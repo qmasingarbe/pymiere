@@ -56,7 +56,7 @@ class Pymiere(object):
             return response_text
 
         # handle error from extend script
-        if "error" in response_decoded and response_decoded["error"] is True:
+        if isinstance(response_decoded, dict) and "error" in response_decoded and response_decoded["error"] is True:
             raise ExtendScriptError(response_decoded)
         return response_decoded
 
@@ -101,9 +101,11 @@ class PymiereObject(object):
         if not line.endswith(";"):
             line += ";"
         script = "var tmp = {}".format(line)
-        script += """var newPymiereId = $._pymiere.generateId();
-        $._pymiere[newPymiereId] = tmp;
-        tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId});
+        script += """\nif(typeof tmp === 'object'){
+            var newPymiereId = $._pymiere.generateId();
+            $._pymiere[newPymiereId] = tmp;
+            tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId});
+        }
         tmp"""
         return PYMIERE.eval_script(script, decode_json=True)
 
@@ -120,7 +122,7 @@ class PymiereObject(object):
         # act on current object using id
         line = "$._pymiere['{}']{}{};".format(self._pymiere_id, "." if dot_notation else "", extend_property)
         result = self._eval_line_returning_object(line)
-        print(result)
+
         if result == "undefined":
             return None
 

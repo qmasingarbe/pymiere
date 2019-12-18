@@ -152,16 +152,14 @@ def collection_iterator(collection):
         yield collection[i]
 
 class PymiereCollection(PymiereObject):
-    def __init__(self, pymiere_id, item_class, len_property):
+    def __init__(self, pymiere_id, len_property):
         """
         These is the base class for all collections, interfacing between premiere Collection objects and python builtin
         iteration tools
         :param pymiere_id: (str) Id of the object we are about to create in extend script, every object is stored in
         $._pymiere var to be accessed easily from python
-        :param item_class: (class) the class of the objects the collection will contain
         :param len_property: (str) name of the property, on the ExtendScript collection object, holding the number of items
         """
-        self.item_class = item_class
         self.len_property = len_property
         super(PymiereCollection, self).__init__(pymiere_id)
 
@@ -169,10 +167,10 @@ class PymiereCollection(PymiereObject):
         """
         Builtin method for getting the value at the specific index, redirect to ExtendScript similar query
         :param index: (int) index of item we are searching in the collection
-        :return: (Any) the item as an object from premiere data
+        :return: (dict) dict of kwargs to create the object. The object creation itself append in the subclass for
+        code inspection/autocomplete purposes
         """
-        # Todo : see if we need to use explicitely the class in subclass to be able to autocomplete in pycharm
-        return self.item_class(**self._extend_eval("[{}]".format(index), dot_notation=False))
+        return self._extend_eval("[{}]".format(index), dot_notation=False)
 
     def __len__(self):
         """

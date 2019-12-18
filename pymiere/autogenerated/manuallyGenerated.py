@@ -71,7 +71,10 @@ class Time(PymiereObject):
 
 class TrackCollection(PymiereCollection):
     def __init__(self, pymiere_id, numTracks):
-        super(TrackCollection, self).__init__(pymiere_id, Track, "numTracks")
+        super(TrackCollection, self).__init__(pymiere_id, "numTracks")
+
+    def __getitem__(self, index):
+        return Track(**super(TrackCollection, self).__getitem__(index))
 
 class Track(PymiereObject):
     def __init__(self, *args, **kwargs):
@@ -87,7 +90,10 @@ class Track(PymiereObject):
 
 class ClipCollection(PymiereCollection):
     def __init__(self, pymiere_id, numItems):
-        super(ClipCollection, self).__init__(pymiere_id, Clip, "numItems")
+        super(ClipCollection, self).__init__(pymiere_id, "numItems")
+
+    def __getitem__(self, index):
+        return Clip(**super(ClipCollection, self).__getitem__(index))
 
 class Clip(PymiereObject):
     def __init__(self, *args, **kwargs):

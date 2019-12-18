@@ -139,6 +139,27 @@ class PymiereObject(object):
             return kwargs
         return result
 
+    @staticmethod
+    def check_init_args(kwargs):
+        """
+        Check that we either get all init args (object comes from ES) or no args (we want to create an empty object)
+        :param kwargs: (dict) keyword arguments at object creation
+        """
+        kwargs = {k: v is not None for k, v in kwargs.items()}
+        if all(kwargs.values()) is True:  # all args are given
+            return
+        if any(kwargs.values()) is False:  # no args given
+            return
+        arg_with_value = list()
+        arg_without_value = list()
+        for k, v in kwargs.items():
+            if v:
+                arg_with_value.append(k)
+            else:
+                arg_without_value.append(k)
+
+        raise ValueError("Creation of object with keywords args doesn't work. Got keywords {} and not {}".format(arg_with_value, arg_without_value))
+
 
 def collection_iterator(collection):
     """
@@ -160,6 +181,8 @@ class PymiereCollection(PymiereObject):
         $._pymiere var to be accessed easily from python
         :param len_property: (str) name of the property, on the ExtendScript collection object, holding the number of items
         """
+        if pymiere_id is None:
+            raise ValueError("Creating a collection from scratch is not supported")
         self.len_property = len_property
         super(PymiereCollection, self).__init__(pymiere_id)
 

@@ -45,8 +45,8 @@ class Sequence(PymiereObject):
 
 
 class Time(PymiereObject):
-    # todo : ameliorer ca dans la generation via class data
     def __init__(self, pymiere_id=None, seconds=None, ticks=None):
+        self.check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
         super(Time, self).__init__(pymiere_id)
         self.__seconds = seconds
         self.__ticks = ticks
@@ -109,6 +109,5 @@ class Clip(PymiereObject):
 
     @end.setter
     def end(self, end):
-        # todo : wrapper ce code et l'inserer dans le build depuis la class data
         self._extend_eval("end = $._pymiere['{}']".format(end._pymiere_id))
         self.__end = end

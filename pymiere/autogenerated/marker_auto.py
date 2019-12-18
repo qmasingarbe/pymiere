@@ -1,7 +1,8 @@
-from pymiere.core import PymiereObject
+from pymiere.core import PymiereObject, PymiereCollection
 
 class Marker(PymiereObject):
-    def __init__(self, pymiere_id, start, end, type, name, comments, guid):
+    def __init__(self, pymiere_id=None, start=None, end=None, type=None, name=None, comments=None, guid=None):
+        self.check_init_args({'pymiere_id':pymiere_id, 'start':start, 'end':end, 'type':type, 'name':name, 'comments':comments, 'guid':guid})
         super(Marker, self).__init__(pymiere_id)
         self.__start = start
         self.__end = end
@@ -17,7 +18,7 @@ class Marker(PymiereObject):
         return self.__start
     @start.setter
     def start(self, start):
-        self._extend_eval("start = {}".format(start))
+        self._extend_eval("start = $._pymiere['{}']".format(start._pymiere_id))
         self.__start = start
 
     @property
@@ -26,7 +27,7 @@ class Marker(PymiereObject):
         return self.__end
     @end.setter
     def end(self, end):
-        self._extend_eval("end = {}".format(end))
+        self._extend_eval("end = $._pymiere['{}']".format(end._pymiere_id))
         self.__end = end
 
     @property

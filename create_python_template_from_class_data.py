@@ -58,16 +58,16 @@ def generate_class(object_data):
             code = code.add_line("self.__{0} = {1}(**self._extend_eval('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
         code = code.add_line("return self.__{}".format(prop_name), indent=2)
         # setter
-        # TODO : add python check for type
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
+        check_cls = TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in TYPE_CORRESPONDENCE else prop_info.get("dataType")
+        code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
         if prop_info.get("type") == "readwrite":
             if prop_info.get("dataType") == "string":  # property is string
                 line = """self._extend_eval("{0} = '{{}}'".format({0}))"""
             elif prop_info.get("dataType") in TYPE_CORRESPONDENCE:  # property is builtin tyoe
                 line = """self._extend_eval("{0} = {{}}".format({0}))"""
             else:  # property is object
-                print("TEST : property {} is object".format(prop_name))
                 line = """self._extend_eval("{0} = $._pymiere['{{}}']".format({0}._pymiere_id))"""
             code = code.add_line(line.format(prop_name), indent=2)
             code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
@@ -92,6 +92,7 @@ def generate_class(object_data):
 
         # docstring
         if func_info.get("arguments"):
+            # pycharm coâtible docstring for arg types
             code = code.add_line('"""', indent=2)
             for arg_name, arg_info in func_info.get("arguments").items():
                 if arg_info.get("help") or arg_info.get("description"):
@@ -99,7 +100,10 @@ def generate_class(object_data):
                 pytype = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line(":type {}: {}".format(arg_name, pytype), indent=2)
             code = code.add_line('"""', indent=2)
-        # TODO : check type of input in python
+            # check type of function args in python
+            for arg_name, arg_info in func_info.get("arguments").items():
+                check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
+                code = code.add_line("""self.check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
         # TODO : support objects as input in functions
         # body
         line = ""

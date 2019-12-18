@@ -12,10 +12,13 @@ class Pymiere(object):
         self.port = 3000
         self.url = "http://{}:{}".format(self.hostname, self.port)
 
-        print("INIT PYMIERE debug temp")
-
         # ping for connection
-        response = requests.get(self.url)
+        try:
+            response = requests.get(self.url)
+        except requests.exceptions.ConnectionError:
+            # todo utiliser psutils pour savoir si premiere est running
+            raise ConnectionError("No connection could be established to Premiere Pro, check that it is running "
+                                  "and the pymiere pannel is loaded")
         if response.content.decode("utf-8") != "Premiere is alive":
             raise ValueError("No Premiere Pro instance found with server running on '{}'".format(self.url))
 
@@ -159,6 +162,11 @@ class PymiereObject(object):
                 arg_without_value.append(k)
 
         raise ValueError("Creation of object with keywords args doesn't work. Got keywords {} and not {}".format(arg_with_value, arg_without_value))
+
+    @staticmethod
+    def check_type(obj, cls, name):
+        if not isinstance(obj, cls):
+            raise ValueError("{} shoud be of type {} but got '{}' (type {})".format(name, cls, obj, type(obj)))
 
 
 def collection_iterator(collection):

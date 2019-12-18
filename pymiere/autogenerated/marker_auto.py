@@ -18,6 +18,7 @@ class Marker(PymiereObject):
         return self.__start
     @start.setter
     def start(self, start):
+        self.check_type(start, Time, 'Marker.start')
         self._extend_eval("start = $._pymiere['{}']".format(start._pymiere_id))
         self.__start = start
 
@@ -27,6 +28,7 @@ class Marker(PymiereObject):
         return self.__end
     @end.setter
     def end(self, end):
+        self.check_type(end, Time, 'Marker.end')
         self._extend_eval("end = $._pymiere['{}']".format(end._pymiere_id))
         self.__end = end
 
@@ -36,6 +38,7 @@ class Marker(PymiereObject):
         return self.__type
     @type.setter
     def type(self, type):
+        self.check_type(type, str, 'Marker.type')
         self._extend_eval("type = '{}'".format(type))
         self.__type = type
 
@@ -45,6 +48,7 @@ class Marker(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
+        self.check_type(name, str, 'Marker.name')
         self._extend_eval("name = '{}'".format(name))
         self.__name = name
 
@@ -54,6 +58,7 @@ class Marker(PymiereObject):
         return self.__comments
     @comments.setter
     def comments(self, comments):
+        self.check_type(comments, str, 'Marker.comments')
         self._extend_eval("comments = '{}'".format(comments))
         self.__comments = comments
 
@@ -63,6 +68,7 @@ class Marker(PymiereObject):
         return self.__guid
     @guid.setter
     def guid(self, guid):
+        self.check_type(guid, str, 'Marker.guid')
         raise AttributeError("Attribute 'guid' is read-only")
 
 
@@ -72,12 +78,15 @@ class Marker(PymiereObject):
         :type eventName: str
         :type function: any
         """
+        self.check_type(eventName, str, 'arg "eventName" of function "Marker.bind"')
+        self.check_type(function, any, 'arg "function" of function "Marker.bind"')
         self._extend_eval("bind('{}', {})".format(eventName, function))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
+        self.check_type(eventName, str, 'arg "eventName" of function "Marker.unbind"')
         self._extend_eval("unbind('{}')".format(eventName))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -86,6 +95,9 @@ class Marker(PymiereObject):
         :type function: any
         :type milliseconds: float
         """
+        self.check_type(eventName, str, 'arg "eventName" of function "Marker.setTimeout"')
+        self.check_type(function, any, 'arg "function" of function "Marker.setTimeout"')
+        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Marker.setTimeout"')
         self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
 
     def setTypeAsComment(self):
@@ -102,6 +114,8 @@ class Marker(PymiereObject):
         :type url: str
         :type frameTarget: str
         """
+        self.check_type(url, str, 'arg "url" of function "Marker.setTypeAsWebLink"')
+        self.check_type(frameTarget, str, 'arg "frameTarget" of function "Marker.setTypeAsWebLink"')
         self._extend_eval("setTypeAsWebLink('{}', '{}')".format(url, frameTarget))
 
     def getWebLinkURL(self):

@@ -14,6 +14,7 @@ class Sequence(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
+        self.check_type(name, str, "Sequence.name")
         self._extend_eval("name = '{}'".format(name))
         self.__name = name
 

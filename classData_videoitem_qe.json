@@ -1,0 +1,4231 @@
+{
+  "name": "Object",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "reversed": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Boolean",
+        "type": "boolean",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "duration": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "String",
+        "type": "string",
+        "description": "",
+        "help": "",
+        "props": {
+          "length": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": 11
+          }
+        },
+        "funcs": {
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "charAt": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "charCodeAt": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "concat": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "indexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "lastIndexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "slice": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "localeCompare": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "match": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "regexp": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "replace": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "with": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "search": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "search": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "split": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "sep": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "limit": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substr": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substring": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "anchor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "big": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "blink": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "bold": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fixed": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fontcolor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "fontsize": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "italics": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "link": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "small": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "strike": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sub": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sup": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "start": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Object",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "ticks": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "String",
+              "type": "string",
+              "description": "",
+              "help": "",
+              "props": {
+                "length": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readonly",
+                  "value": 1
+                }
+              },
+              "funcs": {
+                "toString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toSource": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "valueOf": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "charAt": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "charCodeAt": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "concat": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "indexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "lastIndexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "slice": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "localeCompare": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "match": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "regexp": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "replace": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    },
+                    "with": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "search": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "search": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "split": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "sep": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    },
+                    "limit": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substr": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substring": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "anchor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "big": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "blink": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "bold": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fixed": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fontcolor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "fontsize": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "italics": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "link": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "small": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "strike": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sub": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sup": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "secs": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "Number",
+              "type": "number",
+              "description": "",
+              "help": "",
+              "props": {},
+              "funcs": {
+                "toSource": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toFixed": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toExponential": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toPrecision": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "valueOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "frames": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "Number",
+              "type": "number",
+              "description": "",
+              "help": "",
+              "props": {},
+              "funcs": {
+                "toSource": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toFixed": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toExponential": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toPrecision": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "valueOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "timecode": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "String",
+              "type": "string",
+              "description": "",
+              "help": "",
+              "props": {
+                "length": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readonly",
+                  "value": 11
+                }
+              },
+              "funcs": {
+                "toString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toSource": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "valueOf": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "charAt": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "charCodeAt": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "concat": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "indexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "lastIndexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "slice": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "localeCompare": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "match": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "regexp": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "replace": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    },
+                    "with": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "search": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "search": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "split": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "sep": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    },
+                    "limit": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substr": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substring": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "anchor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "big": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "blink": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "bold": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fixed": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fontcolor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "fontsize": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "italics": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "link": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "small": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "strike": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sub": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sup": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          }
+        },
+        "funcs": {
+          "toLocaleString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "arg1": {
+                "dataType": "unknown",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "hasOwnProperty": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "propertyIsEnumerable": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "isPrototypeOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "unwatch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "watch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "end": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Object",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "ticks": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "String",
+              "type": "string",
+              "description": "",
+              "help": "",
+              "props": {
+                "length": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readonly",
+                  "value": 13
+                }
+              },
+              "funcs": {
+                "toString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toSource": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "valueOf": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "charAt": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "charCodeAt": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "concat": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "indexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "lastIndexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "slice": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "localeCompare": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "match": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "regexp": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "replace": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    },
+                    "with": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "search": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "search": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "split": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "sep": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    },
+                    "limit": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substr": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substring": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "anchor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "big": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "blink": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "bold": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fixed": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fontcolor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "fontsize": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "italics": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "link": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "small": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "strike": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sub": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sup": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "secs": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "Number",
+              "type": "number",
+              "description": "",
+              "help": "",
+              "props": {},
+              "funcs": {
+                "toSource": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toFixed": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toExponential": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toPrecision": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "valueOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "frames": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "Number",
+              "type": "number",
+              "description": "",
+              "help": "",
+              "props": {},
+              "funcs": {
+                "toSource": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleString": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toFixed": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toExponential": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toPrecision": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "decimals": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "valueOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "timecode": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": {
+              "name": "String",
+              "type": "string",
+              "description": "",
+              "help": "",
+              "props": {
+                "length": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readonly",
+                  "value": 11
+                }
+              },
+              "funcs": {
+                "toString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toSource": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "valueOf": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "charAt": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "charCodeAt": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "index": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "concat": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "indexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "lastIndexOf": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "slice": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleLowerCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleUpperCase": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "localeCompare": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "match": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "regexp": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "replace": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    },
+                    "with": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "search": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "search": {
+                      "dataType": "RegExp",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "split": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "sep": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    },
+                    "limit": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substr": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "substring": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "start": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    },
+                    "end": {
+                      "dataType": "number",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "anchor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "big": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "blink": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "bold": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fixed": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "fontcolor": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "fontsize": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "italics": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "link": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "text": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "small": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "strike": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sub": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sup": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          }
+        },
+        "funcs": {
+          "toLocaleString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "arg1": {
+                "dataType": "unknown",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "hasOwnProperty": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "propertyIsEnumerable": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "isPrototypeOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "unwatch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "watch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "type": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "String",
+        "type": "string",
+        "description": "",
+        "help": "",
+        "props": {
+          "length": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": 4
+          }
+        },
+        "funcs": {
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "charAt": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "charCodeAt": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "concat": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "indexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "lastIndexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "slice": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "localeCompare": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "match": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "regexp": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "replace": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "with": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "search": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "search": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "split": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "sep": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "limit": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substr": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substring": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "anchor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "big": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "blink": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "bold": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fixed": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fontcolor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "fontsize": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "italics": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "link": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "small": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "strike": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sub": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sup": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "name": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "String",
+        "type": "string",
+        "description": "",
+        "help": "",
+        "props": {
+          "length": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": 32
+          }
+        },
+        "funcs": {
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "charAt": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "charCodeAt": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "concat": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "indexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "lastIndexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "slice": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "localeCompare": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "match": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "regexp": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "replace": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "with": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "search": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "search": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "split": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "sep": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "limit": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substr": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substring": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "anchor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "big": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "blink": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "bold": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fixed": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fontcolor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "fontsize": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "italics": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "link": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "small": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "strike": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sub": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sup": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "mediaType": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "String",
+        "type": "string",
+        "description": "",
+        "help": "",
+        "props": {
+          "length": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readonly",
+            "value": 5
+          }
+        },
+        "funcs": {
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "charAt": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "charCodeAt": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "index": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "concat": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "indexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "lastIndexOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "slice": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleLowerCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleUpperCase": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "localeCompare": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "match": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "regexp": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "replace": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "with": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "search": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "search": {
+                "dataType": "RegExp",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "split": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "sep": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "limit": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substr": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "substring": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "start": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "end": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "anchor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "big": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "blink": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "bold": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fixed": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "fontcolor": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "fontsize": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "italics": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "link": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "text": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "small": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "strike": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sub": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sup": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "frameBlend": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Boolean",
+        "type": "boolean",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "timeInterpolationType": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Number",
+        "type": "number",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toFixed": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toExponential": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toPrecision": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "valueOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "scaleToFrameSize": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Boolean",
+        "type": "boolean",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "numComponents": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Number",
+        "type": "number",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toFixed": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toExponential": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toPrecision": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "valueOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "multicamEnabled": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Boolean",
+        "type": "boolean",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "speed": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Number",
+        "type": "number",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toSource": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toFixed": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toExponential": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toPrecision": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "decimals": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "valueOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    }
+  },
+  "funcs": {
+    "getProjectItem": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "addVideoEffect": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "addAudioEffect": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "addTransition": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setFrameBlend": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setTimeInterpolationType": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setScaleToFrameSize": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "getComponentAt": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "slip": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "slide": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "roll": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "move": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "moveToTrack": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setName": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "removeEffects": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "remove": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setSpeed": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "canDoMulticam": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setMulticam": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "toLocaleString": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "arg1": {
+          "dataType": "unknown",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "hasOwnProperty": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "name": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "propertyIsEnumerable": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "name": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "isPrototypeOf": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "what": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "toSource": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "unwatch": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "watch": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    }
+  }
+}

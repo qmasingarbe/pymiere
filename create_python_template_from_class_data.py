@@ -102,9 +102,11 @@ def generate_class(object_data):
             code = code.add_line('"""', indent=2)
             # check type of function args in python
             for arg_name, arg_info in func_info.get("arguments").items():
+                # TODO : support objects as input in functions
+                if arg_info.get("dataType") not in TYPE_CORRESPONDENCE:
+                    raise NotImplementedError("arg type {} not supported for function {} of {}".format(arg_info.get("dataType"), func_name, object_data.get('name')))
                 check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line("""self.check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
-        # TODO : support objects as input in functions
         # body
         line = ""
         if func_info.get("dataType") != "undefined":

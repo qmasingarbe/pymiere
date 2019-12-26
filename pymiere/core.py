@@ -165,6 +165,8 @@ class PymiereObject(object):
 
     @staticmethod
     def check_type(obj, cls, name):
+        if cls == any or cls == "any":
+            return
         if not isinstance(obj, cls):
             raise ValueError("{} shoud be of type {} but got '{}' (type {})".format(name, cls, obj, type(obj)))
 

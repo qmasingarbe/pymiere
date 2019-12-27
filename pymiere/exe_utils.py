@@ -1,22 +1,32 @@
 import os
-from subprocess import check_output
+import time
+from subprocess import check_output, call
+from distutils.version import StrictVersion
 try:
     import _winreg as wr  # python 2
 except:
     import winreg as wr  # python 3
 
-def exe_is_running(exe_name):
+def count_running_exe(exe_name):
     """
-    Using tasklist windows command, we can find if a specific process is running
+    Using tasklist windows command, we can find the number of process running with a specific name
     :param exe_name: (str) exact name of the process (ex : 'pycharm64.exe')
-    :return: (bool) exe is running
+    :return:
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
     output = check_output(call, text=True)
     # check in last line for process name
-    last_line = output.strip().splitlines()[-1]
-    return last_line.lower().startswith(exe_name.lower())
+    lines = output.strip().splitlines()
+    return len([l for l in lines if l.lower().startswith(exe_name.lower())])
+
+def exe_is_running(exe_name):
+    """
+    See count_running_exe
+    :param exe_name: (str) exact name of the process (ex : 'pycharm64.exe')
+    :return: (bool) exe is running
+    """
+    return count_running_exe(exe_name) > 0
 
 def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallLocation"]):
     """
@@ -41,11 +51,52 @@ def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallL
     return apps_info
 
 def get_last_premiere_exe():
+    """
+    Hopefully compute the path to the exe file for premiere
+    :return: (str) path to exe
+    """
     premiere_versions = get_installed_softwares_info("adobe premiere pro")
     if not premiere_versions:
         raise OSError("Could not find an Adobe Premiere Pro version installed on this computer")
+    # find last installed version
+    last_version_num = sorted([StrictVersion(v["DisplayVersion"]) for v in premiere_versions])[-1]
+    last_version_info = [v for v in premiere_versions if v["DisplayVersion"] == str(last_version_num)][0]
+    # build exe path
+    exe_path = last_version_info["InstallLocation"]
+    if "Premiere" not in exe_path:
+        exe_path = os.path.join(exe_path, "Adobe Premiere Pro CC {}".format(last_version_info["DisplayName"].split(" ")[-1]))
+    if not os.path.isdir(exe_path):
+        raise IOError("Could not find install dir for Premiere in '{}'".format(exe_path))
+    exe_path = os.path.join(exe_path, "Adobe Premiere Pro.exe")
+    if not os.path.isfile(exe_path):
+        raise IOError("Could not find Premiere executable in '{}'".format(exe_path))
+    return exe_path
 
+def start_premiere():
+    """
+    Start Premiere pro if not already started
+    """
+    if exe_is_running("adobe premiere pro.exe"):
+        return
+    exe_path = get_last_premiere_exe()
+    # we count the CEP pannel process running before because Premiere pops new ones at the end of loading
+    start_running_cep_pannels = count_running_exe("CEPHtmlEngine.exe")
+    # we don't call directly premiere exec here so it's not a child of this script.
+    # It will still run after this script is killed
+    call(["start_premiere.bat", exe_path])
+    # check process is starting and when it is done
+    for i in range(200):
+        if not exe_is_running("adobe premiere pro.exe"):
+            raise ValueError("Could not start premiere")
+        current_running_cep_pannels = count_running_exe("CEPHtmlEngine.exe")
+        if current_running_cep_pannels > start_running_cep_pannels:
+            time.sleep(1)
+            return
+        time.sleep(0.5)
+    raise TimeoutError("Could not guaranty premiere started")
 
 if __name__ == "__main__":
-    print(get_installed_softwares_info("adobe premiere pro"))
-    print(exe_is_running("adobe premiere pro.exe"))
+    # print(get_installed_softwares_info("adobe premiere pro"))
+    # print(exe_is_running("adobe premiere pro.exe"))
+    start_premiere()
+

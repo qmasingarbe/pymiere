@@ -1,14 +1,3 @@
-# from pymiere import Pymiere
-#
-# pymiere = Pymiere()
-#
-# print(pymiere.eval_script("""$._pymiere.generateId()"""))
+from distutils.version import StrictVersion
 
-class A(object):
-    def myclass(self):
-        print(self.__class__.__name__)
-
-class B(A):
-    pass
-
-B().myclass()
+print(StrictVersion("12.1.25") > StrictVersion("12.2.15"))

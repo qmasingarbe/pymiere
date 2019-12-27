@@ -14,6 +14,7 @@ class Sequence(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
+        self.check_type(name, str, "Sequence.name")
         self._extend_eval("name = '{}'".format(name))
         self.__name = name
 
@@ -45,8 +46,8 @@ class Sequence(PymiereObject):
 
 
 class Time(PymiereObject):
-    # todo : ameliorer ca dans la generation via class data
     def __init__(self, pymiere_id=None, seconds=None, ticks=None):
+        self.check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
         super(Time, self).__init__(pymiere_id)
         self.__seconds = seconds
         self.__ticks = ticks
@@ -71,7 +72,10 @@ class Time(PymiereObject):
 
 class TrackCollection(PymiereCollection):
     def __init__(self, pymiere_id, numTracks):
-        super(TrackCollection, self).__init__(pymiere_id, Track, "numTracks")
+        super(TrackCollection, self).__init__(pymiere_id, "numTracks")
+
+    def __getitem__(self, index):
+        return Track(**super(TrackCollection, self).__getitem__(index))
 
 class Track(PymiereObject):
     def __init__(self, *args, **kwargs):
@@ -87,7 +91,10 @@ class Track(PymiereObject):
 
 class ClipCollection(PymiereCollection):
     def __init__(self, pymiere_id, numItems):
-        super(ClipCollection, self).__init__(pymiere_id, Clip, "numItems")
+        super(ClipCollection, self).__init__(pymiere_id, "numItems")
+
+    def __getitem__(self, index):
+        return Clip(**super(ClipCollection, self).__getitem__(index))
 
 class Clip(PymiereObject):
     def __init__(self, *args, **kwargs):
@@ -103,6 +110,5 @@ class Clip(PymiereObject):
 
     @end.setter
     def end(self, end):
-        # todo : wrapper ce code et l'inserer dans le build depuis la class data
         self._extend_eval("end = $._pymiere['{}']".format(end._pymiere_id))
         self.__end = end

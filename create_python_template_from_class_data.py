@@ -9,12 +9,11 @@ class MyStr(str):
     def add_empty_line(self):
         return MyStr(self + "\n")
 
-# todo : check autocompletion for object pulled from colelction
 # todo : merge property and function code
 
 def generate_class(object_data):
     is_collection = False
-    # check
+    # checks
     if list(object_data.keys()) != ["name", "type", "description", "help", "props", "funcs"]:
         is_collection = True
         if list(object_data.keys()) != ["name", "type", "description", "help", "props", "funcs", "collectionContent"]:
@@ -33,7 +32,10 @@ def generate_class(object_data):
     if object_data.get("help") or object_data.get("description"):
         raise NotImplementedError()
     # init
-    code = code.add_line("def __init__(self, pymiere_id, {}):".format(", ".join(object_data.get("props").keys())), indent=1)
+    properties = ["{}=None".format(p) for p in object_data.get("props").keys()]
+    code = code.add_line("def __init__(self, pymiere_id=None, {}):".format(", ".join(properties)), indent=1)
+    properties_dict = ["'{0}':{0}".format(p) for p in object_data.get("props").keys()]
+    code = code.add_line("self.check_init_args({'pymiere_id':pymiere_id, "+ ", ".join(properties_dict) +"})", indent=2)
     code = code.add_line("super({}, self).__init__(pymiere_id)".format(object_data.get("name")), indent=2)
     for prop_name in object_data.get("props").keys():
         code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
@@ -58,12 +60,15 @@ def generate_class(object_data):
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
+        check_cls = TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in TYPE_CORRESPONDENCE else prop_info.get("dataType")
+        code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
         if prop_info.get("type") == "readwrite":
-            # TODO Support write of objects in property
-            if prop_info.get("dataType") == "string":
+            if prop_info.get("dataType") == "string":  # property is string
                 line = """self._extend_eval("{0} = '{{}}'".format({0}))"""
-            else:
+            elif prop_info.get("dataType") in TYPE_CORRESPONDENCE:  # property is builtin tyoe
                 line = """self._extend_eval("{0} = {{}}".format({0}))"""
+            else:  # property is object
+                line = """self._extend_eval("{0} = $._pymiere['{{}}']".format({0}._pymiere_id))"""
             code = code.add_line(line.format(prop_name), indent=2)
             code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
         elif prop_info.get("type") == "readonly":
@@ -87,6 +92,7 @@ def generate_class(object_data):
 
         # docstring
         if func_info.get("arguments"):
+            # pycharm coâtible docstring for arg types
             code = code.add_line('"""', indent=2)
             for arg_name, arg_info in func_info.get("arguments").items():
                 if arg_info.get("help") or arg_info.get("description"):
@@ -94,8 +100,13 @@ def generate_class(object_data):
                 pytype = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line(":type {}: {}".format(arg_name, pytype), indent=2)
             code = code.add_line('"""', indent=2)
-        # TODO : check type of input in python
-        # TODO : support objects as input in functions
+            # check type of function args in python
+            for arg_name, arg_info in func_info.get("arguments").items():
+                # TODO : support objects as input in functions
+                if arg_info.get("dataType") not in TYPE_CORRESPONDENCE:
+                    raise NotImplementedError("arg type {} not supported for function {} of {}".format(arg_info.get("dataType"), func_name, object_data.get('name')))
+                check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
+                code = code.add_line("""self.check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
         # body
         line = ""
         if func_info.get("dataType") != "undefined":
@@ -125,7 +136,7 @@ def generate_collection_class(object_data):
     # find the num property holding the length of the collection. The length property does not have the real length...
     length_property = [prop_name for prop_name in object_data.get("props").keys() if "num" in prop_name]
     if not length_property:
-        raise ValueError("Couldn't find any length/numbeer property on {}".format(object_data.get("name")))
+        raise ValueError("Couldn't find any length/number property on {}".format(object_data.get("name")))
     if len(length_property) != 1:
         raise ValueError("Found mutliple properties that could be the length of {} : {}".format(object_data.get("name"), length_property))
     length_property = length_property[0]
@@ -137,12 +148,19 @@ def generate_collection_class(object_data):
     # write class declaration
     code = code.add_line("class {}(PymiereCollection):".format(class_name))
     code = code.add_line("def __init__(self, pymiere_id, {}):".format(length_property), indent=1)
-    code = code.add_line('super({}, self).__init__(pymiere_id, {}, "{}")'.format(class_name, item_class_name, length_property), indent=2)
+    code = code.add_line('super({}, self).__init__(pymiere_id, "{}")'.format(class_name, length_property), indent=2)
+    code = code.add_empty_line()
+    code = code.add_line("def __getitem__(self, index):", indent=1)
+    code = code.add_line("return {}(**super({}, self).__getitem__(index))".format(class_name, item_class_name), indent=2)
+    code = code.add_empty_line()
     return code
+
+def build_python_from_data(data, save_path):
+    result_code = "from pymiere.core import PymiereObject, PymiereCollection\n"
+    result_code += generate_class(data)
+    with open(save_path, "w") as f:
+        f.write(result_code)
 
 if __name__ == "__main__":
     data = utils.read_json_file(r"D:\code\prpro\classData_marker.json")
-    result_code = "from pymiere.core import PymiereObject\n"
-    result_code += generate_class(data)
-    with open(r"D:\code\prpro\pymiere\autogenerated\marker_auto.py", "w") as f:
-        f.write(result_code)
+    build_python_from_data(data, r"D:\code\prpro\pymiere\autogenerated\marker_auto.py")

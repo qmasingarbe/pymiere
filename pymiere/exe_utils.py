@@ -1,5 +1,6 @@
 import os
 import time
+import re
 from subprocess import check_output, call
 from distutils.version import StrictVersion
 try:
@@ -24,9 +25,16 @@ def exe_is_running(exe_name):
     """
     See count_running_exe
     :param exe_name: (str) exact name of the process (ex : 'pycharm64.exe')
-    :return: (bool) exe is running
+    :return: (bool) exe is running, (int) pid
     """
-    return count_running_exe(exe_name) > 0
+    # use tasklist command with filter by name
+    call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
+    output = check_output(call, text=True)
+    # check in last line for process name
+    lines = output.strip().splitlines()
+    if lines[-1].lower().startswith(exe_name.lower()):
+        return True, int(re.findall("   ([0-9]{1,6}) [a-zA-Z]", lines[-1])[0])
+    return False, None
 
 def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallLocation"]):
     """
@@ -75,9 +83,11 @@ def get_last_premiere_exe():
 def start_premiere():
     """
     Start Premiere pro if not already started
+    :return (int) pid of Premiere process
     """
-    if exe_is_running("adobe premiere pro.exe"):
-        return
+    running, pid = exe_is_running("adobe premiere pro.exe")
+    if running:
+        return pid
     exe_path = get_last_premiere_exe()
     # we count the CEP pannel process running before because Premiere pops new ones at the end of loading
     start_running_cep_pannels = count_running_exe("CEPHtmlEngine.exe")
@@ -86,17 +96,18 @@ def start_premiere():
     call(["start_premiere.bat", exe_path])
     # check process is starting and when it is done
     for i in range(200):
-        if not exe_is_running("adobe premiere pro.exe"):
+        running, pid = exe_is_running("adobe premiere pro.exe")
+        if not running:
             raise ValueError("Could not start premiere")
         current_running_cep_pannels = count_running_exe("CEPHtmlEngine.exe")
         if current_running_cep_pannels > start_running_cep_pannels:
             time.sleep(1)
-            return
+            return pid
         time.sleep(0.5)
     raise TimeoutError("Could not guaranty premiere started")
 
 if __name__ == "__main__":
     # print(get_installed_softwares_info("adobe premiere pro"))
     # print(exe_is_running("adobe premiere pro.exe"))
-    start_premiere()
+    print(start_premiere())
 

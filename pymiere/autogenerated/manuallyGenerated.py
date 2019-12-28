@@ -44,6 +44,12 @@ class Sequence(PymiereObject):
         """
         self._extend_eval("setPlayerPosition({})".format(newTimeInTicks))
 
+    def setOutPoint(self, time):
+        """
+        :type time: Time
+        """
+        self._extend_eval("setOutPoint({})".format(time))
+        # self._extend_eval("setOutPoint($._pymiere['{}'])".format(time._pymiere_id))
 
 class Time(PymiereObject):
     def __init__(self, pymiere_id=None, seconds=None, ticks=None):

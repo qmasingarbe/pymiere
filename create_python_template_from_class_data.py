@@ -10,6 +10,7 @@ class MyStr(str):
         return MyStr(self + "\n")
 
 # todo : merge property and function code
+# todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
 
 def generate_class(object_data):
     is_collection = False
@@ -53,7 +54,8 @@ def generate_class(object_data):
         if prop_info.get("dataType") in TYPE_CORRESPONDENCE:
             code = code.add_line("self.__{0} = self._extend_eval('{0}')".format(prop_name), indent=2)
         elif not prop_info.get("dataType")[0].isupper():
-            raise ValueError("Don't know how to handle dataType {}".format(prop_info.get("dataType")))
+            code = code.add_line("# TODO : this is unsupported dataType {}".format(prop_info.get("dataType")), indent=2)
+            # raise ValueError("Don't know how to handle dataType {}".format(prop_info.get("dataType")))
         else:
             code = code.add_line("self.__{0} = {1}(**self._extend_eval('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
         code = code.add_line("return self.__{}".format(prop_name), indent=2)
@@ -104,8 +106,10 @@ def generate_class(object_data):
             for arg_name, arg_info in func_info.get("arguments").items():
                 # TODO : support objects as input in functions
                 if arg_info.get("dataType") not in TYPE_CORRESPONDENCE:
-                    raise NotImplementedError("arg type {} not supported for function {} of {}".format(arg_info.get("dataType"), func_name, object_data.get('name')))
-                check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
+                    # raise NotImplementedError("arg type {} not supported for function {} of {}".format(arg_info.get("dataType"), func_name, object_data.get('name')))
+                    check_cls = arg_info.get("dataType")
+                else:
+                    check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line("""self.check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
         # body
         line = ""
@@ -115,8 +119,20 @@ def generate_class(object_data):
                 line += str(func_info.get("dataType")) + "(**"
         line += 'self._extend_eval("{}('.format(func_name)
         if func_info.get("arguments"):
-            line += ", ".join(['{}' if arg_info.get("dataType") != "string" else "'{}'" for arg_info in func_info.get("arguments").values()])
-            line += ')".format({}))'.format(", ".join(func_info.get("arguments").keys()))
+            line_args = list()
+            format_args = list()
+            for arg_name, arg_info in func_info.get("arguments").items():
+                if arg_info.get("dataType") == "string":
+                    line_args.append("'{}'")
+                    format_args.append(arg_name)
+                elif arg_info.get("dataType") not in TYPE_CORRESPONDENCE:
+                    line_args.append("$._pymiere['{}']")
+                    format_args.append("{}._pymiere_id".format(arg_name))
+                else:
+                    line_args.append("{}")
+                    format_args.append(arg_name)
+            line += ", ".join(line_args)
+            line += ')".format({}))'.format(", ".join(format_args))
         else:
             line += ')")'
         if func_info.get("dataType") != "undefined" and func_info.get("dataType") not in TYPE_CORRESPONDENCE:
@@ -151,16 +167,44 @@ def generate_collection_class(object_data):
     code = code.add_line('super({}, self).__init__(pymiere_id, "{}")'.format(class_name, length_property), indent=2)
     code = code.add_empty_line()
     code = code.add_line("def __getitem__(self, index):", indent=1)
-    code = code.add_line("return {}(**super({}, self).__getitem__(index))".format(class_name, item_class_name), indent=2)
+    code = code.add_line("return {}(**super({}, self).__getitem__(index))".format(item_class_name, class_name), indent=2)
     code = code.add_empty_line()
     return code
 
-def build_python_from_data(data, save_path):
+def build_python_from_data(datas, save_path):
     result_code = "from pymiere.core import PymiereObject, PymiereCollection\n"
-    result_code += generate_class(data)
+    for data in datas:
+        result_code += generate_class(data)
     with open(save_path, "w") as f:
         f.write(result_code)
 
+def decrypt_object(d):
+    objects = dict()
+    if d is None:
+        return objects
+    if d.get("name") in ["Object", "object"]:
+        # print("Simple object detected :", d.get("name"))
+        return objects
+    if d.get("type") in TYPE_CORRESPONDENCE:
+        # print("Type is not object : ", d.get("type"))
+        return objects
+    if d.get("name") not in objects:
+        objects.update({d.get("name"): d})
+    for prop_name, prop_value in d.get("props").items():
+        if prop_value.get("value") is None:
+            continue
+        if not isinstance(prop_value.get("value"), dict):
+            # print("Type is not object : ", d.get("dataType"))
+            continue
+        if prop_value.get("value").get("name") in ["Object", "object"]:
+            # print("Simple object detected :", prop_name)
+            continue
+        objects.update(decrypt_object(prop_value.get("value")))
+    return objects
+
+
+
 if __name__ == "__main__":
-    data = utils.read_json_file(r"D:\code\prpro\classData_marker.json")
-    build_python_from_data(data, r"D:\code\prpro\pymiere\autogenerated\marker_auto.py")
+    data = utils.read_json_file(r"D:\code\prpro\classData_globals.json")
+    unique_objects = decrypt_object(data)
+    build_python_from_data(unique_objects.values(), r"D:\code\prpro\pymiere\autogenerated\globals_auto.py")

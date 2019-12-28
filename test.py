@@ -26,8 +26,8 @@ if __name__== "__main__":
     # print(playerPos.ticks)
     clip = sequence.videoTracks[0].clips[0]
     new_time = Time()
-    new_time.seconds = 10
+    new_time.seconds = 5
 
     print(new_time.ticks)
 
-    clip.end = new_time
+    sequence.setOutPoint(10)

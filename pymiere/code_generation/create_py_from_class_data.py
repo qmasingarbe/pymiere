@@ -46,12 +46,14 @@ def generate_class(object_data):
     code = code.add_empty_line()
     code = code.add_line("# ----- PROPERTIES -----", indent=1)
     for prop_name, prop_info in object_data.get("props").items():
-        # docstring
-        if prop_info.get("help") or prop_info.get("description"):
-            raise NotImplementedError()
+        # docstring$
+        if prop_info.get("help"):
+            raise NotImplementedError("help")
         # getter
         code = code.add_line("@property", indent=1)
         code = code.add_line("def {}(self):".format(prop_name), indent=1)
+        if prop_info.get("description"):
+            code = code.add_line('"""{}"""'.format(prop_info.get("description")), indent=2)
         if prop_info.get("dataType") in TYPE_CORRESPONDENCE:
             code = code.add_line("self.__{0} = self._extend_eval('{0}')".format(prop_name), indent=2)
         elif not prop_info.get("dataType")[0].isupper():
@@ -85,8 +87,8 @@ def generate_class(object_data):
     code = code.add_line("# ----- FUNCTIONS -----", indent=1)
     for func_name, func_info in object_data.get("funcs").items():
         # docstring
-        if func_info.get("help") or func_info.get("description"):
-            raise NotImplementedError()
+        if func_info.get("help"):
+            raise NotImplementedError("help")
         # definition
         args = ""
         if func_info.get("arguments"):
@@ -94,15 +96,20 @@ def generate_class(object_data):
         code = code.add_line("def {}(self{}):".format(func_name, args), indent=1)
 
         # docstring
-        if func_info.get("arguments"):
-            # pycharm coâtible docstring for arg types
+        if func_info.get("arguments") or func_info.get("description"):
+            # pycharm compatible docstring for arg types
             code = code.add_line('"""', indent=2)
-            for arg_name, arg_info in func_info.get("arguments").items():
-                if arg_info.get("help") or arg_info.get("description"):
-                    raise NotImplementedError()
+            if func_info.get("description"):
+                code = code.add_line(func_info.get("description"), indent=2)
+            for arg_name, arg_info in func_info.get("arguments", dict()).items():
+                if arg_info.get("help"):
+                    raise NotImplementedError("help")
+                if arg_info.get("description"):
+                    code = code.add_line(":param {}: {}".format(arg_name, arg_info.get("description")), indent=2)
                 pytype = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line(":type {}: {}".format(arg_name, pytype), indent=2)
             code = code.add_line('"""', indent=2)
+        if func_info.get("arguments"):
             # check type of function args in python
             for arg_name, arg_info in func_info.get("arguments").items():
                 if arg_info.get("dataType") == "unknown":
@@ -175,8 +182,12 @@ def generate_collection_class(object_data):
 
 def build_python_from_data(datas, save_path):
     result_code = "from pymiere.core import PymiereObject, PymiereCollection\n"
-    for data in datas:
+    for name, data in datas.items():
+        print("Generating object '{}'".format(name))
         result_code += generate_class(data)
+    # prevent class called $
+    result_code = result_code.replace("class $(PymiereObject):", "class Dollar(PymiereObject):")
+    result_code = result_code.replace("super($, self).__init__(pymiere_id)", "super(Dollar, self).__init__(pymiere_id)")
     with open(save_path, "w") as f:
         f.write(result_code)
 
@@ -207,13 +218,32 @@ def decrypt_object(d):
 
 
 if __name__ == "__main__":
-    data = utils.read_json_file(r"D:\code\prpro\pymiere\code_generation\class_datas\classData_globals.json")
-    unique_objects = decrypt_object(data)
-    illegal_objects = list()
+    things_to_extract = [
+        '$.global',
+        'qe',
+        'app.project.rootItem.children[0].getFootageInterpretation()',
+        'app.project.rootItem.children[0].getOutPoint()',
+        'app.project.activeSequence.videoTracks[0]',
+        'app.project.activeSequence.videoTracks[0].clips',
+        'app.project.activeSequence.videoTracks[0].clips[0]',
+        'app.project.activeSequence.getSettings()',
+        'app.project.activeSequence.markers.getFirstMarker()',
+        'app.project.activeSequence.videoTracks[0].clips[0].components[0]',
+        '$',
+        'Folder.current.getFiles("*.exe")',
+        'app.project.activeSequence.videoTracks[0].clips[0].components[0].properties[0]'
+    ]
+    unique_objects = dict()
+    for thing_to_extract in things_to_extract:
+        filename = thing_to_extract.replace(".","").replace("[","").replace("]","").replace("(","").replace(")","").replace("*","").replace('"','')
+        data = utils.read_json_file(r"D:\code\prpro\pymiere\code_generation\class_datas\classDataExtract_{}.json".format(filename))
+        unique_objects.update(decrypt_object(data))
+    print(unique_objects.keys())
+    illegal_objects = ["Array", "Dictionary"]
     for unique_object_name in unique_objects.keys():
         if keyword.iskeyword(unique_object_name):
             print("Cannot crate Extend script object '{}' cause it is a python reserved keywork".format(unique_object_name))
             illegal_objects.append(unique_object_name)
     for illegal_object in illegal_objects:
         del unique_objects[illegal_object]
-    build_python_from_data(unique_objects.values(), r"D:\code\prpro\pymiere\autogenerated\globals_auto.py")
+    build_python_from_data(unique_objects, r"D:\code\prpro\pymiere\autogenerated\globals_all.py")

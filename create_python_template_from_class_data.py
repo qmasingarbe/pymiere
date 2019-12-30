@@ -62,9 +62,9 @@ def generate_class(object_data):
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
-        check_cls = TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in TYPE_CORRESPONDENCE else prop_info.get("dataType")
-        code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
         if prop_info.get("type") == "readwrite":
+            check_cls = TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in TYPE_CORRESPONDENCE else prop_info.get("dataType")
+            code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
             if prop_info.get("dataType") == "string":  # property is string
                 line = """self._extend_eval("{0} = '{{}}'".format({0}))"""
             elif prop_info.get("dataType") in TYPE_CORRESPONDENCE:  # property is builtin tyoe

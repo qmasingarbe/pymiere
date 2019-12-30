@@ -89,8 +89,16 @@ function reflectToDict(obj, exclude_property){
     return result
 }
 
-//delete $.global.test;
+JSON.stringify(reflectToDict(__PLACEHOLDER__));
 //JSON.stringify(reflectToDict($.global, "$"));
-JSON.stringify(reflectToDict($.global, "$"));
-//JSON.stringify(reflectToDict(qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(0), "babababa"));
-//JSON.stringify(reflectToDict(app.project.activeSequence.markers.getFirstMarker()));
+//JSON.stringify(reflectToDict(qe, "bababababa"));
+//JSON.stringify(reflectToDict(app.project.rootItem.children[0].getFootageInterpretation(), "bababababa"));
+//JSON.stringify(reflectToDict(app.project.rootItem.children[0].getOutPoint(), "bababababa"));
+//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0], "bababababa"));
+//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0].clips, "bababababa"));
+//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0].clips[0], "bababababa"));
+//JSON.stringify(reflectToDict(app.project.activeSequence.getSettings(), "bababababa"));
+//JSON.stringify(reflectToDict(app.project.activeSequence.markers.getFirstMarker(), "bababababa"));
+//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0].clips[0].components[0], "bababababa"));
+//JSON.stringify(reflectToDict($, "global"));
+//JSON.stringify(reflectToDict(Folder.current.getFiles("*.exe"), "bababababa"));

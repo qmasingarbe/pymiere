@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# pycharm shit
+*.xml
+
 # C extensions
 *.so
 

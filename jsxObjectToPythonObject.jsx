@@ -54,10 +54,10 @@ function reflectToDict(obj, exclude_property){
         property_result.max = property_info.max;
         property_result.min = property_info.min;
         property_result.type = property_info.type;
-        if (property_result.dataType == "boolean" || property_result.dataType == "number" || property_result.dataType == "string" || property_result.dataType == "any" || property_result.dataType == "undefined"){
+        if (property_result.dataType == "boolean" || property_result.dataType == "number" || property_result.dataType == "string" || property_result.dataType == "any" || property_result.dataType == "undefined" || property_result.dataType == "null"){
             // property contains data of builtin type
             property_result.value = obj[property_name];
-        }else if(typeof obj[property_name] === "undefined"){
+        }else if(typeof obj[property_name] === "undefined" || obj[property_name] === null){
             // property has undefinied value
             property_result.value = undefined;
         }else if(property_result.dataType == "MarkerCollection"){
@@ -91,5 +91,6 @@ function reflectToDict(obj, exclude_property){
 
 //delete $.global.test;
 //JSON.stringify(reflectToDict($.global, "$"));
-JSON.stringify(reflectToDict(qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(0), "babababa"));
+JSON.stringify(reflectToDict($.global, "$"));
+//JSON.stringify(reflectToDict(qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(0), "babababa"));
 //JSON.stringify(reflectToDict(app.project.activeSequence.markers.getFirstMarker()));

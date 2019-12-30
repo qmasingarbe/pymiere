@@ -2,6 +2,10 @@ import os
 import json
 import requests
 
+
+# TODO take into account $ to Dollar when getting an object from ES
+
+
 # ----- FUNCTIONS -----
 def _format_object_to_es(obj):
     """
@@ -337,3 +341,12 @@ class PymiereGenericObject(PymiereObject):
             result = self._eval_line_returning_object(line)
             return _format_object_to_py(result)
         return generic_method
+
+class Array():
+    pass
+
+class Dictionary():
+    pass
+
+class unknown(PymiereGenericObject):
+    pass

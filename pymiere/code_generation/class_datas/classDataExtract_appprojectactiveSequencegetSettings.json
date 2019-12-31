@@ -1,0 +1,470 @@
+{
+  "name": "SequenceSettings",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "editingMode": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "cf2f7860-0e56-444f-a64f-74eafec54e44"
+    },
+    "videoFrameRate": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Time",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "seconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 0.04
+          },
+          "ticks": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "10160640000"
+          }
+        },
+        "funcs": {
+          "bind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "unbind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setTimeout": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "milliseconds": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setSecondsAsFraction": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "numerator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "denominator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "getFormatted": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "time": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              },
+              "timeDisplay": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "videoFrameWidth": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 1280
+    },
+    "videoFrameHeight": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 720
+    },
+    "videoPixelAspectRatio": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "1000000:1000000"
+    },
+    "videoFieldType": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "videoDisplayFormat": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 101
+    },
+    "audioChannelType": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 1
+    },
+    "audioChannelCount": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 2
+    },
+    "audioSampleRate": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Time",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "seconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 2.083333333e-05
+          },
+          "ticks": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "5292000"
+          }
+        },
+        "funcs": {
+          "bind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "unbind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setTimeout": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "milliseconds": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setSecondsAsFraction": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "numerator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "denominator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "getFormatted": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "time": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              },
+              "timeDisplay": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "audioDisplayFormat": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 200
+    },
+    "previewFileFormat": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "EncoderPresets\\SequencePreview\\cf2f7860-0e56-444f-a64f-74eafec54e44\\AVC-Intra Class100 720p.epr"
+    },
+    "previewCodec": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": ""
+    },
+    "previewFrameWidth": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 1280
+    },
+    "previewFrameHeight": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 720
+    },
+    "maximumBitDepth": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "maximumRenderQuality": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "compositeLinearColor": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": true
+    },
+    "vrProjection": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "vrLayout": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "vrHorzCapturedView": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "vrVertCapturedView": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    }
+  }
+}

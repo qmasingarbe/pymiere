@@ -1,4 +1,4 @@
-from pymiere.core import PymiereObject, PymiereCollection, Array
+from pymiere.core import PymiereObject, PymiereCollection, Array, _format_object_to_py, _format_object_to_es
 
 class Application(PymiereObject):
     def __init__(self, pymiere_id=None, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
@@ -61,7 +61,7 @@ class Application(PymiereObject):
     @project.setter
     def project(self, project):
         self.check_type(project, Project, 'Application.project')
-        self._extend_eval("project = $._pymiere['{}']".format(project._pymiere_id))
+        self._extend_eval("project = {}".format(_format_object_to_es(project)))
         self.__project = project
 
     @property
@@ -161,14 +161,14 @@ class Application(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Application.bind"')
         self.check_type(function, any, 'arg "function" of function "Application.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Application.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -179,7 +179,7 @@ class Application(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Application.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Application.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Application.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def isDocumentOpen(self):
         return self._extend_eval("isDocumentOpen()")
@@ -192,14 +192,14 @@ class Application(PymiereObject):
         :type workspace: str
         """
         self.check_type(workspace, str, 'arg "workspace" of function "Application.setWorkspace"')
-        return self._extend_eval("setWorkspace('{}')".format(workspace))
+        return self._extend_eval("setWorkspace({})".format(_format_object_to_es(workspace)))
 
     def isDocument(self, filePath):
         """
         :type filePath: str
         """
         self.check_type(filePath, str, 'arg "filePath" of function "Application.isDocument"')
-        return self._extend_eval("isDocument('{}')".format(filePath))
+        return self._extend_eval("isDocument({})".format(_format_object_to_es(filePath)))
 
     def openDocument(self):
         return self._extend_eval("openDocument()")
@@ -212,14 +212,14 @@ class Application(PymiereObject):
         :type message: str
         """
         self.check_type(message, str, 'arg "message" of function "Application.trace"')
-        self._extend_eval("trace('{}')".format(message))
+        self._extend_eval("trace({})".format(_format_object_to_es(message)))
 
     def write(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Application.write"')
-        self._extend_eval("write({})".format(arg1))
+        self._extend_eval("write({})".format(_format_object_to_es(arg1)))
 
     def openFCPXML(self):
         return self._extend_eval("openFCPXML()")
@@ -231,7 +231,7 @@ class Application(PymiereObject):
         """
         self.check_type(value, str, 'arg "value" of function "Application.setSDKEventMessage"')
         self.check_type(eventType, str, 'arg "eventType" of function "Application.setSDKEventMessage"')
-        return self._extend_eval("setSDKEventMessage('{}', '{}')".format(value, eventType))
+        return self._extend_eval("setSDKEventMessage({}, {})".format(_format_object_to_es(value), _format_object_to_es(eventType)))
 
     def setScratchDiskPath(self, value, type):
         """
@@ -240,14 +240,14 @@ class Application(PymiereObject):
         """
         self.check_type(value, str, 'arg "value" of function "Application.setScratchDiskPath"')
         self.check_type(type, str, 'arg "type" of function "Application.setScratchDiskPath"')
-        self._extend_eval("setScratchDiskPath('{}', '{}')".format(value, type))
+        self._extend_eval("setScratchDiskPath({}, {})".format(_format_object_to_es(value), _format_object_to_es(type)))
 
     def broadcastPrefsChanged(self, preferencesThatChanged):
         """
         :type preferencesThatChanged: str
         """
         self.check_type(preferencesThatChanged, str, 'arg "preferencesThatChanged" of function "Application.broadcastPrefsChanged"')
-        return self._extend_eval("broadcastPrefsChanged('{}')".format(preferencesThatChanged))
+        return self._extend_eval("broadcastPrefsChanged({})".format(_format_object_to_es(preferencesThatChanged)))
 
     def setExtensionPersistent(self, extensionID, state):
         """
@@ -256,7 +256,7 @@ class Application(PymiereObject):
         """
         self.check_type(extensionID, str, 'arg "extensionID" of function "Application.setExtensionPersistent"')
         self.check_type(state, float, 'arg "state" of function "Application.setExtensionPersistent"')
-        self._extend_eval("setExtensionPersistent('{}', {})".format(extensionID, state))
+        self._extend_eval("setExtensionPersistent({}, {})".format(_format_object_to_es(extensionID), _format_object_to_es(state)))
 
     def getEnableProxies(self):
         return self._extend_eval("getEnableProxies()")
@@ -266,14 +266,14 @@ class Application(PymiereObject):
         :type enable: float
         """
         self.check_type(enable, float, 'arg "enable" of function "Application.setEnableProxies"')
-        return self._extend_eval("setEnableProxies({})".format(enable))
+        return self._extend_eval("setEnableProxies({})".format(_format_object_to_es(enable)))
 
     def showCursor(self, enable):
         """
         :type enable: bool
         """
         self.check_type(enable, bool, 'arg "enable" of function "Application.showCursor"')
-        self._extend_eval("showCursor({})".format(enable))
+        self._extend_eval("showCursor({})".format(_format_object_to_es(enable)))
 
     def getProjectViewIDs(self):
         self._extend_eval("getProjectViewIDs()")
@@ -283,28 +283,28 @@ class Application(PymiereObject):
         :type viewID: str
         """
         self.check_type(viewID, str, 'arg "viewID" of function "Application.getProjectFromViewID"')
-        return Project(**self._extend_eval("getProjectFromViewID('{}')".format(viewID)))
+        return Project(**self._extend_eval("getProjectFromViewID({})".format(_format_object_to_es(viewID))))
 
     def getProjectViewSelection(self, viewID):
         """
         :type viewID: str
         """
         self.check_type(viewID, str, 'arg "viewID" of function "Application.getProjectViewSelection"')
-        self._extend_eval("getProjectViewSelection('{}')".format(viewID))
+        self._extend_eval("getProjectViewSelection({})".format(_format_object_to_es(viewID)))
 
     def setProjectViewSelection(self, viewID):
         """
         :type viewID: str
         """
         self.check_type(viewID, str, 'arg "viewID" of function "Application.setProjectViewSelection"')
-        self._extend_eval("setProjectViewSelection('{}')".format(viewID))
+        self._extend_eval("setProjectViewSelection({})".format(_format_object_to_es(viewID)))
 
     def getConstant(self, name):
         """
         :type name: str
         """
         self.check_type(name, str, 'arg "name" of function "Application.getConstant"')
-        return self._extend_eval("getConstant('{}')".format(name))
+        return self._extend_eval("getConstant({})".format(_format_object_to_es(name)))
 
     def refresh(self):
         self._extend_eval("refresh()")
@@ -314,7 +314,7 @@ class Application(PymiereObject):
         :type inEnable: bool
         """
         self.check_type(inEnable, bool, 'arg "inEnable" of function "Application.setEnableTranscodeOnIngest"')
-        self._extend_eval("setEnableTranscodeOnIngest({})".format(inEnable))
+        self._extend_eval("setEnableTranscodeOnIngest({})".format(_format_object_to_es(inEnable)))
 
     def getCCXUserJSONData(self):
         return self._extend_eval("getCCXUserJSONData()")
@@ -383,7 +383,7 @@ class Project(PymiereObject):
     @activeSequence.setter
     def activeSequence(self, activeSequence):
         self.check_type(activeSequence, Sequence, 'Project.activeSequence')
-        self._extend_eval("activeSequence = $._pymiere['{}']".format(activeSequence._pymiere_id))
+        self._extend_eval("activeSequence = {}".format(_format_object_to_es(activeSequence)))
         self.__activeSequence = activeSequence
 
     @property
@@ -411,14 +411,14 @@ class Project(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Project.bind"')
         self.check_type(function, any, 'arg "function" of function "Project.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Project.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -429,42 +429,42 @@ class Project(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Project.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Project.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Project.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def openSequence(self, sequenceID):
         """
         :type sequenceID: str
         """
         self.check_type(sequenceID, str, 'arg "sequenceID" of function "Project.openSequence"')
-        return self._extend_eval("openSequence('{}')".format(sequenceID))
+        return self._extend_eval("openSequence({})".format(_format_object_to_es(sequenceID)))
 
     def importFiles(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Project.importFiles"')
-        return self._extend_eval("importFiles({})".format(arg1))
+        return self._extend_eval("importFiles({})".format(_format_object_to_es(arg1)))
 
     def importSequences(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Project.importSequences"')
-        return self._extend_eval("importSequences({})".format(arg1))
+        return self._extend_eval("importSequences({})".format(_format_object_to_es(arg1)))
 
     def importAllAEComps(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Project.importAllAEComps"')
-        return self._extend_eval("importAllAEComps({})".format(arg1))
+        return self._extend_eval("importAllAEComps({})".format(_format_object_to_es(arg1)))
 
     def importAEComps(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Project.importAEComps"')
-        return self._extend_eval("importAEComps({})".format(arg1))
+        return self._extend_eval("importAEComps({})".format(_format_object_to_es(arg1)))
 
     def createNewSequence(self, sequenceName, placeholderID):
         """
@@ -473,14 +473,14 @@ class Project(PymiereObject):
         """
         self.check_type(sequenceName, str, 'arg "sequenceName" of function "Project.createNewSequence"')
         self.check_type(placeholderID, str, 'arg "placeholderID" of function "Project.createNewSequence"')
-        self._extend_eval("createNewSequence('{}', '{}')".format(sequenceName, placeholderID))
+        self._extend_eval("createNewSequence({}, {})".format(_format_object_to_es(sequenceName), _format_object_to_es(placeholderID)))
 
     def deleteSequence(self, sequence):
         """
         :type sequence: Sequence
         """
         self.check_type(sequence, Sequence, 'arg "sequence" of function "Project.deleteSequence"')
-        return self._extend_eval("deleteSequence($._pymiere['{}'])".format(sequence._pymiere_id))
+        return self._extend_eval("deleteSequence({})".format(_format_object_to_es(sequence)))
 
     def exportFinalCutProXML(self, exportPath, suppressUI):
         """
@@ -489,14 +489,14 @@ class Project(PymiereObject):
         """
         self.check_type(exportPath, str, 'arg "exportPath" of function "Project.exportFinalCutProXML"')
         self.check_type(suppressUI, float, 'arg "suppressUI" of function "Project.exportFinalCutProXML"')
-        return self._extend_eval("exportFinalCutProXML('{}', {})".format(exportPath, suppressUI))
+        return self._extend_eval("exportFinalCutProXML({}, {})".format(_format_object_to_es(exportPath), _format_object_to_es(suppressUI)))
 
     def exportTimeline(self, exportControllerName):
         """
         :type exportControllerName: str
         """
         self.check_type(exportControllerName, str, 'arg "exportControllerName" of function "Project.exportTimeline"')
-        return self._extend_eval("exportTimeline('{}')".format(exportControllerName))
+        return self._extend_eval("exportTimeline({})".format(_format_object_to_es(exportControllerName)))
 
     def exportOMF(self, sequence, filePath, OMFTitle, sampleRate, bitsPerSample, audioEncapsulated, audioFileFormat, trimAudioFiles, handleFrames, includePan):
         """
@@ -521,7 +521,7 @@ class Project(PymiereObject):
         self.check_type(trimAudioFiles, float, 'arg "trimAudioFiles" of function "Project.exportOMF"')
         self.check_type(handleFrames, float, 'arg "handleFrames" of function "Project.exportOMF"')
         self.check_type(includePan, float, 'arg "includePan" of function "Project.exportOMF"')
-        return self._extend_eval("exportOMF($._pymiere['{}'], '{}', '{}', {}, {}, {}, {}, {}, {}, {})".format(sequence._pymiere_id, filePath, OMFTitle, sampleRate, bitsPerSample, audioEncapsulated, audioFileFormat, trimAudioFiles, handleFrames, includePan))
+        return self._extend_eval("exportOMF({}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(_format_object_to_es(sequence), _format_object_to_es(filePath), _format_object_to_es(OMFTitle), _format_object_to_es(sampleRate), _format_object_to_es(bitsPerSample), _format_object_to_es(audioEncapsulated), _format_object_to_es(audioFileFormat), _format_object_to_es(trimAudioFiles), _format_object_to_es(handleFrames), _format_object_to_es(includePan)))
 
     def exportAAF(self, sequence, filePath, mixDownVideo, explodeToMono, sampleRate, bitsPerSample, embedAudio, audioFileFormat, trimSources, handleFrames):
         """
@@ -546,14 +546,14 @@ class Project(PymiereObject):
         self.check_type(audioFileFormat, float, 'arg "audioFileFormat" of function "Project.exportAAF"')
         self.check_type(trimSources, float, 'arg "trimSources" of function "Project.exportAAF"')
         self.check_type(handleFrames, float, 'arg "handleFrames" of function "Project.exportAAF"')
-        return self._extend_eval("exportAAF($._pymiere['{}'], '{}', {}, {}, {}, {}, {}, {}, {}, {})".format(sequence._pymiere_id, filePath, mixDownVideo, explodeToMono, sampleRate, bitsPerSample, embedAudio, audioFileFormat, trimSources, handleFrames))
+        return self._extend_eval("exportAAF({}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(_format_object_to_es(sequence), _format_object_to_es(filePath), _format_object_to_es(mixDownVideo), _format_object_to_es(explodeToMono), _format_object_to_es(sampleRate), _format_object_to_es(bitsPerSample), _format_object_to_es(embedAudio), _format_object_to_es(audioFileFormat), _format_object_to_es(trimSources), _format_object_to_es(handleFrames)))
 
     def saveAs(self, saveAsPath):
         """
         :type saveAsPath: str
         """
         self.check_type(saveAsPath, str, 'arg "saveAsPath" of function "Project.saveAs"')
-        return self._extend_eval("saveAs('{}')".format(saveAsPath))
+        return self._extend_eval("saveAs({})".format(_format_object_to_es(saveAsPath)))
 
     def save(self):
         self._extend_eval("save()")
@@ -563,7 +563,7 @@ class Project(PymiereObject):
         :type pausedOrNot: float
         """
         self.check_type(pausedOrNot, float, 'arg "pausedOrNot" of function "Project.pauseGrowing"')
-        return self._extend_eval("pauseGrowing({})".format(pausedOrNot))
+        return self._extend_eval("pauseGrowing({})".format(_format_object_to_es(pausedOrNot)))
 
     def closeDocument(self):
         return self._extend_eval("closeDocument()")
@@ -573,7 +573,7 @@ class Project(PymiereObject):
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Project.placeAsset"')
-        return self._extend_eval("placeAsset({})".format(arg1))
+        return self._extend_eval("placeAsset({})".format(_format_object_to_es(arg1)))
 
     def addPropertyToProjectMetadataSchema(self, name, label, type):
         """
@@ -584,7 +584,7 @@ class Project(PymiereObject):
         self.check_type(name, str, 'arg "name" of function "Project.addPropertyToProjectMetadataSchema"')
         self.check_type(label, str, 'arg "label" of function "Project.addPropertyToProjectMetadataSchema"')
         self.check_type(type, float, 'arg "type" of function "Project.addPropertyToProjectMetadataSchema"')
-        return self._extend_eval("addPropertyToProjectMetadataSchema('{}', '{}', {})".format(name, label, type))
+        return self._extend_eval("addPropertyToProjectMetadataSchema({}, {}, {})".format(_format_object_to_es(name), _format_object_to_es(label), _format_object_to_es(type)))
 
     def getInsertionBin(self):
         return ProjectItem(**self._extend_eval("getInsertionBin()"))
@@ -602,7 +602,7 @@ class Project(PymiereObject):
         """
         self.check_type(value, str, 'arg "value" of function "Project.setScratchDiskPath"')
         self.check_type(type, str, 'arg "type" of function "Project.setScratchDiskPath"')
-        self._extend_eval("setScratchDiskPath('{}', '{}')".format(value, type))
+        self._extend_eval("setScratchDiskPath({}, {})".format(_format_object_to_es(value), _format_object_to_es(type)))
 
     def consolidateDuplicates(self):
         self._extend_eval("consolidateDuplicates()")
@@ -612,7 +612,7 @@ class Project(PymiereObject):
         :type inEnable: bool
         """
         self.check_type(inEnable, bool, 'arg "inEnable" of function "Project.setEnableTranscodeOnIngest"')
-        return self._extend_eval("setEnableTranscodeOnIngest({})".format(inEnable))
+        return self._extend_eval("setEnableTranscodeOnIngest({})".format(_format_object_to_es(inEnable)))
 
 class ProjectItem(PymiereObject):
     def __init__(self, pymiere_id=None, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
@@ -640,8 +640,7 @@ class ProjectItem(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, 'ProjectItem.name')
-        self._extend_eval("name = '{}'".format(name))
+        self._extend_eval("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
     @property
@@ -685,14 +684,14 @@ class ProjectItem(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectItem.bind"')
         self.check_type(function, any, 'arg "function" of function "ProjectItem.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectItem.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -703,7 +702,7 @@ class ProjectItem(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectItem.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "ProjectItem.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectItem.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getFootageInterpretation(self):
         return FootageInterpretation(**self._extend_eval("getFootageInterpretation()"))
@@ -713,7 +712,7 @@ class ProjectItem(PymiereObject):
         :type interpretFootage: FootageInterpretation
         """
         self.check_type(interpretFootage, FootageInterpretation, 'arg "interpretFootage" of function "ProjectItem.setFootageInterpretation"')
-        return self._extend_eval("setFootageInterpretation($._pymiere['{}'])".format(interpretFootage._pymiere_id))
+        return self._extend_eval("setFootageInterpretation({})".format(_format_object_to_es(interpretFootage)))
 
     def createSmartBin(self, name, query):
         """
@@ -722,21 +721,21 @@ class ProjectItem(PymiereObject):
         """
         self.check_type(name, str, 'arg "name" of function "ProjectItem.createSmartBin"')
         self.check_type(query, str, 'arg "query" of function "ProjectItem.createSmartBin"')
-        self._extend_eval("createSmartBin('{}', '{}')".format(name, query))
+        self._extend_eval("createSmartBin({}, {})".format(_format_object_to_es(name), _format_object_to_es(query)))
 
     def createBin(self, name):
         """
         :type name: str
         """
         self.check_type(name, str, 'arg "name" of function "ProjectItem.createBin"')
-        self._extend_eval("createBin('{}')".format(name))
+        self._extend_eval("createBin({})".format(_format_object_to_es(name)))
 
     def renameBin(self, name):
         """
         :type name: str
         """
         self.check_type(name, str, 'arg "name" of function "ProjectItem.renameBin"')
-        return self._extend_eval("renameBin('{}')".format(name))
+        return self._extend_eval("renameBin({})".format(_format_object_to_es(name)))
 
     def deleteBin(self):
         self._extend_eval("deleteBin()")
@@ -746,7 +745,7 @@ class ProjectItem(PymiereObject):
         :type destination: ProjectItem
         """
         self.check_type(destination, ProjectItem, 'arg "destination" of function "ProjectItem.moveBin"')
-        self._extend_eval("moveBin($._pymiere['{}'])".format(destination._pymiere_id))
+        self._extend_eval("moveBin({})".format(_format_object_to_es(destination)))
 
     def getXMPMetadata(self):
         return self._extend_eval("getXMPMetadata()")
@@ -756,7 +755,7 @@ class ProjectItem(PymiereObject):
         :type buffer: str
         """
         self.check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setXMPMetadata"')
-        return self._extend_eval("setXMPMetadata('{}')".format(buffer))
+        return self._extend_eval("setXMPMetadata({})".format(_format_object_to_es(buffer)))
 
     def getProjectMetadata(self):
         return self._extend_eval("getProjectMetadata()")
@@ -766,7 +765,7 @@ class ProjectItem(PymiereObject):
         :type buffer: str
         """
         self.check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setProjectMetadata"')
-        self._extend_eval("setProjectMetadata('{}')".format(buffer))
+        self._extend_eval("setProjectMetadata({})".format(_format_object_to_es(buffer)))
 
     def getMarkers(self):
         return MarkerCollection(**self._extend_eval("getMarkers()"))
@@ -787,7 +786,7 @@ class ProjectItem(PymiereObject):
         """
         self.check_type(mediaPath, str, 'arg "mediaPath" of function "ProjectItem.changeMediaPath"')
         self.check_type(overrideChecks, bool, 'arg "overrideChecks" of function "ProjectItem.changeMediaPath"')
-        return self._extend_eval("changeMediaPath('{}', {})".format(mediaPath, overrideChecks))
+        return self._extend_eval("changeMediaPath({}, {})".format(_format_object_to_es(mediaPath), _format_object_to_es(overrideChecks)))
 
     def select(self):
         self._extend_eval("select()")
@@ -799,14 +798,14 @@ class ProjectItem(PymiereObject):
         """
         self.check_type(numerator, float, 'arg "numerator" of function "ProjectItem.setOverridePixelAspectRatio"')
         self.check_type(denominator, float, 'arg "denominator" of function "ProjectItem.setOverridePixelAspectRatio"')
-        return self._extend_eval("setOverridePixelAspectRatio({}, {})".format(numerator, denominator))
+        return self._extend_eval("setOverridePixelAspectRatio({}, {})".format(_format_object_to_es(numerator), _format_object_to_es(denominator)))
 
     def setOverrideFrameRate(self, frameRate):
         """
         :type frameRate: float
         """
         self.check_type(frameRate, float, 'arg "frameRate" of function "ProjectItem.setOverrideFrameRate"')
-        return self._extend_eval("setOverrideFrameRate({})".format(frameRate))
+        return self._extend_eval("setOverrideFrameRate({})".format(_format_object_to_es(frameRate)))
 
     def setScaleToFrameSize(self):
         self._extend_eval("setScaleToFrameSize()")
@@ -821,12 +820,10 @@ class ProjectItem(PymiereObject):
         :type takeAudio: float
         """
         self.check_type(name, str, 'arg "name" of function "ProjectItem.createSubClip"')
-        self.check_type(startTime, Object, 'arg "startTime" of function "ProjectItem.createSubClip"')
-        self.check_type(endTime, Object, 'arg "endTime" of function "ProjectItem.createSubClip"')
         self.check_type(hasHardBoundaries, float, 'arg "hasHardBoundaries" of function "ProjectItem.createSubClip"')
         self.check_type(takeVideo, float, 'arg "takeVideo" of function "ProjectItem.createSubClip"')
         self.check_type(takeAudio, float, 'arg "takeAudio" of function "ProjectItem.createSubClip"')
-        return ProjectItem(**self._extend_eval("createSubClip('{}', $._pymiere['{}'], $._pymiere['{}'], {}, {}, {})".format(name, startTime._pymiere_id, endTime._pymiere_id, hasHardBoundaries, takeVideo, takeAudio)))
+        return ProjectItem(**self._extend_eval("createSubClip({}, {}, {}, {}, {}, {})".format(_format_object_to_es(name), _format_object_to_es(startTime), _format_object_to_es(endTime), _format_object_to_es(hasHardBoundaries), _format_object_to_es(takeVideo), _format_object_to_es(takeAudio))))
 
     def findItemsMatchingMediaPath(self, matchString, ignoreSubclips):
         """
@@ -835,7 +832,7 @@ class ProjectItem(PymiereObject):
         """
         self.check_type(matchString, str, 'arg "matchString" of function "ProjectItem.findItemsMatchingMediaPath"')
         self.check_type(ignoreSubclips, float, 'arg "ignoreSubclips" of function "ProjectItem.findItemsMatchingMediaPath"')
-        self._extend_eval("findItemsMatchingMediaPath('{}', {})".format(matchString, ignoreSubclips))
+        self._extend_eval("findItemsMatchingMediaPath({}, {})".format(_format_object_to_es(matchString), _format_object_to_es(ignoreSubclips)))
 
     def attachProxy(self, mediaPath, isHiRes):
         """
@@ -844,7 +841,7 @@ class ProjectItem(PymiereObject):
         """
         self.check_type(mediaPath, str, 'arg "mediaPath" of function "ProjectItem.attachProxy"')
         self.check_type(isHiRes, float, 'arg "isHiRes" of function "ProjectItem.attachProxy"')
-        return self._extend_eval("attachProxy('{}', {})".format(mediaPath, isHiRes))
+        return self._extend_eval("attachProxy({}, {})".format(_format_object_to_es(mediaPath), _format_object_to_es(isHiRes)))
 
     def hasProxy(self):
         return self._extend_eval("hasProxy()")
@@ -865,54 +862,51 @@ class ProjectItem(PymiereObject):
         """
         :type arg1: Object
         """
-        self.check_type(arg1, Object, 'arg "arg1" of function "ProjectItem.setStartTime"')
-        self._extend_eval("setStartTime($._pymiere['{}'])".format(arg1._pymiere_id))
+        self._extend_eval("setStartTime({})".format(_format_object_to_es(arg1)))
 
     def clearInPoint(self, mediaType):
         """
         :type mediaType: float
         """
         self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.clearInPoint"')
-        self._extend_eval("clearInPoint({})".format(mediaType))
+        self._extend_eval("clearInPoint({})".format(_format_object_to_es(mediaType)))
 
     def setInPoint(self, arg1, mediaType):
         """
         :type arg1: Object
         :type mediaType: float
         """
-        self.check_type(arg1, Object, 'arg "arg1" of function "ProjectItem.setInPoint"')
         self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.setInPoint"')
-        self._extend_eval("setInPoint($._pymiere['{}'], {})".format(arg1._pymiere_id, mediaType))
+        self._extend_eval("setInPoint({}, {})".format(_format_object_to_es(arg1), _format_object_to_es(mediaType)))
 
     def getInPoint(self, mediaType):
         """
         :type mediaType: float
         """
         self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getInPoint"')
-        return Time(**self._extend_eval("getInPoint({})".format(mediaType)))
+        return Time(**self._extend_eval("getInPoint({})".format(_format_object_to_es(mediaType))))
 
     def clearOutPoint(self, mediaType):
         """
         :type mediaType: float
         """
         self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.clearOutPoint"')
-        self._extend_eval("clearOutPoint({})".format(mediaType))
+        self._extend_eval("clearOutPoint({})".format(_format_object_to_es(mediaType)))
 
     def setOutPoint(self, arg1, mediaType):
         """
         :type arg1: Object
         :type mediaType: float
         """
-        self.check_type(arg1, Object, 'arg "arg1" of function "ProjectItem.setOutPoint"')
         self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.setOutPoint"')
-        self._extend_eval("setOutPoint($._pymiere['{}'], {})".format(arg1._pymiere_id, mediaType))
+        self._extend_eval("setOutPoint({}, {})".format(_format_object_to_es(arg1), _format_object_to_es(mediaType)))
 
     def getOutPoint(self, mediaType):
         """
         :type mediaType: float
         """
         self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getOutPoint"')
-        return Time(**self._extend_eval("getOutPoint({})".format(mediaType)))
+        return Time(**self._extend_eval("getOutPoint({})".format(_format_object_to_es(mediaType))))
 
     def setColorLabel(self):
         self._extend_eval("setColorLabel()")
@@ -991,8 +985,7 @@ class Sequence(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, 'Sequence.name')
-        self._extend_eval("name = '{}'".format(name))
+        self._extend_eval("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
     @property
@@ -1073,8 +1066,7 @@ class Sequence(PymiereObject):
         return self.__videoDisplayFormat
     @videoDisplayFormat.setter
     def videoDisplayFormat(self, videoDisplayFormat):
-        self.check_type(videoDisplayFormat, float, 'Sequence.videoDisplayFormat')
-        self._extend_eval("videoDisplayFormat = {}".format(videoDisplayFormat))
+        self._extend_eval("videoDisplayFormat = {}".format(_format_object_to_es(videoDisplayFormat)))
         self.__videoDisplayFormat = videoDisplayFormat
 
     @property
@@ -1083,8 +1075,7 @@ class Sequence(PymiereObject):
         return self.__audioDisplayFormat
     @audioDisplayFormat.setter
     def audioDisplayFormat(self, audioDisplayFormat):
-        self.check_type(audioDisplayFormat, float, 'Sequence.audioDisplayFormat')
-        self._extend_eval("audioDisplayFormat = {}".format(audioDisplayFormat))
+        self._extend_eval("audioDisplayFormat = {}".format(_format_object_to_es(audioDisplayFormat)))
         self.__audioDisplayFormat = audioDisplayFormat
 
 
@@ -1096,14 +1087,14 @@ class Sequence(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Sequence.bind"')
         self.check_type(function, any, 'arg "function" of function "Sequence.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Sequence.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1114,7 +1105,7 @@ class Sequence(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Sequence.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Sequence.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Sequence.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getPlayerPosition(self):
         return Time(**self._extend_eval("getPlayerPosition()"))
@@ -1124,21 +1115,19 @@ class Sequence(PymiereObject):
         :type pos: str
         """
         self.check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
-        self._extend_eval("setPlayerPosition('{}')".format(pos))
+        self._extend_eval("setPlayerPosition({})".format(_format_object_to_es(pos)))
 
     def setInPoint(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "Sequence.setInPoint"')
-        self._extend_eval("setInPoint($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("setInPoint({})".format(_format_object_to_es(time)))
 
     def setOutPoint(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "Sequence.setOutPoint"')
-        self._extend_eval("setOutPoint($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("setOutPoint({})".format(_format_object_to_es(time)))
 
     def getInPoint(self):
         return self._extend_eval("getInPoint()")
@@ -1156,15 +1145,13 @@ class Sequence(PymiereObject):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "Sequence.setWorkAreaInPoint"')
-        self._extend_eval("setWorkAreaInPoint($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("setWorkAreaInPoint({})".format(_format_object_to_es(time)))
 
     def setWorkAreaOutPoint(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "Sequence.setWorkAreaOutPoint"')
-        self._extend_eval("setWorkAreaOutPoint($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("setWorkAreaOutPoint({})".format(_format_object_to_es(time)))
 
     def getWorkAreaInPoint(self):
         return self._extend_eval("getWorkAreaInPoint()")
@@ -1183,7 +1170,7 @@ class Sequence(PymiereObject):
         :type ticks: str
         """
         self.check_type(ticks, str, 'arg "ticks" of function "Sequence.setZeroPoint"')
-        self._extend_eval("setZeroPoint('{}')".format(ticks))
+        self._extend_eval("setZeroPoint({})".format(_format_object_to_es(ticks)))
 
     def attachCustomProperty(self, propertyID, propertyValue):
         """
@@ -1192,7 +1179,7 @@ class Sequence(PymiereObject):
         """
         self.check_type(propertyID, str, 'arg "propertyID" of function "Sequence.attachCustomProperty"')
         self.check_type(propertyValue, str, 'arg "propertyValue" of function "Sequence.attachCustomProperty"')
-        self._extend_eval("attachCustomProperty('{}', '{}')".format(propertyID, propertyValue))
+        self._extend_eval("attachCustomProperty({}, {})".format(_format_object_to_es(propertyID), _format_object_to_es(propertyValue)))
 
     def clone(self):
         self._extend_eval("clone()")
@@ -1202,7 +1189,7 @@ class Sequence(PymiereObject):
         :type exportPath: str
         """
         self.check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsProject"')
-        self._extend_eval("exportAsProject('{}')".format(exportPath))
+        self._extend_eval("exportAsProject({})".format(_format_object_to_es(exportPath)))
 
     def exportAsFinalCutProXML(self, exportPath, suppressUI):
         """
@@ -1211,7 +1198,7 @@ class Sequence(PymiereObject):
         """
         self.check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsFinalCutProXML"')
         self.check_type(suppressUI, float, 'arg "suppressUI" of function "Sequence.exportAsFinalCutProXML"')
-        return self._extend_eval("exportAsFinalCutProXML('{}', {})".format(exportPath, suppressUI))
+        return self._extend_eval("exportAsFinalCutProXML({}, {})".format(_format_object_to_es(exportPath), _format_object_to_es(suppressUI)))
 
     def exportAsMediaDirect(self, outputFilePath, presetPath, workAreaType):
         """
@@ -1222,14 +1209,14 @@ class Sequence(PymiereObject):
         self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "Sequence.exportAsMediaDirect"')
         self.check_type(presetPath, str, 'arg "presetPath" of function "Sequence.exportAsMediaDirect"')
         self.check_type(workAreaType, float, 'arg "workAreaType" of function "Sequence.exportAsMediaDirect"')
-        return self._extend_eval("exportAsMediaDirect('{}', '{}', {})".format(outputFilePath, presetPath, workAreaType))
+        return self._extend_eval("exportAsMediaDirect({}, {}, {})".format(_format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(workAreaType)))
 
     def getExportFileExtension(self, presetFilePath):
         """
         :type presetFilePath: str
         """
         self.check_type(presetFilePath, str, 'arg "presetFilePath" of function "Sequence.getExportFileExtension"')
-        return self._extend_eval("getExportFileExtension('{}')".format(presetFilePath))
+        return self._extend_eval("getExportFileExtension({})".format(_format_object_to_es(presetFilePath)))
 
     def importMGT(self, path, time, videoTrackIndex, audioTrackIndex):
         """
@@ -1239,10 +1226,9 @@ class Sequence(PymiereObject):
         :type audioTrackIndex: float
         """
         self.check_type(path, str, 'arg "path" of function "Sequence.importMGT"')
-        self.check_type(time, Object, 'arg "time" of function "Sequence.importMGT"')
         self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.importMGT"')
         self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.importMGT"')
-        return TrackItem(**self._extend_eval("importMGT('{}', $._pymiere['{}'], {}, {})".format(path, time._pymiere_id, videoTrackIndex, audioTrackIndex)))
+        return TrackItem(**self._extend_eval("importMGT({}, {}, {}, {})".format(_format_object_to_es(path), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex))))
 
     def importMGTFromLibrary(self, libraryName, mgtName, time, videoTrackIndex, audioTrackIndex):
         """
@@ -1254,10 +1240,9 @@ class Sequence(PymiereObject):
         """
         self.check_type(libraryName, str, 'arg "libraryName" of function "Sequence.importMGTFromLibrary"')
         self.check_type(mgtName, str, 'arg "mgtName" of function "Sequence.importMGTFromLibrary"')
-        self.check_type(time, Object, 'arg "time" of function "Sequence.importMGTFromLibrary"')
         self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.importMGTFromLibrary"')
         self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.importMGTFromLibrary"')
-        return TrackItem(**self._extend_eval("importMGTFromLibrary('{}', '{}', $._pymiere['{}'], {}, {})".format(libraryName, mgtName, time._pymiere_id, videoTrackIndex, audioTrackIndex)))
+        return TrackItem(**self._extend_eval("importMGTFromLibrary({}, {}, {}, {}, {})".format(_format_object_to_es(libraryName), _format_object_to_es(mgtName), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex))))
 
     def getSettings(self):
         return SequenceSettings(**self._extend_eval("getSettings()"))
@@ -1267,7 +1252,7 @@ class Sequence(PymiereObject):
         :type settings: SequenceSettings
         """
         self.check_type(settings, SequenceSettings, 'arg "settings" of function "Sequence.setSettings"')
-        self._extend_eval("setSettings($._pymiere['{}'])".format(settings._pymiere_id))
+        self._extend_eval("setSettings({})".format(_format_object_to_es(settings)))
 
     def getSelection(self):
         self._extend_eval("getSelection()")
@@ -1289,10 +1274,9 @@ class Sequence(PymiereObject):
         :type audioTrackIndex: float
         """
         self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.insertClip"')
-        self.check_type(time, Object, 'arg "time" of function "Sequence.insertClip"')
         self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.insertClip"')
         self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.insertClip"')
-        self._extend_eval("insertClip($._pymiere['{}'], $._pymiere['{}'], {}, {})".format(clipProjectItem._pymiere_id, time._pymiere_id, videoTrackIndex, audioTrackIndex))
+        self._extend_eval("insertClip({}, {}, {}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex)))
 
     def overwriteClip(self, clipProjectItem, time, videoTrackIndex, audioTrackIndex):
         """
@@ -1302,10 +1286,9 @@ class Sequence(PymiereObject):
         :type audioTrackIndex: float
         """
         self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.overwriteClip"')
-        self.check_type(time, Object, 'arg "time" of function "Sequence.overwriteClip"')
         self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.overwriteClip"')
         self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.overwriteClip"')
-        self._extend_eval("overwriteClip($._pymiere['{}'], $._pymiere['{}'], {}, {})".format(clipProjectItem._pymiere_id, time._pymiere_id, videoTrackIndex, audioTrackIndex))
+        self._extend_eval("overwriteClip({}, {}, {}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex)))
 
     def close(self):
         self._extend_eval("close()")
@@ -1315,7 +1298,7 @@ class Sequence(PymiereObject):
         :type ignoreTrackTargeting: bool
         """
         self.check_type(ignoreTrackTargeting, bool, 'arg "ignoreTrackTargeting" of function "Sequence.createSubsequence"')
-        return Sequence(**self._extend_eval("createSubsequence({})".format(ignoreTrackTargeting)))
+        return Sequence(**self._extend_eval("createSubsequence({})".format(_format_object_to_es(ignoreTrackTargeting))))
 
     def isWorkAreaEnabled(self):
         return self._extend_eval("isWorkAreaEnabled()")
@@ -1325,7 +1308,7 @@ class Sequence(PymiereObject):
         :type specifiedState: float
         """
         self.check_type(specifiedState, float, 'arg "specifiedState" of function "Sequence.setWorkAreaEnabled"')
-        return self._extend_eval("setWorkAreaEnabled({})".format(specifiedState))
+        return self._extend_eval("setWorkAreaEnabled({})".format(_format_object_to_es(specifiedState)))
 
 class TrackCollection(PymiereCollection):
     def __init__(self, pymiere_id, numTracks):
@@ -1358,14 +1341,14 @@ class MarkerCollection(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.bind"')
         self.check_type(function, any, 'arg "function" of function "MarkerCollection.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1376,21 +1359,21 @@ class MarkerCollection(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "MarkerCollection.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "MarkerCollection.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def createMarker(self, time):
         """
         :type time: float
         """
         self.check_type(time, float, 'arg "time" of function "MarkerCollection.createMarker"')
-        return Marker(**self._extend_eval("createMarker({})".format(time)))
+        return Marker(**self._extend_eval("createMarker({})".format(_format_object_to_es(time))))
 
     def deleteMarker(self, marker):
         """
         :type marker: Marker
         """
         self.check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.deleteMarker"')
-        self._extend_eval("deleteMarker($._pymiere['{}'])".format(marker._pymiere_id))
+        self._extend_eval("deleteMarker({})".format(_format_object_to_es(marker)))
 
     def getFirstMarker(self):
         return Marker(**self._extend_eval("getFirstMarker()"))
@@ -1403,14 +1386,14 @@ class MarkerCollection(PymiereObject):
         :type marker: Marker
         """
         self.check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.getPrevMarker"')
-        return Marker(**self._extend_eval("getPrevMarker($._pymiere['{}'])".format(marker._pymiere_id)))
+        return Marker(**self._extend_eval("getPrevMarker({})".format(_format_object_to_es(marker))))
 
     def getNextMarker(self, marker):
         """
         :type marker: Marker
         """
         self.check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.getNextMarker"')
-        return Marker(**self._extend_eval("getNextMarker($._pymiere['{}'])".format(marker._pymiere_id)))
+        return Marker(**self._extend_eval("getNextMarker({})".format(_format_object_to_es(marker))))
 
 class ComponentCollection(PymiereCollection):
     def __init__(self, pymiere_id, numItems):
@@ -1441,14 +1424,14 @@ class Anywhere(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Anywhere.bind"')
         self.check_type(function, any, 'arg "function" of function "Anywhere.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Anywhere.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1459,7 +1442,7 @@ class Anywhere(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Anywhere.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Anywhere.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Anywhere.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setAuthenticationToken(self, inAuthToken, inEmail):
         """
@@ -1468,27 +1451,27 @@ class Anywhere(PymiereObject):
         """
         self.check_type(inAuthToken, str, 'arg "inAuthToken" of function "Anywhere.setAuthenticationToken"')
         self.check_type(inEmail, str, 'arg "inEmail" of function "Anywhere.setAuthenticationToken"')
-        return self._extend_eval("setAuthenticationToken('{}', '{}')".format(inAuthToken, inEmail))
+        return self._extend_eval("setAuthenticationToken({}, {})".format(_format_object_to_es(inAuthToken), _format_object_to_es(inEmail)))
 
     def getAuthenticationToken(self):
         return self._extend_eval("getAuthenticationToken()")
 
     def listProductions(self):
-        return RemoteProductionCollection(**self._extend_eval("listProductions()"))
+        return _format_object_to_py(self._extend_eval("listProductions()"))
 
     def openProduction(self, inProductionURL):
         """
         :type inProductionURL: str
         """
         self.check_type(inProductionURL, str, 'arg "inProductionURL" of function "Anywhere.openProduction"')
-        return self._extend_eval("openProduction('{}')".format(inProductionURL))
+        return self._extend_eval("openProduction({})".format(_format_object_to_es(inProductionURL)))
 
     def openTeamProjectSnapshot(self, inTeamProjectSnapshotPath):
         """
         :type inTeamProjectSnapshotPath: str
         """
         self.check_type(inTeamProjectSnapshotPath, str, 'arg "inTeamProjectSnapshotPath" of function "Anywhere.openTeamProjectSnapshot"')
-        return self._extend_eval("openTeamProjectSnapshot('{}')".format(inTeamProjectSnapshotPath))
+        return self._extend_eval("openTeamProjectSnapshot({})".format(_format_object_to_es(inTeamProjectSnapshotPath)))
 
     def isProductionOpen(self):
         return self._extend_eval("isProductionOpen()")
@@ -1544,14 +1527,14 @@ class Encoder(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Encoder.bind"')
         self.check_type(function, any, 'arg "function" of function "Encoder.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Encoder.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1562,7 +1545,7 @@ class Encoder(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Encoder.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Encoder.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Encoder.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def encodeSequence(self, sequence, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately):
         """
@@ -1579,7 +1562,7 @@ class Encoder(PymiereObject):
         self.check_type(WorkAreaType, float, 'arg "WorkAreaType" of function "Encoder.encodeSequence"')
         self.check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeSequence"')
         self.check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeSequence"')
-        return self._extend_eval("encodeSequence($._pymiere['{}'], '{}', '{}', {}, {}, {})".format(sequence._pymiere_id, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately))
+        return self._extend_eval("encodeSequence({}, {}, {}, {}, {}, {})".format(_format_object_to_es(sequence), _format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(WorkAreaType), _format_object_to_es(removeOnCompletion), _format_object_to_es(startQueueImmediately)))
 
     def encodeProjectItem(self, projectItem, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately):
         """
@@ -1596,7 +1579,7 @@ class Encoder(PymiereObject):
         self.check_type(WorkAreaType, float, 'arg "WorkAreaType" of function "Encoder.encodeProjectItem"')
         self.check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeProjectItem"')
         self.check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeProjectItem"')
-        return self._extend_eval("encodeProjectItem($._pymiere['{}'], '{}', '{}', {}, {}, {})".format(projectItem._pymiere_id, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately))
+        return self._extend_eval("encodeProjectItem({}, {}, {}, {}, {}, {})".format(_format_object_to_es(projectItem), _format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(WorkAreaType), _format_object_to_es(removeOnCompletion), _format_object_to_es(startQueueImmediately)))
 
     def encodeFile(self, inputFilePath, outputFilePath, presetPath, removeOnCompletion, startTime, stopTime, startQueueImmediately):
         """
@@ -1612,10 +1595,8 @@ class Encoder(PymiereObject):
         self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeFile"')
         self.check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeFile"')
         self.check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeFile"')
-        self.check_type(startTime, Object, 'arg "startTime" of function "Encoder.encodeFile"')
-        self.check_type(stopTime, Object, 'arg "stopTime" of function "Encoder.encodeFile"')
         self.check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeFile"')
-        return self._extend_eval("encodeFile('{}', '{}', '{}', {}, $._pymiere['{}'], $._pymiere['{}'], {})".format(inputFilePath, outputFilePath, presetPath, removeOnCompletion, startTime._pymiere_id, stopTime._pymiere_id, startQueueImmediately))
+        return self._extend_eval("encodeFile({}, {}, {}, {}, {}, {}, {})".format(_format_object_to_es(inputFilePath), _format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(removeOnCompletion), _format_object_to_es(startTime), _format_object_to_es(stopTime), _format_object_to_es(startQueueImmediately)))
 
     def startBatch(self):
         return self._extend_eval("startBatch()")
@@ -1628,14 +1609,14 @@ class Encoder(PymiereObject):
         :type enable: float
         """
         self.check_type(enable, float, 'arg "enable" of function "Encoder.setSidecarXMPEnabled"')
-        self._extend_eval("setSidecarXMPEnabled({})".format(enable))
+        self._extend_eval("setSidecarXMPEnabled({})".format(_format_object_to_es(enable)))
 
     def setEmbeddedXMPEnabled(self, enable):
         """
         :type enable: float
         """
         self.check_type(enable, float, 'arg "enable" of function "Encoder.setEmbeddedXMPEnabled"')
-        self._extend_eval("setEmbeddedXMPEnabled({})".format(enable))
+        self._extend_eval("setEmbeddedXMPEnabled({})".format(_format_object_to_es(enable)))
 
     def getExporters(self):
         self._extend_eval("getExporters()")
@@ -1655,14 +1636,14 @@ class Properties(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Properties.bind"')
         self.check_type(function, any, 'arg "function" of function "Properties.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Properties.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1673,42 +1654,42 @@ class Properties(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Properties.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Properties.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Properties.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def doesPropertyExist(self, propertyKey):
         """
         :type propertyKey: str
         """
         self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.doesPropertyExist"')
-        return self._extend_eval("doesPropertyExist('{}')".format(propertyKey))
+        return self._extend_eval("doesPropertyExist({})".format(_format_object_to_es(propertyKey)))
 
     def isPropertyReadOnly(self, propertyKey):
         """
         :type propertyKey: str
         """
         self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.isPropertyReadOnly"')
-        return self._extend_eval("isPropertyReadOnly('{}')".format(propertyKey))
+        return self._extend_eval("isPropertyReadOnly({})".format(_format_object_to_es(propertyKey)))
 
     def clearProperty(self, propertyKey):
         """
         :type propertyKey: str
         """
         self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.clearProperty"')
-        self._extend_eval("clearProperty('{}')".format(propertyKey))
+        self._extend_eval("clearProperty({})".format(_format_object_to_es(propertyKey)))
 
     def setProperty(self, propertyKey):
         """
         :type propertyKey: str
         """
         self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.setProperty"')
-        self._extend_eval("setProperty('{}')".format(propertyKey))
+        self._extend_eval("setProperty({})".format(_format_object_to_es(propertyKey)))
 
     def getProperty(self, propertyKey):
         """
         :type propertyKey: str
         """
         self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.getProperty"')
-        self._extend_eval("getProperty('{}')".format(propertyKey))
+        self._extend_eval("getProperty({})".format(_format_object_to_es(propertyKey)))
 
 class SourceMonitor(PymiereObject):
     def __init__(self, pymiere_id=None, ):
@@ -1725,14 +1706,14 @@ class SourceMonitor(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.bind"')
         self.check_type(function, any, 'arg "function" of function "SourceMonitor.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1743,28 +1724,28 @@ class SourceMonitor(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "SourceMonitor.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "SourceMonitor.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def openFilePath(self, filePath):
         """
         :type filePath: str
         """
         self.check_type(filePath, str, 'arg "filePath" of function "SourceMonitor.openFilePath"')
-        return self._extend_eval("openFilePath('{}')".format(filePath))
+        return self._extend_eval("openFilePath({})".format(_format_object_to_es(filePath)))
 
     def openProjectItem(self, projectItem):
         """
         :type projectItem: ProjectItem
         """
         self.check_type(projectItem, ProjectItem, 'arg "projectItem" of function "SourceMonitor.openProjectItem"')
-        return self._extend_eval("openProjectItem($._pymiere['{}'])".format(projectItem._pymiere_id))
+        return self._extend_eval("openProjectItem({})".format(_format_object_to_es(projectItem)))
 
     def play(self, speed):
         """
         :type speed: float
         """
         self.check_type(speed, float, 'arg "speed" of function "SourceMonitor.play"')
-        self._extend_eval("play({})".format(speed))
+        self._extend_eval("play({})".format(_format_object_to_es(speed)))
 
     def closeClip(self):
         self._extend_eval("closeClip()")
@@ -1811,14 +1792,14 @@ class ProjectManager(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectManager.bind"')
         self.check_type(function, any, 'arg "function" of function "ProjectManager.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectManager.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -1829,14 +1810,14 @@ class ProjectManager(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectManager.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "ProjectManager.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectManager.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def process(self, project):
         """
         :type project: Project
         """
         self.check_type(project, Project, 'arg "project" of function "ProjectManager.process"')
-        return self._extend_eval("process($._pymiere['{}'])".format(project._pymiere_id))
+        return self._extend_eval("process({})".format(_format_object_to_es(project)))
 
 class ProjectManagerOptions(PymiereObject):
     def __init__(self, pymiere_id=None, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
@@ -1870,8 +1851,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__clipTransferOption
     @clipTransferOption.setter
     def clipTransferOption(self, clipTransferOption):
-        self.check_type(clipTransferOption, float, 'ProjectManagerOptions.clipTransferOption')
-        self._extend_eval("clipTransferOption = {}".format(clipTransferOption))
+        self._extend_eval("clipTransferOption = {}".format(_format_object_to_es(clipTransferOption)))
         self.__clipTransferOption = clipTransferOption
 
     @property
@@ -1880,8 +1860,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__clipTranscoderOption
     @clipTranscoderOption.setter
     def clipTranscoderOption(self, clipTranscoderOption):
-        self.check_type(clipTranscoderOption, float, 'ProjectManagerOptions.clipTranscoderOption')
-        self._extend_eval("clipTranscoderOption = {}".format(clipTranscoderOption))
+        self._extend_eval("clipTranscoderOption = {}".format(_format_object_to_es(clipTranscoderOption)))
         self.__clipTranscoderOption = clipTranscoderOption
 
     @property
@@ -1890,8 +1869,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__excludeUnused
     @excludeUnused.setter
     def excludeUnused(self, excludeUnused):
-        self.check_type(excludeUnused, bool, 'ProjectManagerOptions.excludeUnused')
-        self._extend_eval("excludeUnused = {}".format(excludeUnused))
+        self._extend_eval("excludeUnused = {}".format(_format_object_to_es(excludeUnused)))
         self.__excludeUnused = excludeUnused
 
     @property
@@ -1900,8 +1878,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__handleFrameCount
     @handleFrameCount.setter
     def handleFrameCount(self, handleFrameCount):
-        self.check_type(handleFrameCount, float, 'ProjectManagerOptions.handleFrameCount')
-        self._extend_eval("handleFrameCount = {}".format(handleFrameCount))
+        self._extend_eval("handleFrameCount = {}".format(_format_object_to_es(handleFrameCount)))
         self.__handleFrameCount = handleFrameCount
 
     @property
@@ -1910,8 +1887,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__includePreviews
     @includePreviews.setter
     def includePreviews(self, includePreviews):
-        self.check_type(includePreviews, bool, 'ProjectManagerOptions.includePreviews')
-        self._extend_eval("includePreviews = {}".format(includePreviews))
+        self._extend_eval("includePreviews = {}".format(_format_object_to_es(includePreviews)))
         self.__includePreviews = includePreviews
 
     @property
@@ -1920,8 +1896,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__includeConformedAudio
     @includeConformedAudio.setter
     def includeConformedAudio(self, includeConformedAudio):
-        self.check_type(includeConformedAudio, bool, 'ProjectManagerOptions.includeConformedAudio')
-        self._extend_eval("includeConformedAudio = {}".format(includeConformedAudio))
+        self._extend_eval("includeConformedAudio = {}".format(_format_object_to_es(includeConformedAudio)))
         self.__includeConformedAudio = includeConformedAudio
 
     @property
@@ -1930,8 +1905,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__renameMedia
     @renameMedia.setter
     def renameMedia(self, renameMedia):
-        self.check_type(renameMedia, bool, 'ProjectManagerOptions.renameMedia')
-        self._extend_eval("renameMedia = {}".format(renameMedia))
+        self._extend_eval("renameMedia = {}".format(_format_object_to_es(renameMedia)))
         self.__renameMedia = renameMedia
 
     @property
@@ -1940,8 +1914,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__destinationPath
     @destinationPath.setter
     def destinationPath(self, destinationPath):
-        self.check_type(destinationPath, str, 'ProjectManagerOptions.destinationPath')
-        self._extend_eval("destinationPath = '{}'".format(destinationPath))
+        self._extend_eval("destinationPath = {}".format(_format_object_to_es(destinationPath)))
         self.__destinationPath = destinationPath
 
     @property
@@ -1950,8 +1923,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__includeAllSequences
     @includeAllSequences.setter
     def includeAllSequences(self, includeAllSequences):
-        self.check_type(includeAllSequences, bool, 'ProjectManagerOptions.includeAllSequences')
-        self._extend_eval("includeAllSequences = {}".format(includeAllSequences))
+        self._extend_eval("includeAllSequences = {}".format(_format_object_to_es(includeAllSequences)))
         self.__includeAllSequences = includeAllSequences
 
     @property
@@ -1960,8 +1932,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__affectedSequences
     @affectedSequences.setter
     def affectedSequences(self, affectedSequences):
-        self.check_type(affectedSequences, None, 'ProjectManagerOptions.affectedSequences')
-        self._extend_eval("affectedSequences = {}".format(affectedSequences))
+        self._extend_eval("affectedSequences = {}".format(_format_object_to_es(affectedSequences)))
         self.__affectedSequences = affectedSequences
 
     @property
@@ -1970,8 +1941,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__encoderPresetFilePath
     @encoderPresetFilePath.setter
     def encoderPresetFilePath(self, encoderPresetFilePath):
-        self.check_type(encoderPresetFilePath, str, 'ProjectManagerOptions.encoderPresetFilePath')
-        self._extend_eval("encoderPresetFilePath = '{}'".format(encoderPresetFilePath))
+        self._extend_eval("encoderPresetFilePath = {}".format(_format_object_to_es(encoderPresetFilePath)))
         self.__encoderPresetFilePath = encoderPresetFilePath
 
     @property
@@ -1980,8 +1950,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__convertImageSequencesToClips
     @convertImageSequencesToClips.setter
     def convertImageSequencesToClips(self, convertImageSequencesToClips):
-        self.check_type(convertImageSequencesToClips, None, 'ProjectManagerOptions.convertImageSequencesToClips')
-        self._extend_eval("convertImageSequencesToClips = {}".format(convertImageSequencesToClips))
+        self._extend_eval("convertImageSequencesToClips = {}".format(_format_object_to_es(convertImageSequencesToClips)))
         self.__convertImageSequencesToClips = convertImageSequencesToClips
 
     @property
@@ -1990,8 +1959,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__convertSyntheticsToClips
     @convertSyntheticsToClips.setter
     def convertSyntheticsToClips(self, convertSyntheticsToClips):
-        self.check_type(convertSyntheticsToClips, bool, 'ProjectManagerOptions.convertSyntheticsToClips')
-        self._extend_eval("convertSyntheticsToClips = {}".format(convertSyntheticsToClips))
+        self._extend_eval("convertSyntheticsToClips = {}".format(_format_object_to_es(convertSyntheticsToClips)))
         self.__convertSyntheticsToClips = convertSyntheticsToClips
 
     @property
@@ -2000,8 +1968,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__convertAECompsToClips
     @convertAECompsToClips.setter
     def convertAECompsToClips(self, convertAECompsToClips):
-        self.check_type(convertAECompsToClips, bool, 'ProjectManagerOptions.convertAECompsToClips')
-        self._extend_eval("convertAECompsToClips = {}".format(convertAECompsToClips))
+        self._extend_eval("convertAECompsToClips = {}".format(_format_object_to_es(convertAECompsToClips)))
         self.__convertAECompsToClips = convertAECompsToClips
 
     @property
@@ -2010,8 +1977,7 @@ class ProjectManagerOptions(PymiereObject):
         return self.__copyToPreventAlphaLoss
     @copyToPreventAlphaLoss.setter
     def copyToPreventAlphaLoss(self, copyToPreventAlphaLoss):
-        self.check_type(copyToPreventAlphaLoss, bool, 'ProjectManagerOptions.copyToPreventAlphaLoss')
-        self._extend_eval("copyToPreventAlphaLoss = {}".format(copyToPreventAlphaLoss))
+        self._extend_eval("copyToPreventAlphaLoss = {}".format(_format_object_to_es(copyToPreventAlphaLoss)))
         self.__copyToPreventAlphaLoss = copyToPreventAlphaLoss
 
     @property
@@ -2063,14 +2029,14 @@ class ProjectManagerOptions(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.bind"')
         self.check_type(function, any, 'arg "function" of function "ProjectManagerOptions.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2081,7 +2047,7 @@ class ProjectManagerOptions(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "ProjectManagerOptions.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectManagerOptions.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class Metadata(PymiereObject):
     def __init__(self, pymiere_id=None, getMetadata=None):
@@ -2107,14 +2073,14 @@ class Metadata(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Metadata.bind"')
         self.check_type(function, any, 'arg "function" of function "Metadata.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Metadata.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2125,7 +2091,7 @@ class Metadata(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Metadata.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Metadata.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Metadata.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setMetadataValue(self):
         self._extend_eval("setMetadataValue()")
@@ -2157,14 +2123,14 @@ class Document(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Document.bind"')
         self.check_type(function, any, 'arg "function" of function "Document.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Document.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2175,14 +2141,14 @@ class Document(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Document.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Document.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Document.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def importFiles(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "Document.importFiles"')
-        return self._extend_eval("importFiles({})".format(arg1))
+        return self._extend_eval("importFiles({})".format(_format_object_to_es(arg1)))
 
     def getFilePath(self):
         return self._extend_eval("getFilePath()")
@@ -2238,14 +2204,14 @@ class ProjectItemType(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.bind"')
         self.check_type(function, any, 'arg "function" of function "ProjectItemType.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2256,7 +2222,7 @@ class ProjectItemType(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "ProjectItemType.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectItemType.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class ScratchDiskType(PymiereObject):
     def __init__(self, pymiere_id=None, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
@@ -2336,14 +2302,14 @@ class ScratchDiskType(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.bind"')
         self.check_type(function, any, 'arg "function" of function "ScratchDiskType.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2354,7 +2320,7 @@ class ScratchDiskType(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "ScratchDiskType.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "ScratchDiskType.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class RegisteredDirectories(PymiereObject):
     def __init__(self, pymiere_id=None, ):
@@ -2371,14 +2337,14 @@ class RegisteredDirectories(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.bind"')
         self.check_type(function, any, 'arg "function" of function "RegisteredDirectories.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2389,7 +2355,7 @@ class RegisteredDirectories(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "RegisteredDirectories.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "RegisteredDirectories.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class UtilityFunctions(PymiereObject):
     def __init__(self, pymiere_id=None, ):
@@ -2406,14 +2372,14 @@ class UtilityFunctions(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.bind"')
         self.check_type(function, any, 'arg "function" of function "UtilityFunctions.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -2424,7 +2390,7 @@ class UtilityFunctions(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "UtilityFunctions.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "UtilityFunctions.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class Math(PymiereObject):
     def __init__(self, pymiere_id=None, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
@@ -2511,28 +2477,28 @@ class Math(PymiereObject):
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.abs"')
-        return self._extend_eval("abs({})".format(n))
+        return self._extend_eval("abs({})".format(_format_object_to_es(n)))
 
     def acos(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.acos"')
-        return self._extend_eval("acos({})".format(n))
+        return self._extend_eval("acos({})".format(_format_object_to_es(n)))
 
     def asin(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.asin"')
-        return self._extend_eval("asin({})".format(n))
+        return self._extend_eval("asin({})".format(_format_object_to_es(n)))
 
     def atan(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.atan"')
-        return self._extend_eval("atan({})".format(n))
+        return self._extend_eval("atan({})".format(_format_object_to_es(n)))
 
     def atan2(self, y, x):
         """
@@ -2541,42 +2507,42 @@ class Math(PymiereObject):
         """
         self.check_type(y, float, 'arg "y" of function "Math.atan2"')
         self.check_type(x, float, 'arg "x" of function "Math.atan2"')
-        return self._extend_eval("atan2({}, {})".format(y, x))
+        return self._extend_eval("atan2({}, {})".format(_format_object_to_es(y), _format_object_to_es(x)))
 
     def ceil(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.ceil"')
-        return self._extend_eval("ceil({})".format(n))
+        return self._extend_eval("ceil({})".format(_format_object_to_es(n)))
 
     def cos(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.cos"')
-        return self._extend_eval("cos({})".format(n))
+        return self._extend_eval("cos({})".format(_format_object_to_es(n)))
 
     def exp(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.exp"')
-        return self._extend_eval("exp({})".format(n))
+        return self._extend_eval("exp({})".format(_format_object_to_es(n)))
 
     def floor(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.floor"')
-        return self._extend_eval("floor({})".format(n))
+        return self._extend_eval("floor({})".format(_format_object_to_es(n)))
 
     def log(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.log"')
-        return self._extend_eval("log({})".format(n))
+        return self._extend_eval("log({})".format(_format_object_to_es(n)))
 
     def max(self, a, b):
         """
@@ -2585,7 +2551,7 @@ class Math(PymiereObject):
         """
         self.check_type(a, float, 'arg "a" of function "Math.max"')
         self.check_type(b, float, 'arg "b" of function "Math.max"')
-        return self._extend_eval("max({}, {})".format(a, b))
+        return self._extend_eval("max({}, {})".format(_format_object_to_es(a), _format_object_to_es(b)))
 
     def min(self, y, x):
         """
@@ -2594,7 +2560,7 @@ class Math(PymiereObject):
         """
         self.check_type(y, float, 'arg "y" of function "Math.min"')
         self.check_type(x, float, 'arg "x" of function "Math.min"')
-        return self._extend_eval("min({}, {})".format(y, x))
+        return self._extend_eval("min({}, {})".format(_format_object_to_es(y), _format_object_to_es(x)))
 
     def pow(self, x, y):
         """
@@ -2603,7 +2569,7 @@ class Math(PymiereObject):
         """
         self.check_type(x, float, 'arg "x" of function "Math.pow"')
         self.check_type(y, float, 'arg "y" of function "Math.pow"')
-        return self._extend_eval("pow({}, {})".format(x, y))
+        return self._extend_eval("pow({}, {})".format(_format_object_to_es(x), _format_object_to_es(y)))
 
     def random(self):
         return self._extend_eval("random()")
@@ -2613,28 +2579,28 @@ class Math(PymiereObject):
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.round"')
-        return self._extend_eval("round({})".format(n))
+        return self._extend_eval("round({})".format(_format_object_to_es(n)))
 
     def sin(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.sin"')
-        return self._extend_eval("sin({})".format(n))
+        return self._extend_eval("sin({})".format(_format_object_to_es(n)))
 
     def sqrt(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.sqrt"')
-        return self._extend_eval("sqrt({})".format(n))
+        return self._extend_eval("sqrt({})".format(_format_object_to_es(n)))
 
     def tan(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Math.tan"')
-        return self._extend_eval("tan({})".format(n))
+        return self._extend_eval("tan({})".format(_format_object_to_es(n)))
 
 class File(PymiereObject):
     def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
@@ -2685,8 +2651,7 @@ class File(PymiereObject):
         return self.__error
     @error.setter
     def error(self, error):
-        self.check_type(error, str, 'File.error')
-        self._extend_eval("error = '{}'".format(error))
+        self._extend_eval("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
     @property
@@ -2791,8 +2756,7 @@ class File(PymiereObject):
         return self.__hidden
     @hidden.setter
     def hidden(self, hidden):
-        self.check_type(hidden, bool, 'File.hidden')
-        self._extend_eval("hidden = {}".format(hidden))
+        self._extend_eval("hidden = {}".format(_format_object_to_es(hidden)))
         self.__hidden = hidden
 
     @property
@@ -2801,8 +2765,7 @@ class File(PymiereObject):
         return self.__readonly
     @readonly.setter
     def readonly(self, readonly):
-        self.check_type(readonly, bool, 'File.readonly')
-        self._extend_eval("readonly = {}".format(readonly))
+        self._extend_eval("readonly = {}".format(_format_object_to_es(readonly)))
         self.__readonly = readonly
 
     @property
@@ -2811,8 +2774,7 @@ class File(PymiereObject):
         return self.__lineFeed
     @lineFeed.setter
     def lineFeed(self, lineFeed):
-        self.check_type(lineFeed, str, 'File.lineFeed')
-        self._extend_eval("lineFeed = '{}'".format(lineFeed))
+        self._extend_eval("lineFeed = {}".format(_format_object_to_es(lineFeed)))
         self.__lineFeed = lineFeed
 
     @property
@@ -2821,8 +2783,7 @@ class File(PymiereObject):
         return self.__length
     @length.setter
     def length(self, length):
-        self.check_type(length, float, 'File.length')
-        self._extend_eval("length = {}".format(length))
+        self._extend_eval("length = {}".format(_format_object_to_es(length)))
         self.__length = length
 
     @property
@@ -2831,8 +2792,7 @@ class File(PymiereObject):
         return self.__encoding
     @encoding.setter
     def encoding(self, encoding):
-        self.check_type(encoding, str, 'File.encoding')
-        self._extend_eval("encoding = '{}'".format(encoding))
+        self._extend_eval("encoding = {}".format(_format_object_to_es(encoding)))
         self.__encoding = encoding
 
     @property
@@ -2846,14 +2806,14 @@ class File(PymiereObject):
 
     # ----- FUNCTIONS -----
     def resolve(self):
-        return Object(**self._extend_eval("resolve()"))
+        return _format_object_to_py(self._extend_eval("resolve()"))
 
     def rename(self, name):
         """
         :type name: str
         """
         self.check_type(name, str, 'arg "name" of function "File.rename"')
-        return self._extend_eval("rename('{}')".format(name))
+        return self._extend_eval("rename({})".format(_format_object_to_es(name)))
 
     def remove(self):
         return self._extend_eval("remove()")
@@ -2863,14 +2823,14 @@ class File(PymiereObject):
         :type path: str
         """
         self.check_type(path, str, 'arg "path" of function "File.changePath"')
-        return self._extend_eval("changePath('{}')".format(path))
+        return self._extend_eval("changePath({})".format(_format_object_to_es(path)))
 
     def getRelativeURI(self, baseURI):
         """
         :type baseURI: str
         """
         self.check_type(baseURI, str, 'arg "baseURI" of function "File.getRelativeURI"')
-        return self._extend_eval("getRelativeURI('{}')".format(baseURI))
+        return self._extend_eval("getRelativeURI({})".format(_format_object_to_es(baseURI)))
 
     def execute(self):
         return self._extend_eval("execute()")
@@ -2880,14 +2840,14 @@ class File(PymiereObject):
         :type prompt: str
         """
         self.check_type(prompt, str, 'arg "prompt" of function "File.openDlg"')
-        return Object(**self._extend_eval("openDlg('{}')".format(prompt)))
+        return _format_object_to_py(self._extend_eval("openDlg({})".format(_format_object_to_es(prompt))))
 
     def saveDlg(self, prompt):
         """
         :type prompt: str
         """
         self.check_type(prompt, str, 'arg "prompt" of function "File.saveDlg"')
-        return Object(**self._extend_eval("saveDlg('{}')".format(prompt)))
+        return _format_object_to_py(self._extend_eval("saveDlg({})".format(_format_object_to_es(prompt))))
 
     def toString(self):
         return self._extend_eval("toString()")
@@ -2900,14 +2860,14 @@ class File(PymiereObject):
         :type path: str
         """
         self.check_type(path, str, 'arg "path" of function "File.createAlias"')
-        return self._extend_eval("createAlias('{}')".format(path))
+        return self._extend_eval("createAlias({})".format(_format_object_to_es(path)))
 
     def open(self, mode):
         """
         :type mode: str
         """
         self.check_type(mode, str, 'arg "mode" of function "File.open"')
-        return self._extend_eval("open('{}')".format(mode))
+        return self._extend_eval("open({})".format(_format_object_to_es(mode)))
 
     def close(self):
         return self._extend_eval("close()")
@@ -2917,7 +2877,7 @@ class File(PymiereObject):
         :type count: float
         """
         self.check_type(count, float, 'arg "count" of function "File.read"')
-        return self._extend_eval("read({})".format(count))
+        return self._extend_eval("read({})".format(_format_object_to_es(count)))
 
     def readch(self):
         return self._extend_eval("readch()")
@@ -2930,28 +2890,28 @@ class File(PymiereObject):
         :type text: str
         """
         self.check_type(text, str, 'arg "text" of function "File.write"')
-        return self._extend_eval("write('{}')".format(text))
+        return self._extend_eval("write({})".format(_format_object_to_es(text)))
 
     def print(self, text):
         """
         :type text: str
         """
         self.check_type(text, str, 'arg "text" of function "File.print"')
-        return self._extend_eval("print('{}')".format(text))
+        return self._extend_eval("print({})".format(_format_object_to_es(text)))
 
     def writeln(self, text):
         """
         :type text: str
         """
         self.check_type(text, str, 'arg "text" of function "File.writeln"')
-        return self._extend_eval("writeln('{}')".format(text))
+        return self._extend_eval("writeln({})".format(_format_object_to_es(text)))
 
     def seek(self, pos):
         """
         :type pos: float
         """
         self.check_type(pos, float, 'arg "pos" of function "File.seek"')
-        return self._extend_eval("seek({})".format(pos))
+        return self._extend_eval("seek({})".format(_format_object_to_es(pos)))
 
     def tell(self):
         return self._extend_eval("tell()")
@@ -2961,7 +2921,7 @@ class File(PymiereObject):
         :type where: str
         """
         self.check_type(where, str, 'arg "where" of function "File.copy"')
-        return self._extend_eval("copy('{}')".format(where))
+        return self._extend_eval("copy({})".format(_format_object_to_es(where)))
 
 class Date(PymiereObject):
     def __init__(self, pymiere_id=None, ):
@@ -3033,42 +2993,42 @@ class Date(PymiereObject):
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setDate"')
-        return self._extend_eval("setDate({})".format(n))
+        return self._extend_eval("setDate({})".format(_format_object_to_es(n)))
 
     def setFullYear(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setFullYear"')
-        return self._extend_eval("setFullYear({})".format(n))
+        return self._extend_eval("setFullYear({})".format(_format_object_to_es(n)))
 
     def setHours(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setHours"')
-        return self._extend_eval("setHours({})".format(n))
+        return self._extend_eval("setHours({})".format(_format_object_to_es(n)))
 
     def setMilliseconds(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setMilliseconds"')
-        return self._extend_eval("setMilliseconds({})".format(n))
+        return self._extend_eval("setMilliseconds({})".format(_format_object_to_es(n)))
 
     def setMinutes(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setMinutes"')
-        return self._extend_eval("setMinutes({})".format(n))
+        return self._extend_eval("setMinutes({})".format(_format_object_to_es(n)))
 
     def setSeconds(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setSeconds"')
-        return self._extend_eval("setSeconds({})".format(n))
+        return self._extend_eval("setSeconds({})".format(_format_object_to_es(n)))
 
     def setMonth(self, n, arg2):
         """
@@ -3076,70 +3036,70 @@ class Date(PymiereObject):
         :type arg2: unknown
         """
         self.check_type(n, float, 'arg "n" of function "Date.setMonth"')
-        return self._extend_eval("setMonth({}, $._pymiere['{}'])".format(n, arg2._pymiere_id))
+        return self._extend_eval("setMonth({}, {})".format(_format_object_to_es(n), _format_object_to_es(arg2)))
 
     def setUTCDate(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCDate"')
-        return self._extend_eval("setUTCDate({})".format(n))
+        return self._extend_eval("setUTCDate({})".format(_format_object_to_es(n)))
 
     def setUTCFullYear(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCFullYear"')
-        return self._extend_eval("setUTCFullYear({})".format(n))
+        return self._extend_eval("setUTCFullYear({})".format(_format_object_to_es(n)))
 
     def setUTCHours(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCHours"')
-        return self._extend_eval("setUTCHours({})".format(n))
+        return self._extend_eval("setUTCHours({})".format(_format_object_to_es(n)))
 
     def setUTCMilliseconds(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCMilliseconds"')
-        return self._extend_eval("setUTCMilliseconds({})".format(n))
+        return self._extend_eval("setUTCMilliseconds({})".format(_format_object_to_es(n)))
 
     def setUTCMinutes(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCMinutes"')
-        return self._extend_eval("setUTCMinutes({})".format(n))
+        return self._extend_eval("setUTCMinutes({})".format(_format_object_to_es(n)))
 
     def setUTCSeconds(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCSeconds"')
-        return self._extend_eval("setUTCSeconds({})".format(n))
+        return self._extend_eval("setUTCSeconds({})".format(_format_object_to_es(n)))
 
     def setUTCMonth(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setUTCMonth"')
-        return self._extend_eval("setUTCMonth({})".format(n))
+        return self._extend_eval("setUTCMonth({})".format(_format_object_to_es(n)))
 
     def setTime(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setTime"')
-        return self._extend_eval("setTime({})".format(n))
+        return self._extend_eval("setTime({})".format(_format_object_to_es(n)))
 
     def setYear(self, n):
         """
         :type n: float
         """
         self.check_type(n, float, 'arg "n" of function "Date.setYear"')
-        return self._extend_eval("setYear({})".format(n))
+        return self._extend_eval("setYear({})".format(_format_object_to_es(n)))
 
     def toDateString(self):
         return self._extend_eval("toDateString()")
@@ -3215,8 +3175,7 @@ class Folder(PymiereObject):
         return self.__error
     @error.setter
     def error(self, error):
-        self.check_type(error, str, 'Folder.error')
-        self._extend_eval("error = '{}'".format(error))
+        self._extend_eval("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
     @property
@@ -3302,14 +3261,14 @@ class Folder(PymiereObject):
 
     # ----- FUNCTIONS -----
     def resolve(self):
-        return Object(**self._extend_eval("resolve()"))
+        return _format_object_to_py(self._extend_eval("resolve()"))
 
     def rename(self, name):
         """
         :type name: str
         """
         self.check_type(name, str, 'arg "name" of function "Folder.rename"')
-        return self._extend_eval("rename('{}')".format(name))
+        return self._extend_eval("rename({})".format(_format_object_to_es(name)))
 
     def remove(self):
         return self._extend_eval("remove()")
@@ -3319,14 +3278,14 @@ class Folder(PymiereObject):
         :type path: str
         """
         self.check_type(path, str, 'arg "path" of function "Folder.changePath"')
-        return self._extend_eval("changePath('{}')".format(path))
+        return self._extend_eval("changePath({})".format(_format_object_to_es(path)))
 
     def getRelativeURI(self, baseURI):
         """
         :type baseURI: str
         """
         self.check_type(baseURI, str, 'arg "baseURI" of function "Folder.getRelativeURI"')
-        return self._extend_eval("getRelativeURI('{}')".format(baseURI))
+        return self._extend_eval("getRelativeURI({})".format(_format_object_to_es(baseURI)))
 
     def execute(self):
         return self._extend_eval("execute()")
@@ -3336,14 +3295,14 @@ class Folder(PymiereObject):
         :type prompt: str
         """
         self.check_type(prompt, str, 'arg "prompt" of function "Folder.openDlg"')
-        return Object(**self._extend_eval("openDlg('{}')".format(prompt)))
+        return _format_object_to_py(self._extend_eval("openDlg({})".format(_format_object_to_es(prompt))))
 
     def saveDlg(self, prompt):
         """
         :type prompt: str
         """
         self.check_type(prompt, str, 'arg "prompt" of function "Folder.saveDlg"')
-        return Object(**self._extend_eval("saveDlg('{}')".format(prompt)))
+        return _format_object_to_py(self._extend_eval("saveDlg({})".format(_format_object_to_es(prompt))))
 
     def toString(self):
         return self._extend_eval("toString()")
@@ -3356,14 +3315,14 @@ class Folder(PymiereObject):
         :type prompt: str
         """
         self.check_type(prompt, str, 'arg "prompt" of function "Folder.selectDlg"')
-        return Object(**self._extend_eval("selectDlg('{}')".format(prompt)))
+        return _format_object_to_py(self._extend_eval("selectDlg({})".format(_format_object_to_es(prompt))))
 
     def getFiles(self, pattern):
         """
         :type pattern: str
         """
         self.check_type(pattern, str, 'arg "pattern" of function "Folder.getFiles"')
-        return Array(**self._extend_eval("getFiles('{}')".format(pattern)))
+        return Array(**self._extend_eval("getFiles({})".format(_format_object_to_es(pattern))))
 
     def create(self):
         return self._extend_eval("create()")
@@ -3404,8 +3363,7 @@ class FootageInterpretation(PymiereObject):
         return self.__frameRate
     @frameRate.setter
     def frameRate(self, frameRate):
-        self.check_type(frameRate, float, 'FootageInterpretation.frameRate')
-        self._extend_eval("frameRate = {}".format(frameRate))
+        self._extend_eval("frameRate = {}".format(_format_object_to_es(frameRate)))
         self.__frameRate = frameRate
 
     @property
@@ -3414,8 +3372,7 @@ class FootageInterpretation(PymiereObject):
         return self.__pixelAspectRatio
     @pixelAspectRatio.setter
     def pixelAspectRatio(self, pixelAspectRatio):
-        self.check_type(pixelAspectRatio, float, 'FootageInterpretation.pixelAspectRatio')
-        self._extend_eval("pixelAspectRatio = {}".format(pixelAspectRatio))
+        self._extend_eval("pixelAspectRatio = {}".format(_format_object_to_es(pixelAspectRatio)))
         self.__pixelAspectRatio = pixelAspectRatio
 
     @property
@@ -3424,8 +3381,7 @@ class FootageInterpretation(PymiereObject):
         return self.__fieldType
     @fieldType.setter
     def fieldType(self, fieldType):
-        self.check_type(fieldType, float, 'FootageInterpretation.fieldType')
-        self._extend_eval("fieldType = {}".format(fieldType))
+        self._extend_eval("fieldType = {}".format(_format_object_to_es(fieldType)))
         self.__fieldType = fieldType
 
     @property
@@ -3434,8 +3390,7 @@ class FootageInterpretation(PymiereObject):
         return self.__removePulldown
     @removePulldown.setter
     def removePulldown(self, removePulldown):
-        self.check_type(removePulldown, bool, 'FootageInterpretation.removePulldown')
-        self._extend_eval("removePulldown = {}".format(removePulldown))
+        self._extend_eval("removePulldown = {}".format(_format_object_to_es(removePulldown)))
         self.__removePulldown = removePulldown
 
     @property
@@ -3444,8 +3399,7 @@ class FootageInterpretation(PymiereObject):
         return self.__alphaUsage
     @alphaUsage.setter
     def alphaUsage(self, alphaUsage):
-        self.check_type(alphaUsage, float, 'FootageInterpretation.alphaUsage')
-        self._extend_eval("alphaUsage = {}".format(alphaUsage))
+        self._extend_eval("alphaUsage = {}".format(_format_object_to_es(alphaUsage)))
         self.__alphaUsage = alphaUsage
 
     @property
@@ -3454,8 +3408,7 @@ class FootageInterpretation(PymiereObject):
         return self.__ignoreAlpha
     @ignoreAlpha.setter
     def ignoreAlpha(self, ignoreAlpha):
-        self.check_type(ignoreAlpha, bool, 'FootageInterpretation.ignoreAlpha')
-        self._extend_eval("ignoreAlpha = {}".format(ignoreAlpha))
+        self._extend_eval("ignoreAlpha = {}".format(_format_object_to_es(ignoreAlpha)))
         self.__ignoreAlpha = ignoreAlpha
 
     @property
@@ -3464,8 +3417,7 @@ class FootageInterpretation(PymiereObject):
         return self.__invertAlpha
     @invertAlpha.setter
     def invertAlpha(self, invertAlpha):
-        self.check_type(invertAlpha, bool, 'FootageInterpretation.invertAlpha')
-        self._extend_eval("invertAlpha = {}".format(invertAlpha))
+        self._extend_eval("invertAlpha = {}".format(_format_object_to_es(invertAlpha)))
         self.__invertAlpha = invertAlpha
 
     @property
@@ -3474,8 +3426,7 @@ class FootageInterpretation(PymiereObject):
         return self.__vrConformProjectionType
     @vrConformProjectionType.setter
     def vrConformProjectionType(self, vrConformProjectionType):
-        self.check_type(vrConformProjectionType, float, 'FootageInterpretation.vrConformProjectionType')
-        self._extend_eval("vrConformProjectionType = {}".format(vrConformProjectionType))
+        self._extend_eval("vrConformProjectionType = {}".format(_format_object_to_es(vrConformProjectionType)))
         self.__vrConformProjectionType = vrConformProjectionType
 
     @property
@@ -3484,8 +3435,7 @@ class FootageInterpretation(PymiereObject):
         return self.__vrLayoutType
     @vrLayoutType.setter
     def vrLayoutType(self, vrLayoutType):
-        self.check_type(vrLayoutType, float, 'FootageInterpretation.vrLayoutType')
-        self._extend_eval("vrLayoutType = {}".format(vrLayoutType))
+        self._extend_eval("vrLayoutType = {}".format(_format_object_to_es(vrLayoutType)))
         self.__vrLayoutType = vrLayoutType
 
     @property
@@ -3494,8 +3444,7 @@ class FootageInterpretation(PymiereObject):
         return self.__vrHorizontalView
     @vrHorizontalView.setter
     def vrHorizontalView(self, vrHorizontalView):
-        self.check_type(vrHorizontalView, float, 'FootageInterpretation.vrHorizontalView')
-        self._extend_eval("vrHorizontalView = {}".format(vrHorizontalView))
+        self._extend_eval("vrHorizontalView = {}".format(_format_object_to_es(vrHorizontalView)))
         self.__vrHorizontalView = vrHorizontalView
 
     @property
@@ -3504,8 +3453,7 @@ class FootageInterpretation(PymiereObject):
         return self.__vrVerticalView
     @vrVerticalView.setter
     def vrVerticalView(self, vrVerticalView):
-        self.check_type(vrVerticalView, float, 'FootageInterpretation.vrVerticalView')
-        self._extend_eval("vrVerticalView = {}".format(vrVerticalView))
+        self._extend_eval("vrVerticalView = {}".format(_format_object_to_es(vrVerticalView)))
         self.__vrVerticalView = vrVerticalView
 
     @property
@@ -3621,14 +3569,14 @@ class FootageInterpretation(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.bind"')
         self.check_type(function, any, 'arg "function" of function "FootageInterpretation.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -3639,7 +3587,7 @@ class FootageInterpretation(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "FootageInterpretation.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "FootageInterpretation.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class Time(PymiereObject):
     def __init__(self, pymiere_id=None, seconds=None, ticks=None):
@@ -3655,8 +3603,7 @@ class Time(PymiereObject):
         return self.__seconds
     @seconds.setter
     def seconds(self, seconds):
-        self.check_type(seconds, float, 'Time.seconds')
-        self._extend_eval("seconds = {}".format(seconds))
+        self._extend_eval("seconds = {}".format(_format_object_to_es(seconds)))
         self.__seconds = seconds
 
     @property
@@ -3665,8 +3612,7 @@ class Time(PymiereObject):
         return self.__ticks
     @ticks.setter
     def ticks(self, ticks):
-        self.check_type(ticks, str, 'Time.ticks')
-        self._extend_eval("ticks = '{}'".format(ticks))
+        self._extend_eval("ticks = {}".format(_format_object_to_es(ticks)))
         self.__ticks = ticks
 
 
@@ -3678,14 +3624,14 @@ class Time(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Time.bind"')
         self.check_type(function, any, 'arg "function" of function "Time.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Time.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -3696,7 +3642,7 @@ class Time(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Time.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Time.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Time.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setSecondsAsFraction(self, numerator, denominator):
         """
@@ -3705,16 +3651,15 @@ class Time(PymiereObject):
         """
         self.check_type(numerator, float, 'arg "numerator" of function "Time.setSecondsAsFraction"')
         self.check_type(denominator, float, 'arg "denominator" of function "Time.setSecondsAsFraction"')
-        self._extend_eval("setSecondsAsFraction({}, {})".format(numerator, denominator))
+        self._extend_eval("setSecondsAsFraction({}, {})".format(_format_object_to_es(numerator), _format_object_to_es(denominator)))
 
     def getFormatted(self, time, timeDisplay):
         """
         :type time: Object
         :type timeDisplay: float
         """
-        self.check_type(time, Object, 'arg "time" of function "Time.getFormatted"')
         self.check_type(timeDisplay, float, 'arg "timeDisplay" of function "Time.getFormatted"')
-        return self._extend_eval("getFormatted($._pymiere['{}'], {})".format(time._pymiere_id, timeDisplay))
+        return self._extend_eval("getFormatted({}, {})".format(_format_object_to_es(time), _format_object_to_es(timeDisplay)))
 
 class Track(PymiereObject):
     def __init__(self, pymiere_id=None, id=None, name=None, mediaType=None, clips=None, transitions=None):
@@ -3741,8 +3686,7 @@ class Track(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, 'Track.name')
-        self._extend_eval("name = '{}'".format(name))
+        self._extend_eval("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
     @property
@@ -3778,14 +3722,14 @@ class Track(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Track.bind"')
         self.check_type(function, any, 'arg "function" of function "Track.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Track.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -3796,7 +3740,7 @@ class Track(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Track.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Track.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Track.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def isMuted(self):
         return self._extend_eval("isMuted()")
@@ -3806,7 +3750,7 @@ class Track(PymiereObject):
         :type arg1: float
         """
         self.check_type(arg1, float, 'arg "arg1" of function "Track.setMute"')
-        self._extend_eval("setMute({})".format(arg1))
+        self._extend_eval("setMute({})".format(_format_object_to_es(arg1)))
 
     def isLocked(self):
         return self._extend_eval("isLocked()")
@@ -3816,7 +3760,7 @@ class Track(PymiereObject):
         :type arg1: float
         """
         self.check_type(arg1, float, 'arg "arg1" of function "Track.setLocked"')
-        self._extend_eval("setLocked({})".format(arg1))
+        self._extend_eval("setLocked({})".format(_format_object_to_es(arg1)))
 
     def isTargeted(self):
         return self._extend_eval("isTargeted()")
@@ -3828,7 +3772,7 @@ class Track(PymiereObject):
         """
         self.check_type(isTargeted, bool, 'arg "isTargeted" of function "Track.setTargeted"')
         self.check_type(shouldBroadcast, bool, 'arg "shouldBroadcast" of function "Track.setTargeted"')
-        self._extend_eval("setTargeted({}, {})".format(isTargeted, shouldBroadcast))
+        self._extend_eval("setTargeted({}, {})".format(_format_object_to_es(isTargeted), _format_object_to_es(shouldBroadcast)))
 
     def insertClip(self, clipProjectItem, time):
         """
@@ -3836,8 +3780,7 @@ class Track(PymiereObject):
         :type time: Object
         """
         self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.insertClip"')
-        self.check_type(time, Object, 'arg "time" of function "Track.insertClip"')
-        self._extend_eval("insertClip($._pymiere['{}'], $._pymiere['{}'])".format(clipProjectItem._pymiere_id, time._pymiere_id))
+        self._extend_eval("insertClip({}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time)))
 
     def overwriteClip(self, clipProjectItem, time):
         """
@@ -3845,8 +3788,7 @@ class Track(PymiereObject):
         :type time: Object
         """
         self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.overwriteClip"')
-        self.check_type(time, Object, 'arg "time" of function "Track.overwriteClip"')
-        self._extend_eval("overwriteClip($._pymiere['{}'], $._pymiere['{}'])".format(clipProjectItem._pymiere_id, time._pymiere_id))
+        self._extend_eval("overwriteClip({}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time)))
 
 class TrackItemCollection(PymiereObject):
     def __init__(self, pymiere_id=None, numItems=None, length=None):
@@ -3870,8 +3812,7 @@ class TrackItemCollection(PymiereObject):
         return self.__length
     @length.setter
     def length(self, length):
-        self.check_type(length, any, 'TrackItemCollection.length')
-        self._extend_eval("length = {}".format(length))
+        self._extend_eval("length = {}".format(_format_object_to_es(length)))
         self.__length = length
 
 
@@ -3883,14 +3824,14 @@ class TrackItemCollection(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "TrackItemCollection.bind"')
         self.check_type(function, any, 'arg "function" of function "TrackItemCollection.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "TrackItemCollection.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -3901,7 +3842,7 @@ class TrackItemCollection(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "TrackItemCollection.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "TrackItemCollection.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "TrackItemCollection.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class TrackItem(PymiereObject):
     def __init__(self, pymiere_id=None, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
@@ -3936,7 +3877,7 @@ class TrackItem(PymiereObject):
     @start.setter
     def start(self, start):
         self.check_type(start, Time, 'TrackItem.start')
-        self._extend_eval("start = $._pymiere['{}']".format(start._pymiere_id))
+        self._extend_eval("start = {}".format(_format_object_to_es(start)))
         self.__start = start
 
     @property
@@ -3946,7 +3887,7 @@ class TrackItem(PymiereObject):
     @end.setter
     def end(self, end):
         self.check_type(end, Time, 'TrackItem.end')
-        self._extend_eval("end = $._pymiere['{}']".format(end._pymiere_id))
+        self._extend_eval("end = {}".format(_format_object_to_es(end)))
         self.__end = end
 
     @property
@@ -3956,7 +3897,7 @@ class TrackItem(PymiereObject):
     @inPoint.setter
     def inPoint(self, inPoint):
         self.check_type(inPoint, Time, 'TrackItem.inPoint')
-        self._extend_eval("inPoint = $._pymiere['{}']".format(inPoint._pymiere_id))
+        self._extend_eval("inPoint = {}".format(_format_object_to_es(inPoint)))
         self.__inPoint = inPoint
 
     @property
@@ -3966,7 +3907,7 @@ class TrackItem(PymiereObject):
     @outPoint.setter
     def outPoint(self, outPoint):
         self.check_type(outPoint, Time, 'TrackItem.outPoint')
-        self._extend_eval("outPoint = $._pymiere['{}']".format(outPoint._pymiere_id))
+        self._extend_eval("outPoint = {}".format(_format_object_to_es(outPoint)))
         self.__outPoint = outPoint
 
     @property
@@ -3992,7 +3933,7 @@ class TrackItem(PymiereObject):
     @projectItem.setter
     def projectItem(self, projectItem):
         self.check_type(projectItem, ProjectItem, 'TrackItem.projectItem')
-        self._extend_eval("projectItem = $._pymiere['{}']".format(projectItem._pymiere_id))
+        self._extend_eval("projectItem = {}".format(_format_object_to_es(projectItem)))
         self.__projectItem = projectItem
 
     @property
@@ -4001,8 +3942,7 @@ class TrackItem(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, 'TrackItem.name')
-        self._extend_eval("name = '{}'".format(name))
+        self._extend_eval("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
     @property
@@ -4038,14 +3978,14 @@ class TrackItem(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "TrackItem.bind"')
         self.check_type(function, any, 'arg "function" of function "TrackItem.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "TrackItem.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -4056,7 +3996,7 @@ class TrackItem(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "TrackItem.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "TrackItem.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "TrackItem.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def isSelected(self):
         return self._extend_eval("isSelected()")
@@ -4068,7 +4008,7 @@ class TrackItem(PymiereObject):
         """
         self.check_type(isSelected, float, 'arg "isSelected" of function "TrackItem.setSelected"')
         self.check_type(updateUI, float, 'arg "updateUI" of function "TrackItem.setSelected"')
-        self._extend_eval("setSelected({}, {})".format(isSelected, updateUI))
+        self._extend_eval("setSelected({}, {})".format(_format_object_to_es(isSelected), _format_object_to_es(updateUI)))
 
     def getLinkedItems(self):
         return TrackItemCollection(**self._extend_eval("getLinkedItems()"))
@@ -4098,7 +4038,7 @@ class TrackItem(PymiereObject):
         """
         self.check_type(inRipple, bool, 'arg "inRipple" of function "TrackItem.remove"')
         self.check_type(inAlignToVideo, bool, 'arg "inAlignToVideo" of function "TrackItem.remove"')
-        return self._extend_eval("remove({}, {})".format(inRipple, inAlignToVideo))
+        return self._extend_eval("remove({}, {})".format(_format_object_to_es(inRipple), _format_object_to_es(inAlignToVideo)))
 
 class SequenceSettings(PymiereObject):
     def __init__(self, pymiere_id=None, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
@@ -4134,8 +4074,7 @@ class SequenceSettings(PymiereObject):
         return self.__editingMode
     @editingMode.setter
     def editingMode(self, editingMode):
-        self.check_type(editingMode, str, 'SequenceSettings.editingMode')
-        self._extend_eval("editingMode = '{}'".format(editingMode))
+        self._extend_eval("editingMode = {}".format(_format_object_to_es(editingMode)))
         self.__editingMode = editingMode
 
     @property
@@ -4145,7 +4084,7 @@ class SequenceSettings(PymiereObject):
     @videoFrameRate.setter
     def videoFrameRate(self, videoFrameRate):
         self.check_type(videoFrameRate, Time, 'SequenceSettings.videoFrameRate')
-        self._extend_eval("videoFrameRate = $._pymiere['{}']".format(videoFrameRate._pymiere_id))
+        self._extend_eval("videoFrameRate = {}".format(_format_object_to_es(videoFrameRate)))
         self.__videoFrameRate = videoFrameRate
 
     @property
@@ -4154,8 +4093,7 @@ class SequenceSettings(PymiereObject):
         return self.__videoFrameWidth
     @videoFrameWidth.setter
     def videoFrameWidth(self, videoFrameWidth):
-        self.check_type(videoFrameWidth, float, 'SequenceSettings.videoFrameWidth')
-        self._extend_eval("videoFrameWidth = {}".format(videoFrameWidth))
+        self._extend_eval("videoFrameWidth = {}".format(_format_object_to_es(videoFrameWidth)))
         self.__videoFrameWidth = videoFrameWidth
 
     @property
@@ -4164,8 +4102,7 @@ class SequenceSettings(PymiereObject):
         return self.__videoFrameHeight
     @videoFrameHeight.setter
     def videoFrameHeight(self, videoFrameHeight):
-        self.check_type(videoFrameHeight, float, 'SequenceSettings.videoFrameHeight')
-        self._extend_eval("videoFrameHeight = {}".format(videoFrameHeight))
+        self._extend_eval("videoFrameHeight = {}".format(_format_object_to_es(videoFrameHeight)))
         self.__videoFrameHeight = videoFrameHeight
 
     @property
@@ -4174,8 +4111,7 @@ class SequenceSettings(PymiereObject):
         return self.__videoPixelAspectRatio
     @videoPixelAspectRatio.setter
     def videoPixelAspectRatio(self, videoPixelAspectRatio):
-        self.check_type(videoPixelAspectRatio, str, 'SequenceSettings.videoPixelAspectRatio')
-        self._extend_eval("videoPixelAspectRatio = '{}'".format(videoPixelAspectRatio))
+        self._extend_eval("videoPixelAspectRatio = {}".format(_format_object_to_es(videoPixelAspectRatio)))
         self.__videoPixelAspectRatio = videoPixelAspectRatio
 
     @property
@@ -4184,8 +4120,7 @@ class SequenceSettings(PymiereObject):
         return self.__videoFieldType
     @videoFieldType.setter
     def videoFieldType(self, videoFieldType):
-        self.check_type(videoFieldType, float, 'SequenceSettings.videoFieldType')
-        self._extend_eval("videoFieldType = {}".format(videoFieldType))
+        self._extend_eval("videoFieldType = {}".format(_format_object_to_es(videoFieldType)))
         self.__videoFieldType = videoFieldType
 
     @property
@@ -4194,8 +4129,7 @@ class SequenceSettings(PymiereObject):
         return self.__videoDisplayFormat
     @videoDisplayFormat.setter
     def videoDisplayFormat(self, videoDisplayFormat):
-        self.check_type(videoDisplayFormat, float, 'SequenceSettings.videoDisplayFormat')
-        self._extend_eval("videoDisplayFormat = {}".format(videoDisplayFormat))
+        self._extend_eval("videoDisplayFormat = {}".format(_format_object_to_es(videoDisplayFormat)))
         self.__videoDisplayFormat = videoDisplayFormat
 
     @property
@@ -4204,8 +4138,7 @@ class SequenceSettings(PymiereObject):
         return self.__audioChannelType
     @audioChannelType.setter
     def audioChannelType(self, audioChannelType):
-        self.check_type(audioChannelType, float, 'SequenceSettings.audioChannelType')
-        self._extend_eval("audioChannelType = {}".format(audioChannelType))
+        self._extend_eval("audioChannelType = {}".format(_format_object_to_es(audioChannelType)))
         self.__audioChannelType = audioChannelType
 
     @property
@@ -4214,8 +4147,7 @@ class SequenceSettings(PymiereObject):
         return self.__audioChannelCount
     @audioChannelCount.setter
     def audioChannelCount(self, audioChannelCount):
-        self.check_type(audioChannelCount, float, 'SequenceSettings.audioChannelCount')
-        self._extend_eval("audioChannelCount = {}".format(audioChannelCount))
+        self._extend_eval("audioChannelCount = {}".format(_format_object_to_es(audioChannelCount)))
         self.__audioChannelCount = audioChannelCount
 
     @property
@@ -4225,7 +4157,7 @@ class SequenceSettings(PymiereObject):
     @audioSampleRate.setter
     def audioSampleRate(self, audioSampleRate):
         self.check_type(audioSampleRate, Time, 'SequenceSettings.audioSampleRate')
-        self._extend_eval("audioSampleRate = $._pymiere['{}']".format(audioSampleRate._pymiere_id))
+        self._extend_eval("audioSampleRate = {}".format(_format_object_to_es(audioSampleRate)))
         self.__audioSampleRate = audioSampleRate
 
     @property
@@ -4234,8 +4166,7 @@ class SequenceSettings(PymiereObject):
         return self.__audioDisplayFormat
     @audioDisplayFormat.setter
     def audioDisplayFormat(self, audioDisplayFormat):
-        self.check_type(audioDisplayFormat, float, 'SequenceSettings.audioDisplayFormat')
-        self._extend_eval("audioDisplayFormat = {}".format(audioDisplayFormat))
+        self._extend_eval("audioDisplayFormat = {}".format(_format_object_to_es(audioDisplayFormat)))
         self.__audioDisplayFormat = audioDisplayFormat
 
     @property
@@ -4244,8 +4175,7 @@ class SequenceSettings(PymiereObject):
         return self.__previewFileFormat
     @previewFileFormat.setter
     def previewFileFormat(self, previewFileFormat):
-        self.check_type(previewFileFormat, str, 'SequenceSettings.previewFileFormat')
-        self._extend_eval("previewFileFormat = '{}'".format(previewFileFormat))
+        self._extend_eval("previewFileFormat = {}".format(_format_object_to_es(previewFileFormat)))
         self.__previewFileFormat = previewFileFormat
 
     @property
@@ -4254,8 +4184,7 @@ class SequenceSettings(PymiereObject):
         return self.__previewCodec
     @previewCodec.setter
     def previewCodec(self, previewCodec):
-        self.check_type(previewCodec, str, 'SequenceSettings.previewCodec')
-        self._extend_eval("previewCodec = '{}'".format(previewCodec))
+        self._extend_eval("previewCodec = {}".format(_format_object_to_es(previewCodec)))
         self.__previewCodec = previewCodec
 
     @property
@@ -4264,8 +4193,7 @@ class SequenceSettings(PymiereObject):
         return self.__previewFrameWidth
     @previewFrameWidth.setter
     def previewFrameWidth(self, previewFrameWidth):
-        self.check_type(previewFrameWidth, float, 'SequenceSettings.previewFrameWidth')
-        self._extend_eval("previewFrameWidth = {}".format(previewFrameWidth))
+        self._extend_eval("previewFrameWidth = {}".format(_format_object_to_es(previewFrameWidth)))
         self.__previewFrameWidth = previewFrameWidth
 
     @property
@@ -4274,8 +4202,7 @@ class SequenceSettings(PymiereObject):
         return self.__previewFrameHeight
     @previewFrameHeight.setter
     def previewFrameHeight(self, previewFrameHeight):
-        self.check_type(previewFrameHeight, float, 'SequenceSettings.previewFrameHeight')
-        self._extend_eval("previewFrameHeight = {}".format(previewFrameHeight))
+        self._extend_eval("previewFrameHeight = {}".format(_format_object_to_es(previewFrameHeight)))
         self.__previewFrameHeight = previewFrameHeight
 
     @property
@@ -4284,8 +4211,7 @@ class SequenceSettings(PymiereObject):
         return self.__maximumBitDepth
     @maximumBitDepth.setter
     def maximumBitDepth(self, maximumBitDepth):
-        self.check_type(maximumBitDepth, bool, 'SequenceSettings.maximumBitDepth')
-        self._extend_eval("maximumBitDepth = {}".format(maximumBitDepth))
+        self._extend_eval("maximumBitDepth = {}".format(_format_object_to_es(maximumBitDepth)))
         self.__maximumBitDepth = maximumBitDepth
 
     @property
@@ -4294,8 +4220,7 @@ class SequenceSettings(PymiereObject):
         return self.__maximumRenderQuality
     @maximumRenderQuality.setter
     def maximumRenderQuality(self, maximumRenderQuality):
-        self.check_type(maximumRenderQuality, bool, 'SequenceSettings.maximumRenderQuality')
-        self._extend_eval("maximumRenderQuality = {}".format(maximumRenderQuality))
+        self._extend_eval("maximumRenderQuality = {}".format(_format_object_to_es(maximumRenderQuality)))
         self.__maximumRenderQuality = maximumRenderQuality
 
     @property
@@ -4304,8 +4229,7 @@ class SequenceSettings(PymiereObject):
         return self.__compositeLinearColor
     @compositeLinearColor.setter
     def compositeLinearColor(self, compositeLinearColor):
-        self.check_type(compositeLinearColor, bool, 'SequenceSettings.compositeLinearColor')
-        self._extend_eval("compositeLinearColor = {}".format(compositeLinearColor))
+        self._extend_eval("compositeLinearColor = {}".format(_format_object_to_es(compositeLinearColor)))
         self.__compositeLinearColor = compositeLinearColor
 
     @property
@@ -4314,8 +4238,7 @@ class SequenceSettings(PymiereObject):
         return self.__vrProjection
     @vrProjection.setter
     def vrProjection(self, vrProjection):
-        self.check_type(vrProjection, float, 'SequenceSettings.vrProjection')
-        self._extend_eval("vrProjection = {}".format(vrProjection))
+        self._extend_eval("vrProjection = {}".format(_format_object_to_es(vrProjection)))
         self.__vrProjection = vrProjection
 
     @property
@@ -4324,8 +4247,7 @@ class SequenceSettings(PymiereObject):
         return self.__vrLayout
     @vrLayout.setter
     def vrLayout(self, vrLayout):
-        self.check_type(vrLayout, float, 'SequenceSettings.vrLayout')
-        self._extend_eval("vrLayout = {}".format(vrLayout))
+        self._extend_eval("vrLayout = {}".format(_format_object_to_es(vrLayout)))
         self.__vrLayout = vrLayout
 
     @property
@@ -4334,8 +4256,7 @@ class SequenceSettings(PymiereObject):
         return self.__vrHorzCapturedView
     @vrHorzCapturedView.setter
     def vrHorzCapturedView(self, vrHorzCapturedView):
-        self.check_type(vrHorzCapturedView, float, 'SequenceSettings.vrHorzCapturedView')
-        self._extend_eval("vrHorzCapturedView = {}".format(vrHorzCapturedView))
+        self._extend_eval("vrHorzCapturedView = {}".format(_format_object_to_es(vrHorzCapturedView)))
         self.__vrHorzCapturedView = vrHorzCapturedView
 
     @property
@@ -4344,8 +4265,7 @@ class SequenceSettings(PymiereObject):
         return self.__vrVertCapturedView
     @vrVertCapturedView.setter
     def vrVertCapturedView(self, vrVertCapturedView):
-        self.check_type(vrVertCapturedView, float, 'SequenceSettings.vrVertCapturedView')
-        self._extend_eval("vrVertCapturedView = {}".format(vrVertCapturedView))
+        self._extend_eval("vrVertCapturedView = {}".format(_format_object_to_es(vrVertCapturedView)))
         self.__vrVertCapturedView = vrVertCapturedView
 
 
@@ -4357,14 +4277,14 @@ class SequenceSettings(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.bind"')
         self.check_type(function, any, 'arg "function" of function "SequenceSettings.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -4375,7 +4295,7 @@ class SequenceSettings(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "SequenceSettings.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "SequenceSettings.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class Marker(PymiereObject):
     def __init__(self, pymiere_id=None, start=None, end=None, type=None, name=None, comments=None, guid=None):
@@ -4396,7 +4316,7 @@ class Marker(PymiereObject):
     @start.setter
     def start(self, start):
         self.check_type(start, Time, 'Marker.start')
-        self._extend_eval("start = $._pymiere['{}']".format(start._pymiere_id))
+        self._extend_eval("start = {}".format(_format_object_to_es(start)))
         self.__start = start
 
     @property
@@ -4406,7 +4326,7 @@ class Marker(PymiereObject):
     @end.setter
     def end(self, end):
         self.check_type(end, Time, 'Marker.end')
-        self._extend_eval("end = $._pymiere['{}']".format(end._pymiere_id))
+        self._extend_eval("end = {}".format(_format_object_to_es(end)))
         self.__end = end
 
     @property
@@ -4415,8 +4335,7 @@ class Marker(PymiereObject):
         return self.__type
     @type.setter
     def type(self, type):
-        self.check_type(type, str, 'Marker.type')
-        self._extend_eval("type = '{}'".format(type))
+        self._extend_eval("type = {}".format(_format_object_to_es(type)))
         self.__type = type
 
     @property
@@ -4425,8 +4344,7 @@ class Marker(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, 'Marker.name')
-        self._extend_eval("name = '{}'".format(name))
+        self._extend_eval("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
     @property
@@ -4435,8 +4353,7 @@ class Marker(PymiereObject):
         return self.__comments
     @comments.setter
     def comments(self, comments):
-        self.check_type(comments, str, 'Marker.comments')
-        self._extend_eval("comments = '{}'".format(comments))
+        self._extend_eval("comments = {}".format(_format_object_to_es(comments)))
         self.__comments = comments
 
     @property
@@ -4456,14 +4373,14 @@ class Marker(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Marker.bind"')
         self.check_type(function, any, 'arg "function" of function "Marker.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Marker.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -4474,7 +4391,7 @@ class Marker(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Marker.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Marker.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Marker.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setTypeAsComment(self):
         self._extend_eval("setTypeAsComment()")
@@ -4492,7 +4409,7 @@ class Marker(PymiereObject):
         """
         self.check_type(url, str, 'arg "url" of function "Marker.setTypeAsWebLink"')
         self.check_type(frameTarget, str, 'arg "frameTarget" of function "Marker.setTypeAsWebLink"')
-        self._extend_eval("setTypeAsWebLink('{}', '{}')".format(url, frameTarget))
+        self._extend_eval("setTypeAsWebLink({}, {})".format(_format_object_to_es(url), _format_object_to_es(frameTarget)))
 
     def getWebLinkURL(self):
         return self._extend_eval("getWebLinkURL()")
@@ -4505,7 +4422,7 @@ class Marker(PymiereObject):
         :type arg1: float
         """
         self.check_type(arg1, float, 'arg "arg1" of function "Marker.setColorByIndex"')
-        self._extend_eval("setColorByIndex({})".format(arg1))
+        self._extend_eval("setColorByIndex({})".format(_format_object_to_es(arg1)))
 
     def getColorByIndex(self):
         return self._extend_eval("getColorByIndex()")
@@ -4552,14 +4469,14 @@ class Component(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Component.bind"')
         self.check_type(function, any, 'arg "function" of function "Component.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Component.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -4570,7 +4487,7 @@ class Component(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Component.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Component.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Component.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class ComponentParamCollection(PymiereCollection):
     def __init__(self, pymiere_id, numItems):
@@ -4616,7 +4533,7 @@ class Dollar(PymiereObject):
     @error.setter
     def error(self, error):
         self.check_type(error, Error, '$.error')
-        self._extend_eval("error = $._pymiere['{}']".format(error._pymiere_id))
+        self._extend_eval("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
     @property
@@ -4662,8 +4579,7 @@ class Dollar(PymiereObject):
         return self.__level
     @level.setter
     def level(self, level):
-        self.check_type(level, float, '$.level')
-        self._extend_eval("level = {}".format(level))
+        self._extend_eval("level = {}".format(_format_object_to_es(level)))
         self.__level = level
 
     @property
@@ -4673,8 +4589,7 @@ class Dollar(PymiereObject):
         return self.__flags
     @flags.setter
     def flags(self, flags):
-        self.check_type(flags, float, '$.flags')
-        self._extend_eval("flags = {}".format(flags))
+        self._extend_eval("flags = {}".format(_format_object_to_es(flags)))
         self.__flags = flags
 
     @property
@@ -4684,8 +4599,7 @@ class Dollar(PymiereObject):
         return self.__strict
     @strict.setter
     def strict(self, strict):
-        self.check_type(strict, bool, '$.strict')
-        self._extend_eval("strict = {}".format(strict))
+        self._extend_eval("strict = {}".format(_format_object_to_es(strict)))
         self.__strict = strict
 
     @property
@@ -4695,8 +4609,7 @@ class Dollar(PymiereObject):
         return self.__locale
     @locale.setter
     def locale(self, locale):
-        self.check_type(locale, str, '$.locale')
-        self._extend_eval("locale = '{}'".format(locale))
+        self._extend_eval("locale = {}".format(_format_object_to_es(locale)))
         self.__locale = locale
 
     @property
@@ -4706,8 +4619,7 @@ class Dollar(PymiereObject):
         return self.__localize
     @localize.setter
     def localize(self, localize):
-        self.check_type(localize, bool, '$.localize')
-        self._extend_eval("localize = {}".format(localize))
+        self._extend_eval("localize = {}".format(_format_object_to_es(localize)))
         self.__localize = localize
 
     @property
@@ -4726,8 +4638,7 @@ class Dollar(PymiereObject):
         return self.__memCache
     @memCache.setter
     def memCache(self, memCache):
-        self.check_type(memCache, float, '$.memCache')
-        self._extend_eval("memCache = {}".format(memCache))
+        self._extend_eval("memCache = {}".format(_format_object_to_es(memCache)))
         self.__memCache = memCache
 
     @property
@@ -4737,14 +4648,13 @@ class Dollar(PymiereObject):
         return self.__appEncoding
     @appEncoding.setter
     def appEncoding(self, appEncoding):
-        self.check_type(appEncoding, str, '$.appEncoding')
-        self._extend_eval("appEncoding = '{}'".format(appEncoding))
+        self._extend_eval("appEncoding = {}".format(_format_object_to_es(appEncoding)))
         self.__appEncoding = appEncoding
 
     @property
     def screens(self):
         """An array of rectangles"""
-        self.__screens = Rectangle(**self._extend_eval('screens'))
+        self.__screens = _format_object_to_py(self._extend_eval('screens'))
         return self.__screens
     @screens.setter
     def screens(self, screens):
@@ -4815,22 +4725,20 @@ class Dollar(PymiereObject):
 
     @property
     def _pymiere(self):
-        self.___pymiere = Object(**self._extend_eval('_pymiere'))
+        self.___pymiere = _format_object_to_py(self._extend_eval('_pymiere'))
         return self.___pymiere
     @_pymiere.setter
     def _pymiere(self, _pymiere):
-        self.check_type(_pymiere, Object, '$._pymiere')
-        self._extend_eval("_pymiere = $._pymiere['{}']".format(_pymiere._pymiere_id))
+        self._extend_eval("_pymiere = {}".format(_format_object_to_es(_pymiere)))
         self.___pymiere = _pymiere
 
     @property
     def _jsxFunctions(self):
-        self.___jsxFunctions = Object(**self._extend_eval('_jsxFunctions'))
+        self.___jsxFunctions = _format_object_to_py(self._extend_eval('_jsxFunctions'))
         return self.___jsxFunctions
     @_jsxFunctions.setter
     def _jsxFunctions(self, _jsxFunctions):
-        self.check_type(_jsxFunctions, Object, '$._jsxFunctions')
-        self._extend_eval("_jsxFunctions = $._pymiere['{}']".format(_jsxFunctions._pymiere_id))
+        self._extend_eval("_jsxFunctions = {}".format(_format_object_to_es(_jsxFunctions)))
         self.___jsxFunctions = _jsxFunctions
 
 
@@ -4872,7 +4780,7 @@ class Dollar(PymiereObject):
         :type name: str
         """
         self.check_type(name, str, 'arg "name" of function "$.getenv"')
-        return self._extend_eval("getenv('{}')".format(name))
+        return self._extend_eval("getenv({})".format(_format_object_to_es(name)))
 
     def setenv(self, key, value):
         """
@@ -4882,7 +4790,7 @@ class Dollar(PymiereObject):
         """
         self.check_type(key, str, 'arg "key" of function "$.setenv"')
         self.check_type(value, str, 'arg "value" of function "$.setenv"')
-        return self._extend_eval("setenv('{}', '{}')".format(key, value))
+        return self._extend_eval("setenv({}, {})".format(_format_object_to_es(key), _format_object_to_es(value)))
 
     def sleep(self, msecs):
         """
@@ -4891,7 +4799,7 @@ class Dollar(PymiereObject):
         :type msecs: float
         """
         self.check_type(msecs, float, 'arg "msecs" of function "$.sleep"')
-        self._extend_eval("sleep({})".format(msecs))
+        self._extend_eval("sleep({})".format(_format_object_to_es(msecs)))
 
     def colorPicker(self, color):
         """
@@ -4899,7 +4807,7 @@ class Dollar(PymiereObject):
         :type color: float
         """
         self.check_type(color, float, 'arg "color" of function "$.colorPicker"')
-        return self._extend_eval("colorPicker({})".format(color))
+        return self._extend_eval("colorPicker({})".format(_format_object_to_es(color)))
 
     def evalFile(self, file):
         """
@@ -4908,24 +4816,24 @@ class Dollar(PymiereObject):
         :type file: File
         """
         self.check_type(file, File, 'arg "file" of function "$.evalFile"')
-        return self._extend_eval("evalFile($._pymiere['{}'])".format(file._pymiere_id))
+        return self._extend_eval("evalFile({})".format(_format_object_to_es(file)))
 
     def list(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "$.list"')
-        return unknown(**self._extend_eval("list({})".format(arg1)))
+        return _format_object_to_py(self._extend_eval("list({})".format(_format_object_to_es(arg1))))
 
     def listLO(self, arg1):
         """
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "$.listLO"')
-        return unknown(**self._extend_eval("listLO({})".format(arg1)))
+        return _format_object_to_py(self._extend_eval("listLO({})".format(_format_object_to_es(arg1))))
 
     def summary(self):
-        return unknown(**self._extend_eval("summary()"))
+        return _format_object_to_py(self._extend_eval("summary()"))
 
     def gc(self):
         """
@@ -4954,8 +4862,7 @@ class Error(PymiereObject):
         return self.__number
     @number.setter
     def number(self, number):
-        self.check_type(number, float, 'Error.number')
-        self._extend_eval("number = {}".format(number))
+        self._extend_eval("number = {}".format(_format_object_to_es(number)))
         self.__number = number
 
     @property
@@ -4964,8 +4871,7 @@ class Error(PymiereObject):
         return self.__fileName
     @fileName.setter
     def fileName(self, fileName):
-        self.check_type(fileName, str, 'Error.fileName')
-        self._extend_eval("fileName = '{}'".format(fileName))
+        self._extend_eval("fileName = {}".format(_format_object_to_es(fileName)))
         self.__fileName = fileName
 
     @property
@@ -4974,8 +4880,7 @@ class Error(PymiereObject):
         return self.__line
     @line.setter
     def line(self, line):
-        self.check_type(line, float, 'Error.line')
-        self._extend_eval("line = {}".format(line))
+        self._extend_eval("line = {}".format(_format_object_to_es(line)))
         self.__line = line
 
     @property
@@ -4984,8 +4889,7 @@ class Error(PymiereObject):
         return self.__source
     @source.setter
     def source(self, source):
-        self.check_type(source, str, 'Error.source')
-        self._extend_eval("source = '{}'".format(source))
+        self._extend_eval("source = {}".format(_format_object_to_es(source)))
         self.__source = source
 
     @property
@@ -4994,8 +4898,7 @@ class Error(PymiereObject):
         return self.__start
     @start.setter
     def start(self, start):
-        self.check_type(start, float, 'Error.start')
-        self._extend_eval("start = {}".format(start))
+        self._extend_eval("start = {}".format(_format_object_to_es(start)))
         self.__start = start
 
     @property
@@ -5004,8 +4907,7 @@ class Error(PymiereObject):
         return self.__end
     @end.setter
     def end(self, end):
-        self.check_type(end, float, 'Error.end')
-        self._extend_eval("end = {}".format(end))
+        self._extend_eval("end = {}".format(_format_object_to_es(end)))
         self.__end = end
 
     @property
@@ -5014,8 +4916,7 @@ class Error(PymiereObject):
         return self.__message
     @message.setter
     def message(self, message):
-        self.check_type(message, str, 'Error.message')
-        self._extend_eval("message = '{}'".format(message))
+        self._extend_eval("message = {}".format(_format_object_to_es(message)))
         self.__message = message
 
     @property
@@ -5024,8 +4925,7 @@ class Error(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, 'Error.name')
-        self._extend_eval("name = '{}'".format(name))
+        self._extend_eval("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
     @property
@@ -5034,8 +4934,7 @@ class Error(PymiereObject):
         return self.__description
     @description.setter
     def description(self, description):
-        self.check_type(description, str, 'Error.description')
-        self._extend_eval("description = '{}'".format(description))
+        self._extend_eval("description = {}".format(_format_object_to_es(description)))
         self.__description = description
 
 
@@ -5070,7 +4969,7 @@ class Dictionary(PymiereObject):
         """
         Gets a class description.
         """
-        return Reflection(**self._extend_eval("getClass()"))
+        return _format_object_to_py(self._extend_eval("getClass()"))
 
     def toXML(self, prefix):
         """
@@ -5079,7 +4978,7 @@ class Dictionary(PymiereObject):
         :type prefix: str
         """
         self.check_type(prefix, str, 'arg "prefix" of function "Dictionary.toXML"')
-        return XML(**self._extend_eval("toXML('{}')".format(prefix)))
+        return _format_object_to_py(self._extend_eval("toXML({})".format(_format_object_to_es(prefix))))
 
 class ComponentParam(PymiereObject):
     def __init__(self, pymiere_id=None, displayName=None):
@@ -5105,14 +5004,14 @@ class ComponentParam(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ComponentParam.bind"')
         self.check_type(function, any, 'arg "function" of function "ComponentParam.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "ComponentParam.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -5123,7 +5022,7 @@ class ComponentParam(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "ComponentParam.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "ComponentParam.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "ComponentParam.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def areKeyframesSupported(self):
         return self._extend_eval("areKeyframesSupported()")
@@ -5139,30 +5038,26 @@ class ComponentParam(PymiereObject):
         :type isTimeVarying: bool
         """
         self.check_type(isTimeVarying, bool, 'arg "isTimeVarying" of function "ComponentParam.setTimeVarying"')
-        self._extend_eval("setTimeVarying({})".format(isTimeVarying))
+        self._extend_eval("setTimeVarying({})".format(_format_object_to_es(isTimeVarying)))
 
     def findNearestKey(self, time, threshold):
         """
         :type time: Object
         :type threshold: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.findNearestKey"')
-        self.check_type(threshold, Object, 'arg "threshold" of function "ComponentParam.findNearestKey"')
-        return Time(**self._extend_eval("findNearestKey($._pymiere['{}'], $._pymiere['{}'])".format(time._pymiere_id, threshold._pymiere_id)))
+        return Time(**self._extend_eval("findNearestKey({}, {})".format(_format_object_to_es(time), _format_object_to_es(threshold))))
 
     def findPreviousKey(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.findPreviousKey"')
-        return Time(**self._extend_eval("findPreviousKey($._pymiere['{}'])".format(time._pymiere_id)))
+        return Time(**self._extend_eval("findPreviousKey({})".format(_format_object_to_es(time))))
 
     def findNextKey(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.findNextKey"')
-        return Time(**self._extend_eval("findNextKey($._pymiere['{}'])".format(time._pymiere_id)))
+        return Time(**self._extend_eval("findNextKey({})".format(_format_object_to_es(time))))
 
     def getKeys(self):
         self._extend_eval("getKeys()")
@@ -5171,31 +5066,26 @@ class ComponentParam(PymiereObject):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.addKey"')
-        self._extend_eval("addKey($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("addKey({})".format(_format_object_to_es(time)))
 
     def removeKey(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.removeKey"')
-        self._extend_eval("removeKey($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("removeKey({})".format(_format_object_to_es(time)))
 
     def removeKeyRange(self, startTime, stopTime):
         """
         :type startTime: Object
         :type stopTime: Object
         """
-        self.check_type(startTime, Object, 'arg "startTime" of function "ComponentParam.removeKeyRange"')
-        self.check_type(stopTime, Object, 'arg "stopTime" of function "ComponentParam.removeKeyRange"')
-        self._extend_eval("removeKeyRange($._pymiere['{}'], $._pymiere['{}'])".format(startTime._pymiere_id, stopTime._pymiere_id))
+        self._extend_eval("removeKeyRange({}, {})".format(_format_object_to_es(startTime), _format_object_to_es(stopTime)))
 
     def keyExistsAtTime(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.keyExistsAtTime"')
-        return self._extend_eval("keyExistsAtTime($._pymiere['{}'])".format(time._pymiere_id))
+        return self._extend_eval("keyExistsAtTime({})".format(_format_object_to_es(time)))
 
     def getValue(self):
         self._extend_eval("getValue()")
@@ -5211,35 +5101,31 @@ class ComponentParam(PymiereObject):
         :type arg1: any
         """
         self.check_type(arg1, any, 'arg "arg1" of function "ComponentParam.setColorValue"')
-        return self._extend_eval("setColorValue({})".format(arg1))
+        return self._extend_eval("setColorValue({})".format(_format_object_to_es(arg1)))
 
     def getValueAtKey(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.getValueAtKey"')
-        self._extend_eval("getValueAtKey($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("getValueAtKey({})".format(_format_object_to_es(time)))
 
     def setValueAtKey(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.setValueAtKey"')
-        return self._extend_eval("setValueAtKey($._pymiere['{}'])".format(time._pymiere_id))
+        return self._extend_eval("setValueAtKey({})".format(_format_object_to_es(time)))
 
     def getValueAtTime(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.getValueAtTime"')
-        self._extend_eval("getValueAtTime($._pymiere['{}'])".format(time._pymiere_id))
+        self._extend_eval("getValueAtTime({})".format(_format_object_to_es(time)))
 
     def setInterpolationTypeAtKey(self, time):
         """
         :type time: Object
         """
-        self.check_type(time, Object, 'arg "time" of function "ComponentParam.setInterpolationTypeAtKey"')
-        return self._extend_eval("setInterpolationTypeAtKey($._pymiere['{}'])".format(time._pymiere_id))
+        return self._extend_eval("setInterpolationTypeAtKey({})".format(_format_object_to_es(time)))
 
 class Exporter(PymiereObject):
     def __init__(self, pymiere_id=None, name=None, classID=None, fileType=None):
@@ -5283,14 +5169,14 @@ class Exporter(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Exporter.bind"')
         self.check_type(function, any, 'arg "function" of function "Exporter.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "Exporter.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -5301,7 +5187,7 @@ class Exporter(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "Exporter.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "Exporter.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "Exporter.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getPresets(self):
         self._extend_eval("getPresets()")
@@ -5339,14 +5225,14 @@ class EncoderPreset(PymiereObject):
         """
         self.check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.bind"')
         self.check_type(function, any, 'arg "function" of function "EncoderPreset.bind"')
-        self._extend_eval("bind('{}', {})".format(eventName, function))
+        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
         self.check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.unbind"')
-        self._extend_eval("unbind('{}')".format(eventName))
+        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
         """
@@ -5357,11 +5243,11 @@ class EncoderPreset(PymiereObject):
         self.check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.setTimeout"')
         self.check_type(function, any, 'arg "function" of function "EncoderPreset.setTimeout"')
         self.check_type(milliseconds, float, 'arg "milliseconds" of function "EncoderPreset.setTimeout"')
-        self._extend_eval("setTimeout('{}', {}, {})".format(eventName, function, milliseconds))
+        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def writeToFile(self, outputFilePath):
         """
         :type outputFilePath: str
         """
         self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "EncoderPreset.writeToFile"')
-        return self._extend_eval("writeToFile('{}')".format(outputFilePath))
+        return self._extend_eval("writeToFile({})".format(_format_object_to_es(outputFilePath)))

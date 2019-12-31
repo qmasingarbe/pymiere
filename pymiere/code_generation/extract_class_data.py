@@ -9,7 +9,6 @@ things_to_extract = [
     ('app.project.rootItem.children[0].getFootageInterpretation()', "bababababa"),
     ('app.project.rootItem.children[0].getOutPoint()', "bababababa"),
     ('app.project.activeSequence.videoTracks[0]', "bababababa"),
-    ('app.project.activeSequence.videoTracks[0].clips', "bababababa"),
     ('app.project.activeSequence.videoTracks[0].clips[0]', "bababababa"),
     ('app.project.activeSequence.getSettings()', "bababababa"),
     ('app.project.activeSequence.markers.getFirstMarker()', "bababababa"),

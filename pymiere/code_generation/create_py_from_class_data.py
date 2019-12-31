@@ -224,7 +224,6 @@ if __name__ == "__main__":
         'app.project.rootItem.children[0].getFootageInterpretation()',
         'app.project.rootItem.children[0].getOutPoint()',
         'app.project.activeSequence.videoTracks[0]',
-        'app.project.activeSequence.videoTracks[0].clips',
         'app.project.activeSequence.videoTracks[0].clips[0]',
         'app.project.activeSequence.getSettings()',
         'app.project.activeSequence.markers.getFirstMarker()',

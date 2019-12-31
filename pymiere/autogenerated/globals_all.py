@@ -3790,59 +3790,12 @@ class Track(PymiereObject):
         self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.overwriteClip"')
         self._extend_eval("overwriteClip({}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time)))
 
-class TrackItemCollection(PymiereObject):
-    def __init__(self, pymiere_id=None, numItems=None, length=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'numItems':numItems, 'length':length})
-        super(TrackItemCollection, self).__init__(pymiere_id)
-        self.__numItems = numItems
-        self.__length = length
+class TrackItemCollection(PymiereCollection):
+    def __init__(self, pymiere_id, numItems):
+        super(TrackItemCollection, self).__init__(pymiere_id, "numItems")
 
-    # ----- PROPERTIES -----
-    @property
-    def numItems(self):
-        self.__numItems = self._extend_eval('numItems')
-        return self.__numItems
-    @numItems.setter
-    def numItems(self, numItems):
-        raise AttributeError("Attribute 'numItems' is read-only")
-
-    @property
-    def length(self):
-        self.__length = self._extend_eval('length')
-        return self.__length
-    @length.setter
-    def length(self, length):
-        self._extend_eval("length = {}".format(_format_object_to_es(length)))
-        self.__length = length
-
-
-    # ----- FUNCTIONS -----
-    def bind(self, eventName, function):
-        """
-        :type eventName: str
-        :type function: any
-        """
-        self.check_type(eventName, str, 'arg "eventName" of function "TrackItemCollection.bind"')
-        self.check_type(function, any, 'arg "function" of function "TrackItemCollection.bind"')
-        self._extend_eval("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
-
-    def unbind(self, eventName):
-        """
-        :type eventName: str
-        """
-        self.check_type(eventName, str, 'arg "eventName" of function "TrackItemCollection.unbind"')
-        self._extend_eval("unbind({})".format(_format_object_to_es(eventName)))
-
-    def setTimeout(self, eventName, function, milliseconds):
-        """
-        :type eventName: str
-        :type function: any
-        :type milliseconds: float
-        """
-        self.check_type(eventName, str, 'arg "eventName" of function "TrackItemCollection.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "TrackItemCollection.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "TrackItemCollection.setTimeout"')
-        self._extend_eval("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
+    def __getitem__(self, index):
+        return TrackItem(**super(TrackItemCollection, self).__getitem__(index))
 
 class TrackItem(PymiereObject):
     def __init__(self, pymiere_id=None, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):

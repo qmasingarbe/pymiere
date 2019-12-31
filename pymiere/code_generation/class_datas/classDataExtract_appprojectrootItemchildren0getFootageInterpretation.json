@@ -1,0 +1,256 @@
+{
+  "name": "FootageInterpretation",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "frameRate": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 25
+    },
+    "pixelAspectRatio": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 1
+    },
+    "fieldType": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": -1
+    },
+    "removePulldown": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "alphaUsage": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "ignoreAlpha": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "invertAlpha": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "vrConformProjectionType": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "vrLayoutType": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "vrHorizontalView": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "vrVerticalView": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "ALPHACHANNEL_NONE": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 0
+    },
+    "ALPHACHANNEL_STRAIGHT": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 1
+    },
+    "ALPHACHANNEL_PREMULTIPLIED": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 2
+    },
+    "ALPHACHANNEL_IGNORE": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 3
+    },
+    "FIELD_TYPE_DEFAULT": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": -1
+    },
+    "FIELD_TYPE_PROGRESSIVE": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 0
+    },
+    "FIELD_TYPE_UPPERFIRST": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 1
+    },
+    "FIELD_TYPE_LOWERFIRST": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 2
+    },
+    "VR_CONFORM_PROJECTION_NONE": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 0
+    },
+    "VR_CONFORM_PROJECTION_EQUIRECTANGULAR": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 1
+    },
+    "VR_LAYOUT_MONOSCOPIC": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 0
+    },
+    "VR_LAYOUT_STEREO_OVER_UNDER": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 1
+    },
+    "VR_LAYOUT_STEREO_SIDE_BY_SIDE": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 2
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    }
+  }
+}

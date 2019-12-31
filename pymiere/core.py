@@ -34,6 +34,8 @@ def _format_object_to_py(obj):
             return available_subclasses[object_type](obj.get("pymiereId"), **obj["objectValues"])
         elif "ollection" in object_type:
             raise NotImplementedError("Pymiere does not support collections as generic object...")
+        elif object_type == "$":
+            return available_subclasses["Dollar"](obj.get("pymiereId"), **obj["objectValues"])
         else:
             return PymiereGenericObject(obj["pymiereId"], **obj["objectValues"])
     return obj
@@ -200,7 +202,7 @@ class PymiereObject(object):
             # search subclass of PymiereObject
             available_subclasses = {cls.__name__: cls for cls in PymiereObject.__subclasses__()}
             available_subclasses.update({cls.__name__: cls for cls in PymiereCollection.__subclasses__()})
-            # todo : remettre le check quand tout a bien ete genere
+            # todo : put back this check ? I don't think because we handle unknown objects with PymiereGenericObject
             # if result["objectType"] not in available_subclasses:
             #     raise ValueError("Received object of type '{}' that is not implemented in API...".format(result["objectType"]))
             # create key word argument list to create the object
@@ -342,11 +344,9 @@ class PymiereGenericObject(PymiereObject):
             return _format_object_to_py(result)
         return generic_method
 
-class Array():
-    pass
+class Array(PymiereCollection):
+    def __init__(self, pymiere_id, length):
+        super(Array, self).__init__(pymiere_id, "length")
 
-class Dictionary():
-    pass
-
-class unknown(PymiereGenericObject):
-    pass
+    def __getitem__(self, index):
+        return _format_object_to_py(super(Array, self).__getitem__(index))

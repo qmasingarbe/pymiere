@@ -1,0 +1,93 @@
+{
+  "name": "EncoderPreset",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "name": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "Stereo AAC, 44.1 kHz 128 kbps"
+    },
+    "matchName": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "Stereo AAC, 44.1 kHz 128 kbps"
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "writeToFile": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "outputFilePath": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    }
+  }
+}

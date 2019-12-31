@@ -1,0 +1,95 @@
+{
+  "name": "Exporter",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "name": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "AAC Audio"
+    },
+    "classID": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 1313424203
+    },
+    "fileType": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 1094796064
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getPresets": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    }
+  }
+}

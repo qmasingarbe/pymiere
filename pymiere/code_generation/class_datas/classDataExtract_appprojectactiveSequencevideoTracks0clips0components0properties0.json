@@ -1,0 +1,300 @@
+{
+  "name": "ComponentParam",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "displayName": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "Opacity"
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "areKeyframesSupported": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "isEmpty": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "isTimeVarying": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setTimeVarying": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "isTimeVarying": {
+          "dataType": "boolean",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "findNearestKey": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        },
+        "threshold": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "findPreviousKey": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "findNextKey": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getKeys": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "addKey": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "removeKey": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "removeKeyRange": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "startTime": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        },
+        "stopTime": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "keyExistsAtTime": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getValue": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setValue": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "getColorValue": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setColorValue": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "arg1": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getValueAtKey": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setValueAtKey": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getValueAtTime": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setInterpolationTypeAtKey": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        }
+      }
+    }
+  }
+}

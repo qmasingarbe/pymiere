@@ -1,0 +1,415 @@
+{
+  "name": "Marker",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "start": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Time",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "seconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 13.12
+          },
+          "ticks": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "3332689920000"
+          }
+        },
+        "funcs": {
+          "bind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "unbind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setTimeout": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "milliseconds": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setSecondsAsFraction": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "numerator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "denominator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "getFormatted": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "time": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              },
+              "timeDisplay": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "end": {
+      "dataType": "Time",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Time",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "seconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 13.12
+          },
+          "ticks": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "3332689920000"
+          }
+        },
+        "funcs": {
+          "bind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "unbind": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setTimeout": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "eventName": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              },
+              "function": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              },
+              "milliseconds": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setSecondsAsFraction": {
+            "dataType": "undefined",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "numerator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "denominator": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "getFormatted": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "time": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              },
+              "timeDisplay": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "type": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "Comment"
+    },
+    "name": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": ""
+    },
+    "comments": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": ""
+    },
+    "guid": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "25f0db61-d985-dd70-6815-2a5900000024"
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTypeAsComment": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setTypeAsChapter": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setTypeAsSegmentation": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setTypeAsWebLink": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "url": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "frameTarget": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getWebLinkURL": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "getWebLinkFrameTarget": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "setColorByIndex": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "arg1": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getColorByIndex": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    }
+  }
+}

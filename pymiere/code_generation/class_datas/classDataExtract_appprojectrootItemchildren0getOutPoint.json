@@ -1,0 +1,116 @@
+{
+  "name": "Time",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "seconds": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 20
+    },
+    "ticks": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "5080320000000"
+    }
+  },
+  "funcs": {
+    "bind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unbind": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setTimeout": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "eventName": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "function": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        },
+        "milliseconds": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setSecondsAsFraction": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "numerator": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        },
+        "denominator": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "getFormatted": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "time": {
+          "dataType": "Object",
+          "description": "",
+          "help": ""
+        },
+        "timeDisplay": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    }
+  }
+}

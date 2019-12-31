@@ -1,0 +1,1555 @@
+{
+  "name": "$",
+  "type": "object",
+  "description": "",
+  "help": "",
+  "props": {
+    "error": {
+      "dataType": "Error",
+      "description": "The current runtime error",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Error",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "number": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 1
+          },
+          "fileName": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "81"
+          },
+          "line": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 82
+          },
+          "source": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "try{\nfunction reflectToFuncs(reflectForFuncs){\n    var funcs_results = {};\n    for(var i=0; i<reflectForFuncs.methods.length; i++){\n        var func_result = {};\n        var func_info = reflectForFuncs.methods[i];\n        var func_name = func_info.name;\n        func_result.dataType = func_info.dataType;\n        func_result.description = func_info.description;\n        func_result.help = func_info.help;\n        func_result.isCollection = func_info.isCollection;\n        // function args\n        func_result.arguments = {}\n        if(typeof func_info.arguments != \"undefined\"){\n            for(var j=0; j<func_info.arguments.length; j++){\n                var arg_result = {};\n                var arg_info = func_info.arguments[j];\n                var arg_name = arg_info.name;\n                arg_result.dataType = arg_info.dataType;\n                arg_result.defaultValue = arg_info.defaultValue;\n                arg_result.description = arg_info.description;\n                arg_result.help = arg_info.help;\n                func_result.arguments[arg_name] = arg_result;\n            }\n        }\n        funcs_results[func_name] = func_result;\n    }\n    return funcs_results\n}\n\nfunction reflectToDict(obj, exclude_property){\n    //$.writeln(obj.reflect.name);\n    //$.writeln(\" \");\n    var exclude_property = exclude_property || \" \"\n    var result = {};\n    var objReflect = obj.reflect;\n    // simple infos\n    result.name = objReflect.name;\n    result.type = typeof obj;\n    result.description = objReflect.description;\n    result.help = objReflect.help;\n    \n    // properties\n    result.props = {};\n    for(var i in objReflect.properties){\n        var property_result = {};\n        var property_info = objReflect.properties[i];\n        var property_name = property_info.name;\n        if(property_name == \"__proto__\" || property_name == \"anonymous\" || property_name == exclude_property || property_name == \"reflect\"){continue;}\n        property_result.dataType = property_info.dataType;\n        property_result.defaultValue = property_info.defaultValue;\n        property_result.description = property_info.description;\n        property_result.help = property_info.help;\n        property_result.isCollection = property_info.isCollection;\n        property_result.max = property_info.max;\n        property_result.min = property_info.min;\n        property_result.type = property_info.type;\n        if (property_result.dataType == \"boolean\" || property_result.dataType == \"number\" || property_result.dataType == \"string\" || property_result.dataType == \"any\" || property_result.dataType == \"undefined\" || property_result.dataType == \"null\"){\n            // property contains data of builtin type\n            property_result.value = obj[property_name];\n        }else if(typeof obj[property_name] === \"undefined\" || obj[property_name] === null){\n            // property has undefinied value\n            property_result.value = undefined;\n        }else if(property_result.dataType == \"MarkerCollection\"){\n            // property is a marker collection => not the same as other collections, cannot access markers through array\n            property_result.value = reflectToDict(obj[property_name]);\n        }else if(property_result.dataType.indexOf('ollection') !== -1 || property_result.isCollection == true){\n            // property hold a collection of Objects\n            // find name of proprety holding number of item in collection\n            var collectionLength = undefined;\n            for(var j in obj[property_name]){if(j.indexOf('num') == 0){collectionLength = j;}}\n            // collect representation of the objects inside the collection\n            var collectionContent = [];\n            for(var j=0; j<obj[property_name][collectionLength]; j++){\n                collectionContent.push(reflectToDict(obj[property_name][j]));\n            }\n            property_result.value = reflectToDict(obj[property_name]);\n            property_result.value.collectionContent = collectionContent;\n        }else{\n            // property contains an Object\n            //$.writeln(property_name);\n            property_result.value = reflectToDict(obj[property_name]);\n        }\n        result.props[property_name] =property_result;\n    }\n\n    // functions\n    result.funcs = reflectToFuncs(objReflect);\n    \n    return result\n}\n\nJSON.stringify(reflectToDict($, \"global\"));\n//JSON.stringify(reflectToDict($.global, \"$\"));\n//JSON.stringify(reflectToDict(qe, \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.rootItem.children[0].getFootageInterpretation(), \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.rootItem.children[0].getOutPoint(), \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0], \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0].clips, \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0].clips[0], \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.activeSequence.getSettings(), \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.activeSequence.markers.getFirstMarker(), \"bababababa\"));\n//JSON.stringify(reflectToDict(app.project.activeSequence.videoTracks[0].clips[0].components[0], \"bababababa\"));\n//JSON.stringify(reflectToDict($, \"global\"));\n//JSON.stringify(reflectToDict(Folder.current.getFiles(\"*.exe\"), \"bababababa\"));\n}catch(e){e.error=true;JSON.stringify(e)}"
+          },
+          "start": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 0
+          },
+          "end": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 0
+          },
+          "message": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": ""
+          },
+          "name": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": "Error"
+          },
+          "description": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": ""
+          }
+        },
+        "funcs": {
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "version": {
+      "dataType": "string",
+      "description": "The ExtendScript version",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "4.5.6"
+    },
+    "build": {
+      "dataType": "number",
+      "description": "The ExtendScript build number",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "80.1060872"
+    },
+    "buildDate": {
+      "dataType": "Date",
+      "description": "The ExtendScript build date",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Date",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "getDate": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getDay": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getYear": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getFullYear": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getHours": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getMilliseconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getMinutes": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getMonth": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getSeconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getTime": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getTimezoneOffset": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCDate": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCDay": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCFullYear": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCHours": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCMilliseconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCMinutes": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCMonth": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getUTCSeconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "setDate": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setFullYear": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setHours": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setMilliseconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setMinutes": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setSeconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setMonth": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              },
+              "arg2": {
+                "dataType": "unknown",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCDate": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCFullYear": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCHours": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCMilliseconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCMinutes": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCSeconds": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setUTCMonth": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setTime": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "setYear": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "n": {
+                "dataType": "number",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toDateString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toTimeString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleDateString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleTimeString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toGMTString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toUTCString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "valueOf": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toJSON": {
+            "dataType": "any",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "stack": {
+      "dataType": "string",
+      "description": "The current stack trace",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "[81]\nreflectToDict([$:[Helper Object]],\"global\")\n"
+    },
+    "level": {
+      "dataType": "number",
+      "description": "The debugging level",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "flags": {
+      "dataType": "number",
+      "description": "Debugging flags",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 0
+    },
+    "strict": {
+      "dataType": "boolean",
+      "description": "Set to true to enforce strict mode",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "locale": {
+      "dataType": "string",
+      "description": "The current locale",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "fr_FR"
+    },
+    "localize": {
+      "dataType": "boolean",
+      "description": "Set to true to enable auto-localization",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": false
+    },
+    "decimalPoint": {
+      "dataType": "string",
+      "description": "The decimal point separator",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": ","
+    },
+    "memCache": {
+      "dataType": "number",
+      "description": "The memory cache size",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": 102400
+    },
+    "appEncoding": {
+      "dataType": "string",
+      "description": "The default application encoding",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": "CP1252"
+    },
+    "screens": {
+      "dataType": "Rectangle",
+      "description": "An array of rectangles",
+      "help": "",
+      "isCollection": true,
+      "type": "readonly",
+      "value": {
+        "name": "Array",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "0": {
+            "dataType": "Object",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": {
+              "name": "Object",
+              "type": "object",
+              "description": "",
+              "help": "",
+              "props": {
+                "left": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readwrite",
+                  "value": 0
+                },
+                "top": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readwrite",
+                  "value": 0
+                },
+                "right": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readwrite",
+                  "value": 1920
+                },
+                "bottom": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readwrite",
+                  "value": 1030
+                },
+                "primary": {
+                  "dataType": "boolean",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readwrite",
+                  "value": true
+                }
+              },
+              "funcs": {
+                "toLocaleString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "arg1": {
+                      "dataType": "unknown",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "hasOwnProperty": {
+                  "dataType": "boolean",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "name": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "propertyIsEnumerable": {
+                  "dataType": "boolean",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "name": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "isPrototypeOf": {
+                  "dataType": "boolean",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "Object",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "valueOf": {
+                  "dataType": "Object",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toSource": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "unwatch": {
+                  "dataType": "unknown",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "watch": {
+                  "dataType": "unknown",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "": {
+                  "dataType": "unknown",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                }
+              }
+            }
+          },
+          "length": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": 1
+          }
+        },
+        "funcs": {
+          "concat": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "item": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "join": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "separator": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "reverse": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "slice": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "sort": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "pop": {
+            "dataType": "any",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "push": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "splice": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "shift": {
+            "dataType": "any",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "unshift": {
+            "dataType": "number",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "indexOf": {
+            "dataType": "any",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "item": {
+                "dataType": "any",
+                "description": "",
+                "help": ""
+              }
+            }
+          }
+        },
+        "collectionContent": []
+      }
+    },
+    "os": {
+      "dataType": "string",
+      "description": "The operating system",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "Windows 7/64 6.2  "
+    },
+    "fileName": {
+      "dataType": "string",
+      "description": "The file name of the current script",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "81"
+    },
+    "line": {
+      "dataType": "number",
+      "description": "The current line number of the current script",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 93
+    },
+    "hiresTimer": {
+      "dataType": "number",
+      "description": "The elapsed time in microseconds since the last access",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": 29647144
+    },
+    "dictionary": {
+      "dataType": "Dictionary",
+      "description": "The application's main dictionary",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": {
+        "name": "Dictionary",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "getGroups": {
+            "dataType": "Array",
+            "description": "Gets the list of groups.",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getClasses": {
+            "dataType": "Array",
+            "description": "Gets a list of classes by group.",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "getClass": {
+            "dataType": "Reflection",
+            "description": "Gets a class description.",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toXML": {
+            "dataType": "XML",
+            "description": "Converts a Dictionary instance to XML.",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "prefix": {
+                "dataType": "string",
+                "description": "The href prefix.",
+                "help": ""
+              }
+            }
+          }
+        }
+      }
+    },
+    "engineName": {
+      "dataType": "string",
+      "description": "The name of the current engine if set",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "main"
+    },
+    "includePath": {
+      "dataType": "string",
+      "description": "The path for include files",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly",
+      "value": "C:\\Program Files (x86)\\Common Files\\Adobe\\CEP\\extensions\\FridgePPro"
+    },
+    "_pymiere": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Object",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {
+          "generatedIds": {
+            "dataType": "Array",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "type": "readwrite",
+            "value": {
+              "name": "Array",
+              "type": "object",
+              "description": "",
+              "help": "",
+              "props": {
+                "length": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "type": "readwrite",
+                  "value": 0
+                }
+              },
+              "funcs": {
+                "concat": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "item": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "join": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "separator": {
+                      "dataType": "string",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "reverse": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "slice": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "sort": {
+                  "dataType": "unknown",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "pop": {
+                  "dataType": "any",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "push": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "splice": {
+                  "dataType": "Array",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "shift": {
+                  "dataType": "any",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "toLocaleString": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "unshift": {
+                  "dataType": "number",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "what": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                },
+                "toSource": {
+                  "dataType": "string",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {}
+                },
+                "indexOf": {
+                  "dataType": "any",
+                  "description": "",
+                  "help": "",
+                  "isCollection": false,
+                  "arguments": {
+                    "item": {
+                      "dataType": "any",
+                      "description": "",
+                      "help": ""
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "funcs": {
+          "generateId": {
+            "dataType": "any",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "arg1": {
+                "dataType": "unknown",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "hasOwnProperty": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "propertyIsEnumerable": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "isPrototypeOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "valueOf": {
+            "dataType": "Object",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "unwatch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "watch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    },
+    "_jsxFunctions": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite",
+      "value": {
+        "name": "Object",
+        "type": "object",
+        "description": "",
+        "help": "",
+        "props": {},
+        "funcs": {
+          "toString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toLocaleString": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "arg1": {
+                "dataType": "unknown",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "hasOwnProperty": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "propertyIsEnumerable": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "name": {
+                "dataType": "string",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "isPrototypeOf": {
+            "dataType": "boolean",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {
+              "what": {
+                "dataType": "Object",
+                "description": "",
+                "help": ""
+              }
+            }
+          },
+          "valueOf": {
+            "dataType": "Object",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "toSource": {
+            "dataType": "string",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "unwatch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "watch": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          },
+          "": {
+            "dataType": "unknown",
+            "description": "",
+            "help": "",
+            "isCollection": false,
+            "arguments": {}
+          }
+        }
+      }
+    }
+  },
+  "funcs": {
+    "about": {
+      "dataType": "string",
+      "description": "An About box",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "toString": {
+      "dataType": "string",
+      "description": "Converts this object to a string",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "write": {
+      "dataType": "undefined",
+      "description": "Prints text",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "writeln": {
+      "dataType": "undefined",
+      "description": "Prints text",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "bp": {
+      "dataType": "undefined",
+      "description": "Breaks execution",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "getenv": {
+      "dataType": "string",
+      "description": "Returns an environment variable",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "name": {
+          "dataType": "string",
+          "description": "The name of the variable",
+          "help": ""
+        }
+      }
+    },
+    "setenv": {
+      "dataType": "any",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "key": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "value": {
+          "dataType": "string",
+          "description": "Sets an environment variable",
+          "help": ""
+        }
+      }
+    },
+    "sleep": {
+      "dataType": "undefined",
+      "description": "Sleep",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "msecs": {
+          "dataType": "number",
+          "description": "Number of milliseconds to sleep",
+          "help": ""
+        }
+      }
+    },
+    "colorPicker": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "color": {
+          "dataType": "number",
+          "description": "Picks a color; the argument is the color or -1.",
+          "help": ""
+        }
+      }
+    },
+    "evalFile": {
+      "dataType": "any",
+      "description": "Loads and evaluates a file",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "file": {
+          "dataType": "File",
+          "description": "The file to load",
+          "help": ""
+        }
+      }
+    },
+    "list": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "arg1": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "listLO": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "arg1": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "summary": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    },
+    "gc": {
+      "dataType": "undefined",
+      "description": "Runs the garbage collector",
+      "help": "",
+      "isCollection": false,
+      "arguments": {}
+    }
+  }
+}

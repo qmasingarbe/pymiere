@@ -1,4 +1,5 @@
 from pymiere import utils
+import pymiere
 import keyword
 
 TYPE_CORRESPONDENCE = {"string": "str", "boolean": "bool", "number": "float", "any": "any", "undefined": "None"}
@@ -13,7 +14,7 @@ class MyStr(str):
 # todo : merge property and function code
 # todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
 
-def generate_class(object_data):
+def generate_class(object_data, all_classes_names):
     is_collection = False
     # checks
     if list(object_data.keys()) != ["name", "type", "description", "help", "props", "funcs"]:
@@ -59,6 +60,9 @@ def generate_class(object_data):
         elif not prop_info.get("dataType")[0].isupper():
             code = code.add_line("# TODO : this is unsupported dataType {}".format(prop_info.get("dataType")), indent=2)
             # raise ValueError("Don't know how to handle dataType {}".format(prop_info.get("dataType")))
+        elif prop_info.get("dataType") not in all_classes_names:
+            print("Return type '{}' for property getter '{}.{}' seems unknown, using automatic ES class to py object".format(prop_info.get("dataType"), object_data.get("name"), prop_name))
+            code = code.add_line("self.__{0} = _format_object_to_py(self._extend_eval('{0}'))".format(prop_name), indent=2)
         else:
             code = code.add_line("self.__{0} = {1}(**self._extend_eval('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
         code = code.add_line("return self.__{}".format(prop_name), indent=2)
@@ -67,13 +71,11 @@ def generate_class(object_data):
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
         if prop_info.get("type") == "readwrite":
             check_cls = TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in TYPE_CORRESPONDENCE else prop_info.get("dataType")
-            code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
-            if prop_info.get("dataType") == "string":  # property is string
-                line = """self._extend_eval("{0} = '{{}}'".format({0}))"""
-            elif prop_info.get("dataType") in TYPE_CORRESPONDENCE:  # property is builtin tyoe
-                line = """self._extend_eval("{0} = {{}}".format({0}))"""
-            else:  # property is object
-                line = """self._extend_eval("{0} = $._pymiere['{{}}']".format({0}._pymiere_id))"""
+            if check_cls in all_classes_names:
+                code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
+            else:
+                print("value type '{}' for property setter of '{}.{}' seems unknown, no check for type will be performed".format(check_cls, object_data.get("name"), prop_name))
+            line = """self._extend_eval("{0} = {{}}".format(_format_object_to_es({0})))"""
             code = code.add_line(line.format(prop_name), indent=2)
             code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
         elif prop_info.get("type") == "readonly":
@@ -112,34 +114,32 @@ def generate_class(object_data):
         if func_info.get("arguments"):
             # check type of function args in python
             for arg_name, arg_info in func_info.get("arguments").items():
-                if arg_info.get("dataType") == "unknown":
+                if arg_info.get("dataType") in TYPE_CORRESPONDENCE:
+                    check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
+                elif arg_info.get("dataType") not in all_classes_names:
+                    print("arg type '{}' for function '{}.{}({})' seems unknown, no check for type will be performed".format(arg_info.get("dataType"), object_data.get("name"), func_name, arg_name))
                     continue
-                if arg_info.get("dataType") not in TYPE_CORRESPONDENCE:
+                else:
                     # raise NotImplementedError("arg type {} not supported for function {} of {}".format(arg_info.get("dataType"), func_name, object_data.get('name')))
                     check_cls = arg_info.get("dataType")
-                else:
-                    check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line("""self.check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
         # body
         line = ""
         if func_info.get("dataType") != "undefined":
             line = "return "
             if func_info.get("dataType") not in TYPE_CORRESPONDENCE:
-                line += str(func_info.get("dataType")) + "(**"
+                if func_info.get("dataType") not in all_classes_names:
+                    print("Return type '{}' for function '{}.{}' seems unknown, using automatic ES class to py object".format(func_info.get("dataType"), object_data.get("name"), func_name))
+                    line += "_format_object_to_py("
+                else:
+                    line += str(func_info.get("dataType")) + "(**"
         line += 'self._extend_eval("{}('.format(func_name)
         if func_info.get("arguments"):
             line_args = list()
             format_args = list()
             for arg_name, arg_info in func_info.get("arguments").items():
-                if arg_info.get("dataType") == "string":
-                    line_args.append("'{}'")
-                    format_args.append(arg_name)
-                elif arg_info.get("dataType") not in TYPE_CORRESPONDENCE:
-                    line_args.append("$._pymiere['{}']")
-                    format_args.append("{}._pymiere_id".format(arg_name))
-                else:
-                    line_args.append("{}")
-                    format_args.append(arg_name)
+                line_args.append("{}")
+                format_args.append("_format_object_to_es({})".format(arg_name))
             line += ", ".join(line_args)
             line += ')".format({}))'.format(", ".join(format_args))
         else:
@@ -181,10 +181,10 @@ def generate_collection_class(object_data):
     return code
 
 def build_python_from_data(datas, save_path):
-    result_code = "from pymiere.core import PymiereObject, PymiereCollection\n"
+    result_code = "from pymiere.core import PymiereObject, PymiereCollection, Array, _format_object_to_py, _format_object_to_es\n"
     for name, data in datas.items():
         print("Generating object '{}'".format(name))
-        result_code += generate_class(data)
+        result_code += generate_class(data, list(datas.keys())+["Array"])
     # prevent class called $
     result_code = result_code.replace("class $(PymiereObject):", "class Dollar(PymiereObject):")
     result_code = result_code.replace("super($, self).__init__(pymiere_id)", "super(Dollar, self).__init__(pymiere_id)")
@@ -224,26 +224,37 @@ if __name__ == "__main__":
         'app.project.rootItem.children[0].getFootageInterpretation()',
         'app.project.rootItem.children[0].getOutPoint()',
         'app.project.activeSequence.videoTracks[0]',
-        'app.project.activeSequence.videoTracks[0].clips',
         'app.project.activeSequence.videoTracks[0].clips[0]',
         'app.project.activeSequence.getSettings()',
         'app.project.activeSequence.markers.getFirstMarker()',
         'app.project.activeSequence.videoTracks[0].clips[0].components[0]',
         '$',
         'Folder.current.getFiles("*.exe")',
-        'app.project.activeSequence.videoTracks[0].clips[0].components[0].properties[0]'
+        'app.project.activeSequence.videoTracks[0].clips[0].components[0].properties[0]',
+        'app.encoder.getExporters()[0]',
+        'app.encoder.getExporters()[0].getPresets()[0]'
     ]
     unique_objects = dict()
     for thing_to_extract in things_to_extract:
         filename = thing_to_extract.replace(".","").replace("[","").replace("]","").replace("(","").replace(")","").replace("*","").replace('"','')
         data = utils.read_json_file(r"D:\code\prpro\pymiere\code_generation\class_datas\classDataExtract_{}.json".format(filename))
         unique_objects.update(decrypt_object(data))
-    print(unique_objects.keys())
-    illegal_objects = ["Array", "Dictionary"]
+    print("Found classes to create : {}".format(list(unique_objects.keys())))
+
+    # remove illegal python keywords
+    illegal_objects = ["Array"]
     for unique_object_name in unique_objects.keys():
         if keyword.iskeyword(unique_object_name):
-            print("Cannot crate Extend script object '{}' cause it is a python reserved keywork".format(unique_object_name))
+            print("Cannot crate Extend script class '{}' cause it is a python reserved keywork".format(unique_object_name))
             illegal_objects.append(unique_object_name)
     for illegal_object in illegal_objects:
         del unique_objects[illegal_object]
-    build_python_from_data(unique_objects, r"D:\code\prpro\pymiere\autogenerated\globals_all.py")
+
+    # ensure all specific premiere pro classes registered are being created
+    p = pymiere.Pymiere()
+    registered_classes = p.eval_script("$.dictionary.getClasses()").split(",")
+    for registered_class in registered_classes:
+        if registered_class not in unique_objects:
+            print("The class '{}' is registered in Premiere but will not be created".format(registered_class))
+
+    build_python_from_data(unique_objects, r"D:\code\prpro\pymiere\autogenerated\premiere_objects.py")

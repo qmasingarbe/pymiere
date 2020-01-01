@@ -1,54 +1,95 @@
 import os
 import json
+from time import time as current_time
 import requests
+from pymiere.exe_utils import exe_is_running
 
-
-# TODO take into account $ to Dollar when getting an object from ES
+# ----- GLOBALS -----
+PANEL_URL = "http://127.0.0.1:3000"
+ALIVE_TIMEOUT = 2  # check that premiere is still alive every x seconds
 
 
 # ----- FUNCTIONS -----
-def _format_object_to_es(obj):
+def check_premiere_is_alive(crash=True):
     """
-    For functions args and property setter : format the given arg using quote for string, object query for object
-    :param obj: (any) arg to format
-    :return: (str) extend script equivalent for arg
+    Check if premiere is running and if the pymiere CEP panel is active
+    :param crash: (bool) what to do if premiere is not connected
+    :return: (bool) is premiere ready to receive instruction from python
     """
-    if isinstance(obj, str):
-        return "'{}'".format(obj)
-    elif isinstance(obj, PymiereObject):
-        return "$._pymiere['{}']".format(obj._pymiere_id)
-    else:
-        return str(obj)
+    # search in globals the last time premiere was checked and if we need to chack again
+    global last_alive_check_time
+    if "last_alive_check_time" in globals() and current_time() - last_alive_check_time < ALIVE_TIMEOUT:
+        return True
+    # is premiere pro launched
+    running, pid = exe_is_running("adobe premiere pro.exe")
+    if not running:
+        msg = "Premiere Pro is not running"
+        if crash:
+            raise ValueError(msg)
+        print(msg)
+        return False
+    # is the CEP panel reachable
+    try:
+        response = requests.get(PANEL_URL)
+    except requests.exceptions.ConnectionError:
+        msg = "No connection could be established to Premiere Pro, check that the pymiere pannel is loaded"
+        if crash:
+            raise ConnectionError(msg)
+        print(msg)
+        return False
+    if response.content.decode("utf-8") != "Premiere is alive":
+        msg = "Found running server on '{}' but got wrong response for ping".format(PANEL_URL)
+        if crash:
+            raise ValueError()
+        print(msg)
+        return False
+    last_alive_check_time = current_time()
+    return True
 
-def _format_object_to_py(obj):
-    """
-    when getting a value from extend script, create object if it is one or return value for builtin
-    :param obj: (any) value from ES decoded via json, could be an object repr
-    :return: (any) python value
-    """
-    if isinstance(obj, dict) and obj.get("isObject") is True:
-        object_type = obj.get("objectType")
-        available_subclasses = {cls.__name__: cls for cls in PymiereObject.__subclasses__()}
-        available_subclasses.update({cls.__name__: cls for cls in PymiereCollection.__subclasses__()})
-        if object_type in available_subclasses:
-            return available_subclasses[object_type](obj.get("pymiereId"), **obj["objectValues"])
-        elif "ollection" in object_type:
-            raise NotImplementedError("Pymiere does not support collections as generic object...")
-        elif object_type == "$":
-            return available_subclasses["Dollar"](obj.get("pymiereId"), **obj["objectValues"])
-        else:
-            return PymiereGenericObject(obj["pymiereId"], **obj["objectValues"])
-    return obj
 
-def collection_iterator(collection):
+def eval_script(code=None, filepath=None, decode_json=True):
     """
-    This is an iterator, we use it to redirect the use of __iter__ to __getitem__ in order to always query from
-    ExtendScript. It is used by the __iter__ method of the PymiereCollection class
-    :param collection: (PymiereCollection) the collection we want to iter on
-    :return: yield item of the collection
+    Send some ExtendScript code to premiere and wait for the returning value
+    :param code: (str) plain text ExtendScript code
+    :param filepath: (str) path to a jsx file to execute
+    :param decode_json: (bool) decode response using json if possible
+    :return: (any) depend on the returned value
     """
-    for i in range(len(collection)):
-        yield collection[i]
+    # todo voir si ca prends du temps et peut etre mettre un cache ici
+    check_premiere_is_alive(crash=True)
+
+    # arg check
+    if not any([code, filepath]):
+        raise ValueError("Have to supply either code as string or path to a .jsx file to eval some script")
+
+    # load code from file
+    if filepath:
+        if not os.path.isfile(filepath):
+            raise IOError("Specified file '{}' couldn't be found on disk".format(filepath))
+        if not os.path.splitext(filepath)[-1] != "jsx":
+            print("Passing a file '{}' that's not a .jsx to premiere, that's strange...".format(filepath))
+
+        # using encoding 'utf-8-sig' to work with file saved with Adobe ExtendScript Toolkit
+        with open(filepath, encoding='utf-8-sig') as f:
+            code = f.read()
+
+    # send code to premiere (adding try statement to prevent error popup message locking premiere UI)
+    response = requests.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;JSON.stringify(e)}"})
+
+    # handle response
+    response_text = response.text
+    if decode_json is False:
+        return response_text
+    try:
+        response_decoded = json.loads(response_text)
+    except json.decoder.JSONDecodeError as e:
+        # print("No json could be decoded : {}".format(e))
+        return response_text
+
+    # handle error from extend script
+    if isinstance(response_decoded, dict) and "error" in response_decoded and response_decoded["error"] is True:
+        raise ExtendScriptError(response_decoded)
+    return response_decoded
 
 
 # ----- CLASSES -----
@@ -70,69 +111,7 @@ class ExtendScriptError(Exception):
         super(ExtendScriptError, self).__init__(msg)
 
 
-class Pymiere(object):
-    """
-    Main global class handling the communication to the node.js server in the premiere panel
-    """
-    def __init__(self):
-        # global variables
-        self.hostname = '127.0.0.1'
-        self.port = 3000
-        self.url = "http://{}:{}".format(self.hostname, self.port)
-
-        # ping for connection
-        try:
-            response = requests.get(self.url)
-        except requests.exceptions.ConnectionError:
-            # todo premiere is running or not ?
-            raise ConnectionError("No connection could be established to Premiere Pro, check that it is running "
-                                  "and the pymiere pannel is loaded")
-        if response.content.decode("utf-8") != "Premiere is alive":
-            raise ValueError("No Premiere Pro instance found with server running on '{}'".format(self.url))
-
-    def eval_script(self, code=None, filepath=None, decode_json=True):
-        """
-        Send some ExtendScript to premiere and wait for the returning value
-        :param code: (str) plain text ExtendScript code
-        :param filepath: (str) path to a jsx file to execute
-        :param decode_json: (bool) decode response using json if possible
-        :return: (any) depend on the returned value
-        """
-        # arg check
-        if not any([code, filepath]):
-            raise ValueError("Have to supply either code as string or path to a .jsx file to eval some script")
-
-        # load code from file
-        if filepath:
-            if not os.path.isfile(filepath):
-                raise IOError("Specified file '{}' couldn't be found on disk".format(filepath))
-            if not os.path.splitext(filepath)[-1] != "jsx":
-                print("Passing a file '{}' that's not a .jsx to premiere, that's strange...".format(filepath))
-
-            # using encoding 'utf-8-sig' to work with file saved with Adobe ExtendScript Toolkit
-            with open(filepath, encoding='utf-8-sig') as f:
-                code = f.read()
-
-        # send code to premiere (adding try statement to prevent error popup message locking premiere UI)
-        response = requests.post(self.url, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;JSON.stringify(e)}"})
-
-        # handle response
-        response_text = response.text
-        if decode_json is False:
-            return response_text
-        try:
-            response_decoded = json.loads(response_text)
-        except json.decoder.JSONDecodeError as e:
-            # print("No json could be decoded : {}".format(e))
-            return response_text
-
-        # handle error from extend script
-        if isinstance(response_decoded, dict) and "error" in response_decoded and response_decoded["error"] is True:
-            raise ExtendScriptError(response_decoded)
-        return response_decoded
-
-
-class PymiereObject(object):
+class PymiereBaseObject(object):
     """
     base object for every mirror object from ES
     """
@@ -142,11 +121,6 @@ class PymiereObject(object):
         :param pymiere_id: (str) Id of the object we are about to create in extend script, every object is stored in
         $._pymiere var to be accessed easily from python
         """
-        # connect to premiere
-        global PYMIERE
-        if 'PYMIERE' not in globals():
-            PYMIERE = Pymiere()
-
         # if the id is None, the user created this object in python, we want to create it in ExtendScript
         if pymiere_id is None:
             # I don't think we need to create new objects with creation args... Put back if needed
@@ -155,32 +129,13 @@ class PymiereObject(object):
             str_args += ["{}='{}'".format(k, v) if isinstance(v, str) else "{}={}".format(k, v) for k, v in kwargs]"""
             # create code line with 'new' statement and sending it to premiere
             line = "new {}()".format(self.__class__.__name__)
-            result = self._eval_line_returning_object(line)
+            result = _eval_script_returning_object(line)
             pymiere_id = result["pymiereId"]
 
         # store id
         self._pymiere_id = pymiere_id
 
-    @staticmethod
-    def _eval_line_returning_object(line):
-        """
-        Eval the line as ExtendScript code, if the code return an object, it will be properly stored with an id for
-        pymiere to handle it and returned as a representation with the id
-        :param line: (str) line of code to execute in ES
-        :return: (dict) object repr
-        """
-        if not line.endswith(";"):
-            line += ";"
-        script = "var tmp = {}".format(line)
-        script += """\nif(typeof tmp === 'object'){
-            var newPymiereId = $._pymiere.generateId();
-            $._pymiere[newPymiereId] = tmp;
-            tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId});
-        }
-        tmp"""
-        return PYMIERE.eval_script(script, decode_json=True)
-
-    def _extend_eval(self, extend_property, dot_notation=True):
+    def _eval_on_this_object(self, extend_property, dot_notation=True):
         """
         Do something on the current object in extendscript, could be to query or set a property or exec a function
         :param extend_property: (str) code part after object needed to be execute (ex: get property name second => 'second',
@@ -192,7 +147,7 @@ class PymiereObject(object):
         """
         # act on current object using id
         line = "$._pymiere['{}']{}{};".format(self._pymiere_id, "." if dot_notation else "", extend_property)
-        result = self._eval_line_returning_object(line)
+        result = _eval_script_returning_object(line)
 
         if result == "undefined":
             return None
@@ -200,8 +155,8 @@ class PymiereObject(object):
         # if it's an object search if class exists and return objects creation arguments
         if isinstance(result, dict) and "isObject" in result and result["isObject"] is True:
             # search subclass of PymiereObject
-            available_subclasses = {cls.__name__: cls for cls in PymiereObject.__subclasses__()}
-            available_subclasses.update({cls.__name__: cls for cls in PymiereCollection.__subclasses__()})
+            available_subclasses = {cls.__name__: cls for cls in PymiereBaseObject.__subclasses__()}
+            available_subclasses.update({cls.__name__: cls for cls in PymiereBaseCollection.__subclasses__()})
             # todo : put back this check ? I don't think because we handle unknown objects with PymiereGenericObject
             # if result["objectType"] not in available_subclasses:
             #     raise ValueError("Received object of type '{}' that is not implemented in API...".format(result["objectType"]))
@@ -214,7 +169,7 @@ class PymiereObject(object):
     @staticmethod
     def check_init_args(kwargs):
         """
-        Check that we either get all init args (object comes from ES) or no args (we want to create an empty object)
+        Check that we either get all init args (when object comes from ES) or no args (when we want to create an empty object)
         :param kwargs: (dict) keyword arguments at object creation
         """
         kwargs = {k: v is not None for k, v in kwargs.items()}
@@ -229,18 +184,23 @@ class PymiereObject(object):
                 arg_with_value.append(k)
             else:
                 arg_without_value.append(k)
-
         raise ValueError("Creation of object with keywords args doesn't work. Got keywords {} and not {}".format(arg_with_value, arg_without_value))
 
     @staticmethod
     def check_type(obj, cls, name):
+        """
+        Check that the object is an instances of the right type
+        :param obj: (any) object to check
+        :param cls: (type) class the object should be
+        :param name: (str) name of the object being check to print in the error if check fails
+        """
         if cls == any or cls == "any":
             return
         if not isinstance(obj, cls):
             raise ValueError("{} shoud be of type {} but got '{}' (type {})".format(name, cls, obj, type(obj)))
 
 
-class PymiereCollection(PymiereObject):
+class PymiereBaseCollection(PymiereBaseObject):
     def __init__(self, pymiere_id, len_property):
         """
         These is the base class for all collections, interfacing between premiere Collection objects and python builtin
@@ -252,7 +212,7 @@ class PymiereCollection(PymiereObject):
         if pymiere_id is None:
             raise ValueError("Creating a collection from scratch is not supported")
         self.len_property = len_property
-        super(PymiereCollection, self).__init__(pymiere_id)
+        super(PymiereBaseCollection, self).__init__(pymiere_id)
 
     def __getitem__(self, index):
         """
@@ -261,26 +221,26 @@ class PymiereCollection(PymiereObject):
         :return: (dict) dict of kwargs to create the object. The object creation itself append in the subclass for
         code inspection/autocomplete purposes
         """
-        return self._extend_eval("[{}]".format(index), dot_notation=False)
+        return self._eval_on_this_object("[{}]".format(index), dot_notation=False)
 
     def __len__(self):
         """
         Builtin method for length, we ask premiere using the 'num...' property of the object
         :return: (int) length of the collection
         """
-        return self._extend_eval(self.len_property)
+        return self._eval_on_this_object(self.len_property)
 
     def __iter__(self):
         """
         Builtin method for iteration, we return our custom iterator to redirect to the __getitem__ method
         :return: (generator)
         """
-        return collection_iterator(self)
+        return _collection_iterator(self)
 
 
-class PymiereGenericObject(PymiereObject):
+class PymiereGenericObject(PymiereBaseObject):
     """
-    For all extend scrip object that are not a specific class, works like the others but does not support code completion
+    For all extend scrip objects that are not a specific class, works like the others but does not support code completion
     """
     def __init__(self, pymiere_id, *args, **kwargs):
         super(PymiereGenericObject, self).__init__(pymiere_id)
@@ -296,11 +256,11 @@ class PymiereGenericObject(PymiereObject):
             return super(PymiereGenericObject, self).__setattr__(key, value)
 
         # check prop is available in extend script
-        available_props = PYMIERE.eval_script("$._pymiere['{}'].reflect.properties".format(self._pymiere_id), decode_json=False).split(",")
+        available_props = eval_script("$._pymiere['{}'].reflect.properties".format(self._pymiere_id), decode_json=False).split(",")
         if key not in available_props:
             raise ValueError("Cannot set property '{}' of object '{}' because it does not exists".format(key, self))
         # check prop is writable
-        prop_type = PYMIERE.eval_script("$._pymiere['{}'].reflect.properties[{}].type".format(self._pymiere_id, available_props.index(key)), decode_json=False)
+        prop_type = eval_script("$._pymiere['{}'].reflect.properties[{}].type".format(self._pymiere_id, available_props.index(key)), decode_json=False)
         if prop_type != "readwrite":
             raise ValueError("Cannot write to property '{}' of '{}' because it is {}".format(key, self, prop_type))
 
@@ -318,15 +278,15 @@ class PymiereGenericObject(PymiereObject):
             return super(PymiereGenericObject, self).__getattribute__(item)
 
         # search this item in methods and properties of extend script object
-        available_props = PYMIERE.eval_script("$._pymiere['{}'].reflect.properties".format(self._pymiere_id), decode_json=False).split(",")
-        available_funcs = PYMIERE.eval_script("$._pymiere['{}'].reflect.methods".format(self._pymiere_id), decode_json=False).split(",")
+        available_props = eval_script("$._pymiere['{}'].reflect.properties".format(self._pymiere_id), decode_json=False).split(",")
+        available_funcs = eval_script("$._pymiere['{}'].reflect.methods".format(self._pymiere_id), decode_json=False).split(",")
         if item not in available_props and item not in available_funcs:
             raise ValueError("Cannot get function/property '{}' because it does not exist on object '{}'".format(item, self))
 
         # getting a property value
         if item in available_props:
             line = "$._pymiere['{}'].{};".format(self._pymiere_id, item)
-            result = self._eval_line_returning_object(line)
+            result = _eval_script_returning_object(line)
             return _format_object_to_py(result)
 
         # using a function
@@ -340,13 +300,93 @@ class PymiereGenericObject(PymiereObject):
             line = "$._pymiere['{}'].{}({});".format(self._pymiere_id, item, ",".join(args_line))
 
             # execute function
-            result = self._eval_line_returning_object(line)
+            result = _eval_script_returning_object(line)
             return _format_object_to_py(result)
         return generic_method
+    
+    def inspect(self):
+        """
+        Print functions and properties available on this object, can't be autocompleted
+        """
+        # todo
+        raise NotImplementedError()
 
-class Array(PymiereCollection):
+
+class Array(PymiereBaseCollection):
     def __init__(self, pymiere_id, length):
         super(Array, self).__init__(pymiere_id, "length")
 
     def __getitem__(self, index):
         return _format_object_to_py(super(Array, self).__getitem__(index))
+
+
+# ----- PRIVATE FUNCTIONS ----
+def _format_object_to_es(obj):
+    """
+    For functions args and property setter : format the given arg using quote for string, object query for object
+    :param obj: (any) arg to format
+    :return: (str) extend script equivalent for arg
+    """
+    if isinstance(obj, str):
+        return "'{}'".format(obj)
+    elif isinstance(obj, PymiereBaseObject):
+        return "$._pymiere['{}']".format(obj._pymiere_id)
+    else:
+        return str(obj)
+
+
+def _format_object_to_py(obj):
+    """
+    when getting a value from extend script, create object if it is one or return value for builtin
+    :param obj: (any) value from ES decoded via json, could be an object repr
+    :return: (any) python value
+    """
+    if isinstance(obj, dict) and obj.get("isObject") is True:
+        object_type = obj.get("objectType")
+        available_subclasses = {cls.__name__: cls for cls in PymiereBaseObject.__subclasses__()}
+        available_subclasses.update({cls.__name__: cls for cls in PymiereBaseCollection.__subclasses__()})
+        if object_type in available_subclasses:
+            return available_subclasses[object_type](obj.get("pymiereId"), **obj["objectValues"])
+        elif "ollection" in object_type:
+            raise NotImplementedError("Pymiere does not support collections as generic object...")
+        elif object_type == "$":
+            return available_subclasses["Dollar"](obj.get("pymiereId"), **obj["objectValues"])
+        else:
+            return PymiereGenericObject(obj["pymiereId"], **obj["objectValues"])
+    return obj
+
+
+def _eval_script_returning_object(line, as_kwargs=False):
+    """
+    Eval the line as ExtendScript code, if the code return an object, it will be properly stored with an id for
+    pymiere to handle it and returned as a representation with the id
+    :param line: (str) line of code to execute in ES
+    :param as_kwargs: (bool) if object return only kwargs+pymiere_id to directly pass it to class init
+    :return: (dict) object repr
+    """
+    if not line.endswith(";"):
+        line += ";"
+    script = "var tmp = {}".format(line)
+    script += """\nif(typeof tmp === 'object'){
+            var newPymiereId = $._pymiere.generateId();
+            $._pymiere[newPymiereId] = tmp;
+            tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId});
+        }
+        tmp"""
+    result = eval_script(script, decode_json=True)
+    if as_kwargs and isinstance(result, dict) and result.get("isObject"):
+        kwargs = result.get("objectValues", dict())
+        kwargs.update(pymiere_id=result["pymiereId"])
+        return kwargs
+    return result
+
+
+def _collection_iterator(collection):
+    """
+    This is an iterator, we use it to redirect the use of __iter__ to __getitem__ in order to always query from
+    ExtendScript. It is used by the __iter__ method of the PymiereBaseCollection class
+    :param collection: (PymiereBaseCollection) the collection we want to iter on
+    :return: yield item of the collection
+    """
+    for i in range(len(collection)):
+        yield collection[i]

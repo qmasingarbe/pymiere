@@ -2,15 +2,6 @@ from pymiere import utils
 import pymiere
 import keyword
 
-TYPE_CORRESPONDENCE = {"string": "str", "boolean": "bool", "number": "float", "any": "any", "undefined": "None"}
-
-class MyStr(str):
-    """Subclass of string to add code line quicker"""
-    def add_line(self, content, indent=0):
-        return MyStr(self + "\n" + indent*4*" " + content)
-    def add_empty_line(self):
-        return MyStr(self + "\n")
-
 # todo : merge property and function code
 # todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
 
@@ -28,9 +19,9 @@ def generate_class(object_data, all_classes_names):
         return generate_collection_class(object_data)
 
     # ----- INIT CLASS ------
-    code = MyStr()
+    code = utils.MyStr()
     # definition
-    code = code.add_line("class {}(PymiereObject):".format(object_data.get("name")))
+    code = code.add_line("class {}(PymiereBaseObject):".format(object_data.get("name")))
     # docstring
     if object_data.get("help") or object_data.get("description"):
         raise NotImplementedError()
@@ -55,27 +46,27 @@ def generate_class(object_data, all_classes_names):
         code = code.add_line("def {}(self):".format(prop_name), indent=1)
         if prop_info.get("description"):
             code = code.add_line('"""{}"""'.format(prop_info.get("description")), indent=2)
-        if prop_info.get("dataType") in TYPE_CORRESPONDENCE:
-            code = code.add_line("self.__{0} = self._extend_eval('{0}')".format(prop_name), indent=2)
+        if prop_info.get("dataType") in utils.TYPE_CORRESPONDENCE:
+            code = code.add_line("self.__{0} = self._eval_on_this_object('{0}')".format(prop_name), indent=2)
         elif not prop_info.get("dataType")[0].isupper():
             code = code.add_line("# TODO : this is unsupported dataType {}".format(prop_info.get("dataType")), indent=2)
             # raise ValueError("Don't know how to handle dataType {}".format(prop_info.get("dataType")))
         elif prop_info.get("dataType") not in all_classes_names:
             print("Return type '{}' for property getter '{}.{}' seems unknown, using automatic ES class to py object".format(prop_info.get("dataType"), object_data.get("name"), prop_name))
-            code = code.add_line("self.__{0} = _format_object_to_py(self._extend_eval('{0}'))".format(prop_name), indent=2)
+            code = code.add_line("self.__{0} = _format_object_to_py(self._eval_on_this_object('{0}'))".format(prop_name), indent=2)
         else:
-            code = code.add_line("self.__{0} = {1}(**self._extend_eval('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
+            code = code.add_line("self.__{0} = {1}(**self._eval_on_this_object('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
         code = code.add_line("return self.__{}".format(prop_name), indent=2)
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
         if prop_info.get("type") == "readwrite":
-            check_cls = TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in TYPE_CORRESPONDENCE else prop_info.get("dataType")
+            check_cls = utils.TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in utils.TYPE_CORRESPONDENCE else prop_info.get("dataType")
             if check_cls in all_classes_names:
                 code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
             else:
                 print("value type '{}' for property setter of '{}.{}' seems unknown, no check for type will be performed".format(check_cls, object_data.get("name"), prop_name))
-            line = """self._extend_eval("{0} = {{}}".format(_format_object_to_es({0})))"""
+            line = """self._eval_on_this_object("{0} = {{}}".format(_format_object_to_es({0})))"""
             code = code.add_line(line.format(prop_name), indent=2)
             code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
         elif prop_info.get("type") == "readonly":
@@ -108,14 +99,14 @@ def generate_class(object_data, all_classes_names):
                     raise NotImplementedError("help")
                 if arg_info.get("description"):
                     code = code.add_line(":param {}: {}".format(arg_name, arg_info.get("description")), indent=2)
-                pytype = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
+                pytype = utils.TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in utils.TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line(":type {}: {}".format(arg_name, pytype), indent=2)
             code = code.add_line('"""', indent=2)
         if func_info.get("arguments"):
             # check type of function args in python
             for arg_name, arg_info in func_info.get("arguments").items():
-                if arg_info.get("dataType") in TYPE_CORRESPONDENCE:
-                    check_cls = TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in TYPE_CORRESPONDENCE else arg_info.get("dataType")
+                if arg_info.get("dataType") in utils.TYPE_CORRESPONDENCE:
+                    check_cls = utils.TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in utils.TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 elif arg_info.get("dataType") not in all_classes_names:
                     print("arg type '{}' for function '{}.{}({})' seems unknown, no check for type will be performed".format(arg_info.get("dataType"), object_data.get("name"), func_name, arg_name))
                     continue
@@ -127,13 +118,13 @@ def generate_class(object_data, all_classes_names):
         line = ""
         if func_info.get("dataType") != "undefined":
             line = "return "
-            if func_info.get("dataType") not in TYPE_CORRESPONDENCE:
+            if func_info.get("dataType") not in utils.TYPE_CORRESPONDENCE:
                 if func_info.get("dataType") not in all_classes_names:
                     print("Return type '{}' for function '{}.{}' seems unknown, using automatic ES class to py object".format(func_info.get("dataType"), object_data.get("name"), func_name))
                     line += "_format_object_to_py("
                 else:
                     line += str(func_info.get("dataType")) + "(**"
-        line += 'self._extend_eval("{}('.format(func_name)
+        line += 'self._eval_on_this_object("{}('.format(func_name)
         if func_info.get("arguments"):
             line_args = list()
             format_args = list()
@@ -144,7 +135,7 @@ def generate_class(object_data, all_classes_names):
             line += ')".format({}))'.format(", ".join(format_args))
         else:
             line += ')")'
-        if func_info.get("dataType") != "undefined" and func_info.get("dataType") not in TYPE_CORRESPONDENCE:
+        if func_info.get("dataType") != "undefined" and func_info.get("dataType") not in utils.TYPE_CORRESPONDENCE:
             line += ")"
         code = code.add_line(line, indent=2)
         code = code.add_empty_line()
@@ -156,7 +147,7 @@ def generate_collection_class(object_data):
     :param object_data: (dict) object infos
     :return: (str) python code
     """
-    code = MyStr()
+    code = utils.MyStr()
     class_name = object_data.get("name")
     # find the num property holding the length of the collection. The length property does not have the real length...
     length_property = [prop_name for prop_name in object_data.get("props").keys() if "num" in prop_name]
@@ -171,7 +162,7 @@ def generate_collection_class(object_data):
     else:
         item_class_name = class_name.replace("Collection", "")
     # write class declaration
-    code = code.add_line("class {}(PymiereCollection):".format(class_name))
+    code = code.add_line("class {}(PymiereBaseCollection):".format(class_name))
     code = code.add_line("def __init__(self, pymiere_id, {}):".format(length_property), indent=1)
     code = code.add_line('super({}, self).__init__(pymiere_id, "{}")'.format(class_name, length_property), indent=2)
     code = code.add_empty_line()
@@ -181,12 +172,12 @@ def generate_collection_class(object_data):
     return code
 
 def build_python_from_data(datas, save_path):
-    result_code = "from pymiere.core import PymiereObject, PymiereCollection, Array, _format_object_to_py, _format_object_to_es\n"
+    result_code = "from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es\n"
     for name, data in datas.items():
         print("Generating object '{}'".format(name))
         result_code += generate_class(data, list(datas.keys())+["Array"])
     # prevent class called $
-    result_code = result_code.replace("class $(PymiereObject):", "class Dollar(PymiereObject):")
+    result_code = result_code.replace("class $(PymiereBaseObject):", "class Dollar(PymiereBaseObject):")
     result_code = result_code.replace("super($, self).__init__(pymiere_id)", "super(Dollar, self).__init__(pymiere_id)")
     with open(save_path, "w") as f:
         f.write(result_code)
@@ -198,7 +189,7 @@ def decrypt_object(d):
     if d.get("name") in ["Object", "object"]:
         # print("Simple object detected :", d.get("name"))
         return objects
-    if d.get("type") in TYPE_CORRESPONDENCE:
+    if d.get("type") in utils.TYPE_CORRESPONDENCE:
         # print("Type is not object : ", d.get("type"))
         return objects
     if d.get("name") not in objects:
@@ -251,8 +242,8 @@ if __name__ == "__main__":
         del unique_objects[illegal_object]
 
     # ensure all specific premiere pro classes registered are being created
-    p = pymiere.Pymiere()
-    registered_classes = p.eval_script("$.dictionary.getClasses()").split(",")
+    from pymiere.core import eval_script
+    registered_classes = eval_script("$.dictionary.getClasses()").split(",")
     for registered_class in registered_classes:
         if registered_class not in unique_objects:
             print("The class '{}' is registered in Premiere but will not be created".format(registered_class))

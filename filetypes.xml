@@ -6,6 +6,7 @@
       <mapping pattern="todo" type="PLAIN_TEXT" />
       <mapping ext="qml" type="PLAIN_TEXT" />
       <mapping ext="kv" type="PLAIN_TEXT" />
+      <mapping pattern="extract_start_vars.py" type="Python" />
     </extensionMap>
   </component>
 </application>

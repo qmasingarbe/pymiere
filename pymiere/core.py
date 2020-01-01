@@ -1,10 +1,13 @@
 import os
 import json
+from time import time as current_time
 import requests
 from pymiere.exe_utils import exe_is_running
 
 # ----- GLOBALS -----
 PANEL_URL = "http://127.0.0.1:3000"
+ALIVE_TIMEOUT = 2  # check that premiere is still alive every x seconds
+
 
 # ----- FUNCTIONS -----
 def check_premiere_is_alive(crash=True):
@@ -13,6 +16,10 @@ def check_premiere_is_alive(crash=True):
     :param crash: (bool) what to do if premiere is not connected
     :return: (bool) is premiere ready to receive instruction from python
     """
+    # search in globals the last time premiere was checked and if we need to chack again
+    global last_alive_check_time
+    if "last_alive_check_time" in globals() and current_time() - last_alive_check_time < ALIVE_TIMEOUT:
+        return True
     # is premiere pro launched
     running, pid = exe_is_running("adobe premiere pro.exe")
     if not running:
@@ -36,7 +43,9 @@ def check_premiere_is_alive(crash=True):
             raise ValueError()
         print(msg)
         return False
+    last_alive_check_time = current_time()
     return True
+
 
 def eval_script(code=None, filepath=None, decode_json=True):
     """
@@ -82,6 +91,7 @@ def eval_script(code=None, filepath=None, decode_json=True):
         raise ExtendScriptError(response_decoded)
     return response_decoded
 
+
 # ----- CLASSES -----
 class ExtendScriptError(Exception):
     """
@@ -99,6 +109,7 @@ class ExtendScriptError(Exception):
             msg += "\n {}\t{}".format(line+1, source[line])
         # previous line
         super(ExtendScriptError, self).__init__(msg)
+
 
 class PymiereBaseObject(object):
     """
@@ -300,13 +311,15 @@ class PymiereGenericObject(PymiereBaseObject):
         # todo
         raise NotImplementedError()
 
+
 class Array(PymiereBaseCollection):
     def __init__(self, pymiere_id, length):
         super(Array, self).__init__(pymiere_id, "length")
 
     def __getitem__(self, index):
         return _format_object_to_py(super(Array, self).__getitem__(index))
-    
+
+
 # ----- PRIVATE FUNCTIONS ----
 def _format_object_to_es(obj):
     """
@@ -320,6 +333,7 @@ def _format_object_to_es(obj):
         return "$._pymiere['{}']".format(obj._pymiere_id)
     else:
         return str(obj)
+
 
 def _format_object_to_py(obj):
     """
@@ -340,6 +354,7 @@ def _format_object_to_py(obj):
         else:
             return PymiereGenericObject(obj["pymiereId"], **obj["objectValues"])
     return obj
+
 
 def _eval_script_returning_object(line, as_kwargs=False):
     """
@@ -364,6 +379,7 @@ def _eval_script_returning_object(line, as_kwargs=False):
         kwargs.update(pymiere_id=result["pymiereId"])
         return kwargs
     return result
+
 
 def _collection_iterator(collection):
     """

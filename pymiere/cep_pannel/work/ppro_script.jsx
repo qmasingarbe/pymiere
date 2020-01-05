@@ -34,16 +34,5 @@ $._pymiere.generateId = function(){
 	return result;
 }
 
-// debug function to interact with javascript in panel
-$._jsxFunctions = {
-	debug_print : function(data) {
-		alert(data);
-	},
-	
-	returnSomething : function(){
-		return "String from jsx"
-	}
-};
-
 // replacer function to pass to json.stringify preventing infinite loop for $ objects
 function internal_variables_replacer(key, value){if(key !== "tmp" && key !== "_pymiere"){return value}}

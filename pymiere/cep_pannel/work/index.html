@@ -1,100 +1,59 @@
 <!doctype html>
-<!--
-/*************************************************************************
-* ADOBE CONFIDENTIAL
-* ___________________
-*
-* Copyright 2019 Adobe
-* All Rights Reserved.
-*
-* NOTICE: Adobe permits you to use, modify, and distribute this file in
-* accordance with the terms of the Adobe license agreement accompanying
-* it. If you have received this file from a source other than Adobe,
-* then your use, modification, or distribution of it requires the prior
-* written permission of Adobe. 
-**************************************************************************/
--->
 <html>
+	<head>
+		<meta charset="utf-8">
+		<script src="./lib/CSInterface.js"></script>
+		<script type="text/javascript">
+			// Launch node server
+			window.onload = function () {
+				var http = require('http');
 
-<head>
-	<meta charset="utf-8">
-	<!--<script src="./lib/CEPEngine_extensions.js"></script>-->
-	<script src="./lib/CSInterface.js"></script>
-	<script src="./lib/jquery-1.9.1.js"></script>
-	<script src="./lib/Vulcan.js"></script>
-	<script type="text/javascript">
-		function jsToPPro(){
-			var cs = new CSInterface;
-			cs.evalScript('$._jsxFunctions.debug_print("hello world")');
-		}
-		function PProToJs(){
-			var cs = new CSInterface;
-			cs.evalScript('$._jsxFunctions.returnSomething()', returnFromPPro);
-		}
-		function returnFromPPro(data){
-			window.alert(data);
-		}
-		function launch_python(){
-			window.cep.process.createProcess('C:\\Users\\Quentin\\AppData\\Local\\Programs\\Python\\Python37\\python.exe', 'D:\\code\\prpro\\hello.py');
-			window.alert("Done");
-		}
-		// Launch node server
-		window.onload = function () {
-			//var localServer = cep_node.require(__dirname + '/server/main.js')();
-			//var localServer = require('./server/main.js')();
-			var http = require('http');
+				var hostname = '127.0.0.1';
+				var port = 3000;
 
-			var hostname = '127.0.0.1';
-			var port = 3000;
-
-			function handleConnection(req, res){
-				res.statusCode = 200;
-				if(req.method == "GET"){
-					res.setHeader('Content-Type', 'text/plain');
-					res.end('Premiere is alive');
+				function handleConnection(req, res){
+					res.statusCode = 200;
+					if(req.method == "GET"){
+						// ping
+						res.setHeader('Content-Type', 'text/plain');
+						res.end('Premiere is alive');
+					}
+					if(req.method == "POST"){
+						// download all body data (req only get header)
+						var data = []
+						req.on('data', function(chunk){
+							data.push(chunk)
+						})
+						req.on('end', function(){
+							// when everything is downloaded, send it to extend script, sending back the response
+							var parsed_data = JSON.parse(data);
+							console.log("\nExtendScript code to be executed :")
+							console.log(parsed_data["to_eval"]);
+							var cs = new CSInterface;
+							cs.evalScript(parsed_data["to_eval"], function(extendScript_return){
+								console.log("ExtendScript sent back :")
+								console.log(extendScript_return);
+								// html response
+								res.setHeader('Content-Type', 'text/plain');
+								res.end(extendScript_return);
+							});
+						})
+					}
 				}
-				if(req.method == "POST"){
-					// download all body data (req only get header)
-					var data = []
-					req.on('data', function(chunk){
-						data.push(chunk)
-					})
-					req.on('end', function(){
-						// when everything is downloaded, send it to extend script, sending back the response
-						var parsed_data = JSON.parse(data);
-						console.log("\nExtendScript code to be executed :")
-						console.log(parsed_data["to_eval"]);
-						var cs = new CSInterface;
-						cs.evalScript(parsed_data["to_eval"], function(extendScript_return){
-							console.log("ExtendScript sent back :")
-							console.log(extendScript_return);
-							// html response
-							res.setHeader('Content-Type', 'text/plain');
-							res.end(extendScript_return);
-						});
-					})
-				}
+
+				var server = http.createServer(handleConnection);
+
+				server.listen(port, hostname, function(){
+				  console.log('Server running at http://' + String(hostname) + ':' + String(port));
+				});
 			}
+		</script>
+	</head>
 
-			var server = http.createServer(handleConnection);
-
-			server.listen(port, hostname, function(){
-			  console.log('Server running at http://' + String(hostname) + ':' + String(port));
-			});
-		}
-	</script>
-</head>
-
-<body>
-	<div>
-		<h2>Fridge panel</h2>
-	</div>
-	<div>
-		<button onClick="jsToPPro()">jsToPPro</button>
-		<button onClick="PProToJs()">PProToJs</button>
-		<button onClick="launch_python()">Lance python</button>
-	</div>
-
-</body>
+	<body>
+		<div>
+			<p>Pymiere is ready to receive instruction from Python</p>
+		</div>
+	</body>
 
 </html>

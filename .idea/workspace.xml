@@ -4,7 +4,10 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa81a7b1-c3c8-4523-9f0b-11f210105579" name="Default" comment="PArt of he cep panel backup" />
+    <list default="true" id="aa81a7b1-c3c8-4523-9f0b-11f210105579" name="Default" comment="Pycharm shit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test2.py" beforeDir="false" afterPath="$PROJECT_DIR$/test2.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -67,7 +70,7 @@
       <recent name="D:\code\prpro\pymiere" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.create_py_from_start_vars">
+  <component name="RunManager" selected="Python.test2">
     <configuration name="create_py_from_class_data" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="prpro" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -187,9 +190,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.test2" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.start_vars" />
-        <item itemvalue="Python.test2" />
         <item itemvalue="Python.create_py_from_class_data" />
         <item itemvalue="Python.create_py_from_start_vars" />
       </list>
@@ -222,14 +225,7 @@
       <workItem from="1578238301565" duration="6576000" />
       <workItem from="1578247705297" duration="287000" />
       <workItem from="1578248085147" duration="167000" />
-      <workItem from="1578253476617" duration="1030000" />
-    </task>
-    <task id="LOCAL-00002" summary="Offset object construction on collection getitem in generated code for autocompletion">
-      <created>1576661933243</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1576661933243</updated>
+      <workItem from="1578253476617" duration="2639000" />
     </task>
     <task id="LOCAL-00003" summary="Add check for init args">
       <created>1576665673236</created>
@@ -567,14 +563,20 @@
       <option name="project" value="LOCAL" />
       <updated>1578247647735</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="Pycharm shit">
+      <created>1578254568261</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1578254568262</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Handle unknown or object type for setter/getter and function return/args&#10;Use function py to es and es to py for handling all objects casting&#10;New json for creation&#10;Add check and error message for premiere registered classes" />
     <MESSAGE value="New extract for Exporter and ExporterPresets" />
     <MESSAGE value="New Array based on PymiereCollection to mimic ES Array, take into account $ to Dollar in es to py func" />
     <MESSAGE value="All class data extracted from premiere in json format" />
@@ -599,33 +601,34 @@
     <MESSAGE value="fix tests" />
     <MESSAGE value="Git not ignore xml" />
     <MESSAGE value="PArt of he cep panel backup" />
-    <option name="LAST_COMMIT_MESSAGE" value="PArt of he cep panel backup" />
+    <MESSAGE value="Pycharm shit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pycharm shit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="361" y="72" key="#Deployment" timestamp="1578247386385">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="361" y="72" key="#Deployment/0.0.1536.824@0.0.1536.824" timestamp="1578247386385" />
-    <state x="130" y="0" width="1406" height="824" key="CommitChangelistDialog2" timestamp="1578254541011">
+    <state x="130" y="0" width="1406" height="824" key="CommitChangelistDialog2" timestamp="1578254566978">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="130" y="0" width="1406" height="824" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578254541011" />
-    <state width="1493" height="236" key="GridCell.Tab.0.bottom" timestamp="1578247664918">
+    <state x="130" y="0" width="1406" height="824" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1578254566978" />
+    <state width="1493" height="382" key="GridCell.Tab.0.bottom" timestamp="1578259278408">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578247664918" />
-    <state width="1493" height="236" key="GridCell.Tab.0.center" timestamp="1578247664918">
+    <state width="1493" height="382" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1578259278408" />
+    <state width="1493" height="382" key="GridCell.Tab.0.center" timestamp="1578259278407">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1578247664918" />
-    <state width="1493" height="236" key="GridCell.Tab.0.left" timestamp="1578247664917">
+    <state width="1493" height="382" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1578259278407" />
+    <state width="1493" height="382" key="GridCell.Tab.0.left" timestamp="1578259278407">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1578247664917" />
-    <state width="1493" height="236" key="GridCell.Tab.0.right" timestamp="1578247664918">
+    <state width="1493" height="382" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1578259278407" />
+    <state width="1493" height="382" key="GridCell.Tab.0.right" timestamp="1578259278408">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="236" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1578247664918" />
+    <state width="1493" height="382" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1578259278408" />
     <state width="1493" height="261" key="GridCell.Tab.1.bottom" timestamp="1577915710658">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -650,17 +653,17 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="56" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1578254518050" />
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1578247649483">
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2" timestamp="1578254570757">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578247649483" />
+    <state x="361" y="146" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1578254570757" />
     <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1578248115902">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="578" y="330" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1578248115902" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/prpro$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1578241975943" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/prpro$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1578259278396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/prpro$core.coverage" NAME="core Coverage Results" MODIFIED="1577898267593" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pymiere" />
     <SUITE FILE_PATH="coverage/prpro$extract_class_data.coverage" NAME="extract_class_data Coverage Results" MODIFIED="1578237760809" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pymiere/code_generation" />
     <SUITE FILE_PATH="coverage/prpro$start_vars.coverage" NAME="start_vars Coverage Results" MODIFIED="1578238664686" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pymiere/autogenerated" />

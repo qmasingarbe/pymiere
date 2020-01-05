@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ExtensionList>
-	<Extension Id="com.quentin.FridgePPro">
+	<Extension Id="com.qmasingarbe.PymiereLink">
         <HostList>
             <Host Name="PPRO" Port="7777"/>
         </HostList>

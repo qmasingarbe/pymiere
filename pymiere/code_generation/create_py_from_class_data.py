@@ -2,7 +2,6 @@ from pymiere import utils
 import pymiere
 import keyword
 
-# todo : merge property and function code
 # todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
 
 

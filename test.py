@@ -11,7 +11,7 @@ JSON.stringify(all_tracks)"""
 
 if __name__== "__main__":
     start_time = time.time()
-    sequence = pymiere.app.project.activeSequence
+    sequence = pymiere.objects.app.project.activeSequence
     print(sequence.name)
     print(sequence.id)
     sequence.name = "nom sympa"

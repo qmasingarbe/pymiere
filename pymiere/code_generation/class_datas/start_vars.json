@@ -1,0 +1,375 @@
+{
+  "name": "global",
+  "type": "root",
+  "description": "",
+  "help": "",
+  "props": {
+    "NaN": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "Infinity": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "undefined": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "qe": {
+      "dataType": "unknown",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "app": {
+      "dataType": "Application",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "document": {
+      "dataType": "Document",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "ProjectItemType": {
+      "dataType": "ProjecItemType",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "ScratchDiskType": {
+      "dataType": "ScratchDiskType",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "RegisteredDirectories": {
+      "dataType": "RegisteredDirectoriesType",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "UtilityFunctions": {
+      "dataType": "UtilityFunctionsType",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "$": {
+      "dataType": "$",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "Math": {
+      "dataType": "Math",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readonly"
+    },
+    "premierepro13": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "AEFTBridge": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "PHXSBridge": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "CCXHostBridge": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "f": {
+      "dataType": "File",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    },
+    "JSON": {
+      "dataType": "Object",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "type": "readwrite"
+    }
+  },
+  "funcs": {
+    "encodeURI": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "text": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "encodeURIComponent": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "text": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "decodeURI": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "uri": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "decodeURIComponent": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "uri": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "escape": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "text": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "eval": {
+      "dataType": "any",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "source": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "uneval": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "what": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "isFinite": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "what": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "isNaN": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "what": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "parseInt": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "text": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        },
+        "base": {
+          "dataType": "number",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "parseFloat": {
+      "dataType": "number",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "txt": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "unescape": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "uri": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "localize": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "what": {
+          "dataType": "any",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "isXMLName": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "name": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "setDefaultXMLNamespace": {
+      "dataType": "any",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "ns": {
+          "dataType": "Namespace",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "alert": {
+      "dataType": "undefined",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "prompt": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "confirm": {
+      "dataType": "boolean",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "prompt": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    },
+    "prompt": {
+      "dataType": "string",
+      "description": "",
+      "help": "",
+      "isCollection": false,
+      "arguments": {
+        "prompt": {
+          "dataType": "string",
+          "description": "",
+          "help": ""
+        }
+      }
+    }
+  }
+}

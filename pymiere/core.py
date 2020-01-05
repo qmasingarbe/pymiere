@@ -370,7 +370,7 @@ def _eval_script_returning_object(line, as_kwargs=False):
     script += """\nif(typeof tmp === 'object'){
             var newPymiereId = $._pymiere.generateId();
             $._pymiere[newPymiereId] = tmp;
-            tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId});
+            tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId}, internal_variables_replacer, 0, 1);
         }
         tmp"""
     result = eval_script(script, decode_json=True)

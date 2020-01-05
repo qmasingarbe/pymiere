@@ -4450,8 +4450,8 @@ class ComponentParamCollection(PymiereBaseCollection):
         return ComponentParam(**super(ComponentParamCollection, self).__getitem__(index))
 
 class Dollar(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, _pymiere=None, _jsxFunctions=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'error':error, 'version':version, 'build':build, 'buildDate':buildDate, 'stack':stack, 'level':level, 'flags':flags, 'strict':strict, 'locale':locale, 'localize':localize, 'decimalPoint':decimalPoint, 'memCache':memCache, 'appEncoding':appEncoding, 'screens':screens, 'os':os, 'fileName':fileName, 'line':line, 'hiresTimer':hiresTimer, 'dictionary':dictionary, 'engineName':engineName, 'includePath':includePath, '_pymiere':_pymiere, '_jsxFunctions':_jsxFunctions})
+    def __init__(self, pymiere_id=None, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
+        self.check_init_args({'pymiere_id':pymiere_id, 'error':error, 'version':version, 'build':build, 'buildDate':buildDate, 'stack':stack, 'level':level, 'flags':flags, 'strict':strict, 'locale':locale, 'localize':localize, 'decimalPoint':decimalPoint, 'memCache':memCache, 'appEncoding':appEncoding, 'screens':screens, 'os':os, 'fileName':fileName, 'line':line, 'hiresTimer':hiresTimer, 'dictionary':dictionary, 'engineName':engineName, 'includePath':includePath})
         super(Dollar, self).__init__(pymiere_id)
         self.__error = error
         self.__version = version
@@ -4474,8 +4474,6 @@ class Dollar(PymiereBaseObject):
         self.__dictionary = dictionary
         self.__engineName = engineName
         self.__includePath = includePath
-        self.___pymiere = _pymiere
-        self.___jsxFunctions = _jsxFunctions
 
     # ----- PROPERTIES -----
     @property
@@ -4675,24 +4673,6 @@ class Dollar(PymiereBaseObject):
     @includePath.setter
     def includePath(self, includePath):
         raise AttributeError("Attribute 'includePath' is read-only")
-
-    @property
-    def _pymiere(self):
-        self.___pymiere = _format_object_to_py(self._eval_on_this_object('_pymiere'))
-        return self.___pymiere
-    @_pymiere.setter
-    def _pymiere(self, _pymiere):
-        self._eval_on_this_object("_pymiere = {}".format(_format_object_to_es(_pymiere)))
-        self.___pymiere = _pymiere
-
-    @property
-    def _jsxFunctions(self):
-        self.___jsxFunctions = _format_object_to_py(self._eval_on_this_object('_jsxFunctions'))
-        return self.___jsxFunctions
-    @_jsxFunctions.setter
-    def _jsxFunctions(self, _jsxFunctions):
-        self._eval_on_this_object("_jsxFunctions = {}".format(_format_object_to_es(_jsxFunctions)))
-        self.___jsxFunctions = _jsxFunctions
 
 
     # ----- FUNCTIONS -----

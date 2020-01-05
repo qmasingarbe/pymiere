@@ -18,7 +18,10 @@ things_to_extract = [
     ('Folder.current.getFiles("*.exe")', "bababababa"),
     ('app.project.activeSequence.videoTracks[0].clips[0].components[0].properties[0]', "bababababa"),
     ('app.encoder.getExporters()[0]', "bababababa"),
-    ('app.encoder.getExporters()[0].getPresets()[0]', "bababababa")
+    ('app.encoder.getExporters()[0].getPresets()[0]', "bababababa"),
+    ('ProjectItemType', 'bbababababab'),
+    ('RegisteredDirectories', 'bbababababab'),
+    ('UtilityFunctions', 'bbababababab')
 ]
 
 for thing_to_extract in things_to_extract:

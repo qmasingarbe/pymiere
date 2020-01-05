@@ -1,4 +1,2 @@
-import pymiere.core as pc
-from pprint import pprint
-
-pprint(pc.eval_script("JSON.stringify(f, internal_variables_replacer, 0, 1)"))
+from pymiere import core
+print(core.check_premiere_is_alive())

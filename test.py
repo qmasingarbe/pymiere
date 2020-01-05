@@ -11,8 +11,7 @@ JSON.stringify(all_tracks)"""
 
 if __name__== "__main__":
     start_time = time.time()
-    sequence_info = pymiere.core.eval_script("$._pymiere['myFirstId'] = app.project.activeSequence; JSON.stringify($._pymiere['myFirstId']);")
-    sequence = pymiere.Sequence('myFirstId', **sequence_info)
+    sequence = pymiere.objects.app.project.activeSequence
     print(sequence.name)
     print(sequence.id)
     sequence.name = "nom sympa"
@@ -24,6 +23,7 @@ if __name__== "__main__":
     playerPos = sequence.getPlayerPosition()
     print(playerPos)
     print(playerPos.ticks)
+
     clip = sequence.videoTracks[0].clips[0]
     new_time = pymiere.Time()
     new_time.seconds = 5

@@ -930,14 +930,14 @@ class ProjectItem(PymiereBaseObject):
         return self._eval_on_this_object("isReference()")
 
 class ProjectItemCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numItems):
+    def __init__(self, pymiere_id, length, numItems):
         super(ProjectItemCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
         return ProjectItem(**super(ProjectItemCollection, self).__getitem__(index))
 
 class SequenceCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numSequences):
+    def __init__(self, pymiere_id, length, numSequences):
         super(SequenceCollection, self).__init__(pymiere_id, "numSequences")
 
     def __getitem__(self, index):
@@ -1311,7 +1311,7 @@ class Sequence(PymiereBaseObject):
         return self._eval_on_this_object("setWorkAreaEnabled({})".format(_format_object_to_es(specifiedState)))
 
 class TrackCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numTracks):
+    def __init__(self, pymiere_id, length, numTracks):
         super(TrackCollection, self).__init__(pymiere_id, "numTracks")
 
     def __getitem__(self, index):
@@ -1396,14 +1396,14 @@ class MarkerCollection(PymiereBaseObject):
         return Marker(**self._eval_on_this_object("getNextMarker({})".format(_format_object_to_es(marker))))
 
 class ComponentCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numItems):
+    def __init__(self, pymiere_id, length, numItems):
         super(ComponentCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
         return Component(**super(ComponentCollection, self).__getitem__(index))
 
 class ProjectCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numProjects):
+    def __init__(self, pymiere_id, length, numProjects):
         super(ProjectCollection, self).__init__(pymiere_id, "numProjects")
 
     def __getitem__(self, index):
@@ -3791,7 +3791,7 @@ class Track(PymiereBaseObject):
         self._eval_on_this_object("overwriteClip({}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time)))
 
 class TrackItemCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numItems):
+    def __init__(self, pymiere_id, length, numItems):
         super(TrackItemCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
@@ -4443,7 +4443,7 @@ class Component(PymiereBaseObject):
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
 class ComponentParamCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, numItems):
+    def __init__(self, pymiere_id, length, numItems):
         super(ComponentParamCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):

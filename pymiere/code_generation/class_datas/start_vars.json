@@ -47,7 +47,7 @@
       "type": "readonly"
     },
     "ProjectItemType": {
-      "dataType": "ProjecItemType",
+      "dataType": "ProjectItemType",
       "description": "",
       "help": "",
       "isCollection": false,
@@ -61,14 +61,14 @@
       "type": "readonly"
     },
     "RegisteredDirectories": {
-      "dataType": "RegisteredDirectoriesType",
+      "dataType": "RegisteredDirectories",
       "description": "",
       "help": "",
       "isCollection": false,
       "type": "readonly"
     },
     "UtilityFunctions": {
-      "dataType": "UtilityFunctionsType",
+      "dataType": "UtilityFunctions",
       "description": "",
       "help": "",
       "isCollection": false,

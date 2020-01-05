@@ -2,8 +2,8 @@ from pymiere import utils
 import pymiere
 import keyword
 
-# todo : merge property and function code
 # todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
+
 
 def generate_class(object_data, all_classes_names):
     is_collection = False
@@ -144,6 +144,7 @@ def generate_class(object_data, all_classes_names):
         code = code.add_empty_line()
     return code
 
+
 def generate_collection_class(object_data):
     """
     Same as generate_class but specifically for objects being collections
@@ -166,13 +167,14 @@ def generate_collection_class(object_data):
         item_class_name = class_name.replace("Collection", "")
     # write class declaration
     code = code.add_line("class {}(PymiereBaseCollection):".format(class_name))
-    code = code.add_line("def __init__(self, pymiere_id, {}):".format(length_property), indent=1)
+    code = code.add_line("def __init__(self, pymiere_id, length, {}):".format(length_property), indent=1)
     code = code.add_line('super({}, self).__init__(pymiere_id, "{}")'.format(class_name, length_property), indent=2)
     code = code.add_empty_line()
     code = code.add_line("def __getitem__(self, index):", indent=1)
     code = code.add_line("return {}(**super({}, self).__getitem__(index))".format(item_class_name, class_name), indent=2)
     code = code.add_empty_line()
     return code
+
 
 def build_python_from_data(datas, save_path):
     result_code = "from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es\n"
@@ -184,6 +186,7 @@ def build_python_from_data(datas, save_path):
     result_code = result_code.replace("super($, self).__init__(pymiere_id)", "super(Dollar, self).__init__(pymiere_id)")
     with open(save_path, "w") as f:
         f.write(result_code)
+
 
 def decrypt_object(d):
     objects = dict()
@@ -210,7 +213,6 @@ def decrypt_object(d):
     return objects
 
 
-
 if __name__ == "__main__":
     things_to_extract = [
         '$.global',
@@ -226,7 +228,10 @@ if __name__ == "__main__":
         'Folder.current.getFiles("*.exe")',
         'app.project.activeSequence.videoTracks[0].clips[0].components[0].properties[0]',
         'app.encoder.getExporters()[0]',
-        'app.encoder.getExporters()[0].getPresets()[0]'
+        'app.encoder.getExporters()[0].getPresets()[0]',
+        'ProjectItemType',
+        'RegisteredDirectories',
+        'UtilityFunctions'
     ]
     unique_objects = dict()
     for thing_to_extract in things_to_extract:

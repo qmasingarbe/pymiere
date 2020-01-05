@@ -27,7 +27,10 @@ def generate_class(object_data, all_classes_names):
         raise NotImplementedError()
     # init
     properties = ["{}=None".format(p) for p in object_data.get("props").keys()]
-    code = code.add_line("def __init__(self, pymiere_id=None, {}):".format(", ".join(properties)), indent=1)
+    if object_data.get("name") == "$":  # absorb extra things in $ object
+        code = code.add_line("def __init__(self, pymiere_id=None, {}, **kwargs):".format(", ".join(properties)), indent=1)
+    else:
+        code = code.add_line("def __init__(self, pymiere_id=None, {}):".format(", ".join(properties)), indent=1)
     properties_dict = ["'{0}':{0}".format(p) for p in object_data.get("props").keys()]
     code = code.add_line("self.check_init_args({'pymiere_id':pymiere_id, "+ ", ".join(properties_dict) +"})", indent=2)
     code = code.add_line("super({}, self).__init__(pymiere_id)".format(object_data.get("name")), indent=2)

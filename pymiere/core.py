@@ -308,9 +308,21 @@ class PymiereGenericObject(PymiereBaseObject):
         """
         Print functions and properties available on this object, can't be autocompleted
         """
-        # todo
-        raise NotImplementedError()
-
+        # start printing debug infos
+        object_name = eval_script("$._pymiere['{}'].reflect.name".format(self._pymiere_id), decode_json=False)
+        print("Inspection of object '{}' found :".format(object_name))
+        # print available props
+        available_props = eval_script("$._pymiere['{}'].reflect.properties".format(self._pymiere_id), decode_json=False).split(",")
+        available_props = [p for p in available_props if not p.startswith("__") and p not in ["reflect"]]
+        print(" {} properties :".format(len(available_props)))
+        for prop in available_props:
+            print("  - {} = {}".format(prop, self.__getattr__(prop)))
+        # print available methods
+        available_methods = eval_script("$._pymiere['{}'].reflect.methods".format(self._pymiere_id), decode_json=False).split(",")
+        available_methods = [m for m in available_methods if m not in ["hasOwnProperty", "propertyIsEnumerable", "isPrototypeOf", "toSource", "watch", "unwatch"]]
+        print(" {} methods".format(len(available_methods)))
+        for i, method in enumerate(available_methods):
+            print("  - {}({})".format(method, eval_script("$._pymiere['{}'].reflect.methods[{}].arguments".format(self._pymiere_id, i))))
 
 class Array(PymiereBaseCollection):
     def __init__(self, pymiere_id, length):

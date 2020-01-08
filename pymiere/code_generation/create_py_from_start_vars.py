@@ -54,9 +54,9 @@ def generate_class(object_data, all_classes_names):
             code = code.add_line("self.__{0} = _eval_on_global_object('{0}')".format(prop_name), indent=2)
         elif prop_info.get("dataType") not in all_classes_names:
             print("Return type '{}' for property getter '{}.{}' seems unknown, using automatic ES class to py object".format(prop_info.get("dataType"), object_data.get("name"), prop_name))
-            code = code.add_line("self.__{0} = _format_object_to_py(_eval_on_global_object('{0}'))".format(prop_name), indent=2)
+            code = code.add_line("self.__{0} = _format_object_to_py(_eval_script_returning_object('{0}'))".format(prop_name), indent=2)
         else:
-            code = code.add_line("self.__{0} = {1}(**_eval_on_global_object('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
+            code = code.add_line("self.__{0} = {1}(**_eval_script_returning_object('{0}', as_kwargs=True))".format(prop_name, prop_info.get("dataType")), indent=2)
         code = code.add_line("return self.__{}".format(prop_name), indent=2)
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)

@@ -1,2 +1,7 @@
-from pymiere import core
-print(core.check_premiere_is_alive())
+import pymiere
+
+qe = pymiere.objects.qe
+
+print(qe)
+qe.inspect()
+qe.exit()

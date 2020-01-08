@@ -70,7 +70,7 @@ class StartVars(object):
 
     @property
     def qe(self):
-        self.__qe = _format_object_to_py(_eval_on_global_object('qe'))
+        self.__qe = _format_object_to_py(_eval_script_returning_object('qe'))
         return self.__qe
     @qe.setter
     def qe(self, qe):
@@ -78,7 +78,7 @@ class StartVars(object):
 
     @property
     def app(self):
-        self.__app = Application(**_eval_on_global_object('app'))
+        self.__app = Application(**_eval_script_returning_object('app', as_kwargs=True))
         return self.__app
     @app.setter
     def app(self, app):
@@ -86,7 +86,7 @@ class StartVars(object):
 
     @property
     def document(self):
-        self.__document = Document(**_eval_on_global_object('document'))
+        self.__document = Document(**_eval_script_returning_object('document', as_kwargs=True))
         return self.__document
     @document.setter
     def document(self, document):
@@ -94,7 +94,7 @@ class StartVars(object):
 
     @property
     def ProjectItemType(self):
-        self.__ProjectItemType = ProjectItemType(**_eval_on_global_object('ProjectItemType'))
+        self.__ProjectItemType = ProjectItemType(**_eval_script_returning_object('ProjectItemType', as_kwargs=True))
         return self.__ProjectItemType
     @ProjectItemType.setter
     def ProjectItemType(self, ProjectItemType):
@@ -102,7 +102,7 @@ class StartVars(object):
 
     @property
     def ScratchDiskType(self):
-        self.__ScratchDiskType = ScratchDiskType(**_eval_on_global_object('ScratchDiskType'))
+        self.__ScratchDiskType = ScratchDiskType(**_eval_script_returning_object('ScratchDiskType', as_kwargs=True))
         return self.__ScratchDiskType
     @ScratchDiskType.setter
     def ScratchDiskType(self, ScratchDiskType):
@@ -110,7 +110,7 @@ class StartVars(object):
 
     @property
     def RegisteredDirectories(self):
-        self.__RegisteredDirectories = RegisteredDirectories(**_eval_on_global_object('RegisteredDirectories'))
+        self.__RegisteredDirectories = RegisteredDirectories(**_eval_script_returning_object('RegisteredDirectories', as_kwargs=True))
         return self.__RegisteredDirectories
     @RegisteredDirectories.setter
     def RegisteredDirectories(self, RegisteredDirectories):
@@ -118,7 +118,7 @@ class StartVars(object):
 
     @property
     def UtilityFunctions(self):
-        self.__UtilityFunctions = UtilityFunctions(**_eval_on_global_object('UtilityFunctions'))
+        self.__UtilityFunctions = UtilityFunctions(**_eval_script_returning_object('UtilityFunctions', as_kwargs=True))
         return self.__UtilityFunctions
     @UtilityFunctions.setter
     def UtilityFunctions(self, UtilityFunctions):
@@ -126,7 +126,7 @@ class StartVars(object):
 
     @property
     def Dollar(self):
-        self.__Dollar = _format_object_to_py(_eval_on_global_object('Dollar'))
+        self.__Dollar = _format_object_to_py(_eval_script_returning_object('Dollar'))
         return self.__Dollar
     @Dollar.setter
     def Dollar(self, Dollar):
@@ -134,7 +134,7 @@ class StartVars(object):
 
     @property
     def Math(self):
-        self.__Math = Math(**_eval_on_global_object('Math'))
+        self.__Math = Math(**_eval_script_returning_object('Math', as_kwargs=True))
         return self.__Math
     @Math.setter
     def Math(self, Math):
@@ -142,7 +142,7 @@ class StartVars(object):
 
     @property
     def premierepro13(self):
-        self.__premierepro13 = _format_object_to_py(_eval_on_global_object('premierepro13'))
+        self.__premierepro13 = _format_object_to_py(_eval_script_returning_object('premierepro13'))
         return self.__premierepro13
     @premierepro13.setter
     def premierepro13(self, premierepro13):
@@ -151,7 +151,7 @@ class StartVars(object):
 
     @property
     def AEFTBridge(self):
-        self.__AEFTBridge = _format_object_to_py(_eval_on_global_object('AEFTBridge'))
+        self.__AEFTBridge = _format_object_to_py(_eval_script_returning_object('AEFTBridge'))
         return self.__AEFTBridge
     @AEFTBridge.setter
     def AEFTBridge(self, AEFTBridge):
@@ -160,7 +160,7 @@ class StartVars(object):
 
     @property
     def PHXSBridge(self):
-        self.__PHXSBridge = _format_object_to_py(_eval_on_global_object('PHXSBridge'))
+        self.__PHXSBridge = _format_object_to_py(_eval_script_returning_object('PHXSBridge'))
         return self.__PHXSBridge
     @PHXSBridge.setter
     def PHXSBridge(self, PHXSBridge):
@@ -169,7 +169,7 @@ class StartVars(object):
 
     @property
     def CCXHostBridge(self):
-        self.__CCXHostBridge = _format_object_to_py(_eval_on_global_object('CCXHostBridge'))
+        self.__CCXHostBridge = _format_object_to_py(_eval_script_returning_object('CCXHostBridge'))
         return self.__CCXHostBridge
     @CCXHostBridge.setter
     def CCXHostBridge(self, CCXHostBridge):
@@ -178,7 +178,7 @@ class StartVars(object):
 
     @property
     def f(self):
-        self.__f = File(**_eval_on_global_object('f'))
+        self.__f = File(**_eval_script_returning_object('f', as_kwargs=True))
         return self.__f
     @f.setter
     def f(self, f):
@@ -188,7 +188,7 @@ class StartVars(object):
 
     @property
     def JSON(self):
-        self.__JSON = _format_object_to_py(_eval_on_global_object('JSON'))
+        self.__JSON = _format_object_to_py(_eval_script_returning_object('JSON'))
         return self.__JSON
     @JSON.setter
     def JSON(self, JSON):

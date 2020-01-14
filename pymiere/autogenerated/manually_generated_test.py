@@ -14,7 +14,7 @@ class Sequence(PymiereObject):
         return self.__name
     @name.setter
     def name(self, name):
-        self.check_type(name, str, "Sequence.name")
+        self._check_type(name, str, "Sequence.name")
         self._extend_eval("name = '{}'".format(name))
         self.__name = name
 
@@ -53,7 +53,7 @@ class Sequence(PymiereObject):
 
 class Time(PymiereObject):
     def __init__(self, pymiere_id=None, seconds=None, ticks=None):
-        self.check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
+        self._check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
         super(Time, self).__init__(pymiere_id)
         self.__seconds = seconds
         self.__ticks = ticks

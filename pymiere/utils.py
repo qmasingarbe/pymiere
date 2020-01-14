@@ -21,5 +21,5 @@ class MyStr(str):
     def add_line(self, content, indent=0):
         return MyStr(self + "\n" + indent*4*" " + content)
 
-    def add_empty_line(self):
-        return MyStr(self + "\n")
+    def add_empty_line(self, number=1):
+        return MyStr(self + "\n"*number)

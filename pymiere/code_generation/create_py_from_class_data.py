@@ -28,11 +28,11 @@ def generate_class(object_data, all_classes_names):
     # init
     properties = ["{}=None".format(p) for p in object_data.get("props").keys()]
     if object_data.get("name") == "$":  # absorb extra things in $ object
-        code = code.add_line("def __init__(self, pymiere_id=None, {}, **kwargs):".format(", ".join(properties)), indent=1)
+        code = code.add_line("def __init__(self, pymiere_id=None, created_by_user=False, {}, **kwargs):".format(", ".join(properties)), indent=1)
     else:
-        code = code.add_line("def __init__(self, pymiere_id=None, {}):".format(", ".join(properties)), indent=1)
-    properties_dict = ["'{0}':{0}".format(p) for p in object_data.get("props").keys()]
-    code = code.add_line("self.check_init_args({'pymiere_id':pymiere_id, "+ ", ".join(properties_dict) +"})", indent=2)
+        code = code.add_line("def __init__(self, pymiere_id=None, created_by_user=False, {}):".format(", ".join(properties)), indent=1)
+    properties_dict = ["'{0}': {0}".format(p) for p in object_data.get("props").keys()]
+    code = code.add_line("self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, "+ ", ".join(properties_dict) +"})", indent=2)
     code = code.add_line("super({}, self).__init__(pymiere_id)".format(object_data.get("name")), indent=2)
     for prop_name in object_data.get("props").keys():
         code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
@@ -58,7 +58,8 @@ def generate_class(object_data, all_classes_names):
             print("Return type '{}' for property getter '{}.{}' seems unknown, using automatic ES class to py object".format(prop_info.get("dataType"), object_data.get("name"), prop_name))
             code = code.add_line("self.__{0} = _format_object_to_py(self._eval_on_this_object('{0}'))".format(prop_name), indent=2)
         else:
-            code = code.add_line("self.__{0} = {1}(**self._eval_on_this_object('{0}'))".format(prop_name, prop_info.get("dataType")), indent=2)
+            code = code.add_line("kwargs = self._eval_on_this_object('{0}')".format(prop_name), indent=2)
+            code = code.add_line("self.__{0} = {1}(**kwargs) if kwargs else None".format(prop_name, prop_info.get("dataType")), indent=2)
         code = code.add_line("return self.__{}".format(prop_name), indent=2)
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
@@ -66,7 +67,7 @@ def generate_class(object_data, all_classes_names):
         if prop_info.get("type") == "readwrite":
             check_cls = utils.TYPE_CORRESPONDENCE[prop_info.get("dataType")] if prop_info.get("dataType") in utils.TYPE_CORRESPONDENCE else prop_info.get("dataType")
             if check_cls in all_classes_names:
-                code = code.add_line("self.check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
+                code = code.add_line("self._check_type({0}, {1}, '{2}.{0}')".format(prop_name, check_cls, object_data.get("name")), indent=2)
             else:
                 print("value type '{}' for property setter of '{}.{}' seems unknown, no check for type will be performed".format(check_cls, object_data.get("name"), prop_name))
             line = """self._eval_on_this_object("{0} = {{}}".format(_format_object_to_es({0})))"""
@@ -116,7 +117,7 @@ def generate_class(object_data, all_classes_names):
                 else:
                     # raise NotImplementedError("arg type {} not supported for function {} of {}".format(arg_info.get("dataType"), func_name, object_data.get('name')))
                     check_cls = arg_info.get("dataType")
-                code = code.add_line("""self.check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
+                code = code.add_line("""self._check_type({0}, {1}, 'arg "{0}" of function "{2}.{3}"')""".format(arg_name, check_cls, object_data.get("name"), func_name), indent=2)
         # body
         line = ""
         if func_info.get("dataType") != "undefined":
@@ -142,6 +143,7 @@ def generate_class(object_data, all_classes_names):
             line += ")"
         code = code.add_line(line, indent=2)
         code = code.add_empty_line()
+    code = code.add_empty_line()
     return code
 
 
@@ -167,12 +169,17 @@ def generate_collection_class(object_data):
         item_class_name = class_name.replace("Collection", "")
     # write class declaration
     code = code.add_line("class {}(PymiereBaseCollection):".format(class_name))
-    code = code.add_line("def __init__(self, pymiere_id, length, {}):".format(length_property), indent=1)
+    code = code.add_line("def __init__(self, pymiere_id, length, {}, **kwargs):".format(length_property), indent=1)
+    code = code.add_line("if not all([k.isdigit() for k in kwargs.keys()]):", indent=2)
+    code = code.add_line("raise ValueError('Got unexpected argument {}'.format(kwargs))", indent=3)
     code = code.add_line('super({}, self).__init__(pymiere_id, "{}")'.format(class_name, length_property), indent=2)
     code = code.add_empty_line()
     code = code.add_line("def __getitem__(self, index):", indent=1)
     code = code.add_line("return {}(**super({}, self).__getitem__(index))".format(item_class_name, class_name), indent=2)
     code = code.add_empty_line()
+    code = code.add_line("def __iter__(self):", indent=1)
+    code = code.add_line("return iter([self.__getitem__(i) for i in range(len(self))])", indent=2)
+    code = code.add_empty_line(number=2)
     return code
 
 

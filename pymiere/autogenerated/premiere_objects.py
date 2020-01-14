@@ -1,8 +1,8 @@
 from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es
 
 class Application(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'version':version, 'build':build, 'getPProPrefPath':getPProPrefPath, 'getPProSystemPrefPath':getPProSystemPrefPath, 'project':project, 'projects':projects, 'anywhere':anywhere, 'encoder':encoder, 'properties':properties, 'sourceMonitor':sourceMonitor, 'projectManager':projectManager, 'userGuid':userGuid, 'path':path, 'getAppPrefPath':getAppPrefPath, 'getAppSystemPrefPath':getAppSystemPrefPath, 'metadata':metadata})
+    def __init__(self, pymiere_id=None, created_by_user=False, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'version': version, 'build': build, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
         super(Application, self).__init__(pymiere_id)
         self.__version = version
         self.__build = build
@@ -56,17 +56,19 @@ class Application(PymiereBaseObject):
 
     @property
     def project(self):
-        self.__project = Project(**self._eval_on_this_object('project'))
+        kwargs = self._eval_on_this_object('project')
+        self.__project = Project(**kwargs) if kwargs else None
         return self.__project
     @project.setter
     def project(self, project):
-        self.check_type(project, Project, 'Application.project')
+        self._check_type(project, Project, 'Application.project')
         self._eval_on_this_object("project = {}".format(_format_object_to_es(project)))
         self.__project = project
 
     @property
     def projects(self):
-        self.__projects = ProjectCollection(**self._eval_on_this_object('projects'))
+        kwargs = self._eval_on_this_object('projects')
+        self.__projects = ProjectCollection(**kwargs) if kwargs else None
         return self.__projects
     @projects.setter
     def projects(self, projects):
@@ -74,7 +76,8 @@ class Application(PymiereBaseObject):
 
     @property
     def anywhere(self):
-        self.__anywhere = Anywhere(**self._eval_on_this_object('anywhere'))
+        kwargs = self._eval_on_this_object('anywhere')
+        self.__anywhere = Anywhere(**kwargs) if kwargs else None
         return self.__anywhere
     @anywhere.setter
     def anywhere(self, anywhere):
@@ -82,7 +85,8 @@ class Application(PymiereBaseObject):
 
     @property
     def encoder(self):
-        self.__encoder = Encoder(**self._eval_on_this_object('encoder'))
+        kwargs = self._eval_on_this_object('encoder')
+        self.__encoder = Encoder(**kwargs) if kwargs else None
         return self.__encoder
     @encoder.setter
     def encoder(self, encoder):
@@ -90,7 +94,8 @@ class Application(PymiereBaseObject):
 
     @property
     def properties(self):
-        self.__properties = Properties(**self._eval_on_this_object('properties'))
+        kwargs = self._eval_on_this_object('properties')
+        self.__properties = Properties(**kwargs) if kwargs else None
         return self.__properties
     @properties.setter
     def properties(self, properties):
@@ -98,7 +103,8 @@ class Application(PymiereBaseObject):
 
     @property
     def sourceMonitor(self):
-        self.__sourceMonitor = SourceMonitor(**self._eval_on_this_object('sourceMonitor'))
+        kwargs = self._eval_on_this_object('sourceMonitor')
+        self.__sourceMonitor = SourceMonitor(**kwargs) if kwargs else None
         return self.__sourceMonitor
     @sourceMonitor.setter
     def sourceMonitor(self, sourceMonitor):
@@ -106,7 +112,8 @@ class Application(PymiereBaseObject):
 
     @property
     def projectManager(self):
-        self.__projectManager = ProjectManager(**self._eval_on_this_object('projectManager'))
+        kwargs = self._eval_on_this_object('projectManager')
+        self.__projectManager = ProjectManager(**kwargs) if kwargs else None
         return self.__projectManager
     @projectManager.setter
     def projectManager(self, projectManager):
@@ -146,7 +153,8 @@ class Application(PymiereBaseObject):
 
     @property
     def metadata(self):
-        self.__metadata = Metadata(**self._eval_on_this_object('metadata'))
+        kwargs = self._eval_on_this_object('metadata')
+        self.__metadata = Metadata(**kwargs) if kwargs else None
         return self.__metadata
     @metadata.setter
     def metadata(self, metadata):
@@ -159,15 +167,15 @@ class Application(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Application.bind"')
-        self.check_type(function, any, 'arg "function" of function "Application.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Application.bind"')
+        self._check_type(function, any, 'arg "function" of function "Application.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Application.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Application.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -176,9 +184,9 @@ class Application(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Application.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Application.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Application.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Application.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Application.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Application.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def isDocumentOpen(self):
@@ -191,14 +199,14 @@ class Application(PymiereBaseObject):
         """
         :type workspace: str
         """
-        self.check_type(workspace, str, 'arg "workspace" of function "Application.setWorkspace"')
+        self._check_type(workspace, str, 'arg "workspace" of function "Application.setWorkspace"')
         return self._eval_on_this_object("setWorkspace({})".format(_format_object_to_es(workspace)))
 
     def isDocument(self, filePath):
         """
         :type filePath: str
         """
-        self.check_type(filePath, str, 'arg "filePath" of function "Application.isDocument"')
+        self._check_type(filePath, str, 'arg "filePath" of function "Application.isDocument"')
         return self._eval_on_this_object("isDocument({})".format(_format_object_to_es(filePath)))
 
     def openDocument(self):
@@ -211,14 +219,14 @@ class Application(PymiereBaseObject):
         """
         :type message: str
         """
-        self.check_type(message, str, 'arg "message" of function "Application.trace"')
+        self._check_type(message, str, 'arg "message" of function "Application.trace"')
         self._eval_on_this_object("trace({})".format(_format_object_to_es(message)))
 
     def write(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Application.write"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Application.write"')
         self._eval_on_this_object("write({})".format(_format_object_to_es(arg1)))
 
     def openFCPXML(self):
@@ -229,8 +237,8 @@ class Application(PymiereBaseObject):
         :type value: str
         :type eventType: str
         """
-        self.check_type(value, str, 'arg "value" of function "Application.setSDKEventMessage"')
-        self.check_type(eventType, str, 'arg "eventType" of function "Application.setSDKEventMessage"')
+        self._check_type(value, str, 'arg "value" of function "Application.setSDKEventMessage"')
+        self._check_type(eventType, str, 'arg "eventType" of function "Application.setSDKEventMessage"')
         return self._eval_on_this_object("setSDKEventMessage({}, {})".format(_format_object_to_es(value), _format_object_to_es(eventType)))
 
     def setScratchDiskPath(self, value, type):
@@ -238,15 +246,15 @@ class Application(PymiereBaseObject):
         :type value: str
         :type type: str
         """
-        self.check_type(value, str, 'arg "value" of function "Application.setScratchDiskPath"')
-        self.check_type(type, str, 'arg "type" of function "Application.setScratchDiskPath"')
+        self._check_type(value, str, 'arg "value" of function "Application.setScratchDiskPath"')
+        self._check_type(type, str, 'arg "type" of function "Application.setScratchDiskPath"')
         self._eval_on_this_object("setScratchDiskPath({}, {})".format(_format_object_to_es(value), _format_object_to_es(type)))
 
     def broadcastPrefsChanged(self, preferencesThatChanged):
         """
         :type preferencesThatChanged: str
         """
-        self.check_type(preferencesThatChanged, str, 'arg "preferencesThatChanged" of function "Application.broadcastPrefsChanged"')
+        self._check_type(preferencesThatChanged, str, 'arg "preferencesThatChanged" of function "Application.broadcastPrefsChanged"')
         return self._eval_on_this_object("broadcastPrefsChanged({})".format(_format_object_to_es(preferencesThatChanged)))
 
     def setExtensionPersistent(self, extensionID, state):
@@ -254,8 +262,8 @@ class Application(PymiereBaseObject):
         :type extensionID: str
         :type state: float
         """
-        self.check_type(extensionID, str, 'arg "extensionID" of function "Application.setExtensionPersistent"')
-        self.check_type(state, float, 'arg "state" of function "Application.setExtensionPersistent"')
+        self._check_type(extensionID, str, 'arg "extensionID" of function "Application.setExtensionPersistent"')
+        self._check_type(state, float, 'arg "state" of function "Application.setExtensionPersistent"')
         self._eval_on_this_object("setExtensionPersistent({}, {})".format(_format_object_to_es(extensionID), _format_object_to_es(state)))
 
     def getEnableProxies(self):
@@ -265,14 +273,14 @@ class Application(PymiereBaseObject):
         """
         :type enable: float
         """
-        self.check_type(enable, float, 'arg "enable" of function "Application.setEnableProxies"')
+        self._check_type(enable, float, 'arg "enable" of function "Application.setEnableProxies"')
         return self._eval_on_this_object("setEnableProxies({})".format(_format_object_to_es(enable)))
 
     def showCursor(self, enable):
         """
         :type enable: bool
         """
-        self.check_type(enable, bool, 'arg "enable" of function "Application.showCursor"')
+        self._check_type(enable, bool, 'arg "enable" of function "Application.showCursor"')
         self._eval_on_this_object("showCursor({})".format(_format_object_to_es(enable)))
 
     def getProjectViewIDs(self):
@@ -282,28 +290,28 @@ class Application(PymiereBaseObject):
         """
         :type viewID: str
         """
-        self.check_type(viewID, str, 'arg "viewID" of function "Application.getProjectFromViewID"')
+        self._check_type(viewID, str, 'arg "viewID" of function "Application.getProjectFromViewID"')
         return Project(**self._eval_on_this_object("getProjectFromViewID({})".format(_format_object_to_es(viewID))))
 
     def getProjectViewSelection(self, viewID):
         """
         :type viewID: str
         """
-        self.check_type(viewID, str, 'arg "viewID" of function "Application.getProjectViewSelection"')
+        self._check_type(viewID, str, 'arg "viewID" of function "Application.getProjectViewSelection"')
         self._eval_on_this_object("getProjectViewSelection({})".format(_format_object_to_es(viewID)))
 
     def setProjectViewSelection(self, viewID):
         """
         :type viewID: str
         """
-        self.check_type(viewID, str, 'arg "viewID" of function "Application.setProjectViewSelection"')
+        self._check_type(viewID, str, 'arg "viewID" of function "Application.setProjectViewSelection"')
         self._eval_on_this_object("setProjectViewSelection({})".format(_format_object_to_es(viewID)))
 
     def getConstant(self, name):
         """
         :type name: str
         """
-        self.check_type(name, str, 'arg "name" of function "Application.getConstant"')
+        self._check_type(name, str, 'arg "name" of function "Application.getConstant"')
         return self._eval_on_this_object("getConstant({})".format(_format_object_to_es(name)))
 
     def refresh(self):
@@ -313,7 +321,7 @@ class Application(PymiereBaseObject):
         """
         :type inEnable: bool
         """
-        self.check_type(inEnable, bool, 'arg "inEnable" of function "Application.setEnableTranscodeOnIngest"')
+        self._check_type(inEnable, bool, 'arg "inEnable" of function "Application.setEnableTranscodeOnIngest"')
         self._eval_on_this_object("setEnableTranscodeOnIngest({})".format(_format_object_to_es(inEnable)))
 
     def getCCXUserJSONData(self):
@@ -322,9 +330,10 @@ class Application(PymiereBaseObject):
     def enableQE(self):
         return self._eval_on_this_object("enableQE()")
 
+
 class Project(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'documentID':documentID, 'name':name, 'path':path, 'rootItem':rootItem, 'sequences':sequences, 'activeSequence':activeSequence, 'isCloudProject':isCloudProject, 'cloudProjectLocalID':cloudProjectLocalID})
+    def __init__(self, pymiere_id=None, created_by_user=False, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'documentID': documentID, 'name': name, 'path': path, 'rootItem': rootItem, 'sequences': sequences, 'activeSequence': activeSequence, 'isCloudProject': isCloudProject, 'cloudProjectLocalID': cloudProjectLocalID})
         super(Project, self).__init__(pymiere_id)
         self.__documentID = documentID
         self.__name = name
@@ -362,7 +371,8 @@ class Project(PymiereBaseObject):
 
     @property
     def rootItem(self):
-        self.__rootItem = ProjectItem(**self._eval_on_this_object('rootItem'))
+        kwargs = self._eval_on_this_object('rootItem')
+        self.__rootItem = ProjectItem(**kwargs) if kwargs else None
         return self.__rootItem
     @rootItem.setter
     def rootItem(self, rootItem):
@@ -370,7 +380,8 @@ class Project(PymiereBaseObject):
 
     @property
     def sequences(self):
-        self.__sequences = SequenceCollection(**self._eval_on_this_object('sequences'))
+        kwargs = self._eval_on_this_object('sequences')
+        self.__sequences = SequenceCollection(**kwargs) if kwargs else None
         return self.__sequences
     @sequences.setter
     def sequences(self, sequences):
@@ -378,11 +389,12 @@ class Project(PymiereBaseObject):
 
     @property
     def activeSequence(self):
-        self.__activeSequence = Sequence(**self._eval_on_this_object('activeSequence'))
+        kwargs = self._eval_on_this_object('activeSequence')
+        self.__activeSequence = Sequence(**kwargs) if kwargs else None
         return self.__activeSequence
     @activeSequence.setter
     def activeSequence(self, activeSequence):
-        self.check_type(activeSequence, Sequence, 'Project.activeSequence')
+        self._check_type(activeSequence, Sequence, 'Project.activeSequence')
         self._eval_on_this_object("activeSequence = {}".format(_format_object_to_es(activeSequence)))
         self.__activeSequence = activeSequence
 
@@ -409,15 +421,15 @@ class Project(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Project.bind"')
-        self.check_type(function, any, 'arg "function" of function "Project.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Project.bind"')
+        self._check_type(function, any, 'arg "function" of function "Project.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Project.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Project.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -426,44 +438,44 @@ class Project(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Project.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Project.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Project.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Project.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Project.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Project.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def openSequence(self, sequenceID):
         """
         :type sequenceID: str
         """
-        self.check_type(sequenceID, str, 'arg "sequenceID" of function "Project.openSequence"')
+        self._check_type(sequenceID, str, 'arg "sequenceID" of function "Project.openSequence"')
         return self._eval_on_this_object("openSequence({})".format(_format_object_to_es(sequenceID)))
 
     def importFiles(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Project.importFiles"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Project.importFiles"')
         return self._eval_on_this_object("importFiles({})".format(_format_object_to_es(arg1)))
 
     def importSequences(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Project.importSequences"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Project.importSequences"')
         return self._eval_on_this_object("importSequences({})".format(_format_object_to_es(arg1)))
 
     def importAllAEComps(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Project.importAllAEComps"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Project.importAllAEComps"')
         return self._eval_on_this_object("importAllAEComps({})".format(_format_object_to_es(arg1)))
 
     def importAEComps(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Project.importAEComps"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Project.importAEComps"')
         return self._eval_on_this_object("importAEComps({})".format(_format_object_to_es(arg1)))
 
     def createNewSequence(self, sequenceName, placeholderID):
@@ -471,15 +483,15 @@ class Project(PymiereBaseObject):
         :type sequenceName: str
         :type placeholderID: str
         """
-        self.check_type(sequenceName, str, 'arg "sequenceName" of function "Project.createNewSequence"')
-        self.check_type(placeholderID, str, 'arg "placeholderID" of function "Project.createNewSequence"')
+        self._check_type(sequenceName, str, 'arg "sequenceName" of function "Project.createNewSequence"')
+        self._check_type(placeholderID, str, 'arg "placeholderID" of function "Project.createNewSequence"')
         self._eval_on_this_object("createNewSequence({}, {})".format(_format_object_to_es(sequenceName), _format_object_to_es(placeholderID)))
 
     def deleteSequence(self, sequence):
         """
         :type sequence: Sequence
         """
-        self.check_type(sequence, Sequence, 'arg "sequence" of function "Project.deleteSequence"')
+        self._check_type(sequence, Sequence, 'arg "sequence" of function "Project.deleteSequence"')
         return self._eval_on_this_object("deleteSequence({})".format(_format_object_to_es(sequence)))
 
     def exportFinalCutProXML(self, exportPath, suppressUI):
@@ -487,15 +499,15 @@ class Project(PymiereBaseObject):
         :type exportPath: str
         :type suppressUI: float
         """
-        self.check_type(exportPath, str, 'arg "exportPath" of function "Project.exportFinalCutProXML"')
-        self.check_type(suppressUI, float, 'arg "suppressUI" of function "Project.exportFinalCutProXML"')
+        self._check_type(exportPath, str, 'arg "exportPath" of function "Project.exportFinalCutProXML"')
+        self._check_type(suppressUI, float, 'arg "suppressUI" of function "Project.exportFinalCutProXML"')
         return self._eval_on_this_object("exportFinalCutProXML({}, {})".format(_format_object_to_es(exportPath), _format_object_to_es(suppressUI)))
 
     def exportTimeline(self, exportControllerName):
         """
         :type exportControllerName: str
         """
-        self.check_type(exportControllerName, str, 'arg "exportControllerName" of function "Project.exportTimeline"')
+        self._check_type(exportControllerName, str, 'arg "exportControllerName" of function "Project.exportTimeline"')
         return self._eval_on_this_object("exportTimeline({})".format(_format_object_to_es(exportControllerName)))
 
     def exportOMF(self, sequence, filePath, OMFTitle, sampleRate, bitsPerSample, audioEncapsulated, audioFileFormat, trimAudioFiles, handleFrames, includePan):
@@ -511,16 +523,16 @@ class Project(PymiereBaseObject):
         :type handleFrames: float
         :type includePan: float
         """
-        self.check_type(sequence, Sequence, 'arg "sequence" of function "Project.exportOMF"')
-        self.check_type(filePath, str, 'arg "filePath" of function "Project.exportOMF"')
-        self.check_type(OMFTitle, str, 'arg "OMFTitle" of function "Project.exportOMF"')
-        self.check_type(sampleRate, float, 'arg "sampleRate" of function "Project.exportOMF"')
-        self.check_type(bitsPerSample, float, 'arg "bitsPerSample" of function "Project.exportOMF"')
-        self.check_type(audioEncapsulated, float, 'arg "audioEncapsulated" of function "Project.exportOMF"')
-        self.check_type(audioFileFormat, float, 'arg "audioFileFormat" of function "Project.exportOMF"')
-        self.check_type(trimAudioFiles, float, 'arg "trimAudioFiles" of function "Project.exportOMF"')
-        self.check_type(handleFrames, float, 'arg "handleFrames" of function "Project.exportOMF"')
-        self.check_type(includePan, float, 'arg "includePan" of function "Project.exportOMF"')
+        self._check_type(sequence, Sequence, 'arg "sequence" of function "Project.exportOMF"')
+        self._check_type(filePath, str, 'arg "filePath" of function "Project.exportOMF"')
+        self._check_type(OMFTitle, str, 'arg "OMFTitle" of function "Project.exportOMF"')
+        self._check_type(sampleRate, float, 'arg "sampleRate" of function "Project.exportOMF"')
+        self._check_type(bitsPerSample, float, 'arg "bitsPerSample" of function "Project.exportOMF"')
+        self._check_type(audioEncapsulated, float, 'arg "audioEncapsulated" of function "Project.exportOMF"')
+        self._check_type(audioFileFormat, float, 'arg "audioFileFormat" of function "Project.exportOMF"')
+        self._check_type(trimAudioFiles, float, 'arg "trimAudioFiles" of function "Project.exportOMF"')
+        self._check_type(handleFrames, float, 'arg "handleFrames" of function "Project.exportOMF"')
+        self._check_type(includePan, float, 'arg "includePan" of function "Project.exportOMF"')
         return self._eval_on_this_object("exportOMF({}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(_format_object_to_es(sequence), _format_object_to_es(filePath), _format_object_to_es(OMFTitle), _format_object_to_es(sampleRate), _format_object_to_es(bitsPerSample), _format_object_to_es(audioEncapsulated), _format_object_to_es(audioFileFormat), _format_object_to_es(trimAudioFiles), _format_object_to_es(handleFrames), _format_object_to_es(includePan)))
 
     def exportAAF(self, sequence, filePath, mixDownVideo, explodeToMono, sampleRate, bitsPerSample, embedAudio, audioFileFormat, trimSources, handleFrames):
@@ -536,23 +548,23 @@ class Project(PymiereBaseObject):
         :type trimSources: float
         :type handleFrames: float
         """
-        self.check_type(sequence, Sequence, 'arg "sequence" of function "Project.exportAAF"')
-        self.check_type(filePath, str, 'arg "filePath" of function "Project.exportAAF"')
-        self.check_type(mixDownVideo, float, 'arg "mixDownVideo" of function "Project.exportAAF"')
-        self.check_type(explodeToMono, float, 'arg "explodeToMono" of function "Project.exportAAF"')
-        self.check_type(sampleRate, float, 'arg "sampleRate" of function "Project.exportAAF"')
-        self.check_type(bitsPerSample, float, 'arg "bitsPerSample" of function "Project.exportAAF"')
-        self.check_type(embedAudio, float, 'arg "embedAudio" of function "Project.exportAAF"')
-        self.check_type(audioFileFormat, float, 'arg "audioFileFormat" of function "Project.exportAAF"')
-        self.check_type(trimSources, float, 'arg "trimSources" of function "Project.exportAAF"')
-        self.check_type(handleFrames, float, 'arg "handleFrames" of function "Project.exportAAF"')
+        self._check_type(sequence, Sequence, 'arg "sequence" of function "Project.exportAAF"')
+        self._check_type(filePath, str, 'arg "filePath" of function "Project.exportAAF"')
+        self._check_type(mixDownVideo, float, 'arg "mixDownVideo" of function "Project.exportAAF"')
+        self._check_type(explodeToMono, float, 'arg "explodeToMono" of function "Project.exportAAF"')
+        self._check_type(sampleRate, float, 'arg "sampleRate" of function "Project.exportAAF"')
+        self._check_type(bitsPerSample, float, 'arg "bitsPerSample" of function "Project.exportAAF"')
+        self._check_type(embedAudio, float, 'arg "embedAudio" of function "Project.exportAAF"')
+        self._check_type(audioFileFormat, float, 'arg "audioFileFormat" of function "Project.exportAAF"')
+        self._check_type(trimSources, float, 'arg "trimSources" of function "Project.exportAAF"')
+        self._check_type(handleFrames, float, 'arg "handleFrames" of function "Project.exportAAF"')
         return self._eval_on_this_object("exportAAF({}, {}, {}, {}, {}, {}, {}, {}, {}, {})".format(_format_object_to_es(sequence), _format_object_to_es(filePath), _format_object_to_es(mixDownVideo), _format_object_to_es(explodeToMono), _format_object_to_es(sampleRate), _format_object_to_es(bitsPerSample), _format_object_to_es(embedAudio), _format_object_to_es(audioFileFormat), _format_object_to_es(trimSources), _format_object_to_es(handleFrames)))
 
     def saveAs(self, saveAsPath):
         """
         :type saveAsPath: str
         """
-        self.check_type(saveAsPath, str, 'arg "saveAsPath" of function "Project.saveAs"')
+        self._check_type(saveAsPath, str, 'arg "saveAsPath" of function "Project.saveAs"')
         return self._eval_on_this_object("saveAs({})".format(_format_object_to_es(saveAsPath)))
 
     def save(self):
@@ -562,7 +574,7 @@ class Project(PymiereBaseObject):
         """
         :type pausedOrNot: float
         """
-        self.check_type(pausedOrNot, float, 'arg "pausedOrNot" of function "Project.pauseGrowing"')
+        self._check_type(pausedOrNot, float, 'arg "pausedOrNot" of function "Project.pauseGrowing"')
         return self._eval_on_this_object("pauseGrowing({})".format(_format_object_to_es(pausedOrNot)))
 
     def closeDocument(self):
@@ -572,7 +584,7 @@ class Project(PymiereBaseObject):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Project.placeAsset"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Project.placeAsset"')
         return self._eval_on_this_object("placeAsset({})".format(_format_object_to_es(arg1)))
 
     def addPropertyToProjectMetadataSchema(self, name, label, type):
@@ -581,9 +593,9 @@ class Project(PymiereBaseObject):
         :type label: str
         :type type: float
         """
-        self.check_type(name, str, 'arg "name" of function "Project.addPropertyToProjectMetadataSchema"')
-        self.check_type(label, str, 'arg "label" of function "Project.addPropertyToProjectMetadataSchema"')
-        self.check_type(type, float, 'arg "type" of function "Project.addPropertyToProjectMetadataSchema"')
+        self._check_type(name, str, 'arg "name" of function "Project.addPropertyToProjectMetadataSchema"')
+        self._check_type(label, str, 'arg "label" of function "Project.addPropertyToProjectMetadataSchema"')
+        self._check_type(type, float, 'arg "type" of function "Project.addPropertyToProjectMetadataSchema"')
         return self._eval_on_this_object("addPropertyToProjectMetadataSchema({}, {}, {})".format(_format_object_to_es(name), _format_object_to_es(label), _format_object_to_es(type)))
 
     def getInsertionBin(self):
@@ -600,8 +612,8 @@ class Project(PymiereBaseObject):
         :type value: str
         :type type: str
         """
-        self.check_type(value, str, 'arg "value" of function "Project.setScratchDiskPath"')
-        self.check_type(type, str, 'arg "type" of function "Project.setScratchDiskPath"')
+        self._check_type(value, str, 'arg "value" of function "Project.setScratchDiskPath"')
+        self._check_type(type, str, 'arg "type" of function "Project.setScratchDiskPath"')
         self._eval_on_this_object("setScratchDiskPath({}, {})".format(_format_object_to_es(value), _format_object_to_es(type)))
 
     def consolidateDuplicates(self):
@@ -611,12 +623,13 @@ class Project(PymiereBaseObject):
         """
         :type inEnable: bool
         """
-        self.check_type(inEnable, bool, 'arg "inEnable" of function "Project.setEnableTranscodeOnIngest"')
+        self._check_type(inEnable, bool, 'arg "inEnable" of function "Project.setEnableTranscodeOnIngest"')
         return self._eval_on_this_object("setEnableTranscodeOnIngest({})".format(_format_object_to_es(inEnable)))
 
+
 class ProjectItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'children':children, 'name':name, 'treePath':treePath, 'type':type, 'nodeId':nodeId, 'videoComponents':videoComponents})
+    def __init__(self, pymiere_id=None, created_by_user=False, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'children': children, 'name': name, 'treePath': treePath, 'type': type, 'nodeId': nodeId, 'videoComponents': videoComponents})
         super(ProjectItem, self).__init__(pymiere_id)
         self.__children = children
         self.__name = name
@@ -628,7 +641,8 @@ class ProjectItem(PymiereBaseObject):
     # ----- PROPERTIES -----
     @property
     def children(self):
-        self.__children = ProjectItemCollection(**self._eval_on_this_object('children'))
+        kwargs = self._eval_on_this_object('children')
+        self.__children = ProjectItemCollection(**kwargs) if kwargs else None
         return self.__children
     @children.setter
     def children(self, children):
@@ -669,7 +683,8 @@ class ProjectItem(PymiereBaseObject):
 
     @property
     def videoComponents(self):
-        self.__videoComponents = ComponentCollection(**self._eval_on_this_object('videoComponents'))
+        kwargs = self._eval_on_this_object('videoComponents')
+        self.__videoComponents = ComponentCollection(**kwargs) if kwargs else None
         return self.__videoComponents
     @videoComponents.setter
     def videoComponents(self, videoComponents):
@@ -682,15 +697,15 @@ class ProjectItem(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectItem.bind"')
-        self.check_type(function, any, 'arg "function" of function "ProjectItem.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectItem.bind"')
+        self._check_type(function, any, 'arg "function" of function "ProjectItem.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectItem.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectItem.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -699,9 +714,9 @@ class ProjectItem(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectItem.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "ProjectItem.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectItem.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectItem.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "ProjectItem.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectItem.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getFootageInterpretation(self):
@@ -711,7 +726,7 @@ class ProjectItem(PymiereBaseObject):
         """
         :type interpretFootage: FootageInterpretation
         """
-        self.check_type(interpretFootage, FootageInterpretation, 'arg "interpretFootage" of function "ProjectItem.setFootageInterpretation"')
+        self._check_type(interpretFootage, FootageInterpretation, 'arg "interpretFootage" of function "ProjectItem.setFootageInterpretation"')
         return self._eval_on_this_object("setFootageInterpretation({})".format(_format_object_to_es(interpretFootage)))
 
     def createSmartBin(self, name, query):
@@ -719,22 +734,22 @@ class ProjectItem(PymiereBaseObject):
         :type name: str
         :type query: str
         """
-        self.check_type(name, str, 'arg "name" of function "ProjectItem.createSmartBin"')
-        self.check_type(query, str, 'arg "query" of function "ProjectItem.createSmartBin"')
+        self._check_type(name, str, 'arg "name" of function "ProjectItem.createSmartBin"')
+        self._check_type(query, str, 'arg "query" of function "ProjectItem.createSmartBin"')
         self._eval_on_this_object("createSmartBin({}, {})".format(_format_object_to_es(name), _format_object_to_es(query)))
 
     def createBin(self, name):
         """
         :type name: str
         """
-        self.check_type(name, str, 'arg "name" of function "ProjectItem.createBin"')
+        self._check_type(name, str, 'arg "name" of function "ProjectItem.createBin"')
         self._eval_on_this_object("createBin({})".format(_format_object_to_es(name)))
 
     def renameBin(self, name):
         """
         :type name: str
         """
-        self.check_type(name, str, 'arg "name" of function "ProjectItem.renameBin"')
+        self._check_type(name, str, 'arg "name" of function "ProjectItem.renameBin"')
         return self._eval_on_this_object("renameBin({})".format(_format_object_to_es(name)))
 
     def deleteBin(self):
@@ -744,7 +759,7 @@ class ProjectItem(PymiereBaseObject):
         """
         :type destination: ProjectItem
         """
-        self.check_type(destination, ProjectItem, 'arg "destination" of function "ProjectItem.moveBin"')
+        self._check_type(destination, ProjectItem, 'arg "destination" of function "ProjectItem.moveBin"')
         self._eval_on_this_object("moveBin({})".format(_format_object_to_es(destination)))
 
     def getXMPMetadata(self):
@@ -754,7 +769,7 @@ class ProjectItem(PymiereBaseObject):
         """
         :type buffer: str
         """
-        self.check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setXMPMetadata"')
+        self._check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setXMPMetadata"')
         return self._eval_on_this_object("setXMPMetadata({})".format(_format_object_to_es(buffer)))
 
     def getProjectMetadata(self):
@@ -764,7 +779,7 @@ class ProjectItem(PymiereBaseObject):
         """
         :type buffer: str
         """
-        self.check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setProjectMetadata"')
+        self._check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setProjectMetadata"')
         self._eval_on_this_object("setProjectMetadata({})".format(_format_object_to_es(buffer)))
 
     def getMarkers(self):
@@ -784,8 +799,8 @@ class ProjectItem(PymiereBaseObject):
         :type mediaPath: str
         :type overrideChecks: bool
         """
-        self.check_type(mediaPath, str, 'arg "mediaPath" of function "ProjectItem.changeMediaPath"')
-        self.check_type(overrideChecks, bool, 'arg "overrideChecks" of function "ProjectItem.changeMediaPath"')
+        self._check_type(mediaPath, str, 'arg "mediaPath" of function "ProjectItem.changeMediaPath"')
+        self._check_type(overrideChecks, bool, 'arg "overrideChecks" of function "ProjectItem.changeMediaPath"')
         return self._eval_on_this_object("changeMediaPath({}, {})".format(_format_object_to_es(mediaPath), _format_object_to_es(overrideChecks)))
 
     def select(self):
@@ -796,15 +811,15 @@ class ProjectItem(PymiereBaseObject):
         :type numerator: float
         :type denominator: float
         """
-        self.check_type(numerator, float, 'arg "numerator" of function "ProjectItem.setOverridePixelAspectRatio"')
-        self.check_type(denominator, float, 'arg "denominator" of function "ProjectItem.setOverridePixelAspectRatio"')
+        self._check_type(numerator, float, 'arg "numerator" of function "ProjectItem.setOverridePixelAspectRatio"')
+        self._check_type(denominator, float, 'arg "denominator" of function "ProjectItem.setOverridePixelAspectRatio"')
         return self._eval_on_this_object("setOverridePixelAspectRatio({}, {})".format(_format_object_to_es(numerator), _format_object_to_es(denominator)))
 
     def setOverrideFrameRate(self, frameRate):
         """
         :type frameRate: float
         """
-        self.check_type(frameRate, float, 'arg "frameRate" of function "ProjectItem.setOverrideFrameRate"')
+        self._check_type(frameRate, float, 'arg "frameRate" of function "ProjectItem.setOverrideFrameRate"')
         return self._eval_on_this_object("setOverrideFrameRate({})".format(_format_object_to_es(frameRate)))
 
     def setScaleToFrameSize(self):
@@ -819,10 +834,10 @@ class ProjectItem(PymiereBaseObject):
         :type takeVideo: float
         :type takeAudio: float
         """
-        self.check_type(name, str, 'arg "name" of function "ProjectItem.createSubClip"')
-        self.check_type(hasHardBoundaries, float, 'arg "hasHardBoundaries" of function "ProjectItem.createSubClip"')
-        self.check_type(takeVideo, float, 'arg "takeVideo" of function "ProjectItem.createSubClip"')
-        self.check_type(takeAudio, float, 'arg "takeAudio" of function "ProjectItem.createSubClip"')
+        self._check_type(name, str, 'arg "name" of function "ProjectItem.createSubClip"')
+        self._check_type(hasHardBoundaries, float, 'arg "hasHardBoundaries" of function "ProjectItem.createSubClip"')
+        self._check_type(takeVideo, float, 'arg "takeVideo" of function "ProjectItem.createSubClip"')
+        self._check_type(takeAudio, float, 'arg "takeAudio" of function "ProjectItem.createSubClip"')
         return ProjectItem(**self._eval_on_this_object("createSubClip({}, {}, {}, {}, {}, {})".format(_format_object_to_es(name), _format_object_to_es(startTime), _format_object_to_es(endTime), _format_object_to_es(hasHardBoundaries), _format_object_to_es(takeVideo), _format_object_to_es(takeAudio))))
 
     def findItemsMatchingMediaPath(self, matchString, ignoreSubclips):
@@ -830,8 +845,8 @@ class ProjectItem(PymiereBaseObject):
         :type matchString: str
         :type ignoreSubclips: float
         """
-        self.check_type(matchString, str, 'arg "matchString" of function "ProjectItem.findItemsMatchingMediaPath"')
-        self.check_type(ignoreSubclips, float, 'arg "ignoreSubclips" of function "ProjectItem.findItemsMatchingMediaPath"')
+        self._check_type(matchString, str, 'arg "matchString" of function "ProjectItem.findItemsMatchingMediaPath"')
+        self._check_type(ignoreSubclips, float, 'arg "ignoreSubclips" of function "ProjectItem.findItemsMatchingMediaPath"')
         self._eval_on_this_object("findItemsMatchingMediaPath({}, {})".format(_format_object_to_es(matchString), _format_object_to_es(ignoreSubclips)))
 
     def attachProxy(self, mediaPath, isHiRes):
@@ -839,8 +854,8 @@ class ProjectItem(PymiereBaseObject):
         :type mediaPath: str
         :type isHiRes: float
         """
-        self.check_type(mediaPath, str, 'arg "mediaPath" of function "ProjectItem.attachProxy"')
-        self.check_type(isHiRes, float, 'arg "isHiRes" of function "ProjectItem.attachProxy"')
+        self._check_type(mediaPath, str, 'arg "mediaPath" of function "ProjectItem.attachProxy"')
+        self._check_type(isHiRes, float, 'arg "isHiRes" of function "ProjectItem.attachProxy"')
         return self._eval_on_this_object("attachProxy({}, {})".format(_format_object_to_es(mediaPath), _format_object_to_es(isHiRes)))
 
     def hasProxy(self):
@@ -868,7 +883,7 @@ class ProjectItem(PymiereBaseObject):
         """
         :type mediaType: float
         """
-        self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.clearInPoint"')
+        self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.clearInPoint"')
         self._eval_on_this_object("clearInPoint({})".format(_format_object_to_es(mediaType)))
 
     def setInPoint(self, arg1, mediaType):
@@ -876,21 +891,21 @@ class ProjectItem(PymiereBaseObject):
         :type arg1: Object
         :type mediaType: float
         """
-        self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.setInPoint"')
+        self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.setInPoint"')
         self._eval_on_this_object("setInPoint({}, {})".format(_format_object_to_es(arg1), _format_object_to_es(mediaType)))
 
     def getInPoint(self, mediaType):
         """
         :type mediaType: float
         """
-        self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getInPoint"')
+        self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getInPoint"')
         return Time(**self._eval_on_this_object("getInPoint({})".format(_format_object_to_es(mediaType))))
 
     def clearOutPoint(self, mediaType):
         """
         :type mediaType: float
         """
-        self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.clearOutPoint"')
+        self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.clearOutPoint"')
         self._eval_on_this_object("clearOutPoint({})".format(_format_object_to_es(mediaType)))
 
     def setOutPoint(self, arg1, mediaType):
@@ -898,14 +913,14 @@ class ProjectItem(PymiereBaseObject):
         :type arg1: Object
         :type mediaType: float
         """
-        self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.setOutPoint"')
+        self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.setOutPoint"')
         self._eval_on_this_object("setOutPoint({}, {})".format(_format_object_to_es(arg1), _format_object_to_es(mediaType)))
 
     def getOutPoint(self, mediaType):
         """
         :type mediaType: float
         """
-        self.check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getOutPoint"')
+        self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getOutPoint"')
         return Time(**self._eval_on_this_object("getOutPoint({})".format(_format_object_to_es(mediaType))))
 
     def setColorLabel(self):
@@ -929,23 +944,36 @@ class ProjectItem(PymiereBaseObject):
     def isReference(self):
         return self._eval_on_this_object("isReference()")
 
+
 class ProjectItemCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems):
+    def __init__(self, pymiere_id, length, numItems, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(ProjectItemCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
         return ProjectItem(**super(ProjectItemCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class SequenceCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numSequences):
+    def __init__(self, pymiere_id, length, numSequences, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(SequenceCollection, self).__init__(pymiere_id, "numSequences")
 
     def __getitem__(self, index):
         return Sequence(**super(SequenceCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class Sequence(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'id':id, 'sequenceID':sequenceID, 'name':name, 'audioTracks':audioTracks, 'videoTracks':videoTracks, 'frameSizeHorizontal':frameSizeHorizontal, 'frameSizeVertical':frameSizeVertical, 'timebase':timebase, 'zeroPoint':zeroPoint, 'end':end, 'markers':markers, 'projectItem':projectItem, 'videoDisplayFormat':videoDisplayFormat, 'audioDisplayFormat':audioDisplayFormat})
+    def __init__(self, pymiere_id=None, created_by_user=False, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'id': id, 'sequenceID': sequenceID, 'name': name, 'audioTracks': audioTracks, 'videoTracks': videoTracks, 'frameSizeHorizontal': frameSizeHorizontal, 'frameSizeVertical': frameSizeVertical, 'timebase': timebase, 'zeroPoint': zeroPoint, 'end': end, 'markers': markers, 'projectItem': projectItem, 'videoDisplayFormat': videoDisplayFormat, 'audioDisplayFormat': audioDisplayFormat})
         super(Sequence, self).__init__(pymiere_id)
         self.__id = id
         self.__sequenceID = sequenceID
@@ -990,7 +1018,8 @@ class Sequence(PymiereBaseObject):
 
     @property
     def audioTracks(self):
-        self.__audioTracks = TrackCollection(**self._eval_on_this_object('audioTracks'))
+        kwargs = self._eval_on_this_object('audioTracks')
+        self.__audioTracks = TrackCollection(**kwargs) if kwargs else None
         return self.__audioTracks
     @audioTracks.setter
     def audioTracks(self, audioTracks):
@@ -998,7 +1027,8 @@ class Sequence(PymiereBaseObject):
 
     @property
     def videoTracks(self):
-        self.__videoTracks = TrackCollection(**self._eval_on_this_object('videoTracks'))
+        kwargs = self._eval_on_this_object('videoTracks')
+        self.__videoTracks = TrackCollection(**kwargs) if kwargs else None
         return self.__videoTracks
     @videoTracks.setter
     def videoTracks(self, videoTracks):
@@ -1046,7 +1076,8 @@ class Sequence(PymiereBaseObject):
 
     @property
     def markers(self):
-        self.__markers = MarkerCollection(**self._eval_on_this_object('markers'))
+        kwargs = self._eval_on_this_object('markers')
+        self.__markers = MarkerCollection(**kwargs) if kwargs else None
         return self.__markers
     @markers.setter
     def markers(self, markers):
@@ -1054,7 +1085,8 @@ class Sequence(PymiereBaseObject):
 
     @property
     def projectItem(self):
-        self.__projectItem = ProjectItem(**self._eval_on_this_object('projectItem'))
+        kwargs = self._eval_on_this_object('projectItem')
+        self.__projectItem = ProjectItem(**kwargs) if kwargs else None
         return self.__projectItem
     @projectItem.setter
     def projectItem(self, projectItem):
@@ -1085,15 +1117,15 @@ class Sequence(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Sequence.bind"')
-        self.check_type(function, any, 'arg "function" of function "Sequence.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Sequence.bind"')
+        self._check_type(function, any, 'arg "function" of function "Sequence.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Sequence.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Sequence.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1102,9 +1134,9 @@ class Sequence(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Sequence.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Sequence.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Sequence.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Sequence.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Sequence.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Sequence.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getPlayerPosition(self):
@@ -1114,7 +1146,7 @@ class Sequence(PymiereBaseObject):
         """
         :type pos: str
         """
-        self.check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
+        self._check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
         self._eval_on_this_object("setPlayerPosition({})".format(_format_object_to_es(pos)))
 
     def setInPoint(self, time):
@@ -1169,7 +1201,7 @@ class Sequence(PymiereBaseObject):
         """
         :type ticks: str
         """
-        self.check_type(ticks, str, 'arg "ticks" of function "Sequence.setZeroPoint"')
+        self._check_type(ticks, str, 'arg "ticks" of function "Sequence.setZeroPoint"')
         self._eval_on_this_object("setZeroPoint({})".format(_format_object_to_es(ticks)))
 
     def attachCustomProperty(self, propertyID, propertyValue):
@@ -1177,8 +1209,8 @@ class Sequence(PymiereBaseObject):
         :type propertyID: str
         :type propertyValue: str
         """
-        self.check_type(propertyID, str, 'arg "propertyID" of function "Sequence.attachCustomProperty"')
-        self.check_type(propertyValue, str, 'arg "propertyValue" of function "Sequence.attachCustomProperty"')
+        self._check_type(propertyID, str, 'arg "propertyID" of function "Sequence.attachCustomProperty"')
+        self._check_type(propertyValue, str, 'arg "propertyValue" of function "Sequence.attachCustomProperty"')
         self._eval_on_this_object("attachCustomProperty({}, {})".format(_format_object_to_es(propertyID), _format_object_to_es(propertyValue)))
 
     def clone(self):
@@ -1188,7 +1220,7 @@ class Sequence(PymiereBaseObject):
         """
         :type exportPath: str
         """
-        self.check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsProject"')
+        self._check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsProject"')
         self._eval_on_this_object("exportAsProject({})".format(_format_object_to_es(exportPath)))
 
     def exportAsFinalCutProXML(self, exportPath, suppressUI):
@@ -1196,8 +1228,8 @@ class Sequence(PymiereBaseObject):
         :type exportPath: str
         :type suppressUI: float
         """
-        self.check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsFinalCutProXML"')
-        self.check_type(suppressUI, float, 'arg "suppressUI" of function "Sequence.exportAsFinalCutProXML"')
+        self._check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsFinalCutProXML"')
+        self._check_type(suppressUI, float, 'arg "suppressUI" of function "Sequence.exportAsFinalCutProXML"')
         return self._eval_on_this_object("exportAsFinalCutProXML({}, {})".format(_format_object_to_es(exportPath), _format_object_to_es(suppressUI)))
 
     def exportAsMediaDirect(self, outputFilePath, presetPath, workAreaType):
@@ -1206,16 +1238,16 @@ class Sequence(PymiereBaseObject):
         :type presetPath: str
         :type workAreaType: float
         """
-        self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "Sequence.exportAsMediaDirect"')
-        self.check_type(presetPath, str, 'arg "presetPath" of function "Sequence.exportAsMediaDirect"')
-        self.check_type(workAreaType, float, 'arg "workAreaType" of function "Sequence.exportAsMediaDirect"')
+        self._check_type(outputFilePath, str, 'arg "outputFilePath" of function "Sequence.exportAsMediaDirect"')
+        self._check_type(presetPath, str, 'arg "presetPath" of function "Sequence.exportAsMediaDirect"')
+        self._check_type(workAreaType, float, 'arg "workAreaType" of function "Sequence.exportAsMediaDirect"')
         return self._eval_on_this_object("exportAsMediaDirect({}, {}, {})".format(_format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(workAreaType)))
 
     def getExportFileExtension(self, presetFilePath):
         """
         :type presetFilePath: str
         """
-        self.check_type(presetFilePath, str, 'arg "presetFilePath" of function "Sequence.getExportFileExtension"')
+        self._check_type(presetFilePath, str, 'arg "presetFilePath" of function "Sequence.getExportFileExtension"')
         return self._eval_on_this_object("getExportFileExtension({})".format(_format_object_to_es(presetFilePath)))
 
     def importMGT(self, path, time, videoTrackIndex, audioTrackIndex):
@@ -1225,9 +1257,9 @@ class Sequence(PymiereBaseObject):
         :type videoTrackIndex: float
         :type audioTrackIndex: float
         """
-        self.check_type(path, str, 'arg "path" of function "Sequence.importMGT"')
-        self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.importMGT"')
-        self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.importMGT"')
+        self._check_type(path, str, 'arg "path" of function "Sequence.importMGT"')
+        self._check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.importMGT"')
+        self._check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.importMGT"')
         return TrackItem(**self._eval_on_this_object("importMGT({}, {}, {}, {})".format(_format_object_to_es(path), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex))))
 
     def importMGTFromLibrary(self, libraryName, mgtName, time, videoTrackIndex, audioTrackIndex):
@@ -1238,10 +1270,10 @@ class Sequence(PymiereBaseObject):
         :type videoTrackIndex: float
         :type audioTrackIndex: float
         """
-        self.check_type(libraryName, str, 'arg "libraryName" of function "Sequence.importMGTFromLibrary"')
-        self.check_type(mgtName, str, 'arg "mgtName" of function "Sequence.importMGTFromLibrary"')
-        self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.importMGTFromLibrary"')
-        self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.importMGTFromLibrary"')
+        self._check_type(libraryName, str, 'arg "libraryName" of function "Sequence.importMGTFromLibrary"')
+        self._check_type(mgtName, str, 'arg "mgtName" of function "Sequence.importMGTFromLibrary"')
+        self._check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.importMGTFromLibrary"')
+        self._check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.importMGTFromLibrary"')
         return TrackItem(**self._eval_on_this_object("importMGTFromLibrary({}, {}, {}, {}, {})".format(_format_object_to_es(libraryName), _format_object_to_es(mgtName), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex))))
 
     def getSettings(self):
@@ -1251,7 +1283,7 @@ class Sequence(PymiereBaseObject):
         """
         :type settings: SequenceSettings
         """
-        self.check_type(settings, SequenceSettings, 'arg "settings" of function "Sequence.setSettings"')
+        self._check_type(settings, SequenceSettings, 'arg "settings" of function "Sequence.setSettings"')
         self._eval_on_this_object("setSettings({})".format(_format_object_to_es(settings)))
 
     def getSelection(self):
@@ -1273,9 +1305,9 @@ class Sequence(PymiereBaseObject):
         :type videoTrackIndex: float
         :type audioTrackIndex: float
         """
-        self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.insertClip"')
-        self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.insertClip"')
-        self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.insertClip"')
+        self._check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.insertClip"')
+        self._check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.insertClip"')
+        self._check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.insertClip"')
         self._eval_on_this_object("insertClip({}, {}, {}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex)))
 
     def overwriteClip(self, clipProjectItem, time, videoTrackIndex, audioTrackIndex):
@@ -1285,9 +1317,9 @@ class Sequence(PymiereBaseObject):
         :type videoTrackIndex: float
         :type audioTrackIndex: float
         """
-        self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.overwriteClip"')
-        self.check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.overwriteClip"')
-        self.check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.overwriteClip"')
+        self._check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.overwriteClip"')
+        self._check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.overwriteClip"')
+        self._check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.overwriteClip"')
         self._eval_on_this_object("overwriteClip({}, {}, {}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex)))
 
     def close(self):
@@ -1297,7 +1329,7 @@ class Sequence(PymiereBaseObject):
         """
         :type ignoreTrackTargeting: bool
         """
-        self.check_type(ignoreTrackTargeting, bool, 'arg "ignoreTrackTargeting" of function "Sequence.createSubsequence"')
+        self._check_type(ignoreTrackTargeting, bool, 'arg "ignoreTrackTargeting" of function "Sequence.createSubsequence"')
         return Sequence(**self._eval_on_this_object("createSubsequence({})".format(_format_object_to_es(ignoreTrackTargeting))))
 
     def isWorkAreaEnabled(self):
@@ -1307,19 +1339,26 @@ class Sequence(PymiereBaseObject):
         """
         :type specifiedState: float
         """
-        self.check_type(specifiedState, float, 'arg "specifiedState" of function "Sequence.setWorkAreaEnabled"')
+        self._check_type(specifiedState, float, 'arg "specifiedState" of function "Sequence.setWorkAreaEnabled"')
         return self._eval_on_this_object("setWorkAreaEnabled({})".format(_format_object_to_es(specifiedState)))
 
+
 class TrackCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numTracks):
+    def __init__(self, pymiere_id, length, numTracks, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(TrackCollection, self).__init__(pymiere_id, "numTracks")
 
     def __getitem__(self, index):
         return Track(**super(TrackCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class MarkerCollection(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, numMarkers=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'numMarkers':numMarkers})
+    def __init__(self, pymiere_id=None, created_by_user=False, numMarkers=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'numMarkers': numMarkers})
         super(MarkerCollection, self).__init__(pymiere_id)
         self.__numMarkers = numMarkers
 
@@ -1339,15 +1378,15 @@ class MarkerCollection(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.bind"')
-        self.check_type(function, any, 'arg "function" of function "MarkerCollection.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.bind"')
+        self._check_type(function, any, 'arg "function" of function "MarkerCollection.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1356,23 +1395,23 @@ class MarkerCollection(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "MarkerCollection.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "MarkerCollection.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "MarkerCollection.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "MarkerCollection.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "MarkerCollection.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def createMarker(self, time):
         """
         :type time: float
         """
-        self.check_type(time, float, 'arg "time" of function "MarkerCollection.createMarker"')
+        self._check_type(time, float, 'arg "time" of function "MarkerCollection.createMarker"')
         return Marker(**self._eval_on_this_object("createMarker({})".format(_format_object_to_es(time))))
 
     def deleteMarker(self, marker):
         """
         :type marker: Marker
         """
-        self.check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.deleteMarker"')
+        self._check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.deleteMarker"')
         self._eval_on_this_object("deleteMarker({})".format(_format_object_to_es(marker)))
 
     def getFirstMarker(self):
@@ -1385,33 +1424,46 @@ class MarkerCollection(PymiereBaseObject):
         """
         :type marker: Marker
         """
-        self.check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.getPrevMarker"')
+        self._check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.getPrevMarker"')
         return Marker(**self._eval_on_this_object("getPrevMarker({})".format(_format_object_to_es(marker))))
 
     def getNextMarker(self, marker):
         """
         :type marker: Marker
         """
-        self.check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.getNextMarker"')
+        self._check_type(marker, Marker, 'arg "marker" of function "MarkerCollection.getNextMarker"')
         return Marker(**self._eval_on_this_object("getNextMarker({})".format(_format_object_to_es(marker))))
 
+
 class ComponentCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems):
+    def __init__(self, pymiere_id, length, numItems, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(ComponentCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
         return Component(**super(ComponentCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class ProjectCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numProjects):
+    def __init__(self, pymiere_id, length, numProjects, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(ProjectCollection, self).__init__(pymiere_id, "numProjects")
 
     def __getitem__(self, index):
         return Project(**super(ProjectCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class Anywhere(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(Anywhere, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1422,15 +1474,15 @@ class Anywhere(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Anywhere.bind"')
-        self.check_type(function, any, 'arg "function" of function "Anywhere.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Anywhere.bind"')
+        self._check_type(function, any, 'arg "function" of function "Anywhere.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Anywhere.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Anywhere.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1439,9 +1491,9 @@ class Anywhere(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Anywhere.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Anywhere.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Anywhere.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Anywhere.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Anywhere.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Anywhere.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setAuthenticationToken(self, inAuthToken, inEmail):
@@ -1449,8 +1501,8 @@ class Anywhere(PymiereBaseObject):
         :type inAuthToken: str
         :type inEmail: str
         """
-        self.check_type(inAuthToken, str, 'arg "inAuthToken" of function "Anywhere.setAuthenticationToken"')
-        self.check_type(inEmail, str, 'arg "inEmail" of function "Anywhere.setAuthenticationToken"')
+        self._check_type(inAuthToken, str, 'arg "inAuthToken" of function "Anywhere.setAuthenticationToken"')
+        self._check_type(inEmail, str, 'arg "inEmail" of function "Anywhere.setAuthenticationToken"')
         return self._eval_on_this_object("setAuthenticationToken({}, {})".format(_format_object_to_es(inAuthToken), _format_object_to_es(inEmail)))
 
     def getAuthenticationToken(self):
@@ -1463,14 +1515,14 @@ class Anywhere(PymiereBaseObject):
         """
         :type inProductionURL: str
         """
-        self.check_type(inProductionURL, str, 'arg "inProductionURL" of function "Anywhere.openProduction"')
+        self._check_type(inProductionURL, str, 'arg "inProductionURL" of function "Anywhere.openProduction"')
         return self._eval_on_this_object("openProduction({})".format(_format_object_to_es(inProductionURL)))
 
     def openTeamProjectSnapshot(self, inTeamProjectSnapshotPath):
         """
         :type inTeamProjectSnapshotPath: str
         """
-        self.check_type(inTeamProjectSnapshotPath, str, 'arg "inTeamProjectSnapshotPath" of function "Anywhere.openTeamProjectSnapshot"')
+        self._check_type(inTeamProjectSnapshotPath, str, 'arg "inTeamProjectSnapshotPath" of function "Anywhere.openTeamProjectSnapshot"')
         return self._eval_on_this_object("openTeamProjectSnapshot({})".format(_format_object_to_es(inTeamProjectSnapshotPath)))
 
     def isProductionOpen(self):
@@ -1485,9 +1537,10 @@ class Anywhere(PymiereBaseObject):
     def getCurrentEditingSessionActiveSequenceURL(self):
         return self._eval_on_this_object("getCurrentEditingSessionActiveSequenceURL()")
 
+
 class Encoder(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'ENCODE_ENTIRE':ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT':ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA':ENCODE_WORKAREA})
+    def __init__(self, pymiere_id=None, created_by_user=False, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'ENCODE_ENTIRE': ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT': ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA': ENCODE_WORKAREA})
         super(Encoder, self).__init__(pymiere_id)
         self.__ENCODE_ENTIRE = ENCODE_ENTIRE
         self.__ENCODE_IN_TO_OUT = ENCODE_IN_TO_OUT
@@ -1525,15 +1578,15 @@ class Encoder(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Encoder.bind"')
-        self.check_type(function, any, 'arg "function" of function "Encoder.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Encoder.bind"')
+        self._check_type(function, any, 'arg "function" of function "Encoder.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Encoder.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Encoder.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1542,9 +1595,9 @@ class Encoder(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Encoder.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Encoder.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Encoder.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Encoder.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Encoder.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Encoder.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def encodeSequence(self, sequence, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately):
@@ -1556,12 +1609,12 @@ class Encoder(PymiereBaseObject):
         :type removeOnCompletion: float
         :type startQueueImmediately: float
         """
-        self.check_type(sequence, Sequence, 'arg "sequence" of function "Encoder.encodeSequence"')
-        self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeSequence"')
-        self.check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeSequence"')
-        self.check_type(WorkAreaType, float, 'arg "WorkAreaType" of function "Encoder.encodeSequence"')
-        self.check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeSequence"')
-        self.check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeSequence"')
+        self._check_type(sequence, Sequence, 'arg "sequence" of function "Encoder.encodeSequence"')
+        self._check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeSequence"')
+        self._check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeSequence"')
+        self._check_type(WorkAreaType, float, 'arg "WorkAreaType" of function "Encoder.encodeSequence"')
+        self._check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeSequence"')
+        self._check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeSequence"')
         return self._eval_on_this_object("encodeSequence({}, {}, {}, {}, {}, {})".format(_format_object_to_es(sequence), _format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(WorkAreaType), _format_object_to_es(removeOnCompletion), _format_object_to_es(startQueueImmediately)))
 
     def encodeProjectItem(self, projectItem, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately):
@@ -1573,12 +1626,12 @@ class Encoder(PymiereBaseObject):
         :type removeOnCompletion: float
         :type startQueueImmediately: float
         """
-        self.check_type(projectItem, ProjectItem, 'arg "projectItem" of function "Encoder.encodeProjectItem"')
-        self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeProjectItem"')
-        self.check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeProjectItem"')
-        self.check_type(WorkAreaType, float, 'arg "WorkAreaType" of function "Encoder.encodeProjectItem"')
-        self.check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeProjectItem"')
-        self.check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeProjectItem"')
+        self._check_type(projectItem, ProjectItem, 'arg "projectItem" of function "Encoder.encodeProjectItem"')
+        self._check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeProjectItem"')
+        self._check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeProjectItem"')
+        self._check_type(WorkAreaType, float, 'arg "WorkAreaType" of function "Encoder.encodeProjectItem"')
+        self._check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeProjectItem"')
+        self._check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeProjectItem"')
         return self._eval_on_this_object("encodeProjectItem({}, {}, {}, {}, {}, {})".format(_format_object_to_es(projectItem), _format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(WorkAreaType), _format_object_to_es(removeOnCompletion), _format_object_to_es(startQueueImmediately)))
 
     def encodeFile(self, inputFilePath, outputFilePath, presetPath, removeOnCompletion, startTime, stopTime, startQueueImmediately):
@@ -1591,11 +1644,11 @@ class Encoder(PymiereBaseObject):
         :type stopTime: Object
         :type startQueueImmediately: float
         """
-        self.check_type(inputFilePath, str, 'arg "inputFilePath" of function "Encoder.encodeFile"')
-        self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeFile"')
-        self.check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeFile"')
-        self.check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeFile"')
-        self.check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeFile"')
+        self._check_type(inputFilePath, str, 'arg "inputFilePath" of function "Encoder.encodeFile"')
+        self._check_type(outputFilePath, str, 'arg "outputFilePath" of function "Encoder.encodeFile"')
+        self._check_type(presetPath, str, 'arg "presetPath" of function "Encoder.encodeFile"')
+        self._check_type(removeOnCompletion, float, 'arg "removeOnCompletion" of function "Encoder.encodeFile"')
+        self._check_type(startQueueImmediately, float, 'arg "startQueueImmediately" of function "Encoder.encodeFile"')
         return self._eval_on_this_object("encodeFile({}, {}, {}, {}, {}, {}, {})".format(_format_object_to_es(inputFilePath), _format_object_to_es(outputFilePath), _format_object_to_es(presetPath), _format_object_to_es(removeOnCompletion), _format_object_to_es(startTime), _format_object_to_es(stopTime), _format_object_to_es(startQueueImmediately)))
 
     def startBatch(self):
@@ -1608,22 +1661,23 @@ class Encoder(PymiereBaseObject):
         """
         :type enable: float
         """
-        self.check_type(enable, float, 'arg "enable" of function "Encoder.setSidecarXMPEnabled"')
+        self._check_type(enable, float, 'arg "enable" of function "Encoder.setSidecarXMPEnabled"')
         self._eval_on_this_object("setSidecarXMPEnabled({})".format(_format_object_to_es(enable)))
 
     def setEmbeddedXMPEnabled(self, enable):
         """
         :type enable: float
         """
-        self.check_type(enable, float, 'arg "enable" of function "Encoder.setEmbeddedXMPEnabled"')
+        self._check_type(enable, float, 'arg "enable" of function "Encoder.setEmbeddedXMPEnabled"')
         self._eval_on_this_object("setEmbeddedXMPEnabled({})".format(_format_object_to_es(enable)))
 
     def getExporters(self):
         self._eval_on_this_object("getExporters()")
 
+
 class Properties(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(Properties, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1634,15 +1688,15 @@ class Properties(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Properties.bind"')
-        self.check_type(function, any, 'arg "function" of function "Properties.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Properties.bind"')
+        self._check_type(function, any, 'arg "function" of function "Properties.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Properties.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Properties.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1651,49 +1705,50 @@ class Properties(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Properties.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Properties.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Properties.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Properties.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Properties.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Properties.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def doesPropertyExist(self, propertyKey):
         """
         :type propertyKey: str
         """
-        self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.doesPropertyExist"')
+        self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.doesPropertyExist"')
         return self._eval_on_this_object("doesPropertyExist({})".format(_format_object_to_es(propertyKey)))
 
     def isPropertyReadOnly(self, propertyKey):
         """
         :type propertyKey: str
         """
-        self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.isPropertyReadOnly"')
+        self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.isPropertyReadOnly"')
         return self._eval_on_this_object("isPropertyReadOnly({})".format(_format_object_to_es(propertyKey)))
 
     def clearProperty(self, propertyKey):
         """
         :type propertyKey: str
         """
-        self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.clearProperty"')
+        self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.clearProperty"')
         self._eval_on_this_object("clearProperty({})".format(_format_object_to_es(propertyKey)))
 
     def setProperty(self, propertyKey):
         """
         :type propertyKey: str
         """
-        self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.setProperty"')
+        self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.setProperty"')
         self._eval_on_this_object("setProperty({})".format(_format_object_to_es(propertyKey)))
 
     def getProperty(self, propertyKey):
         """
         :type propertyKey: str
         """
-        self.check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.getProperty"')
+        self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.getProperty"')
         self._eval_on_this_object("getProperty({})".format(_format_object_to_es(propertyKey)))
 
+
 class SourceMonitor(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(SourceMonitor, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1704,15 +1759,15 @@ class SourceMonitor(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.bind"')
-        self.check_type(function, any, 'arg "function" of function "SourceMonitor.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.bind"')
+        self._check_type(function, any, 'arg "function" of function "SourceMonitor.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1721,30 +1776,30 @@ class SourceMonitor(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "SourceMonitor.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "SourceMonitor.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "SourceMonitor.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "SourceMonitor.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "SourceMonitor.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def openFilePath(self, filePath):
         """
         :type filePath: str
         """
-        self.check_type(filePath, str, 'arg "filePath" of function "SourceMonitor.openFilePath"')
+        self._check_type(filePath, str, 'arg "filePath" of function "SourceMonitor.openFilePath"')
         return self._eval_on_this_object("openFilePath({})".format(_format_object_to_es(filePath)))
 
     def openProjectItem(self, projectItem):
         """
         :type projectItem: ProjectItem
         """
-        self.check_type(projectItem, ProjectItem, 'arg "projectItem" of function "SourceMonitor.openProjectItem"')
+        self._check_type(projectItem, ProjectItem, 'arg "projectItem" of function "SourceMonitor.openProjectItem"')
         return self._eval_on_this_object("openProjectItem({})".format(_format_object_to_es(projectItem)))
 
     def play(self, speed):
         """
         :type speed: float
         """
-        self.check_type(speed, float, 'arg "speed" of function "SourceMonitor.play"')
+        self._check_type(speed, float, 'arg "speed" of function "SourceMonitor.play"')
         self._eval_on_this_object("play({})".format(_format_object_to_es(speed)))
 
     def closeClip(self):
@@ -1759,9 +1814,10 @@ class SourceMonitor(PymiereBaseObject):
     def getProjectItem(self):
         return ProjectItem(**self._eval_on_this_object("getProjectItem()"))
 
+
 class ProjectManager(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, options=None, errors=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'options':options, 'errors':errors})
+    def __init__(self, pymiere_id=None, created_by_user=False, options=None, errors=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'options': options, 'errors': errors})
         super(ProjectManager, self).__init__(pymiere_id)
         self.__options = options
         self.__errors = errors
@@ -1769,7 +1825,8 @@ class ProjectManager(PymiereBaseObject):
     # ----- PROPERTIES -----
     @property
     def options(self):
-        self.__options = ProjectManagerOptions(**self._eval_on_this_object('options'))
+        kwargs = self._eval_on_this_object('options')
+        self.__options = ProjectManagerOptions(**kwargs) if kwargs else None
         return self.__options
     @options.setter
     def options(self, options):
@@ -1790,15 +1847,15 @@ class ProjectManager(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectManager.bind"')
-        self.check_type(function, any, 'arg "function" of function "ProjectManager.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectManager.bind"')
+        self._check_type(function, any, 'arg "function" of function "ProjectManager.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectManager.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectManager.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -1807,21 +1864,22 @@ class ProjectManager(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectManager.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "ProjectManager.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectManager.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectManager.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "ProjectManager.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectManager.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def process(self, project):
         """
         :type project: Project
         """
-        self.check_type(project, Project, 'arg "project" of function "ProjectManager.process"')
+        self._check_type(project, Project, 'arg "project" of function "ProjectManager.process"')
         return self._eval_on_this_object("process({})".format(_format_object_to_es(project)))
 
+
 class ProjectManagerOptions(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'clipTransferOption':clipTransferOption, 'clipTranscoderOption':clipTranscoderOption, 'excludeUnused':excludeUnused, 'handleFrameCount':handleFrameCount, 'includePreviews':includePreviews, 'includeConformedAudio':includeConformedAudio, 'renameMedia':renameMedia, 'destinationPath':destinationPath, 'includeAllSequences':includeAllSequences, 'affectedSequences':affectedSequences, 'encoderPresetFilePath':encoderPresetFilePath, 'convertImageSequencesToClips':convertImageSequencesToClips, 'convertSyntheticsToClips':convertSyntheticsToClips, 'convertAECompsToClips':convertAECompsToClips, 'copyToPreventAlphaLoss':copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY':CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE':CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET':CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS':CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE':CLIP_TRANSCODE_MATCH_SEQUENCE})
+    def __init__(self, pymiere_id=None, created_by_user=False, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'clipTransferOption': clipTransferOption, 'clipTranscoderOption': clipTranscoderOption, 'excludeUnused': excludeUnused, 'handleFrameCount': handleFrameCount, 'includePreviews': includePreviews, 'includeConformedAudio': includeConformedAudio, 'renameMedia': renameMedia, 'destinationPath': destinationPath, 'includeAllSequences': includeAllSequences, 'affectedSequences': affectedSequences, 'encoderPresetFilePath': encoderPresetFilePath, 'convertImageSequencesToClips': convertImageSequencesToClips, 'convertSyntheticsToClips': convertSyntheticsToClips, 'convertAECompsToClips': convertAECompsToClips, 'copyToPreventAlphaLoss': copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY': CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE': CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET': CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS': CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE': CLIP_TRANSCODE_MATCH_SEQUENCE})
         super(ProjectManagerOptions, self).__init__(pymiere_id)
         self.__clipTransferOption = clipTransferOption
         self.__clipTranscoderOption = clipTranscoderOption
@@ -2027,15 +2085,15 @@ class ProjectManagerOptions(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.bind"')
-        self.check_type(function, any, 'arg "function" of function "ProjectManagerOptions.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.bind"')
+        self._check_type(function, any, 'arg "function" of function "ProjectManagerOptions.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2044,14 +2102,15 @@ class ProjectManagerOptions(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "ProjectManagerOptions.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectManagerOptions.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectManagerOptions.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "ProjectManagerOptions.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectManagerOptions.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class Metadata(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, getMetadata=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'getMetadata':getMetadata})
+    def __init__(self, pymiere_id=None, created_by_user=False, getMetadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'getMetadata': getMetadata})
         super(Metadata, self).__init__(pymiere_id)
         self.__getMetadata = getMetadata
 
@@ -2071,15 +2130,15 @@ class Metadata(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Metadata.bind"')
-        self.check_type(function, any, 'arg "function" of function "Metadata.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Metadata.bind"')
+        self._check_type(function, any, 'arg "function" of function "Metadata.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Metadata.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Metadata.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2088,9 +2147,9 @@ class Metadata(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Metadata.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Metadata.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Metadata.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Metadata.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Metadata.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Metadata.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setMetadataValue(self):
@@ -2108,9 +2167,10 @@ class Metadata(PymiereBaseObject):
     def deleteMarker(self):
         self._eval_on_this_object("deleteMarker()")
 
+
 class Document(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(Document, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2121,15 +2181,15 @@ class Document(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Document.bind"')
-        self.check_type(function, any, 'arg "function" of function "Document.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Document.bind"')
+        self._check_type(function, any, 'arg "function" of function "Document.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Document.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Document.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2138,24 +2198,25 @@ class Document(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Document.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Document.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Document.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Document.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Document.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Document.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def importFiles(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "Document.importFiles"')
+        self._check_type(arg1, any, 'arg "arg1" of function "Document.importFiles"')
         return self._eval_on_this_object("importFiles({})".format(_format_object_to_es(arg1)))
 
     def getFilePath(self):
         return self._eval_on_this_object("getFilePath()")
 
+
 class ProjectItemType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, BIN=None, CLIP=None, FILE=None, ROOT=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'BIN':BIN, 'CLIP':CLIP, 'FILE':FILE, 'ROOT':ROOT})
+    def __init__(self, pymiere_id=None, created_by_user=False, BIN=None, CLIP=None, FILE=None, ROOT=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'BIN': BIN, 'CLIP': CLIP, 'FILE': FILE, 'ROOT': ROOT})
         super(ProjectItemType, self).__init__(pymiere_id)
         self.__BIN = BIN
         self.__CLIP = CLIP
@@ -2202,15 +2263,15 @@ class ProjectItemType(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.bind"')
-        self.check_type(function, any, 'arg "function" of function "ProjectItemType.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.bind"')
+        self._check_type(function, any, 'arg "function" of function "ProjectItemType.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2219,14 +2280,15 @@ class ProjectItemType(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "ProjectItemType.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectItemType.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ProjectItemType.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "ProjectItemType.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "ProjectItemType.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class ScratchDiskType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'FirstVideoCaptureFolder':FirstVideoCaptureFolder, 'FirstAudioCaptureFolder':FirstAudioCaptureFolder, 'FirstVideoPreviewFolder':FirstVideoPreviewFolder, 'FirstAudioPreviewFolder':FirstAudioPreviewFolder, 'FirstAutoSaveFolder':FirstAutoSaveFolder, 'FirstCClibrariesFolder':FirstCClibrariesFolder, 'FirstCapsuleMediaFolder':FirstCapsuleMediaFolder})
+    def __init__(self, pymiere_id=None, created_by_user=False, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'FirstVideoCaptureFolder': FirstVideoCaptureFolder, 'FirstAudioCaptureFolder': FirstAudioCaptureFolder, 'FirstVideoPreviewFolder': FirstVideoPreviewFolder, 'FirstAudioPreviewFolder': FirstAudioPreviewFolder, 'FirstAutoSaveFolder': FirstAutoSaveFolder, 'FirstCClibrariesFolder': FirstCClibrariesFolder, 'FirstCapsuleMediaFolder': FirstCapsuleMediaFolder})
         super(ScratchDiskType, self).__init__(pymiere_id)
         self.__FirstVideoCaptureFolder = FirstVideoCaptureFolder
         self.__FirstAudioCaptureFolder = FirstAudioCaptureFolder
@@ -2300,15 +2362,15 @@ class ScratchDiskType(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.bind"')
-        self.check_type(function, any, 'arg "function" of function "ScratchDiskType.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.bind"')
+        self._check_type(function, any, 'arg "function" of function "ScratchDiskType.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2317,14 +2379,15 @@ class ScratchDiskType(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "ScratchDiskType.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "ScratchDiskType.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ScratchDiskType.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "ScratchDiskType.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "ScratchDiskType.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class RegisteredDirectories(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(RegisteredDirectories, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2335,15 +2398,15 @@ class RegisteredDirectories(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.bind"')
-        self.check_type(function, any, 'arg "function" of function "RegisteredDirectories.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.bind"')
+        self._check_type(function, any, 'arg "function" of function "RegisteredDirectories.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2352,14 +2415,15 @@ class RegisteredDirectories(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "RegisteredDirectories.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "RegisteredDirectories.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "RegisteredDirectories.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "RegisteredDirectories.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "RegisteredDirectories.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class UtilityFunctions(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(UtilityFunctions, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2370,15 +2434,15 @@ class UtilityFunctions(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.bind"')
-        self.check_type(function, any, 'arg "function" of function "UtilityFunctions.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.bind"')
+        self._check_type(function, any, 'arg "function" of function "UtilityFunctions.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -2387,14 +2451,15 @@ class UtilityFunctions(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "UtilityFunctions.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "UtilityFunctions.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "UtilityFunctions.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "UtilityFunctions.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "UtilityFunctions.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class Math(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'E':E, 'LN10':LN10, 'LN2':LN2, 'LOG2E':LOG2E, 'LOG10E':LOG10E, 'PI':PI, 'SQRT1_2':SQRT1_2, 'SQRT2':SQRT2})
+    def __init__(self, pymiere_id=None, created_by_user=False, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'E': E, 'LN10': LN10, 'LN2': LN2, 'LOG2E': LOG2E, 'LOG10E': LOG10E, 'PI': PI, 'SQRT1_2': SQRT1_2, 'SQRT2': SQRT2})
         super(Math, self).__init__(pymiere_id)
         self.__E = E
         self.__LN10 = LN10
@@ -2476,28 +2541,28 @@ class Math(PymiereBaseObject):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.abs"')
+        self._check_type(n, float, 'arg "n" of function "Math.abs"')
         return self._eval_on_this_object("abs({})".format(_format_object_to_es(n)))
 
     def acos(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.acos"')
+        self._check_type(n, float, 'arg "n" of function "Math.acos"')
         return self._eval_on_this_object("acos({})".format(_format_object_to_es(n)))
 
     def asin(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.asin"')
+        self._check_type(n, float, 'arg "n" of function "Math.asin"')
         return self._eval_on_this_object("asin({})".format(_format_object_to_es(n)))
 
     def atan(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.atan"')
+        self._check_type(n, float, 'arg "n" of function "Math.atan"')
         return self._eval_on_this_object("atan({})".format(_format_object_to_es(n)))
 
     def atan2(self, y, x):
@@ -2505,43 +2570,43 @@ class Math(PymiereBaseObject):
         :type y: float
         :type x: float
         """
-        self.check_type(y, float, 'arg "y" of function "Math.atan2"')
-        self.check_type(x, float, 'arg "x" of function "Math.atan2"')
+        self._check_type(y, float, 'arg "y" of function "Math.atan2"')
+        self._check_type(x, float, 'arg "x" of function "Math.atan2"')
         return self._eval_on_this_object("atan2({}, {})".format(_format_object_to_es(y), _format_object_to_es(x)))
 
     def ceil(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.ceil"')
+        self._check_type(n, float, 'arg "n" of function "Math.ceil"')
         return self._eval_on_this_object("ceil({})".format(_format_object_to_es(n)))
 
     def cos(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.cos"')
+        self._check_type(n, float, 'arg "n" of function "Math.cos"')
         return self._eval_on_this_object("cos({})".format(_format_object_to_es(n)))
 
     def exp(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.exp"')
+        self._check_type(n, float, 'arg "n" of function "Math.exp"')
         return self._eval_on_this_object("exp({})".format(_format_object_to_es(n)))
 
     def floor(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.floor"')
+        self._check_type(n, float, 'arg "n" of function "Math.floor"')
         return self._eval_on_this_object("floor({})".format(_format_object_to_es(n)))
 
     def log(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.log"')
+        self._check_type(n, float, 'arg "n" of function "Math.log"')
         return self._eval_on_this_object("log({})".format(_format_object_to_es(n)))
 
     def max(self, a, b):
@@ -2549,8 +2614,8 @@ class Math(PymiereBaseObject):
         :type a: float
         :type b: float
         """
-        self.check_type(a, float, 'arg "a" of function "Math.max"')
-        self.check_type(b, float, 'arg "b" of function "Math.max"')
+        self._check_type(a, float, 'arg "a" of function "Math.max"')
+        self._check_type(b, float, 'arg "b" of function "Math.max"')
         return self._eval_on_this_object("max({}, {})".format(_format_object_to_es(a), _format_object_to_es(b)))
 
     def min(self, y, x):
@@ -2558,8 +2623,8 @@ class Math(PymiereBaseObject):
         :type y: float
         :type x: float
         """
-        self.check_type(y, float, 'arg "y" of function "Math.min"')
-        self.check_type(x, float, 'arg "x" of function "Math.min"')
+        self._check_type(y, float, 'arg "y" of function "Math.min"')
+        self._check_type(x, float, 'arg "x" of function "Math.min"')
         return self._eval_on_this_object("min({}, {})".format(_format_object_to_es(y), _format_object_to_es(x)))
 
     def pow(self, x, y):
@@ -2567,8 +2632,8 @@ class Math(PymiereBaseObject):
         :type x: float
         :type y: float
         """
-        self.check_type(x, float, 'arg "x" of function "Math.pow"')
-        self.check_type(y, float, 'arg "y" of function "Math.pow"')
+        self._check_type(x, float, 'arg "x" of function "Math.pow"')
+        self._check_type(y, float, 'arg "y" of function "Math.pow"')
         return self._eval_on_this_object("pow({}, {})".format(_format_object_to_es(x), _format_object_to_es(y)))
 
     def random(self):
@@ -2578,33 +2643,34 @@ class Math(PymiereBaseObject):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.round"')
+        self._check_type(n, float, 'arg "n" of function "Math.round"')
         return self._eval_on_this_object("round({})".format(_format_object_to_es(n)))
 
     def sin(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.sin"')
+        self._check_type(n, float, 'arg "n" of function "Math.sin"')
         return self._eval_on_this_object("sin({})".format(_format_object_to_es(n)))
 
     def sqrt(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.sqrt"')
+        self._check_type(n, float, 'arg "n" of function "Math.sqrt"')
         return self._eval_on_this_object("sqrt({})".format(_format_object_to_es(n)))
 
     def tan(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Math.tan"')
+        self._check_type(n, float, 'arg "n" of function "Math.tan"')
         return self._eval_on_this_object("tan({})".format(_format_object_to_es(n)))
 
+
 class File(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'alias':alias, 'created':created, 'error':error, 'exists':exists, 'fsName':fsName, 'fullName':fullName, 'absoluteURI':absoluteURI, 'relativeURI':relativeURI, 'modified':modified, 'name':name, 'displayName':displayName, 'path':path, 'parent':parent, 'type':type, 'creator':creator, 'hidden':hidden, 'readonly':readonly, 'lineFeed':lineFeed, 'length':length, 'encoding':encoding, 'eof':eof})
+    def __init__(self, pymiere_id=None, created_by_user=False, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent, 'type': type, 'creator': creator, 'hidden': hidden, 'readonly': readonly, 'lineFeed': lineFeed, 'length': length, 'encoding': encoding, 'eof': eof})
         super(File, self).__init__(pymiere_id)
         self.__alias = alias
         self.__created = created
@@ -2639,7 +2705,8 @@ class File(PymiereBaseObject):
 
     @property
     def created(self):
-        self.__created = Date(**self._eval_on_this_object('created'))
+        kwargs = self._eval_on_this_object('created')
+        self.__created = Date(**kwargs) if kwargs else None
         return self.__created
     @created.setter
     def created(self, created):
@@ -2696,7 +2763,8 @@ class File(PymiereBaseObject):
 
     @property
     def modified(self):
-        self.__modified = Date(**self._eval_on_this_object('modified'))
+        kwargs = self._eval_on_this_object('modified')
+        self.__modified = Date(**kwargs) if kwargs else None
         return self.__modified
     @modified.setter
     def modified(self, modified):
@@ -2728,7 +2796,8 @@ class File(PymiereBaseObject):
 
     @property
     def parent(self):
-        self.__parent = Folder(**self._eval_on_this_object('parent'))
+        kwargs = self._eval_on_this_object('parent')
+        self.__parent = Folder(**kwargs) if kwargs else None
         return self.__parent
     @parent.setter
     def parent(self, parent):
@@ -2812,7 +2881,7 @@ class File(PymiereBaseObject):
         """
         :type name: str
         """
-        self.check_type(name, str, 'arg "name" of function "File.rename"')
+        self._check_type(name, str, 'arg "name" of function "File.rename"')
         return self._eval_on_this_object("rename({})".format(_format_object_to_es(name)))
 
     def remove(self):
@@ -2822,14 +2891,14 @@ class File(PymiereBaseObject):
         """
         :type path: str
         """
-        self.check_type(path, str, 'arg "path" of function "File.changePath"')
+        self._check_type(path, str, 'arg "path" of function "File.changePath"')
         return self._eval_on_this_object("changePath({})".format(_format_object_to_es(path)))
 
     def getRelativeURI(self, baseURI):
         """
         :type baseURI: str
         """
-        self.check_type(baseURI, str, 'arg "baseURI" of function "File.getRelativeURI"')
+        self._check_type(baseURI, str, 'arg "baseURI" of function "File.getRelativeURI"')
         return self._eval_on_this_object("getRelativeURI({})".format(_format_object_to_es(baseURI)))
 
     def execute(self):
@@ -2839,14 +2908,14 @@ class File(PymiereBaseObject):
         """
         :type prompt: str
         """
-        self.check_type(prompt, str, 'arg "prompt" of function "File.openDlg"')
+        self._check_type(prompt, str, 'arg "prompt" of function "File.openDlg"')
         return _format_object_to_py(self._eval_on_this_object("openDlg({})".format(_format_object_to_es(prompt))))
 
     def saveDlg(self, prompt):
         """
         :type prompt: str
         """
-        self.check_type(prompt, str, 'arg "prompt" of function "File.saveDlg"')
+        self._check_type(prompt, str, 'arg "prompt" of function "File.saveDlg"')
         return _format_object_to_py(self._eval_on_this_object("saveDlg({})".format(_format_object_to_es(prompt))))
 
     def toString(self):
@@ -2859,14 +2928,14 @@ class File(PymiereBaseObject):
         """
         :type path: str
         """
-        self.check_type(path, str, 'arg "path" of function "File.createAlias"')
+        self._check_type(path, str, 'arg "path" of function "File.createAlias"')
         return self._eval_on_this_object("createAlias({})".format(_format_object_to_es(path)))
 
     def open(self, mode):
         """
         :type mode: str
         """
-        self.check_type(mode, str, 'arg "mode" of function "File.open"')
+        self._check_type(mode, str, 'arg "mode" of function "File.open"')
         return self._eval_on_this_object("open({})".format(_format_object_to_es(mode)))
 
     def close(self):
@@ -2876,7 +2945,7 @@ class File(PymiereBaseObject):
         """
         :type count: float
         """
-        self.check_type(count, float, 'arg "count" of function "File.read"')
+        self._check_type(count, float, 'arg "count" of function "File.read"')
         return self._eval_on_this_object("read({})".format(_format_object_to_es(count)))
 
     def readch(self):
@@ -2889,28 +2958,28 @@ class File(PymiereBaseObject):
         """
         :type text: str
         """
-        self.check_type(text, str, 'arg "text" of function "File.write"')
+        self._check_type(text, str, 'arg "text" of function "File.write"')
         return self._eval_on_this_object("write({})".format(_format_object_to_es(text)))
 
     def print(self, text):
         """
         :type text: str
         """
-        self.check_type(text, str, 'arg "text" of function "File.print"')
+        self._check_type(text, str, 'arg "text" of function "File.print"')
         return self._eval_on_this_object("print({})".format(_format_object_to_es(text)))
 
     def writeln(self, text):
         """
         :type text: str
         """
-        self.check_type(text, str, 'arg "text" of function "File.writeln"')
+        self._check_type(text, str, 'arg "text" of function "File.writeln"')
         return self._eval_on_this_object("writeln({})".format(_format_object_to_es(text)))
 
     def seek(self, pos):
         """
         :type pos: float
         """
-        self.check_type(pos, float, 'arg "pos" of function "File.seek"')
+        self._check_type(pos, float, 'arg "pos" of function "File.seek"')
         return self._eval_on_this_object("seek({})".format(_format_object_to_es(pos)))
 
     def tell(self):
@@ -2920,12 +2989,13 @@ class File(PymiereBaseObject):
         """
         :type where: str
         """
-        self.check_type(where, str, 'arg "where" of function "File.copy"')
+        self._check_type(where, str, 'arg "where" of function "File.copy"')
         return self._eval_on_this_object("copy({})".format(_format_object_to_es(where)))
 
+
 class Date(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(Date, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2992,42 +3062,42 @@ class Date(PymiereBaseObject):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setDate"')
+        self._check_type(n, float, 'arg "n" of function "Date.setDate"')
         return self._eval_on_this_object("setDate({})".format(_format_object_to_es(n)))
 
     def setFullYear(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setFullYear"')
+        self._check_type(n, float, 'arg "n" of function "Date.setFullYear"')
         return self._eval_on_this_object("setFullYear({})".format(_format_object_to_es(n)))
 
     def setHours(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setHours"')
+        self._check_type(n, float, 'arg "n" of function "Date.setHours"')
         return self._eval_on_this_object("setHours({})".format(_format_object_to_es(n)))
 
     def setMilliseconds(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setMilliseconds"')
+        self._check_type(n, float, 'arg "n" of function "Date.setMilliseconds"')
         return self._eval_on_this_object("setMilliseconds({})".format(_format_object_to_es(n)))
 
     def setMinutes(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setMinutes"')
+        self._check_type(n, float, 'arg "n" of function "Date.setMinutes"')
         return self._eval_on_this_object("setMinutes({})".format(_format_object_to_es(n)))
 
     def setSeconds(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setSeconds"')
+        self._check_type(n, float, 'arg "n" of function "Date.setSeconds"')
         return self._eval_on_this_object("setSeconds({})".format(_format_object_to_es(n)))
 
     def setMonth(self, n, arg2):
@@ -3035,70 +3105,70 @@ class Date(PymiereBaseObject):
         :type n: float
         :type arg2: unknown
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setMonth"')
+        self._check_type(n, float, 'arg "n" of function "Date.setMonth"')
         return self._eval_on_this_object("setMonth({}, {})".format(_format_object_to_es(n), _format_object_to_es(arg2)))
 
     def setUTCDate(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCDate"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCDate"')
         return self._eval_on_this_object("setUTCDate({})".format(_format_object_to_es(n)))
 
     def setUTCFullYear(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCFullYear"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCFullYear"')
         return self._eval_on_this_object("setUTCFullYear({})".format(_format_object_to_es(n)))
 
     def setUTCHours(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCHours"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCHours"')
         return self._eval_on_this_object("setUTCHours({})".format(_format_object_to_es(n)))
 
     def setUTCMilliseconds(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCMilliseconds"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCMilliseconds"')
         return self._eval_on_this_object("setUTCMilliseconds({})".format(_format_object_to_es(n)))
 
     def setUTCMinutes(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCMinutes"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCMinutes"')
         return self._eval_on_this_object("setUTCMinutes({})".format(_format_object_to_es(n)))
 
     def setUTCSeconds(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCSeconds"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCSeconds"')
         return self._eval_on_this_object("setUTCSeconds({})".format(_format_object_to_es(n)))
 
     def setUTCMonth(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setUTCMonth"')
+        self._check_type(n, float, 'arg "n" of function "Date.setUTCMonth"')
         return self._eval_on_this_object("setUTCMonth({})".format(_format_object_to_es(n)))
 
     def setTime(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setTime"')
+        self._check_type(n, float, 'arg "n" of function "Date.setTime"')
         return self._eval_on_this_object("setTime({})".format(_format_object_to_es(n)))
 
     def setYear(self, n):
         """
         :type n: float
         """
-        self.check_type(n, float, 'arg "n" of function "Date.setYear"')
+        self._check_type(n, float, 'arg "n" of function "Date.setYear"')
         return self._eval_on_this_object("setYear({})".format(_format_object_to_es(n)))
 
     def toDateString(self):
@@ -3134,9 +3204,10 @@ class Date(PymiereBaseObject):
     def toJSON(self):
         return self._eval_on_this_object("toJSON()")
 
+
 class Folder(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'alias':alias, 'created':created, 'error':error, 'exists':exists, 'fsName':fsName, 'fullName':fullName, 'absoluteURI':absoluteURI, 'relativeURI':relativeURI, 'modified':modified, 'name':name, 'displayName':displayName, 'path':path, 'parent':parent})
+    def __init__(self, pymiere_id=None, created_by_user=False, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent})
         super(Folder, self).__init__(pymiere_id)
         self.__alias = alias
         self.__created = created
@@ -3163,7 +3234,8 @@ class Folder(PymiereBaseObject):
 
     @property
     def created(self):
-        self.__created = Date(**self._eval_on_this_object('created'))
+        kwargs = self._eval_on_this_object('created')
+        self.__created = Date(**kwargs) if kwargs else None
         return self.__created
     @created.setter
     def created(self, created):
@@ -3220,7 +3292,8 @@ class Folder(PymiereBaseObject):
 
     @property
     def modified(self):
-        self.__modified = Date(**self._eval_on_this_object('modified'))
+        kwargs = self._eval_on_this_object('modified')
+        self.__modified = Date(**kwargs) if kwargs else None
         return self.__modified
     @modified.setter
     def modified(self, modified):
@@ -3252,7 +3325,8 @@ class Folder(PymiereBaseObject):
 
     @property
     def parent(self):
-        self.__parent = Folder(**self._eval_on_this_object('parent'))
+        kwargs = self._eval_on_this_object('parent')
+        self.__parent = Folder(**kwargs) if kwargs else None
         return self.__parent
     @parent.setter
     def parent(self, parent):
@@ -3267,7 +3341,7 @@ class Folder(PymiereBaseObject):
         """
         :type name: str
         """
-        self.check_type(name, str, 'arg "name" of function "Folder.rename"')
+        self._check_type(name, str, 'arg "name" of function "Folder.rename"')
         return self._eval_on_this_object("rename({})".format(_format_object_to_es(name)))
 
     def remove(self):
@@ -3277,14 +3351,14 @@ class Folder(PymiereBaseObject):
         """
         :type path: str
         """
-        self.check_type(path, str, 'arg "path" of function "Folder.changePath"')
+        self._check_type(path, str, 'arg "path" of function "Folder.changePath"')
         return self._eval_on_this_object("changePath({})".format(_format_object_to_es(path)))
 
     def getRelativeURI(self, baseURI):
         """
         :type baseURI: str
         """
-        self.check_type(baseURI, str, 'arg "baseURI" of function "Folder.getRelativeURI"')
+        self._check_type(baseURI, str, 'arg "baseURI" of function "Folder.getRelativeURI"')
         return self._eval_on_this_object("getRelativeURI({})".format(_format_object_to_es(baseURI)))
 
     def execute(self):
@@ -3294,14 +3368,14 @@ class Folder(PymiereBaseObject):
         """
         :type prompt: str
         """
-        self.check_type(prompt, str, 'arg "prompt" of function "Folder.openDlg"')
+        self._check_type(prompt, str, 'arg "prompt" of function "Folder.openDlg"')
         return _format_object_to_py(self._eval_on_this_object("openDlg({})".format(_format_object_to_es(prompt))))
 
     def saveDlg(self, prompt):
         """
         :type prompt: str
         """
-        self.check_type(prompt, str, 'arg "prompt" of function "Folder.saveDlg"')
+        self._check_type(prompt, str, 'arg "prompt" of function "Folder.saveDlg"')
         return _format_object_to_py(self._eval_on_this_object("saveDlg({})".format(_format_object_to_es(prompt))))
 
     def toString(self):
@@ -3314,22 +3388,23 @@ class Folder(PymiereBaseObject):
         """
         :type prompt: str
         """
-        self.check_type(prompt, str, 'arg "prompt" of function "Folder.selectDlg"')
+        self._check_type(prompt, str, 'arg "prompt" of function "Folder.selectDlg"')
         return _format_object_to_py(self._eval_on_this_object("selectDlg({})".format(_format_object_to_es(prompt))))
 
     def getFiles(self, pattern):
         """
         :type pattern: str
         """
-        self.check_type(pattern, str, 'arg "pattern" of function "Folder.getFiles"')
+        self._check_type(pattern, str, 'arg "pattern" of function "Folder.getFiles"')
         return Array(**self._eval_on_this_object("getFiles({})".format(_format_object_to_es(pattern))))
 
     def create(self):
         return self._eval_on_this_object("create()")
 
+
 class FootageInterpretation(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'frameRate':frameRate, 'pixelAspectRatio':pixelAspectRatio, 'fieldType':fieldType, 'removePulldown':removePulldown, 'alphaUsage':alphaUsage, 'ignoreAlpha':ignoreAlpha, 'invertAlpha':invertAlpha, 'vrConformProjectionType':vrConformProjectionType, 'vrLayoutType':vrLayoutType, 'vrHorizontalView':vrHorizontalView, 'vrVerticalView':vrVerticalView, 'ALPHACHANNEL_NONE':ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT':ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED':ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE':ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT':FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE':FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST':FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST':FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE':VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR':VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC':VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER':VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE':VR_LAYOUT_STEREO_SIDE_BY_SIDE})
+    def __init__(self, pymiere_id=None, created_by_user=False, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'frameRate': frameRate, 'pixelAspectRatio': pixelAspectRatio, 'fieldType': fieldType, 'removePulldown': removePulldown, 'alphaUsage': alphaUsage, 'ignoreAlpha': ignoreAlpha, 'invertAlpha': invertAlpha, 'vrConformProjectionType': vrConformProjectionType, 'vrLayoutType': vrLayoutType, 'vrHorizontalView': vrHorizontalView, 'vrVerticalView': vrVerticalView, 'ALPHACHANNEL_NONE': ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT': ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED': ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE': ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT': FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE': FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST': FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST': FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE': VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR': VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC': VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER': VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE': VR_LAYOUT_STEREO_SIDE_BY_SIDE})
         super(FootageInterpretation, self).__init__(pymiere_id)
         self.__frameRate = frameRate
         self.__pixelAspectRatio = pixelAspectRatio
@@ -3567,15 +3642,15 @@ class FootageInterpretation(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.bind"')
-        self.check_type(function, any, 'arg "function" of function "FootageInterpretation.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.bind"')
+        self._check_type(function, any, 'arg "function" of function "FootageInterpretation.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -3584,14 +3659,15 @@ class FootageInterpretation(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "FootageInterpretation.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "FootageInterpretation.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "FootageInterpretation.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "FootageInterpretation.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "FootageInterpretation.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class Time(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, seconds=None, ticks=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'seconds':seconds, 'ticks':ticks})
+    def __init__(self, pymiere_id=None, created_by_user=False, seconds=None, ticks=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'seconds': seconds, 'ticks': ticks})
         super(Time, self).__init__(pymiere_id)
         self.__seconds = seconds
         self.__ticks = ticks
@@ -3622,15 +3698,15 @@ class Time(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Time.bind"')
-        self.check_type(function, any, 'arg "function" of function "Time.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Time.bind"')
+        self._check_type(function, any, 'arg "function" of function "Time.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Time.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Time.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -3639,9 +3715,9 @@ class Time(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Time.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Time.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Time.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Time.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Time.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Time.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setSecondsAsFraction(self, numerator, denominator):
@@ -3649,8 +3725,8 @@ class Time(PymiereBaseObject):
         :type numerator: float
         :type denominator: float
         """
-        self.check_type(numerator, float, 'arg "numerator" of function "Time.setSecondsAsFraction"')
-        self.check_type(denominator, float, 'arg "denominator" of function "Time.setSecondsAsFraction"')
+        self._check_type(numerator, float, 'arg "numerator" of function "Time.setSecondsAsFraction"')
+        self._check_type(denominator, float, 'arg "denominator" of function "Time.setSecondsAsFraction"')
         self._eval_on_this_object("setSecondsAsFraction({}, {})".format(_format_object_to_es(numerator), _format_object_to_es(denominator)))
 
     def getFormatted(self, time, timeDisplay):
@@ -3658,12 +3734,13 @@ class Time(PymiereBaseObject):
         :type time: Object
         :type timeDisplay: float
         """
-        self.check_type(timeDisplay, float, 'arg "timeDisplay" of function "Time.getFormatted"')
+        self._check_type(timeDisplay, float, 'arg "timeDisplay" of function "Time.getFormatted"')
         return self._eval_on_this_object("getFormatted({}, {})".format(_format_object_to_es(time), _format_object_to_es(timeDisplay)))
 
+
 class Track(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, id=None, name=None, mediaType=None, clips=None, transitions=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'id':id, 'name':name, 'mediaType':mediaType, 'clips':clips, 'transitions':transitions})
+    def __init__(self, pymiere_id=None, created_by_user=False, id=None, name=None, mediaType=None, clips=None, transitions=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'id': id, 'name': name, 'mediaType': mediaType, 'clips': clips, 'transitions': transitions})
         super(Track, self).__init__(pymiere_id)
         self.__id = id
         self.__name = name
@@ -3699,7 +3776,8 @@ class Track(PymiereBaseObject):
 
     @property
     def clips(self):
-        self.__clips = TrackItemCollection(**self._eval_on_this_object('clips'))
+        kwargs = self._eval_on_this_object('clips')
+        self.__clips = TrackItemCollection(**kwargs) if kwargs else None
         return self.__clips
     @clips.setter
     def clips(self, clips):
@@ -3707,7 +3785,8 @@ class Track(PymiereBaseObject):
 
     @property
     def transitions(self):
-        self.__transitions = TrackItemCollection(**self._eval_on_this_object('transitions'))
+        kwargs = self._eval_on_this_object('transitions')
+        self.__transitions = TrackItemCollection(**kwargs) if kwargs else None
         return self.__transitions
     @transitions.setter
     def transitions(self, transitions):
@@ -3720,15 +3799,15 @@ class Track(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Track.bind"')
-        self.check_type(function, any, 'arg "function" of function "Track.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Track.bind"')
+        self._check_type(function, any, 'arg "function" of function "Track.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Track.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Track.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -3737,9 +3816,9 @@ class Track(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Track.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Track.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Track.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Track.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Track.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Track.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def isMuted(self):
@@ -3749,7 +3828,7 @@ class Track(PymiereBaseObject):
         """
         :type arg1: float
         """
-        self.check_type(arg1, float, 'arg "arg1" of function "Track.setMute"')
+        self._check_type(arg1, float, 'arg "arg1" of function "Track.setMute"')
         self._eval_on_this_object("setMute({})".format(_format_object_to_es(arg1)))
 
     def isLocked(self):
@@ -3759,7 +3838,7 @@ class Track(PymiereBaseObject):
         """
         :type arg1: float
         """
-        self.check_type(arg1, float, 'arg "arg1" of function "Track.setLocked"')
+        self._check_type(arg1, float, 'arg "arg1" of function "Track.setLocked"')
         self._eval_on_this_object("setLocked({})".format(_format_object_to_es(arg1)))
 
     def isTargeted(self):
@@ -3770,8 +3849,8 @@ class Track(PymiereBaseObject):
         :type isTargeted: bool
         :type shouldBroadcast: bool
         """
-        self.check_type(isTargeted, bool, 'arg "isTargeted" of function "Track.setTargeted"')
-        self.check_type(shouldBroadcast, bool, 'arg "shouldBroadcast" of function "Track.setTargeted"')
+        self._check_type(isTargeted, bool, 'arg "isTargeted" of function "Track.setTargeted"')
+        self._check_type(shouldBroadcast, bool, 'arg "shouldBroadcast" of function "Track.setTargeted"')
         self._eval_on_this_object("setTargeted({}, {})".format(_format_object_to_es(isTargeted), _format_object_to_es(shouldBroadcast)))
 
     def insertClip(self, clipProjectItem, time):
@@ -3779,7 +3858,7 @@ class Track(PymiereBaseObject):
         :type clipProjectItem: ProjectItem
         :type time: Object
         """
-        self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.insertClip"')
+        self._check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.insertClip"')
         self._eval_on_this_object("insertClip({}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time)))
 
     def overwriteClip(self, clipProjectItem, time):
@@ -3787,19 +3866,26 @@ class Track(PymiereBaseObject):
         :type clipProjectItem: ProjectItem
         :type time: Object
         """
-        self.check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.overwriteClip"')
+        self._check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Track.overwriteClip"')
         self._eval_on_this_object("overwriteClip({}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time)))
 
+
 class TrackItemCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems):
+    def __init__(self, pymiere_id, length, numItems, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(TrackItemCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
         return TrackItem(**super(TrackItemCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class TrackItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'duration':duration, 'start':start, 'end':end, 'inPoint':inPoint, 'outPoint':outPoint, 'type':type, 'mediaType':mediaType, 'projectItem':projectItem, 'name':name, 'matchName':matchName, 'nodeId':nodeId, 'components':components})
+    def __init__(self, pymiere_id=None, created_by_user=False, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'duration': duration, 'start': start, 'end': end, 'inPoint': inPoint, 'outPoint': outPoint, 'type': type, 'mediaType': mediaType, 'projectItem': projectItem, 'name': name, 'matchName': matchName, 'nodeId': nodeId, 'components': components})
         super(TrackItem, self).__init__(pymiere_id)
         self.__duration = duration
         self.__start = start
@@ -3817,7 +3903,8 @@ class TrackItem(PymiereBaseObject):
     # ----- PROPERTIES -----
     @property
     def duration(self):
-        self.__duration = Time(**self._eval_on_this_object('duration'))
+        kwargs = self._eval_on_this_object('duration')
+        self.__duration = Time(**kwargs) if kwargs else None
         return self.__duration
     @duration.setter
     def duration(self, duration):
@@ -3825,41 +3912,45 @@ class TrackItem(PymiereBaseObject):
 
     @property
     def start(self):
-        self.__start = Time(**self._eval_on_this_object('start'))
+        kwargs = self._eval_on_this_object('start')
+        self.__start = Time(**kwargs) if kwargs else None
         return self.__start
     @start.setter
     def start(self, start):
-        self.check_type(start, Time, 'TrackItem.start')
+        self._check_type(start, Time, 'TrackItem.start')
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
         self.__start = start
 
     @property
     def end(self):
-        self.__end = Time(**self._eval_on_this_object('end'))
+        kwargs = self._eval_on_this_object('end')
+        self.__end = Time(**kwargs) if kwargs else None
         return self.__end
     @end.setter
     def end(self, end):
-        self.check_type(end, Time, 'TrackItem.end')
+        self._check_type(end, Time, 'TrackItem.end')
         self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
         self.__end = end
 
     @property
     def inPoint(self):
-        self.__inPoint = Time(**self._eval_on_this_object('inPoint'))
+        kwargs = self._eval_on_this_object('inPoint')
+        self.__inPoint = Time(**kwargs) if kwargs else None
         return self.__inPoint
     @inPoint.setter
     def inPoint(self, inPoint):
-        self.check_type(inPoint, Time, 'TrackItem.inPoint')
+        self._check_type(inPoint, Time, 'TrackItem.inPoint')
         self._eval_on_this_object("inPoint = {}".format(_format_object_to_es(inPoint)))
         self.__inPoint = inPoint
 
     @property
     def outPoint(self):
-        self.__outPoint = Time(**self._eval_on_this_object('outPoint'))
+        kwargs = self._eval_on_this_object('outPoint')
+        self.__outPoint = Time(**kwargs) if kwargs else None
         return self.__outPoint
     @outPoint.setter
     def outPoint(self, outPoint):
-        self.check_type(outPoint, Time, 'TrackItem.outPoint')
+        self._check_type(outPoint, Time, 'TrackItem.outPoint')
         self._eval_on_this_object("outPoint = {}".format(_format_object_to_es(outPoint)))
         self.__outPoint = outPoint
 
@@ -3881,11 +3972,12 @@ class TrackItem(PymiereBaseObject):
 
     @property
     def projectItem(self):
-        self.__projectItem = ProjectItem(**self._eval_on_this_object('projectItem'))
+        kwargs = self._eval_on_this_object('projectItem')
+        self.__projectItem = ProjectItem(**kwargs) if kwargs else None
         return self.__projectItem
     @projectItem.setter
     def projectItem(self, projectItem):
-        self.check_type(projectItem, ProjectItem, 'TrackItem.projectItem')
+        self._check_type(projectItem, ProjectItem, 'TrackItem.projectItem')
         self._eval_on_this_object("projectItem = {}".format(_format_object_to_es(projectItem)))
         self.__projectItem = projectItem
 
@@ -3916,7 +4008,8 @@ class TrackItem(PymiereBaseObject):
 
     @property
     def components(self):
-        self.__components = ComponentCollection(**self._eval_on_this_object('components'))
+        kwargs = self._eval_on_this_object('components')
+        self.__components = ComponentCollection(**kwargs) if kwargs else None
         return self.__components
     @components.setter
     def components(self, components):
@@ -3929,15 +4022,15 @@ class TrackItem(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "TrackItem.bind"')
-        self.check_type(function, any, 'arg "function" of function "TrackItem.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "TrackItem.bind"')
+        self._check_type(function, any, 'arg "function" of function "TrackItem.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "TrackItem.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "TrackItem.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -3946,9 +4039,9 @@ class TrackItem(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "TrackItem.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "TrackItem.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "TrackItem.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "TrackItem.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "TrackItem.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "TrackItem.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def isSelected(self):
@@ -3959,8 +4052,8 @@ class TrackItem(PymiereBaseObject):
         :type isSelected: float
         :type updateUI: float
         """
-        self.check_type(isSelected, float, 'arg "isSelected" of function "TrackItem.setSelected"')
-        self.check_type(updateUI, float, 'arg "updateUI" of function "TrackItem.setSelected"')
+        self._check_type(isSelected, float, 'arg "isSelected" of function "TrackItem.setSelected"')
+        self._check_type(updateUI, float, 'arg "updateUI" of function "TrackItem.setSelected"')
         self._eval_on_this_object("setSelected({}, {})".format(_format_object_to_es(isSelected), _format_object_to_es(updateUI)))
 
     def getLinkedItems(self):
@@ -3989,13 +4082,14 @@ class TrackItem(PymiereBaseObject):
         :type inRipple: bool
         :type inAlignToVideo: bool
         """
-        self.check_type(inRipple, bool, 'arg "inRipple" of function "TrackItem.remove"')
-        self.check_type(inAlignToVideo, bool, 'arg "inAlignToVideo" of function "TrackItem.remove"')
+        self._check_type(inRipple, bool, 'arg "inRipple" of function "TrackItem.remove"')
+        self._check_type(inAlignToVideo, bool, 'arg "inAlignToVideo" of function "TrackItem.remove"')
         return self._eval_on_this_object("remove({}, {})".format(_format_object_to_es(inRipple), _format_object_to_es(inAlignToVideo)))
 
+
 class SequenceSettings(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'editingMode':editingMode, 'videoFrameRate':videoFrameRate, 'videoFrameWidth':videoFrameWidth, 'videoFrameHeight':videoFrameHeight, 'videoPixelAspectRatio':videoPixelAspectRatio, 'videoFieldType':videoFieldType, 'videoDisplayFormat':videoDisplayFormat, 'audioChannelType':audioChannelType, 'audioChannelCount':audioChannelCount, 'audioSampleRate':audioSampleRate, 'audioDisplayFormat':audioDisplayFormat, 'previewFileFormat':previewFileFormat, 'previewCodec':previewCodec, 'previewFrameWidth':previewFrameWidth, 'previewFrameHeight':previewFrameHeight, 'maximumBitDepth':maximumBitDepth, 'maximumRenderQuality':maximumRenderQuality, 'compositeLinearColor':compositeLinearColor, 'vrProjection':vrProjection, 'vrLayout':vrLayout, 'vrHorzCapturedView':vrHorzCapturedView, 'vrVertCapturedView':vrVertCapturedView})
+    def __init__(self, pymiere_id=None, created_by_user=False, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'editingMode': editingMode, 'videoFrameRate': videoFrameRate, 'videoFrameWidth': videoFrameWidth, 'videoFrameHeight': videoFrameHeight, 'videoPixelAspectRatio': videoPixelAspectRatio, 'videoFieldType': videoFieldType, 'videoDisplayFormat': videoDisplayFormat, 'audioChannelType': audioChannelType, 'audioChannelCount': audioChannelCount, 'audioSampleRate': audioSampleRate, 'audioDisplayFormat': audioDisplayFormat, 'previewFileFormat': previewFileFormat, 'previewCodec': previewCodec, 'previewFrameWidth': previewFrameWidth, 'previewFrameHeight': previewFrameHeight, 'maximumBitDepth': maximumBitDepth, 'maximumRenderQuality': maximumRenderQuality, 'compositeLinearColor': compositeLinearColor, 'vrProjection': vrProjection, 'vrLayout': vrLayout, 'vrHorzCapturedView': vrHorzCapturedView, 'vrVertCapturedView': vrVertCapturedView})
         super(SequenceSettings, self).__init__(pymiere_id)
         self.__editingMode = editingMode
         self.__videoFrameRate = videoFrameRate
@@ -4032,11 +4126,12 @@ class SequenceSettings(PymiereBaseObject):
 
     @property
     def videoFrameRate(self):
-        self.__videoFrameRate = Time(**self._eval_on_this_object('videoFrameRate'))
+        kwargs = self._eval_on_this_object('videoFrameRate')
+        self.__videoFrameRate = Time(**kwargs) if kwargs else None
         return self.__videoFrameRate
     @videoFrameRate.setter
     def videoFrameRate(self, videoFrameRate):
-        self.check_type(videoFrameRate, Time, 'SequenceSettings.videoFrameRate')
+        self._check_type(videoFrameRate, Time, 'SequenceSettings.videoFrameRate')
         self._eval_on_this_object("videoFrameRate = {}".format(_format_object_to_es(videoFrameRate)))
         self.__videoFrameRate = videoFrameRate
 
@@ -4105,11 +4200,12 @@ class SequenceSettings(PymiereBaseObject):
 
     @property
     def audioSampleRate(self):
-        self.__audioSampleRate = Time(**self._eval_on_this_object('audioSampleRate'))
+        kwargs = self._eval_on_this_object('audioSampleRate')
+        self.__audioSampleRate = Time(**kwargs) if kwargs else None
         return self.__audioSampleRate
     @audioSampleRate.setter
     def audioSampleRate(self, audioSampleRate):
-        self.check_type(audioSampleRate, Time, 'SequenceSettings.audioSampleRate')
+        self._check_type(audioSampleRate, Time, 'SequenceSettings.audioSampleRate')
         self._eval_on_this_object("audioSampleRate = {}".format(_format_object_to_es(audioSampleRate)))
         self.__audioSampleRate = audioSampleRate
 
@@ -4228,15 +4324,15 @@ class SequenceSettings(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.bind"')
-        self.check_type(function, any, 'arg "function" of function "SequenceSettings.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.bind"')
+        self._check_type(function, any, 'arg "function" of function "SequenceSettings.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -4245,14 +4341,15 @@ class SequenceSettings(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "SequenceSettings.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "SequenceSettings.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "SequenceSettings.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "SequenceSettings.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "SequenceSettings.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class Marker(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, start=None, end=None, type=None, name=None, comments=None, guid=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'start':start, 'end':end, 'type':type, 'name':name, 'comments':comments, 'guid':guid})
+    def __init__(self, pymiere_id=None, created_by_user=False, start=None, end=None, type=None, name=None, comments=None, guid=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'start': start, 'end': end, 'type': type, 'name': name, 'comments': comments, 'guid': guid})
         super(Marker, self).__init__(pymiere_id)
         self.__start = start
         self.__end = end
@@ -4264,21 +4361,23 @@ class Marker(PymiereBaseObject):
     # ----- PROPERTIES -----
     @property
     def start(self):
-        self.__start = Time(**self._eval_on_this_object('start'))
+        kwargs = self._eval_on_this_object('start')
+        self.__start = Time(**kwargs) if kwargs else None
         return self.__start
     @start.setter
     def start(self, start):
-        self.check_type(start, Time, 'Marker.start')
+        self._check_type(start, Time, 'Marker.start')
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
         self.__start = start
 
     @property
     def end(self):
-        self.__end = Time(**self._eval_on_this_object('end'))
+        kwargs = self._eval_on_this_object('end')
+        self.__end = Time(**kwargs) if kwargs else None
         return self.__end
     @end.setter
     def end(self, end):
-        self.check_type(end, Time, 'Marker.end')
+        self._check_type(end, Time, 'Marker.end')
         self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
         self.__end = end
 
@@ -4324,15 +4423,15 @@ class Marker(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Marker.bind"')
-        self.check_type(function, any, 'arg "function" of function "Marker.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Marker.bind"')
+        self._check_type(function, any, 'arg "function" of function "Marker.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Marker.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Marker.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -4341,9 +4440,9 @@ class Marker(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Marker.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Marker.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Marker.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Marker.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Marker.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Marker.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def setTypeAsComment(self):
@@ -4360,8 +4459,8 @@ class Marker(PymiereBaseObject):
         :type url: str
         :type frameTarget: str
         """
-        self.check_type(url, str, 'arg "url" of function "Marker.setTypeAsWebLink"')
-        self.check_type(frameTarget, str, 'arg "frameTarget" of function "Marker.setTypeAsWebLink"')
+        self._check_type(url, str, 'arg "url" of function "Marker.setTypeAsWebLink"')
+        self._check_type(frameTarget, str, 'arg "frameTarget" of function "Marker.setTypeAsWebLink"')
         self._eval_on_this_object("setTypeAsWebLink({}, {})".format(_format_object_to_es(url), _format_object_to_es(frameTarget)))
 
     def getWebLinkURL(self):
@@ -4374,15 +4473,16 @@ class Marker(PymiereBaseObject):
         """
         :type arg1: float
         """
-        self.check_type(arg1, float, 'arg "arg1" of function "Marker.setColorByIndex"')
+        self._check_type(arg1, float, 'arg "arg1" of function "Marker.setColorByIndex"')
         self._eval_on_this_object("setColorByIndex({})".format(_format_object_to_es(arg1)))
 
     def getColorByIndex(self):
         return self._eval_on_this_object("getColorByIndex()")
 
+
 class Component(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, displayName=None, matchName=None, properties=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'displayName':displayName, 'matchName':matchName, 'properties':properties})
+    def __init__(self, pymiere_id=None, created_by_user=False, displayName=None, matchName=None, properties=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'displayName': displayName, 'matchName': matchName, 'properties': properties})
         super(Component, self).__init__(pymiere_id)
         self.__displayName = displayName
         self.__matchName = matchName
@@ -4407,7 +4507,8 @@ class Component(PymiereBaseObject):
 
     @property
     def properties(self):
-        self.__properties = ComponentParamCollection(**self._eval_on_this_object('properties'))
+        kwargs = self._eval_on_this_object('properties')
+        self.__properties = ComponentParamCollection(**kwargs) if kwargs else None
         return self.__properties
     @properties.setter
     def properties(self, properties):
@@ -4420,15 +4521,15 @@ class Component(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Component.bind"')
-        self.check_type(function, any, 'arg "function" of function "Component.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Component.bind"')
+        self._check_type(function, any, 'arg "function" of function "Component.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Component.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Component.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -4437,21 +4538,28 @@ class Component(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Component.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Component.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Component.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Component.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Component.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Component.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+
 class ComponentParamCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems):
+    def __init__(self, pymiere_id, length, numItems, **kwargs):
+        if not all([k.isdigit() for k in kwargs.keys()]):
+            raise ValueError('Got unexpected argument {}'.format(kwargs))
         super(ComponentParamCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
         return ComponentParam(**super(ComponentParamCollection, self).__getitem__(index))
 
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
 class Dollar(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
-        self.check_init_args({'pymiere_id':pymiere_id, 'error':error, 'version':version, 'build':build, 'buildDate':buildDate, 'stack':stack, 'level':level, 'flags':flags, 'strict':strict, 'locale':locale, 'localize':localize, 'decimalPoint':decimalPoint, 'memCache':memCache, 'appEncoding':appEncoding, 'screens':screens, 'os':os, 'fileName':fileName, 'line':line, 'hiresTimer':hiresTimer, 'dictionary':dictionary, 'engineName':engineName, 'includePath':includePath})
+    def __init__(self, pymiere_id=None, created_by_user=False, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'error': error, 'version': version, 'build': build, 'buildDate': buildDate, 'stack': stack, 'level': level, 'flags': flags, 'strict': strict, 'locale': locale, 'localize': localize, 'decimalPoint': decimalPoint, 'memCache': memCache, 'appEncoding': appEncoding, 'screens': screens, 'os': os, 'fileName': fileName, 'line': line, 'hiresTimer': hiresTimer, 'dictionary': dictionary, 'engineName': engineName, 'includePath': includePath})
         super(Dollar, self).__init__(pymiere_id)
         self.__error = error
         self.__version = version
@@ -4479,11 +4587,12 @@ class Dollar(PymiereBaseObject):
     @property
     def error(self):
         """The current runtime error"""
-        self.__error = Error(**self._eval_on_this_object('error'))
+        kwargs = self._eval_on_this_object('error')
+        self.__error = Error(**kwargs) if kwargs else None
         return self.__error
     @error.setter
     def error(self, error):
-        self.check_type(error, Error, '$.error')
+        self._check_type(error, Error, '$.error')
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
@@ -4508,7 +4617,8 @@ class Dollar(PymiereBaseObject):
     @property
     def buildDate(self):
         """The ExtendScript build date"""
-        self.__buildDate = Date(**self._eval_on_this_object('buildDate'))
+        kwargs = self._eval_on_this_object('buildDate')
+        self.__buildDate = Date(**kwargs) if kwargs else None
         return self.__buildDate
     @buildDate.setter
     def buildDate(self, buildDate):
@@ -4650,7 +4760,8 @@ class Dollar(PymiereBaseObject):
     @property
     def dictionary(self):
         """The application's main dictionary"""
-        self.__dictionary = Dictionary(**self._eval_on_this_object('dictionary'))
+        kwargs = self._eval_on_this_object('dictionary')
+        self.__dictionary = Dictionary(**kwargs) if kwargs else None
         return self.__dictionary
     @dictionary.setter
     def dictionary(self, dictionary):
@@ -4712,7 +4823,7 @@ class Dollar(PymiereBaseObject):
         :param name: The name of the variable
         :type name: str
         """
-        self.check_type(name, str, 'arg "name" of function "$.getenv"')
+        self._check_type(name, str, 'arg "name" of function "$.getenv"')
         return self._eval_on_this_object("getenv({})".format(_format_object_to_es(name)))
 
     def setenv(self, key, value):
@@ -4721,8 +4832,8 @@ class Dollar(PymiereBaseObject):
         :param value: Sets an environment variable
         :type value: str
         """
-        self.check_type(key, str, 'arg "key" of function "$.setenv"')
-        self.check_type(value, str, 'arg "value" of function "$.setenv"')
+        self._check_type(key, str, 'arg "key" of function "$.setenv"')
+        self._check_type(value, str, 'arg "value" of function "$.setenv"')
         return self._eval_on_this_object("setenv({}, {})".format(_format_object_to_es(key), _format_object_to_es(value)))
 
     def sleep(self, msecs):
@@ -4731,7 +4842,7 @@ class Dollar(PymiereBaseObject):
         :param msecs: Number of milliseconds to sleep
         :type msecs: float
         """
-        self.check_type(msecs, float, 'arg "msecs" of function "$.sleep"')
+        self._check_type(msecs, float, 'arg "msecs" of function "$.sleep"')
         self._eval_on_this_object("sleep({})".format(_format_object_to_es(msecs)))
 
     def colorPicker(self, color):
@@ -4739,7 +4850,7 @@ class Dollar(PymiereBaseObject):
         :param color: Picks a color; the argument is the color or -1.
         :type color: float
         """
-        self.check_type(color, float, 'arg "color" of function "$.colorPicker"')
+        self._check_type(color, float, 'arg "color" of function "$.colorPicker"')
         return self._eval_on_this_object("colorPicker({})".format(_format_object_to_es(color)))
 
     def evalFile(self, file):
@@ -4748,21 +4859,21 @@ class Dollar(PymiereBaseObject):
         :param file: The file to load
         :type file: File
         """
-        self.check_type(file, File, 'arg "file" of function "$.evalFile"')
+        self._check_type(file, File, 'arg "file" of function "$.evalFile"')
         return self._eval_on_this_object("evalFile({})".format(_format_object_to_es(file)))
 
     def list(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "$.list"')
+        self._check_type(arg1, any, 'arg "arg1" of function "$.list"')
         return _format_object_to_py(self._eval_on_this_object("list({})".format(_format_object_to_es(arg1))))
 
     def listLO(self, arg1):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "$.listLO"')
+        self._check_type(arg1, any, 'arg "arg1" of function "$.listLO"')
         return _format_object_to_py(self._eval_on_this_object("listLO({})".format(_format_object_to_es(arg1))))
 
     def summary(self):
@@ -4774,9 +4885,10 @@ class Dollar(PymiereBaseObject):
         """
         self._eval_on_this_object("gc()")
 
+
 class Error(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'number':number, 'fileName':fileName, 'line':line, 'source':source, 'start':start, 'end':end, 'message':message, 'name':name, 'description':description})
+    def __init__(self, pymiere_id=None, created_by_user=False, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'number': number, 'fileName': fileName, 'line': line, 'source': source, 'start': start, 'end': end, 'message': message, 'name': name, 'description': description})
         super(Error, self).__init__(pymiere_id)
         self.__number = number
         self.__fileName = fileName
@@ -4878,9 +4990,10 @@ class Error(PymiereBaseObject):
     def toSource(self):
         return self._eval_on_this_object("toSource()")
 
+
 class Dictionary(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self.check_init_args({'pymiere_id':pymiere_id, })
+    def __init__(self, pymiere_id=None, created_by_user=False, ):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
         super(Dictionary, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -4910,12 +5023,13 @@ class Dictionary(PymiereBaseObject):
         :param prefix: The href prefix.
         :type prefix: str
         """
-        self.check_type(prefix, str, 'arg "prefix" of function "Dictionary.toXML"')
+        self._check_type(prefix, str, 'arg "prefix" of function "Dictionary.toXML"')
         return _format_object_to_py(self._eval_on_this_object("toXML({})".format(_format_object_to_es(prefix))))
 
+
 class ComponentParam(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, displayName=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'displayName':displayName})
+    def __init__(self, pymiere_id=None, created_by_user=False, displayName=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'displayName': displayName})
         super(ComponentParam, self).__init__(pymiere_id)
         self.__displayName = displayName
 
@@ -4935,15 +5049,15 @@ class ComponentParam(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ComponentParam.bind"')
-        self.check_type(function, any, 'arg "function" of function "ComponentParam.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ComponentParam.bind"')
+        self._check_type(function, any, 'arg "function" of function "ComponentParam.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ComponentParam.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ComponentParam.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -4952,9 +5066,9 @@ class ComponentParam(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "ComponentParam.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "ComponentParam.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "ComponentParam.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "ComponentParam.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "ComponentParam.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "ComponentParam.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def areKeyframesSupported(self):
@@ -4970,7 +5084,7 @@ class ComponentParam(PymiereBaseObject):
         """
         :type isTimeVarying: bool
         """
-        self.check_type(isTimeVarying, bool, 'arg "isTimeVarying" of function "ComponentParam.setTimeVarying"')
+        self._check_type(isTimeVarying, bool, 'arg "isTimeVarying" of function "ComponentParam.setTimeVarying"')
         self._eval_on_this_object("setTimeVarying({})".format(_format_object_to_es(isTimeVarying)))
 
     def findNearestKey(self, time, threshold):
@@ -5033,7 +5147,7 @@ class ComponentParam(PymiereBaseObject):
         """
         :type arg1: any
         """
-        self.check_type(arg1, any, 'arg "arg1" of function "ComponentParam.setColorValue"')
+        self._check_type(arg1, any, 'arg "arg1" of function "ComponentParam.setColorValue"')
         return self._eval_on_this_object("setColorValue({})".format(_format_object_to_es(arg1)))
 
     def getValueAtKey(self, time):
@@ -5060,9 +5174,10 @@ class ComponentParam(PymiereBaseObject):
         """
         return self._eval_on_this_object("setInterpolationTypeAtKey({})".format(_format_object_to_es(time)))
 
+
 class Exporter(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, name=None, classID=None, fileType=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'name':name, 'classID':classID, 'fileType':fileType})
+    def __init__(self, pymiere_id=None, created_by_user=False, name=None, classID=None, fileType=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'name': name, 'classID': classID, 'fileType': fileType})
         super(Exporter, self).__init__(pymiere_id)
         self.__name = name
         self.__classID = classID
@@ -5100,15 +5215,15 @@ class Exporter(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Exporter.bind"')
-        self.check_type(function, any, 'arg "function" of function "Exporter.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Exporter.bind"')
+        self._check_type(function, any, 'arg "function" of function "Exporter.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Exporter.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Exporter.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -5117,17 +5232,18 @@ class Exporter(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "Exporter.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "Exporter.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "Exporter.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "Exporter.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "Exporter.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "Exporter.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getPresets(self):
         self._eval_on_this_object("getPresets()")
 
+
 class EncoderPreset(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, name=None, matchName=None):
-        self.check_init_args({'pymiere_id':pymiere_id, 'name':name, 'matchName':matchName})
+    def __init__(self, pymiere_id=None, created_by_user=False, name=None, matchName=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'name': name, 'matchName': matchName})
         super(EncoderPreset, self).__init__(pymiere_id)
         self.__name = name
         self.__matchName = matchName
@@ -5156,15 +5272,15 @@ class EncoderPreset(PymiereBaseObject):
         :type eventName: str
         :type function: any
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.bind"')
-        self.check_type(function, any, 'arg "function" of function "EncoderPreset.bind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.bind"')
+        self._check_type(function, any, 'arg "function" of function "EncoderPreset.bind"')
         self._eval_on_this_object("bind({}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function)))
 
     def unbind(self, eventName):
         """
         :type eventName: str
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.unbind"')
+        self._check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.unbind"')
         self._eval_on_this_object("unbind({})".format(_format_object_to_es(eventName)))
 
     def setTimeout(self, eventName, function, milliseconds):
@@ -5173,14 +5289,15 @@ class EncoderPreset(PymiereBaseObject):
         :type function: any
         :type milliseconds: float
         """
-        self.check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.setTimeout"')
-        self.check_type(function, any, 'arg "function" of function "EncoderPreset.setTimeout"')
-        self.check_type(milliseconds, float, 'arg "milliseconds" of function "EncoderPreset.setTimeout"')
+        self._check_type(eventName, str, 'arg "eventName" of function "EncoderPreset.setTimeout"')
+        self._check_type(function, any, 'arg "function" of function "EncoderPreset.setTimeout"')
+        self._check_type(milliseconds, float, 'arg "milliseconds" of function "EncoderPreset.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def writeToFile(self, outputFilePath):
         """
         :type outputFilePath: str
         """
-        self.check_type(outputFilePath, str, 'arg "outputFilePath" of function "EncoderPreset.writeToFile"')
+        self._check_type(outputFilePath, str, 'arg "outputFilePath" of function "EncoderPreset.writeToFile"')
         return self._eval_on_this_object("writeToFile({})".format(_format_object_to_es(outputFilePath)))
+

@@ -167,11 +167,13 @@ class PymiereBaseObject(object):
         return result
 
     @staticmethod
-    def check_init_args(kwargs):
+    def _check_init_args(kwargs):
         """
         Check that we either get all init args (when object comes from ES) or no args (when we want to create an empty object)
         :param kwargs: (dict) keyword arguments at object creation
         """
+        if not kwargs.get("created_by_user", False):
+            return
         kwargs = {k: v is not None for k, v in kwargs.items()}
         if all(kwargs.values()) is True:  # all args are given
             return
@@ -187,7 +189,7 @@ class PymiereBaseObject(object):
         raise ValueError("Creation of object with keywords args doesn't work. Got keywords {} and not {}".format(arg_with_value, arg_without_value))
 
     @staticmethod
-    def check_type(obj, cls, name):
+    def _check_type(obj, cls, name):
         """
         Check that the object is an instances of the right type
         :param obj: (any) object to check
@@ -233,6 +235,7 @@ class PymiereBaseCollection(PymiereBaseObject):
     def __iter__(self):
         """
         Builtin method for iteration, we return our custom iterator to redirect to the __getitem__ method
+        This is actually overriden on all super class using a list to keep code type hint in IDE
         :return: (generator)
         """
         return _collection_iterator(self)

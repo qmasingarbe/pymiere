@@ -77,6 +77,7 @@ class StartVars(object):
     def qe(self, qe):
         raise AttributeError("Attribute 'qe' is read-only")
 
+    """ The application object """
     @property
     def app(self):
         self.__app = Application(**_eval_script_returning_object('app', as_kwargs=True))
@@ -200,6 +201,8 @@ class StartVars(object):
     # ----- FUNCTIONS -----
     def encodeURI(self, text):
         """
+        Encodes a string after RFC2396. Create an UTF-8 ASCII encoded version of this string. The string is converted into UTF-8. Every non-alphanumeric character is encoded as a percent escape character of the form %xx, where xx is the hex value of the character. After the conversion to UTF-8 encoding and escaping, it is guaranteed that the string does not contain characters codes greater than 127. The list of characters not to be encoded is -_.!~'();/?:@&=+Dollar,#. The method returns false on errors. 
+        :param text: The text to encode.
         :type text: str
         """
         PymiereBaseObject._check_type(text, str, 'arg "text" of function "StartVars.encodeURI"')
@@ -207,6 +210,8 @@ class StartVars(object):
 
     def encodeURIComponent(self, text):
         """
+        Encodes a string after RFC2396. Create an UTF-8 ASCII encoded version of this string. The string is converted into UTF-8. Every non-alphanumeric character is encoded as a percent escape character of the form %xx, where xx is the hex value of the character. After the conversion to UTF-8 encoding and escaping, it is guaranteed that the string does not contain characters codes greater than 127. The list of characters not to be encoded is -_.!~'(). The method returns false on errors. 
+        :param text: The text to encode.
         :type text: str
         """
         PymiereBaseObject._check_type(text, str, 'arg "text" of function "StartVars.encodeURIComponent"')
@@ -214,6 +219,8 @@ class StartVars(object):
 
     def decodeURI(self, uri):
         """
+        Decodes a string created with encodeURI(). 
+        :param uri: The text to decode.
         :type uri: str
         """
         PymiereBaseObject._check_type(uri, str, 'arg "uri" of function "StartVars.decodeURI"')
@@ -221,6 +228,8 @@ class StartVars(object):
 
     def decodeURIComponent(self, uri):
         """
+        Decodes a string created with encodeURIComponent(). 
+        :param uri: The text to decode.
         :type uri: str
         """
         PymiereBaseObject._check_type(uri, str, 'arg "uri" of function "StartVars.decodeURIComponent"')
@@ -228,6 +237,8 @@ class StartVars(object):
 
     def escape(self, text):
         """
+        Creates a URL-encoded string from aString. In the new string, characters of aString that require URL encoding are replaced with the format %xx, where xx is the hexadecimal value of the character code in the Unicode character set.This format is used to transmit information appended to a URL during, for example, execution of the GET method.Use the unescape() global function to translate the string back into its original format. Returns a string which is aString URL-encoded. 
+        :param aString: The string to be encoded.
         :type text: str
         """
         PymiereBaseObject._check_type(text, str, 'arg "text" of function "StartVars.escape"')
@@ -235,6 +246,8 @@ class StartVars(object):
 
     def eval(self, source):
         """
+        Evaluates its argument as a JavaScript script, and returns the result of evaluation. You can pass the result of an object's toSource() method to reconstruct that object. 
+        :param stringExpression: The string to evaluate.
         :type source: str
         """
         PymiereBaseObject._check_type(source, str, 'arg "source" of function "StartVars.eval"')
@@ -242,6 +255,8 @@ class StartVars(object):
 
     def uneval(self, what):
         """
+        Creates a source code representation of the supplied argument, and returns it as a string. 
+        :param what: The object to uneval.
         :type what: any
         """
         PymiereBaseObject._check_type(what, any, 'arg "what" of function "StartVars.uneval"')
@@ -249,6 +264,8 @@ class StartVars(object):
 
     def isFinite(self, what):
         """
+        Evaluates an expression and reports whether the result is a finite number. Returns true if the expression is a finite number, false otherwise. False if the value is infinity or negative infinity. 
+        :param expression: Any valid JavaScript expression.
         :type what: float
         """
         PymiereBaseObject._check_type(what, float, 'arg "what" of function "StartVars.isFinite"')
@@ -256,6 +273,8 @@ class StartVars(object):
 
     def isNaN(self, what):
         """
+        Evaluates an expression and reports whether the result is "Not-a-Number" (NaN). Returns true if the result of evaluation is not a number (NaN), false if the value is a number. 
+        :param expression: Any valid JavaScript expression.
         :type what: float
         """
         PymiereBaseObject._check_type(what, float, 'arg "what" of function "StartVars.isNaN"')
@@ -263,6 +282,9 @@ class StartVars(object):
 
     def parseInt(self, text, base):
         """
+        Extracts an integer from a string. Parses a string to find the first set of characters, in a specified base, that can be converted to an integer, and returns that integer, or NaN if it does not encounter characters that it can convert to a number. 
+        :param text: The string from which to extract an integer.
+        :param base: The base of the string to parse (from base 2 to base 36). If not supplied, base is determined by the format of string.
         :type text: str
         :type base: float
         """
@@ -272,6 +294,8 @@ class StartVars(object):
 
     def parseFloat(self, txt):
         """
+        Extracts a floating-point number from a string. Parses a string to find the first set of characters that can be converted to a floating point number, and returns that number, or NaN if it does not encounter characters that it can converted to a number.The function supports exponential notation. 
+        :param text: The string from which to extract a floating point number.
         :type txt: str
         """
         PymiereBaseObject._check_type(txt, str, 'arg "txt" of function "StartVars.parseFloat"')
@@ -279,6 +303,8 @@ class StartVars(object):
 
     def unescape(self, uri):
         """
+        Translates URL-encoded string into a regular string, and returns that string. Use the escape() global function to URL-encode strings. 
+        :param stringExpression: The URL-encoded string to convert.
         :type uri: str
         """
         PymiereBaseObject._check_type(uri, str, 'arg "uri" of function "StartVars.unescape"')
@@ -286,6 +312,9 @@ class StartVars(object):
 
     def localize(self, what):
         """
+        Localizes a ZString-encoded string and merges additional arguments into the string. 
+        :param what: The string to localize. A ZString-encoded string that can contain placeholder for additional arguments in the form %1 to %n.
+        :param arguments: Optional argument(s) to be merged into the string. There may be more than one argument.
         :type what: any
         """
         PymiereBaseObject._check_type(what, any, 'arg "what" of function "StartVars.localize"')
@@ -293,6 +322,8 @@ class StartVars(object):
 
     def isXMLName(self, name):
         """
+        Returns true if the supplied string is a valid XML name. 
+        :param name: The XML name to test.
         :type name: str
         """
         PymiereBaseObject._check_type(name, str, 'arg "name" of function "StartVars.isXMLName"')
@@ -300,12 +331,18 @@ class StartVars(object):
 
     def setDefaultXMLNamespace(self, ns):
         """
+        Defines the default XML namespace. This is a replacement function for the standard JavaScript statement set default xml namespace. 
+        :param namespace: The namespace to use. Omit this parameter to return to the empty namespace. This is either a Namespace object or a string.
         :type ns: Namespace
         """
         return _eval_on_global_object("setDefaultXMLNamespace({})".format(_format_object_to_es(ns)))
 
     def alert(self, prompt):
         """
+        Displays an alert box 
+        :param message: The text to display
+        :param title: The title of the alert; ignored on the Macintosh
+        :param errorIcon: Display an Error icon; ignored on the Macintosh
         :type prompt: str
         """
         PymiereBaseObject._check_type(prompt, str, 'arg "prompt" of function "StartVars.alert"')
@@ -313,6 +350,10 @@ class StartVars(object):
 
     def confirm(self, prompt):
         """
+        Displays an alert box with Yes and No buttons; returns true for Yes 
+        :param message: The text to display
+        :param noAsDefault: Set to true to set the No button as the default button
+        :param title: The title of the alert; ignored on the Macintosh
         :type prompt: str
         """
         PymiereBaseObject._check_type(prompt, str, 'arg "prompt" of function "StartVars.confirm"')
@@ -320,6 +361,10 @@ class StartVars(object):
 
     def prompt(self, prompt):
         """
+        Displays a dialog allowing the user to enter text Returns null if the user cancelled the dialog, the text otherwise 
+        :param prompt: The text to display
+        :param default_: The default text to preset the edit field with
+        :param title: The title of the dialog;
         :type prompt: str
         """
         PymiereBaseObject._check_type(prompt, str, 'arg "prompt" of function "StartVars.prompt"')

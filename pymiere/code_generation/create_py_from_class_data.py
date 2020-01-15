@@ -1,8 +1,10 @@
+import os
 from pymiere import utils
 import pymiere
 import keyword
 
-# todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
+# load comments extarcted from .d.ts files
+comments_data = utils.read_json_file(os.path.join(__file__, "..", "..", "typescript_definition_parser", "definition_data.json"))["class"]
 
 
 def generate_class(object_data, all_classes_names):
@@ -25,14 +27,16 @@ def generate_class(object_data, all_classes_names):
     # docstring
     if object_data.get("help") or object_data.get("description"):
         raise NotImplementedError()
+    if object_data.get("name") in comments_data and comments_data[object_data.get("name")]["comment"]:
+        code = code.add_line('""" {} """'.format(comments_data[object_data.get("name")]["comment"]), indent=1)
     # init
     properties = ["{}=None".format(p) for p in object_data.get("props").keys()]
     if object_data.get("name") == "$":  # absorb extra things in $ object
-        code = code.add_line("def __init__(self, pymiere_id=None, created_by_user=False, {}, **kwargs):".format(", ".join(properties)), indent=1)
+        code = code.add_line("def __init__(self, pymiere_id=None, {}, **kwargs):".format(", ".join(properties)), indent=1)
     else:
-        code = code.add_line("def __init__(self, pymiere_id=None, created_by_user=False, {}):".format(", ".join(properties)), indent=1)
+        code = code.add_line("def __init__(self, pymiere_id=None, {}):".format(", ".join(properties)), indent=1)
     properties_dict = ["'{0}': {0}".format(p) for p in object_data.get("props").keys()]
-    code = code.add_line("self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, "+ ", ".join(properties_dict) +"})", indent=2)
+    code = code.add_line("self._check_init_args({'pymiere_id': pymiere_id, "+ ", ".join(properties_dict) +"})", indent=2)
     code = code.add_line("super({}, self).__init__(pymiere_id)".format(object_data.get("name")), indent=2)
     for prop_name in object_data.get("props").keys():
         code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
@@ -41,9 +45,11 @@ def generate_class(object_data, all_classes_names):
     code = code.add_empty_line()
     code = code.add_line("# ----- PROPERTIES -----", indent=1)
     for prop_name, prop_info in object_data.get("props").items():
-        # docstring$
+        # docstring
         if prop_info.get("help"):
             raise NotImplementedError("help")
+        if object_data.get("name") in comments_data and prop_name in comments_data[object_data.get("name")]["props"]:
+            code = code.add_line('""" {} """'.format(comments_data[object_data.get("name")]["props"][prop_name]["comment"]), indent=1)
         # getter
         code = code.add_line("@property", indent=1)
         code = code.add_line("def {}(self):".format(prop_name), indent=1)
@@ -93,11 +99,16 @@ def generate_class(object_data, all_classes_names):
         code = code.add_line("def {}(self{}):".format(func_name, args), indent=1)
 
         # docstring
-        if func_info.get("arguments") or func_info.get("description"):
+        if func_info.get("arguments") or func_info.get("description") or object_data.get("name") in comments_data and func_name in comments_data[object_data.get("name")]["props"]:
             # pycharm compatible docstring for arg types
             code = code.add_line('"""', indent=2)
             if func_info.get("description"):
                 code = code.add_line(func_info.get("description"), indent=2)
+            if object_data.get("name") in comments_data and func_name in comments_data[object_data.get("name")]["props"]:
+                code = code.add_line(comments_data[object_data.get("name")]["props"][func_name]["comment"], indent=2)
+                if "args" in comments_data[object_data.get("name")]["props"][func_name]:
+                    for k, v in comments_data[object_data.get("name")]["props"][func_name]["args"].items():
+                        code = code.add_line(":param {}: {}".format(k, v), indent=2)
             for arg_name, arg_info in func_info.get("arguments", dict()).items():
                 if arg_info.get("help"):
                     raise NotImplementedError("help")
@@ -106,6 +117,7 @@ def generate_class(object_data, all_classes_names):
                 pytype = utils.TYPE_CORRESPONDENCE[arg_info.get("dataType")] if arg_info.get("dataType") in utils.TYPE_CORRESPONDENCE else arg_info.get("dataType")
                 code = code.add_line(":type {}: {}".format(arg_name, pytype), indent=2)
             code = code.add_line('"""', indent=2)
+
         if func_info.get("arguments"):
             # check type of function args in python
             for arg_name, arg_info in func_info.get("arguments").items():

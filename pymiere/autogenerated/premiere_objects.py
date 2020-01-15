@@ -1,8 +1,8 @@
 from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es
 
 class Application(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'version': version, 'build': build, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
+    def __init__(self, pymiere_id=None, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'version': version, 'build': build, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
         super(Application, self).__init__(pymiere_id)
         self.__version = version
         self.__build = build
@@ -54,6 +54,7 @@ class Application(PymiereBaseObject):
     def getPProSystemPrefPath(self, getPProSystemPrefPath):
         raise AttributeError("Attribute 'getPProSystemPrefPath' is read-only")
 
+    """ This is the current active project. """
     @property
     def project(self):
         kwargs = self._eval_on_this_object('project')
@@ -204,6 +205,8 @@ class Application(PymiereBaseObject):
 
     def isDocument(self, filePath):
         """
+        Checks whether file specified is a doc 
+        :param filePath: This is the path to be checked
         :type filePath: str
         """
         self._check_type(filePath, str, 'arg "filePath" of function "Application.isDocument"')
@@ -332,8 +335,8 @@ class Application(PymiereBaseObject):
 
 
 class Project(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'documentID': documentID, 'name': name, 'path': path, 'rootItem': rootItem, 'sequences': sequences, 'activeSequence': activeSequence, 'isCloudProject': isCloudProject, 'cloudProjectLocalID': cloudProjectLocalID})
+    def __init__(self, pymiere_id=None, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'documentID': documentID, 'name': name, 'path': path, 'rootItem': rootItem, 'sequences': sequences, 'activeSequence': activeSequence, 'isCloudProject': isCloudProject, 'cloudProjectLocalID': cloudProjectLocalID})
         super(Project, self).__init__(pymiere_id)
         self.__documentID = documentID
         self.__name = name
@@ -387,6 +390,7 @@ class Project(PymiereBaseObject):
     def sequences(self, sequences):
         raise AttributeError("Attribute 'sequences' is read-only")
 
+    """ f """
     @property
     def activeSequence(self):
         kwargs = self._eval_on_this_object('activeSequence')
@@ -452,6 +456,11 @@ class Project(PymiereBaseObject):
 
     def importFiles(self, arg1):
         """
+        Imports files into the project. 
+        :param arrayOfFilePathsToImport: An array of paths to files to import
+        :param suppressUI: optional; if true, suppress any warnings, translation reports, or errors.
+        :param projectBin: optional; if present, the bin into which to import the new media.
+        :param importAsNumberedStill: optiona; if present, interprets the file paths as a series of numbered stills.
         :type arg1: any
         """
         self._check_type(arg1, any, 'arg "arg1" of function "Project.importFiles"')
@@ -459,6 +468,9 @@ class Project(PymiereBaseObject):
 
     def importSequences(self, arg1):
         """
+        Imports sequences from a project. 
+        :param projectPath: Path to project from which to import sequences.
+        :param sequences: An array of sequence IDs to import, from the project.
         :type arg1: any
         """
         self._check_type(arg1, any, 'arg "arg1" of function "Project.importSequences"')
@@ -628,8 +640,8 @@ class Project(PymiereBaseObject):
 
 
 class ProjectItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'children': children, 'name': name, 'treePath': treePath, 'type': type, 'nodeId': nodeId, 'videoComponents': videoComponents})
+    def __init__(self, pymiere_id=None, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'children': children, 'name': name, 'treePath': treePath, 'type': type, 'nodeId': nodeId, 'videoComponents': videoComponents})
         super(ProjectItem, self).__init__(pymiere_id)
         self.__children = children
         self.__name = name
@@ -868,6 +880,9 @@ class ProjectItem(PymiereBaseObject):
         return self._eval_on_this_object("canProxy()")
 
     def isSequence(self):
+        """
+        Returns whether the projectItem represents a sequence.@returns true, if projectItem is a sequence.
+        """
         return self._eval_on_this_object("isSequence()")
 
     def startTime(self):
@@ -972,8 +987,9 @@ class SequenceCollection(PymiereBaseCollection):
 
 
 class Sequence(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'id': id, 'sequenceID': sequenceID, 'name': name, 'audioTracks': audioTracks, 'videoTracks': videoTracks, 'frameSizeHorizontal': frameSizeHorizontal, 'frameSizeVertical': frameSizeVertical, 'timebase': timebase, 'zeroPoint': zeroPoint, 'end': end, 'markers': markers, 'projectItem': projectItem, 'videoDisplayFormat': videoDisplayFormat, 'audioDisplayFormat': audioDisplayFormat})
+    """ A sequence. """
+    def __init__(self, pymiere_id=None, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'id': id, 'sequenceID': sequenceID, 'name': name, 'audioTracks': audioTracks, 'videoTracks': videoTracks, 'frameSizeHorizontal': frameSizeHorizontal, 'frameSizeVertical': frameSizeVertical, 'timebase': timebase, 'zeroPoint': zeroPoint, 'end': end, 'markers': markers, 'projectItem': projectItem, 'videoDisplayFormat': videoDisplayFormat, 'audioDisplayFormat': audioDisplayFormat})
         super(Sequence, self).__init__(pymiere_id)
         self.__id = id
         self.__sequenceID = sequenceID
@@ -991,6 +1007,7 @@ class Sequence(PymiereBaseObject):
         self.__audioDisplayFormat = audioDisplayFormat
 
     # ----- PROPERTIES -----
+    """ Sequence ID """
     @property
     def id(self):
         self.__id = self._eval_on_this_object('id')
@@ -999,6 +1016,7 @@ class Sequence(PymiereBaseObject):
     def id(self, id):
         raise AttributeError("Attribute 'id' is read-only")
 
+    """ Permanent ID of the sequence, within its project. """
     @property
     def sequenceID(self):
         self.__sequenceID = self._eval_on_this_object('sequenceID')
@@ -1007,6 +1025,7 @@ class Sequence(PymiereBaseObject):
     def sequenceID(self, sequenceID):
         raise AttributeError("Attribute 'sequenceID' is read-only")
 
+    """ Name (writable). """
     @property
     def name(self):
         self.__name = self._eval_on_this_object('name')
@@ -1016,6 +1035,7 @@ class Sequence(PymiereBaseObject):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
         self.__name = name
 
+    """ A collection of the sequence's audio tracks. """
     @property
     def audioTracks(self):
         kwargs = self._eval_on_this_object('audioTracks')
@@ -1034,6 +1054,7 @@ class Sequence(PymiereBaseObject):
     def videoTracks(self, videoTracks):
         raise AttributeError("Attribute 'videoTracks' is read-only")
 
+    """ Width """
     @property
     def frameSizeHorizontal(self):
         self.__frameSizeHorizontal = self._eval_on_this_object('frameSizeHorizontal')
@@ -1042,6 +1063,7 @@ class Sequence(PymiereBaseObject):
     def frameSizeHorizontal(self, frameSizeHorizontal):
         raise AttributeError("Attribute 'frameSizeHorizontal' is read-only")
 
+    """ Height """
     @property
     def frameSizeVertical(self):
         self.__frameSizeVertical = self._eval_on_this_object('frameSizeVertical')
@@ -1058,6 +1080,7 @@ class Sequence(PymiereBaseObject):
     def timebase(self, timebase):
         raise AttributeError("Attribute 'timebase' is read-only")
 
+    """ The starting timecode of the first frame of the sequence, as a string. """
     @property
     def zeroPoint(self):
         self.__zeroPoint = self._eval_on_this_object('zeroPoint')
@@ -1066,6 +1089,7 @@ class Sequence(PymiereBaseObject):
     def zeroPoint(self, zeroPoint):
         raise AttributeError("Attribute 'zeroPoint' is read-only")
 
+    """ Timecode (as a string) of the end of the sequence. """
     @property
     def end(self):
         self.__end = self._eval_on_this_object('end')
@@ -1074,6 +1098,7 @@ class Sequence(PymiereBaseObject):
     def end(self, end):
         raise AttributeError("Attribute 'end' is read-only")
 
+    """ The sequence's markers. """
     @property
     def markers(self):
         kwargs = self._eval_on_this_object('markers')
@@ -1083,6 +1108,7 @@ class Sequence(PymiereBaseObject):
     def markers(self, markers):
         raise AttributeError("Attribute 'markers' is read-only")
 
+    """ The `projectItem` corresponding to the sequence. """
     @property
     def projectItem(self):
         kwargs = self._eval_on_this_object('projectItem')
@@ -1140,10 +1166,15 @@ class Sequence(PymiereBaseObject):
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
     def getPlayerPosition(self):
+        """
+        Retrieves the current player position, as a `Time` object.
+        """
         return Time(**self._eval_on_this_object("getPlayerPosition()"))
 
     def setPlayerPosition(self, pos):
         """
+        Sets the current player position. 
+        :param pos: The new position, as a timecode string.
         :type pos: str
         """
         self._check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
@@ -1151,54 +1182,88 @@ class Sequence(PymiereBaseObject):
 
     def setInPoint(self, time):
         """
+        Sets the in point of the sequence. 
+        :param seconds: Time of in point.
         :type time: Object
         """
         self._eval_on_this_object("setInPoint({})".format(_format_object_to_es(time)))
 
     def setOutPoint(self, time):
         """
+        Sets the out point of the sequence. 
+        :param seconds: Time of out point.
         :type time: Object
         """
         self._eval_on_this_object("setOutPoint({})".format(_format_object_to_es(time)))
 
     def getInPoint(self):
+        """
+        Retrieves the sequence's in point, as a timecode string.
+        """
         return self._eval_on_this_object("getInPoint()")
 
     def getOutPoint(self):
+        """
+        Retrieves the sequence's out point, as a timecode string.
+        """
         return self._eval_on_this_object("getOutPoint()")
 
     def getInPointAsTime(self):
+        """
+        Retrieves the sequence's in point, as a `Time` object.
+        """
         return Time(**self._eval_on_this_object("getInPointAsTime()"))
 
     def getOutPointAsTime(self):
+        """
+        Retrieves the sequence's out point, as a `Time` object.
+        """
         return Time(**self._eval_on_this_object("getOutPointAsTime()"))
 
     def setWorkAreaInPoint(self, time):
         """
+        Specify the work area in point, in seconds. 
+        :param timeInSeconds: new in point time.
         :type time: Object
         """
         self._eval_on_this_object("setWorkAreaInPoint({})".format(_format_object_to_es(time)))
 
     def setWorkAreaOutPoint(self, time):
         """
+        Specify the work area out point, in seconds. 
+        :param timeInSeconds: new out point time.
         :type time: Object
         """
         self._eval_on_this_object("setWorkAreaOutPoint({})".format(_format_object_to_es(time)))
 
     def getWorkAreaInPoint(self):
+        """
+        Returns the work area in point, in seconds.
+        """
         return self._eval_on_this_object("getWorkAreaInPoint()")
 
     def getWorkAreaOutPoint(self):
+        """
+        Returns the work area out point, in seconds.
+        """
         return self._eval_on_this_object("getWorkAreaOutPoint()")
 
     def getWorkAreaInPointAsTime(self):
+        """
+        Returns the work area in point, as a `Time` object.
+        """
         return Time(**self._eval_on_this_object("getWorkAreaInPointAsTime()"))
 
     def getWorkAreaOutPointAsTime(self):
+        """
+        Returns the work area out point, as a `Time` object.
+        """
         return Time(**self._eval_on_this_object("getWorkAreaOutPointAsTime()"))
 
     def setZeroPoint(self, ticks):
         """
+        Sets the timecode of the first frame of the sequence. 
+        :param newStartTime: The new starting time, in `ticks`.
         :type ticks: str
         """
         self._check_type(ticks, str, 'arg "ticks" of function "Sequence.setZeroPoint"')
@@ -1206,6 +1271,9 @@ class Sequence(PymiereBaseObject):
 
     def attachCustomProperty(self, propertyID, propertyValue):
         """
+        Adds a new metadata key to the sequence, and sets its value. 
+        :param propertyID: Name of new property
+        :param propertyValue: Value of new property
         :type propertyID: str
         :type propertyValue: str
         """
@@ -1214,10 +1282,15 @@ class Sequence(PymiereBaseObject):
         self._eval_on_this_object("attachCustomProperty({}, {})".format(_format_object_to_es(propertyID), _format_object_to_es(propertyValue)))
 
     def clone(self):
+        """
+        Clones a sequence. @returns the clone Sequence.
+        """
         self._eval_on_this_object("clone()")
 
     def exportAsProject(self, exportPath):
         """
+        Exports the sequence (and its constituent media) as a new PPro project. 
+        :param path: Output file path, including file name.
         :type exportPath: str
         """
         self._check_type(exportPath, str, 'arg "exportPath" of function "Sequence.exportAsProject"')
@@ -1225,6 +1298,9 @@ class Sequence(PymiereBaseObject):
 
     def exportAsFinalCutProXML(self, exportPath, suppressUI):
         """
+        Exports a new FCP XML file representing this sequence. 
+        :param exportPath: The full file path (with file name) to create.
+        :param suppressUI: Optional; quiets any warnings or errors encountered during export.
         :type exportPath: str
         :type suppressUI: float
         """
@@ -1234,6 +1310,10 @@ class Sequence(PymiereBaseObject):
 
     def exportAsMediaDirect(self, outputFilePath, presetPath, workAreaType):
         """
+        Premiere Pro exports the sequence immediately. 
+        :param outputFilePath: The output file path (with name).
+        :param presetPath: The .epr file to use.
+        :param workAreaType: Optional work area specifier.
         :type outputFilePath: str
         :type presetPath: str
         :type workAreaType: float
@@ -1245,6 +1325,8 @@ class Sequence(PymiereBaseObject):
 
     def getExportFileExtension(self, presetFilePath):
         """
+        Retrieves the file extension associated with a given output preset (.epr file). 
+        :param presetFilePath: full path to .epr file
         :type presetFilePath: str
         """
         self._check_type(presetFilePath, str, 'arg "presetFilePath" of function "Sequence.getExportFileExtension"')
@@ -1252,6 +1334,11 @@ class Sequence(PymiereBaseObject):
 
     def importMGT(self, path, time, videoTrackIndex, audioTrackIndex):
         """
+        Imports a Motion Graphics Template (.mogrt) into the sequence 
+        :param pathToMOGRT: Complete path to .mogrt
+        :param timeInTicks: Time (in ticks) at which to insert
+        :param videoTrackOffset: The offset from first video track to targeted track
+        :param audioTrackOffset: The offset from first audio track to targeted track @returns newly-created `trackItem` representing the .mogrt
         :type path: str
         :type time: Object
         :type videoTrackIndex: float
@@ -1277,29 +1364,48 @@ class Sequence(PymiereBaseObject):
         return TrackItem(**self._eval_on_this_object("importMGTFromLibrary({}, {}, {}, {}, {})".format(_format_object_to_es(libraryName), _format_object_to_es(mgtName), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex))))
 
     def getSettings(self):
+        """
+        Returns the current sequence settings. @returns SequenceSettings
+        """
         return SequenceSettings(**self._eval_on_this_object("getSettings()"))
 
     def setSettings(self, settings):
         """
+        Specifies the sequence settings to use. 
+        :param newSettings: New settings
         :type settings: SequenceSettings
         """
         self._check_type(settings, SequenceSettings, 'arg "settings" of function "Sequence.setSettings"')
         self._eval_on_this_object("setSettings({})".format(_format_object_to_es(settings)))
 
     def getSelection(self):
+        """
+        Returns currently-selected clips, as an `Array` of `trackItems`
+        """
         self._eval_on_this_object("getSelection()")
 
     def setSelection(self):
         self._eval_on_this_object("setSelection()")
 
     def linkSelection(self):
+        """
+        Links the currently-selected `trackItems` together, if possible. @returns `True` if successful.
+        """
         return self._eval_on_this_object("linkSelection()")
 
     def unlinkSelection(self):
+        """
+        Unlinks the currently-selected `trackItems`, if possible. @returns `True` if successful.
+        """
         return self._eval_on_this_object("unlinkSelection()")
 
     def insertClip(self, clipProjectItem, time, videoTrackIndex, audioTrackIndex):
         """
+        Inserts a clip (`trackItem`) into the sequence. 
+        :param projectItem: The project item to insert.
+        :param time: Time at which to insert.
+        :param vidTrackOffset: The offset from the first video track to targeted track
+        :param audTrackOffset: The offset from the first audio track to targeted track
         :type clipProjectItem: ProjectItem
         :type time: Object
         :type videoTrackIndex: float
@@ -1327,16 +1433,23 @@ class Sequence(PymiereBaseObject):
 
     def createSubsequence(self, ignoreTrackTargeting):
         """
+        Creates a new sequence from the source sequence's in and out points. 
+        :param ignoreMapping: If True the current selection, not track targeting, will determine the clips to include in the new sequence. If there is no selection, track targeting determines which clips are included in the new sequence.
         :type ignoreTrackTargeting: bool
         """
         self._check_type(ignoreTrackTargeting, bool, 'arg "ignoreTrackTargeting" of function "Sequence.createSubsequence"')
         return Sequence(**self._eval_on_this_object("createSubsequence({})".format(_format_object_to_es(ignoreTrackTargeting))))
 
     def isWorkAreaEnabled(self):
+        """
+        Returns `true` if work area is enabled.
+        """
         return self._eval_on_this_object("isWorkAreaEnabled()")
 
     def setWorkAreaEnabled(self, specifiedState):
         """
+        Sets the enabled state of the seqeuence work area. 
+        :param enableState: The desired state
         :type specifiedState: float
         """
         self._check_type(specifiedState, float, 'arg "specifiedState" of function "Sequence.setWorkAreaEnabled"')
@@ -1357,8 +1470,8 @@ class TrackCollection(PymiereBaseCollection):
 
 
 class MarkerCollection(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, numMarkers=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'numMarkers': numMarkers})
+    def __init__(self, pymiere_id=None, numMarkers=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'numMarkers': numMarkers})
         super(MarkerCollection, self).__init__(pymiere_id)
         self.__numMarkers = numMarkers
 
@@ -1462,8 +1575,8 @@ class ProjectCollection(PymiereBaseCollection):
 
 
 class Anywhere(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Anywhere, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1539,8 +1652,8 @@ class Anywhere(PymiereBaseObject):
 
 
 class Encoder(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'ENCODE_ENTIRE': ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT': ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA': ENCODE_WORKAREA})
+    def __init__(self, pymiere_id=None, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'ENCODE_ENTIRE': ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT': ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA': ENCODE_WORKAREA})
         super(Encoder, self).__init__(pymiere_id)
         self.__ENCODE_ENTIRE = ENCODE_ENTIRE
         self.__ENCODE_IN_TO_OUT = ENCODE_IN_TO_OUT
@@ -1676,8 +1789,8 @@ class Encoder(PymiereBaseObject):
 
 
 class Properties(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Properties, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1747,8 +1860,8 @@ class Properties(PymiereBaseObject):
 
 
 class SourceMonitor(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(SourceMonitor, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1816,13 +1929,14 @@ class SourceMonitor(PymiereBaseObject):
 
 
 class ProjectManager(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, options=None, errors=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'options': options, 'errors': errors})
+    def __init__(self, pymiere_id=None, options=None, errors=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'options': options, 'errors': errors})
         super(ProjectManager, self).__init__(pymiere_id)
         self.__options = options
         self.__errors = errors
 
     # ----- PROPERTIES -----
+    """ The `ProjectManagerOptions` structure. """
     @property
     def options(self):
         kwargs = self._eval_on_this_object('options')
@@ -1832,6 +1946,7 @@ class ProjectManager(PymiereBaseObject):
     def options(self, options):
         raise AttributeError("Attribute 'options' is read-only")
 
+    """ An array of strings describing errors encountered. """
     @property
     def errors(self):
         self.__errors = self._eval_on_this_object('errors')
@@ -1871,6 +1986,8 @@ class ProjectManager(PymiereBaseObject):
 
     def process(self, project):
         """
+        Perform the consolidation and transfer. 
+        :param project: the `Project` to consolidate.
         :type project: Project
         """
         self._check_type(project, Project, 'arg "project" of function "ProjectManager.process"')
@@ -1878,8 +1995,9 @@ class ProjectManager(PymiereBaseObject):
 
 
 class ProjectManagerOptions(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'clipTransferOption': clipTransferOption, 'clipTranscoderOption': clipTranscoderOption, 'excludeUnused': excludeUnused, 'handleFrameCount': handleFrameCount, 'includePreviews': includePreviews, 'includeConformedAudio': includeConformedAudio, 'renameMedia': renameMedia, 'destinationPath': destinationPath, 'includeAllSequences': includeAllSequences, 'affectedSequences': affectedSequences, 'encoderPresetFilePath': encoderPresetFilePath, 'convertImageSequencesToClips': convertImageSequencesToClips, 'convertSyntheticsToClips': convertSyntheticsToClips, 'convertAECompsToClips': convertAECompsToClips, 'copyToPreventAlphaLoss': copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY': CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE': CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET': CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS': CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE': CLIP_TRANSCODE_MATCH_SEQUENCE})
+    """ Structure containing all available options for the `ProjectManager`. """
+    def __init__(self, pymiere_id=None, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'clipTransferOption': clipTransferOption, 'clipTranscoderOption': clipTranscoderOption, 'excludeUnused': excludeUnused, 'handleFrameCount': handleFrameCount, 'includePreviews': includePreviews, 'includeConformedAudio': includeConformedAudio, 'renameMedia': renameMedia, 'destinationPath': destinationPath, 'includeAllSequences': includeAllSequences, 'affectedSequences': affectedSequences, 'encoderPresetFilePath': encoderPresetFilePath, 'convertImageSequencesToClips': convertImageSequencesToClips, 'convertSyntheticsToClips': convertSyntheticsToClips, 'convertAECompsToClips': convertAECompsToClips, 'copyToPreventAlphaLoss': copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY': CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE': CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET': CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS': CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE': CLIP_TRANSCODE_MATCH_SEQUENCE})
         super(ProjectManagerOptions, self).__init__(pymiere_id)
         self.__clipTransferOption = clipTransferOption
         self.__clipTranscoderOption = clipTranscoderOption
@@ -1903,6 +2021,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self.__CLIP_TRANSCODE_MATCH_SEQUENCE = CLIP_TRANSCODE_MATCH_SEQUENCE
 
     # ----- PROPERTIES -----
+    """ Which transfer option to use; will be one of these: 	`CLIP_TRANSFER_COPY`  `CLIP_TRANSFER_TRANSCODE` """
     @property
     def clipTransferOption(self):
         self.__clipTransferOption = self._eval_on_this_object('clipTransferOption')
@@ -1912,6 +2031,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("clipTransferOption = {}".format(_format_object_to_es(clipTransferOption)))
         self.__clipTransferOption = clipTransferOption
 
+    """ Which transcode option to use; will be one of these: 	`CLIP_TRANSCODE_MATCH_PRESET`  `CLIP_TRANSCODE_MATCH_CLIPS` 	`CLIP_TRANSCODE_MATCH_SEQUENCE` """
     @property
     def clipTranscoderOption(self):
         self.__clipTranscoderOption = self._eval_on_this_object('clipTranscoderOption')
@@ -1921,6 +2041,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("clipTranscoderOption = {}".format(_format_object_to_es(clipTranscoderOption)))
         self.__clipTranscoderOption = clipTranscoderOption
 
+    """ If `true`, projectItems not used in a sequence are not transferred """
     @property
     def excludeUnused(self):
         self.__excludeUnused = self._eval_on_this_object('excludeUnused')
@@ -1930,6 +2051,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("excludeUnused = {}".format(_format_object_to_es(excludeUnused)))
         self.__excludeUnused = excludeUnused
 
+    """ The number of 'handle' frames to provide, before and after the in/out points of clips in the sequence. """
     @property
     def handleFrameCount(self):
         self.__handleFrameCount = self._eval_on_this_object('handleFrameCount')
@@ -1939,6 +2061,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("handleFrameCount = {}".format(_format_object_to_es(handleFrameCount)))
         self.__handleFrameCount = handleFrameCount
 
+    """ If `true`, preview files will also be transferred. """
     @property
     def includePreviews(self):
         self.__includePreviews = self._eval_on_this_object('includePreviews')
@@ -1948,6 +2071,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("includePreviews = {}".format(_format_object_to_es(includePreviews)))
         self.__includePreviews = includePreviews
 
+    """ If `true`, conformed audio files will also be transferred. """
     @property
     def includeConformedAudio(self):
         self.__includeConformedAudio = self._eval_on_this_object('includeConformedAudio')
@@ -1957,6 +2081,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("includeConformedAudio = {}".format(_format_object_to_es(includeConformedAudio)))
         self.__includeConformedAudio = includeConformedAudio
 
+    """ If `true`, media files will be renamed to match clip names. """
     @property
     def renameMedia(self):
         self.__renameMedia = self._eval_on_this_object('renameMedia')
@@ -1966,6 +2091,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("renameMedia = {}".format(_format_object_to_es(renameMedia)))
         self.__renameMedia = renameMedia
 
+    """ The containing directory for the consolidation/transfer. """
     @property
     def destinationPath(self):
         self.__destinationPath = self._eval_on_this_object('destinationPath')
@@ -1975,6 +2101,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("destinationPath = {}".format(_format_object_to_es(destinationPath)))
         self.__destinationPath = destinationPath
 
+    """ If `true`, all sequences in the project will be transferred. """
     @property
     def includeAllSequences(self):
         self.__includeAllSequences = self._eval_on_this_object('includeAllSequences')
@@ -1984,6 +2111,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("includeAllSequences = {}".format(_format_object_to_es(includeAllSequences)))
         self.__includeAllSequences = includeAllSequences
 
+    """ An `Array` of all sequences affected by the transfer. """
     @property
     def affectedSequences(self):
         self.__affectedSequences = self._eval_on_this_object('affectedSequences')
@@ -1993,6 +2121,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("affectedSequences = {}".format(_format_object_to_es(affectedSequences)))
         self.__affectedSequences = affectedSequences
 
+    """ Path the the encoder preset (.epr file) to be used. """
     @property
     def encoderPresetFilePath(self):
         self.__encoderPresetFilePath = self._eval_on_this_object('encoderPresetFilePath')
@@ -2002,6 +2131,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("encoderPresetFilePath = {}".format(_format_object_to_es(encoderPresetFilePath)))
         self.__encoderPresetFilePath = encoderPresetFilePath
 
+    """ If `true`, image sequences will be transcoded. """
     @property
     def convertImageSequencesToClips(self):
         self.__convertImageSequencesToClips = self._eval_on_this_object('convertImageSequencesToClips')
@@ -2011,6 +2141,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("convertImageSequencesToClips = {}".format(_format_object_to_es(convertImageSequencesToClips)))
         self.__convertImageSequencesToClips = convertImageSequencesToClips
 
+    """ If `true`, synthetic importer clips will be transcoded. """
     @property
     def convertSyntheticsToClips(self):
         self.__convertSyntheticsToClips = self._eval_on_this_object('convertSyntheticsToClips')
@@ -2020,6 +2151,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("convertSyntheticsToClips = {}".format(_format_object_to_es(convertSyntheticsToClips)))
         self.__convertSyntheticsToClips = convertSyntheticsToClips
 
+    """ If `true`, After Effects compositions will be transcoded. """
     @property
     def convertAECompsToClips(self):
         self.__convertAECompsToClips = self._eval_on_this_object('convertAECompsToClips')
@@ -2029,6 +2161,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("convertAECompsToClips = {}".format(_format_object_to_es(convertAECompsToClips)))
         self.__convertAECompsToClips = convertAECompsToClips
 
+    """ If `true`, source media will be copied not transcoded, if transcoding would have resulted in loss of alpha information. """
     @property
     def copyToPreventAlphaLoss(self):
         self.__copyToPreventAlphaLoss = self._eval_on_this_object('copyToPreventAlphaLoss')
@@ -2038,6 +2171,7 @@ class ProjectManagerOptions(PymiereBaseObject):
         self._eval_on_this_object("copyToPreventAlphaLoss = {}".format(_format_object_to_es(copyToPreventAlphaLoss)))
         self.__copyToPreventAlphaLoss = copyToPreventAlphaLoss
 
+    """ Transfer mode setting: Copy source media """
     @property
     def CLIP_TRANSFER_COPY(self):
         self.__CLIP_TRANSFER_COPY = self._eval_on_this_object('CLIP_TRANSFER_COPY')
@@ -2046,6 +2180,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     def CLIP_TRANSFER_COPY(self, CLIP_TRANSFER_COPY):
         raise AttributeError("Attribute 'CLIP_TRANSFER_COPY' is read-only")
 
+    """ Transfer mode setting: Transcode source media """
     @property
     def CLIP_TRANSFER_TRANSCODE(self):
         self.__CLIP_TRANSFER_TRANSCODE = self._eval_on_this_object('CLIP_TRANSFER_TRANSCODE')
@@ -2054,6 +2189,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     def CLIP_TRANSFER_TRANSCODE(self, CLIP_TRANSFER_TRANSCODE):
         raise AttributeError("Attribute 'CLIP_TRANSFER_TRANSCODE' is read-only")
 
+    """ Transcode mode setting: Transcode source media to a specific preset """
     @property
     def CLIP_TRANSCODE_MATCH_PRESET(self):
         self.__CLIP_TRANSCODE_MATCH_PRESET = self._eval_on_this_object('CLIP_TRANSCODE_MATCH_PRESET')
@@ -2062,6 +2198,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     def CLIP_TRANSCODE_MATCH_PRESET(self, CLIP_TRANSCODE_MATCH_PRESET):
         raise AttributeError("Attribute 'CLIP_TRANSCODE_MATCH_PRESET' is read-only")
 
+    """ Transcode mode setting: Transcode source media to match clips """
     @property
     def CLIP_TRANSCODE_MATCH_CLIPS(self):
         self.__CLIP_TRANSCODE_MATCH_CLIPS = self._eval_on_this_object('CLIP_TRANSCODE_MATCH_CLIPS')
@@ -2070,6 +2207,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     def CLIP_TRANSCODE_MATCH_CLIPS(self, CLIP_TRANSCODE_MATCH_CLIPS):
         raise AttributeError("Attribute 'CLIP_TRANSCODE_MATCH_CLIPS' is read-only")
 
+    """ Transcode mode setting: Transcode source media to match sequence settings """
     @property
     def CLIP_TRANSCODE_MATCH_SEQUENCE(self):
         self.__CLIP_TRANSCODE_MATCH_SEQUENCE = self._eval_on_this_object('CLIP_TRANSCODE_MATCH_SEQUENCE')
@@ -2109,8 +2247,8 @@ class ProjectManagerOptions(PymiereBaseObject):
 
 
 class Metadata(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, getMetadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'getMetadata': getMetadata})
+    def __init__(self, pymiere_id=None, getMetadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'getMetadata': getMetadata})
         super(Metadata, self).__init__(pymiere_id)
         self.__getMetadata = getMetadata
 
@@ -2169,8 +2307,8 @@ class Metadata(PymiereBaseObject):
 
 
 class Document(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Document, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2215,8 +2353,8 @@ class Document(PymiereBaseObject):
 
 
 class ProjectItemType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, BIN=None, CLIP=None, FILE=None, ROOT=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'BIN': BIN, 'CLIP': CLIP, 'FILE': FILE, 'ROOT': ROOT})
+    def __init__(self, pymiere_id=None, BIN=None, CLIP=None, FILE=None, ROOT=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'BIN': BIN, 'CLIP': CLIP, 'FILE': FILE, 'ROOT': ROOT})
         super(ProjectItemType, self).__init__(pymiere_id)
         self.__BIN = BIN
         self.__CLIP = CLIP
@@ -2287,8 +2425,8 @@ class ProjectItemType(PymiereBaseObject):
 
 
 class ScratchDiskType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'FirstVideoCaptureFolder': FirstVideoCaptureFolder, 'FirstAudioCaptureFolder': FirstAudioCaptureFolder, 'FirstVideoPreviewFolder': FirstVideoPreviewFolder, 'FirstAudioPreviewFolder': FirstAudioPreviewFolder, 'FirstAutoSaveFolder': FirstAutoSaveFolder, 'FirstCClibrariesFolder': FirstCClibrariesFolder, 'FirstCapsuleMediaFolder': FirstCapsuleMediaFolder})
+    def __init__(self, pymiere_id=None, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'FirstVideoCaptureFolder': FirstVideoCaptureFolder, 'FirstAudioCaptureFolder': FirstAudioCaptureFolder, 'FirstVideoPreviewFolder': FirstVideoPreviewFolder, 'FirstAudioPreviewFolder': FirstAudioPreviewFolder, 'FirstAutoSaveFolder': FirstAutoSaveFolder, 'FirstCClibrariesFolder': FirstCClibrariesFolder, 'FirstCapsuleMediaFolder': FirstCapsuleMediaFolder})
         super(ScratchDiskType, self).__init__(pymiere_id)
         self.__FirstVideoCaptureFolder = FirstVideoCaptureFolder
         self.__FirstAudioCaptureFolder = FirstAudioCaptureFolder
@@ -2386,8 +2524,8 @@ class ScratchDiskType(PymiereBaseObject):
 
 
 class RegisteredDirectories(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(RegisteredDirectories, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2422,8 +2560,8 @@ class RegisteredDirectories(PymiereBaseObject):
 
 
 class UtilityFunctions(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(UtilityFunctions, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2458,8 +2596,8 @@ class UtilityFunctions(PymiereBaseObject):
 
 
 class Math(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'E': E, 'LN10': LN10, 'LN2': LN2, 'LOG2E': LOG2E, 'LOG10E': LOG10E, 'PI': PI, 'SQRT1_2': SQRT1_2, 'SQRT2': SQRT2})
+    def __init__(self, pymiere_id=None, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'E': E, 'LN10': LN10, 'LN2': LN2, 'LOG2E': LOG2E, 'LOG10E': LOG10E, 'PI': PI, 'SQRT1_2': SQRT1_2, 'SQRT2': SQRT2})
         super(Math, self).__init__(pymiere_id)
         self.__E = E
         self.__LN10 = LN10
@@ -2669,8 +2807,9 @@ class Math(PymiereBaseObject):
 
 
 class File(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent, 'type': type, 'creator': creator, 'hidden': hidden, 'readonly': readonly, 'lineFeed': lineFeed, 'length': length, 'encoding': encoding, 'eof': eof})
+    """ Represents a file in the local file system in a platform-independent manner. """
+    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent, 'type': type, 'creator': creator, 'hidden': hidden, 'readonly': readonly, 'lineFeed': lineFeed, 'length': length, 'encoding': encoding, 'eof': eof})
         super(File, self).__init__(pymiere_id)
         self.__alias = alias
         self.__created = created
@@ -2695,6 +2834,7 @@ class File(PymiereBaseObject):
         self.__eof = eof
 
     # ----- PROPERTIES -----
+    """ If true, the object refers to a file system alias or shortcut. """
     @property
     def alias(self):
         self.__alias = self._eval_on_this_object('alias')
@@ -2703,6 +2843,7 @@ class File(PymiereBaseObject):
     def alias(self, alias):
         raise AttributeError("Attribute 'alias' is read-only")
 
+    """ The creation date of the referenced file, or null if the object does not refer to a file on disk. """
     @property
     def created(self):
         kwargs = self._eval_on_this_object('created')
@@ -2712,6 +2853,7 @@ class File(PymiereBaseObject):
     def created(self, created):
         raise AttributeError("Attribute 'created' is read-only")
 
+    """ A string containing a message describing the most recent file system error. Typically set by the file system, but a script can set it. Setting this value clears any error message and resets the error bit for opened files. Contains the empty string if there is no error. """
     @property
     def error(self):
         self.__error = self._eval_on_this_object('error')
@@ -2721,6 +2863,7 @@ class File(PymiereBaseObject):
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
+    """ If true, this object refers to a file or file-system alias that actually exists in the file system. """
     @property
     def exists(self):
         self.__exists = self._eval_on_this_object('exists')
@@ -2729,6 +2872,7 @@ class File(PymiereBaseObject):
     def exists(self, exists):
         raise AttributeError("Attribute 'exists' is read-only")
 
+    """ The platform-specific full path name for the referenced file. """
     @property
     def fsName(self):
         self.__fsName = self._eval_on_this_object('fsName')
@@ -2737,6 +2881,7 @@ class File(PymiereBaseObject):
     def fsName(self, fsName):
         raise AttributeError("Attribute 'fsName' is read-only")
 
+    """ The full path name for the referenced file in URI notation. """
     @property
     def fullName(self):
         self.__fullName = self._eval_on_this_object('fullName')
@@ -2745,6 +2890,7 @@ class File(PymiereBaseObject):
     def fullName(self, fullName):
         raise AttributeError("Attribute 'fullName' is read-only")
 
+    """ The full path name for the referenced file in URI notation. """
     @property
     def absoluteURI(self):
         self.__absoluteURI = self._eval_on_this_object('absoluteURI')
@@ -2753,6 +2899,7 @@ class File(PymiereBaseObject):
     def absoluteURI(self, absoluteURI):
         raise AttributeError("Attribute 'absoluteURI' is read-only")
 
+    """ The path name for the object in URI notation, relative to the current folder. """
     @property
     def relativeURI(self):
         self.__relativeURI = self._eval_on_this_object('relativeURI')
@@ -2761,6 +2908,7 @@ class File(PymiereBaseObject):
     def relativeURI(self, relativeURI):
         raise AttributeError("Attribute 'relativeURI' is read-only")
 
+    """ The date of the referenced file's last modification, or null if the object does not refer to a file on the disk. """
     @property
     def modified(self):
         kwargs = self._eval_on_this_object('modified')
@@ -2770,6 +2918,7 @@ class File(PymiereBaseObject):
     def modified(self, modified):
         raise AttributeError("Attribute 'modified' is read-only")
 
+    """ The file name portion of the absolute URI for the referenced file, without the path specification. """
     @property
     def name(self):
         self.__name = self._eval_on_this_object('name')
@@ -2778,6 +2927,7 @@ class File(PymiereBaseObject):
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
 
+    """ The localized name of the referenced file, without the path specification. """
     @property
     def displayName(self):
         self.__displayName = self._eval_on_this_object('displayName')
@@ -2786,6 +2936,7 @@ class File(PymiereBaseObject):
     def displayName(self, displayName):
         raise AttributeError("Attribute 'displayName' is read-only")
 
+    """ The path portion of the absolute URI for the referenced file, without the file name. """
     @property
     def path(self):
         self.__path = self._eval_on_this_object('path')
@@ -2794,6 +2945,7 @@ class File(PymiereBaseObject):
     def path(self, path):
         raise AttributeError("Attribute 'path' is read-only")
 
+    """ The Folder object for the folder that contains this file. """
     @property
     def parent(self):
         kwargs = self._eval_on_this_object('parent')
@@ -2803,6 +2955,7 @@ class File(PymiereBaseObject):
     def parent(self, parent):
         raise AttributeError("Attribute 'parent' is read-only")
 
+    """ The file type as a four-character string. In Mac OS, the Mac OS file type. In Windows, "appl" for .EXE files, "shlb" for .DLL files and "TEXT" for any other file. """
     @property
     def type(self):
         self.__type = self._eval_on_this_object('type')
@@ -2811,6 +2964,7 @@ class File(PymiereBaseObject):
     def type(self, type):
         raise AttributeError("Attribute 'type' is read-only")
 
+    """ In Mac OS, the file creator as a four-character string. In Windows or UNIX, value is "????". """
     @property
     def creator(self):
         self.__creator = self._eval_on_this_object('creator')
@@ -2819,6 +2973,7 @@ class File(PymiereBaseObject):
     def creator(self, creator):
         raise AttributeError("Attribute 'creator' is read-only")
 
+    """ When true, the file is not shown in the platform-specific file browser. If the object references a file-system alias or shortcut, the flag is altered on the alias, not on the original file. """
     @property
     def hidden(self):
         self.__hidden = self._eval_on_this_object('hidden')
@@ -2828,6 +2983,7 @@ class File(PymiereBaseObject):
         self._eval_on_this_object("hidden = {}".format(_format_object_to_es(hidden)))
         self.__hidden = hidden
 
+    """ When true, prevents the file from being altered or deleted. If the referenced file is a file-system alias or shortcut, the flag is altered on the alias, not on the original file. """
     @property
     def readonly(self):
         self.__readonly = self._eval_on_this_object('readonly')
@@ -2837,6 +2993,7 @@ class File(PymiereBaseObject):
         self._eval_on_this_object("readonly = {}".format(_format_object_to_es(readonly)))
         self.__readonly = readonly
 
+    """ How line feed characters are written in the file system. One of the values "Windows", "Macintosh", or "Unix". """
     @property
     def lineFeed(self):
         self.__lineFeed = self._eval_on_this_object('lineFeed')
@@ -2846,6 +3003,7 @@ class File(PymiereBaseObject):
         self._eval_on_this_object("lineFeed = {}".format(_format_object_to_es(lineFeed)))
         self.__lineFeed = lineFeed
 
+    """ The size of the file in bytes. Can be set only for a file that is not open, in which case it truncates or pads the file with 0-bytes to the new length. """
     @property
     def length(self):
         self.__length = self._eval_on_this_object('length')
@@ -2855,6 +3013,7 @@ class File(PymiereBaseObject):
         self._eval_on_this_object("length = {}".format(_format_object_to_es(length)))
         self.__length = length
 
+    """ Gets or sets the encoding for subsequent read/write operations. One of the encoding constants listed in the JavaScript Tools Guide. If the value is not recognized, uses the system default encoding.A special encoder, BINARY, is used to read binary files. It stores each byte of the file as one Unicode character regardless of any encoding. When writing, the lower byte of each Unicode character is treated as a single byte to write. """
     @property
     def encoding(self):
         self.__encoding = self._eval_on_this_object('encoding')
@@ -2864,6 +3023,7 @@ class File(PymiereBaseObject):
         self._eval_on_this_object("encoding = {}".format(_format_object_to_es(encoding)))
         self.__encoding = encoding
 
+    """ When true, a read attempt caused the current position to be at the end of the file, or the file is not open. """
     @property
     def eof(self):
         self.__eof = self._eval_on_this_object('eof')
@@ -2875,20 +3035,30 @@ class File(PymiereBaseObject):
 
     # ----- FUNCTIONS -----
     def resolve(self):
+        """
+        Attempts to resolve the file-system alias or shortcut that this object refers to. If successful, creates and returns a new File object that points to the resolved file system element. Returns null if this object does not refer to an alias, or if the alias could not be resolved.
+        """
         return _format_object_to_py(self._eval_on_this_object("resolve()"))
 
     def rename(self, name):
         """
+        Renames the associated file. Does not resolve aliases, but renames the referenced alias or shortcut file itself. Returns true if the file was successfully renamed. 
+        :param newName: The new file name, with no path information.
         :type name: str
         """
         self._check_type(name, str, 'arg "name" of function "File.rename"')
         return self._eval_on_this_object("rename({})".format(_format_object_to_es(name)))
 
     def remove(self):
+        """
+        Deletes the file associated with this object from disk immediately, without moving it to the system trash. Does not resolve aliases; instead, deletes the referenced alias or shortcut file itself. Returns true if the file was successfully removed. IMPORTANT: Cannot be undone. It is recommended that you prompt the user for permission before deleting.
+        """
         return self._eval_on_this_object("remove()")
 
     def changePath(self, path):
         """
+        Changes the path specification of the referenced file. 
+        :param path: A string containing the new path, absolute or relative to the current folder.
         :type path: str
         """
         self._check_type(path, str, 'arg "path" of function "File.changePath"')
@@ -2896,16 +3066,25 @@ class File(PymiereBaseObject):
 
     def getRelativeURI(self, baseURI):
         """
+        Retrieves and returns the path for this file, relative to the specified base path, in URI notation. If no base path is supplied, the URI is relative to the path of the current folder.Returns a string containing the relative URI. 
+        :param basePath: A base path in URI notation.
         :type baseURI: str
         """
         self._check_type(baseURI, str, 'arg "baseURI" of function "File.getRelativeURI"')
         return self._eval_on_this_object("getRelativeURI({})".format(_format_object_to_es(baseURI)))
 
     def execute(self):
+        """
+        Executes or opens this file using the appropriate application, as if it had been double-clicked in a file browser. You can use this method to run scripts, launch applications, and so on.Returns true immediately if the application launch was successful.
+        """
         return self._eval_on_this_object("execute()")
 
     def openDlg(self, prompt):
         """
+        Opens the built-in platform-specific file-browsing dialog, in which the user can select an existing file or files, and creates new File objects to represent the selected files. Differs from the class method openDialog() in that it presets the current folder to this File object's parent folder and the current file to this object's associated file. If the user clicks OK, returns a File or Folder object for the selected file or folder, or an array of objects. If the user cancels, returns null. 
+        :param prompt: A string containing the prompt text, if the dialog allows a prompt.
+        :param filter: A filter that limits the types of files displayed in the dialog. In Windows,a filter expression such as "Javascript files:.jsx;All files:.". In Mac OS, a filter function that takes a File instance and returns true if the file should be included in the display, false if it should not.
+        :param multiSelect: When true, the user can select multiple files and the return value is an array.
         :type prompt: str
         """
         self._check_type(prompt, str, 'arg "prompt" of function "File.openDlg"')
@@ -2913,19 +3092,30 @@ class File(PymiereBaseObject):
 
     def saveDlg(self, prompt):
         """
+        Opens the built-in platform-specific file-browsing dialog, in which the user can select an existing file location to which to save information, and creates a new File object to represent the selected file. Differs from the class method saveDialog() in that it presets the current folder to this File object's parent folder and the file to this object's associated file. If the user clicks OK, returns a File object for the selected file. If the user cancels, returns null. 
+        :param prompt: A string containing the prompt text, if the dialog allows a prompt.
+        :param filter: In Windows only, a filter that limits the types of files displayed in the dialog. In Windows only,a filter expression such as "Javascript files:.jsx;All files:.". Not used In Mac OS.
         :type prompt: str
         """
         self._check_type(prompt, str, 'arg "prompt" of function "File.saveDlg"')
         return _format_object_to_py(self._eval_on_this_object("saveDlg({})".format(_format_object_to_es(prompt))))
 
     def toString(self):
+        """
+        Converts this object to a string.
+        """
         return self._eval_on_this_object("toString()")
 
     def toSource(self):
+        """
+        Creates and returns a serialized string representation of this object. Pass the resulting string to eval() to recreate the object.
+        """
         return self._eval_on_this_object("toSource()")
 
     def createAlias(self, path):
         """
+        Makes this file a file-system alias or shortcut to the specified file. The referenced file for this object must not yet exist on disk. Returns true if the operation was successful. 
+        :param path: A string containing the path of the target file.
         :type path: str
         """
         self._check_type(path, str, 'arg "path" of function "File.createAlias"')
@@ -2933,29 +3123,46 @@ class File(PymiereBaseObject):
 
     def open(self, mode):
         """
+        Opens the referenced file for subsequent read/write operations. The method resolves any aliases to find the file. Returns true if the file was opened successfully.The method attempts to detect the encoding of the open file. It reads a few bytes at the current location and tries to detect the Byte Order Mark character 0xFFFE. If found, the current position is advanced behind the detected character and the encoding property is set to one of the strings UCS-2BE, UCS-2LE, UCS4-BE, UCS-4LE, or UTF-8. If the marker character is not found, it checks for zero bytes at the current location and makes an assumption about one of the above formats (except UTF-8). If everything fails, the encoding property is set to the system encoding. IMPORTANT: Be careful about opening a file more than once. The operating system usually permits you to do so, but if you start writing to the file using two different File objects, you can destroy your data. 
+        :param mode: The read-write mode, a single-character string. One of these characters: r (read) Opens for reading. If the file does not exist or cannot be found, the call fails. w (write) Opens a file for writing. If the file exists, its contents are destroyed. If the file does not exist, creates a new, empty file. e (edit) Opens an existing file for reading and writing. a (append) Opens an existing file for reading and writing, and moves the current position to the end of the file.
+        :param type: In Mac OS, the type of a newly created file, a 4-character string. Ignored in Windows and UNIX.
+        :param creator: In Mac OS, the creator of a newly created file, a 4-character string. Ignored in Windows and UNIX.
         :type mode: str
         """
         self._check_type(mode, str, 'arg "mode" of function "File.open"')
         return self._eval_on_this_object("open({})".format(_format_object_to_es(mode)))
 
     def close(self):
+        """
+        Closes this open file. Returns true if the file was closed successfully, false if an I/O error occurred.
+        """
         return self._eval_on_this_object("close()")
 
     def read(self, count):
         """
+        Reads the contents of the file, starting at the current position. Returns a string that contains up to the specified number of characters. If a number of characters is not supplied, reads from the current position to the end of the file. If the file is encoded, multiple bytes might be read to create single Unicode characters. 
+        :param chars: An integer specifying the number of characters to read.
         :type count: float
         """
         self._check_type(count, float, 'arg "count" of function "File.read"')
         return self._eval_on_this_object("read({})".format(_format_object_to_es(count)))
 
     def readch(self):
+        """
+        Reads a single text character from the file at the current position. Line feeds are recognized as CR, LF, CRLF or LFCR pairs.If the file is encoded, multiple bytes might be read to create a single Unicode character. Returns a string that contains the character.
+        """
         return self._eval_on_this_object("readch()")
 
     def readln(self):
+        """
+        Reads a single line of text from the file at the current position. Line feeds are recognized as CR, LF, CRLF or LFCR pairs.. If the file is encoded, multiple bytes might be read to create single Unicode characters. Returns a string that contains the text.
+        """
         return self._eval_on_this_object("readln()")
 
     def write(self, text):
         """
+        Writes the specified text to the file at the current position. You can supply multiple text values; the strings are concatenated to form a single string.For encoded files, writing a single Unicode character may write multiple bytes. Returns true if the write was successful.IMPORTANT: Be careful not to write to a file that is open in another application or object, as this can overwrite existing data. 
+        :param text: A text string to be written.
         :type text: str
         """
         self._check_type(text, str, 'arg "text" of function "File.write"')
@@ -2970,6 +3177,8 @@ class File(PymiereBaseObject):
 
     def writeln(self, text):
         """
+        Writes a string to the file at the current position and appends a line-feed sequence. You can supply multiple text values. The strings are concatenated into a single string, which is written in the file followed by one line-feed sequence, of the style specified by this object's linefeed property.For encoded files, writing a single Unicode character may write multiple bytes.Returns true if the write was successful.IMPORTANT: Be careful not to write to a file that is open in another application or object, as this can overwrite existing data. 
+        :param text: A text string to be written.
         :type text: str
         """
         self._check_type(text, str, 'arg "text" of function "File.writeln"')
@@ -2977,16 +3186,24 @@ class File(PymiereBaseObject):
 
     def seek(self, pos):
         """
+        Seeks to a given position in the file. The new position cannot be less than 0 or greater than the current file size. Returns true if the position was changed. 
+        :param pos: The new current position in the file as an offset in bytes from the start, current position, or end, depending on the mode.
+        :param mode: The seek mode. One of: 0: Seek to absolute position, where pos=0 is the first byte of the file. This is the default. 1: Seek relative to the current position. 2. Seek backward from the end of the file.
         :type pos: float
         """
         self._check_type(pos, float, 'arg "pos" of function "File.seek"')
         return self._eval_on_this_object("seek({})".format(_format_object_to_es(pos)))
 
     def tell(self):
+        """
+        Retrieves the current position as a byte offset from the start of the file. Returns a number, the position index.
+        """
         return self._eval_on_this_object("tell()")
 
     def copy(self, where):
         """
+        Copies this object's referenced file to the specified target location. Resolves any aliases to find the source file. If a file exists at the target location, it is overwritten. Returns true if the copy was successful. 
+        :param target: A string with the URI path to the target location, or a File object that references the target location.
         :type where: str
         """
         self._check_type(where, str, 'arg "where" of function "File.copy"')
@@ -2994,8 +3211,8 @@ class File(PymiereBaseObject):
 
 
 class Date(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Date, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -3206,8 +3423,9 @@ class Date(PymiereBaseObject):
 
 
 class Folder(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent})
+    """ Represents a file-system folder or directory in a platform-independent manner. """
+    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent})
         super(Folder, self).__init__(pymiere_id)
         self.__alias = alias
         self.__created = created
@@ -3224,6 +3442,7 @@ class Folder(PymiereBaseObject):
         self.__parent = parent
 
     # ----- PROPERTIES -----
+    """ When true, the object refers to a file system alias or shortcut. """
     @property
     def alias(self):
         self.__alias = self._eval_on_this_object('alias')
@@ -3232,6 +3451,7 @@ class Folder(PymiereBaseObject):
     def alias(self, alias):
         raise AttributeError("Attribute 'alias' is read-only")
 
+    """ The creation date of the referenced folder, or null if the object does not refer to a folder on disk. """
     @property
     def created(self):
         kwargs = self._eval_on_this_object('created')
@@ -3241,6 +3461,7 @@ class Folder(PymiereBaseObject):
     def created(self, created):
         raise AttributeError("Attribute 'created' is read-only")
 
+    """ A message describing the most recent file system error. Typically set by the file system, but a script can set it. Setting this value clears any error message and resets the error bit for opened files. Contains the empty string if there is no error. """
     @property
     def error(self):
         self.__error = self._eval_on_this_object('error')
@@ -3250,6 +3471,7 @@ class Folder(PymiereBaseObject):
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
+    """ When true, this object refers to a folder that currently exists in the file system. """
     @property
     def exists(self):
         self.__exists = self._eval_on_this_object('exists')
@@ -3258,6 +3480,7 @@ class Folder(PymiereBaseObject):
     def exists(self, exists):
         raise AttributeError("Attribute 'exists' is read-only")
 
+    """ The platform-specific name of the referenced folder as a full path name. """
     @property
     def fsName(self):
         self.__fsName = self._eval_on_this_object('fsName')
@@ -3266,6 +3489,7 @@ class Folder(PymiereBaseObject):
     def fsName(self, fsName):
         raise AttributeError("Attribute 'fsName' is read-only")
 
+    """ The full path name for the referenced folder in URI notation. . """
     @property
     def fullName(self):
         self.__fullName = self._eval_on_this_object('fullName')
@@ -3274,6 +3498,7 @@ class Folder(PymiereBaseObject):
     def fullName(self, fullName):
         raise AttributeError("Attribute 'fullName' is read-only")
 
+    """ The full path name for the referenced folder in URI notation. """
     @property
     def absoluteURI(self):
         self.__absoluteURI = self._eval_on_this_object('absoluteURI')
@@ -3282,6 +3507,7 @@ class Folder(PymiereBaseObject):
     def absoluteURI(self, absoluteURI):
         raise AttributeError("Attribute 'absoluteURI' is read-only")
 
+    """ The path name for the referenced folder in URI notation, relative to the current folder. """
     @property
     def relativeURI(self):
         self.__relativeURI = self._eval_on_this_object('relativeURI')
@@ -3290,6 +3516,7 @@ class Folder(PymiereBaseObject):
     def relativeURI(self, relativeURI):
         raise AttributeError("Attribute 'relativeURI' is read-only")
 
+    """ The date of the referenced folder's last modification, or null if the object does not refer to a folder on disk. """
     @property
     def modified(self):
         kwargs = self._eval_on_this_object('modified')
@@ -3299,6 +3526,7 @@ class Folder(PymiereBaseObject):
     def modified(self, modified):
         raise AttributeError("Attribute 'modified' is read-only")
 
+    """ The folder name portion of the absolute URI for the referenced file, without the path specification. """
     @property
     def name(self):
         self.__name = self._eval_on_this_object('name')
@@ -3307,6 +3535,7 @@ class Folder(PymiereBaseObject):
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
 
+    """ The localized name portion of the absolute URI for the referenced folder, without the path specification. """
     @property
     def displayName(self):
         self.__displayName = self._eval_on_this_object('displayName')
@@ -3315,6 +3544,7 @@ class Folder(PymiereBaseObject):
     def displayName(self, displayName):
         raise AttributeError("Attribute 'displayName' is read-only")
 
+    """ The path portion of the object absolute URI for the referenced file, without the folder name. """
     @property
     def path(self):
         self.__path = self._eval_on_this_object('path')
@@ -3323,6 +3553,7 @@ class Folder(PymiereBaseObject):
     def path(self, path):
         raise AttributeError("Attribute 'path' is read-only")
 
+    """ TThe Folder object for the folder that contains this folder, or null if this object refers to the root folder of a volume. """
     @property
     def parent(self):
         kwargs = self._eval_on_this_object('parent')
@@ -3335,20 +3566,30 @@ class Folder(PymiereBaseObject):
 
     # ----- FUNCTIONS -----
     def resolve(self):
+        """
+        Attempts to resolve the file-system alias or shortcut that this object refers to. If successful, creates and returns a new Folder object that points to the resolved file system element. Returns null if this object does not refer to an alias, or if the alias could not be resolved.
+        """
         return _format_object_to_py(self._eval_on_this_object("resolve()"))
 
     def rename(self, name):
         """
+        Renames the associated folder. Does not resolve aliases, but renames the referenced alias or shortcut file itself. Returns true if the folder was successfully renamed. 
+        :param newName: The new folder name, with no path information.
         :type name: str
         """
         self._check_type(name, str, 'arg "name" of function "Folder.rename"')
         return self._eval_on_this_object("rename({})".format(_format_object_to_es(name)))
 
     def remove(self):
+        """
+        Deletes the folder associated with this object from disk immediately, without moving it to the system trash. Folders must be empty before they can be deleted. Does not resolve aliases; instead, deletes the referenced alias or shortcut file itself. Returns true if the file was successfully removed. IMPORTANT: Cannot be undone. It is recommended that you prompt the user for permission before deleting.
+        """
         return self._eval_on_this_object("remove()")
 
     def changePath(self, path):
         """
+        Changes the path specification of the referenced folder. 
+        :param path: A string containing the new path, absolute or relative to the current folder.
         :type path: str
         """
         self._check_type(path, str, 'arg "path" of function "Folder.changePath"')
@@ -3356,12 +3597,17 @@ class Folder(PymiereBaseObject):
 
     def getRelativeURI(self, baseURI):
         """
+        Retrieves and returns the path for this file, relative to the specified base path, in URI notation. If no base path is supplied, the URI is relative to the path of the current folder.Returns a string containing the relative URI. 
+        :param basePath: A base path in URI notation.
         :type baseURI: str
         """
         self._check_type(baseURI, str, 'arg "baseURI" of function "Folder.getRelativeURI"')
         return self._eval_on_this_object("getRelativeURI({})".format(_format_object_to_es(baseURI)))
 
     def execute(self):
+        """
+        Opens this folder in the platform-specific file browser (as if it had been double-clicked in the file browser). Returns true immediately if the folder was opened successfully.
+        """
         return self._eval_on_this_object("execute()")
 
     def openDlg(self, prompt):
@@ -3379,13 +3625,21 @@ class Folder(PymiereBaseObject):
         return _format_object_to_py(self._eval_on_this_object("saveDlg({})".format(_format_object_to_es(prompt))))
 
     def toString(self):
+        """
+        Converts this object to a string.
+        """
         return self._eval_on_this_object("toString()")
 
     def toSource(self):
+        """
+        Creates and returns a serialized string representation of this object. Pass the resulting string to eval() to recreate the object.
+        """
         return self._eval_on_this_object("toSource()")
 
     def selectDlg(self, prompt):
         """
+        Opens the built-in platform-specific file-browsing dialog, and creates a new File or Folder object for the selected file or folder. Differs from the class method selectDialog() in that it preselects this folder. If the user clicks OK, returns a File or Folder object for the selected file or folder. If the user cancels, returns null. 
+        :param prompt: The prompt text, if the dialog allows a prompt.
         :type prompt: str
         """
         self._check_type(prompt, str, 'arg "prompt" of function "Folder.selectDlg"')
@@ -3393,18 +3647,23 @@ class Folder(PymiereBaseObject):
 
     def getFiles(self, pattern):
         """
+        Retrieves the contents of this folder, filtered by the supplied mask. Returns an array of File and Folder objects, or null if this object's referenced folder does not exist. 
+        :param mask: A search mask for file names, specified as a string or a function. A mask string can contain question mark (?) and asterisk () wild cards. Default is "", which matches all file names. Can also be the name of a function that takes a File or Folder object as its argument. It is called for each file or folder found in the search; if it returns true, the object is added to the return array. NOTE: In Windows, all aliases end with the extension .lnk. ExtendScript strips this from the file name when found, in order to preserve compatibility with other operating systems. You can search for all aliases by supplying the search mask ".lnk", but note that such code is not portable.
         :type pattern: str
         """
         self._check_type(pattern, str, 'arg "pattern" of function "Folder.getFiles"')
         return Array(**self._eval_on_this_object("getFiles({})".format(_format_object_to_es(pattern))))
 
     def create(self):
+        """
+        Creates a folder at the location given by this object's path property. Returns true if the folder was created.
+        """
         return self._eval_on_this_object("create()")
 
 
 class FootageInterpretation(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'frameRate': frameRate, 'pixelAspectRatio': pixelAspectRatio, 'fieldType': fieldType, 'removePulldown': removePulldown, 'alphaUsage': alphaUsage, 'ignoreAlpha': ignoreAlpha, 'invertAlpha': invertAlpha, 'vrConformProjectionType': vrConformProjectionType, 'vrLayoutType': vrLayoutType, 'vrHorizontalView': vrHorizontalView, 'vrVerticalView': vrVerticalView, 'ALPHACHANNEL_NONE': ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT': ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED': ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE': ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT': FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE': FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST': FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST': FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE': VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR': VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC': VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER': VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE': VR_LAYOUT_STEREO_SIDE_BY_SIDE})
+    def __init__(self, pymiere_id=None, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'frameRate': frameRate, 'pixelAspectRatio': pixelAspectRatio, 'fieldType': fieldType, 'removePulldown': removePulldown, 'alphaUsage': alphaUsage, 'ignoreAlpha': ignoreAlpha, 'invertAlpha': invertAlpha, 'vrConformProjectionType': vrConformProjectionType, 'vrLayoutType': vrLayoutType, 'vrHorizontalView': vrHorizontalView, 'vrVerticalView': vrVerticalView, 'ALPHACHANNEL_NONE': ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT': ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED': ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE': ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT': FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE': FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST': FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST': FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE': VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR': VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC': VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER': VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE': VR_LAYOUT_STEREO_SIDE_BY_SIDE})
         super(FootageInterpretation, self).__init__(pymiere_id)
         self.__frameRate = frameRate
         self.__pixelAspectRatio = pixelAspectRatio
@@ -3666,8 +3925,8 @@ class FootageInterpretation(PymiereBaseObject):
 
 
 class Time(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, seconds=None, ticks=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'seconds': seconds, 'ticks': ticks})
+    def __init__(self, pymiere_id=None, seconds=None, ticks=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
         super(Time, self).__init__(pymiere_id)
         self.__seconds = seconds
         self.__ticks = ticks
@@ -3739,8 +3998,8 @@ class Time(PymiereBaseObject):
 
 
 class Track(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, id=None, name=None, mediaType=None, clips=None, transitions=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'id': id, 'name': name, 'mediaType': mediaType, 'clips': clips, 'transitions': transitions})
+    def __init__(self, pymiere_id=None, id=None, name=None, mediaType=None, clips=None, transitions=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'id': id, 'name': name, 'mediaType': mediaType, 'clips': clips, 'transitions': transitions})
         super(Track, self).__init__(pymiere_id)
         self.__id = id
         self.__name = name
@@ -3884,8 +4143,8 @@ class TrackItemCollection(PymiereBaseCollection):
 
 
 class TrackItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'duration': duration, 'start': start, 'end': end, 'inPoint': inPoint, 'outPoint': outPoint, 'type': type, 'mediaType': mediaType, 'projectItem': projectItem, 'name': name, 'matchName': matchName, 'nodeId': nodeId, 'components': components})
+    def __init__(self, pymiere_id=None, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'duration': duration, 'start': start, 'end': end, 'inPoint': inPoint, 'outPoint': outPoint, 'type': type, 'mediaType': mediaType, 'projectItem': projectItem, 'name': name, 'matchName': matchName, 'nodeId': nodeId, 'components': components})
         super(TrackItem, self).__init__(pymiere_id)
         self.__duration = duration
         self.__start = start
@@ -4088,8 +4347,9 @@ class TrackItem(PymiereBaseObject):
 
 
 class SequenceSettings(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'editingMode': editingMode, 'videoFrameRate': videoFrameRate, 'videoFrameWidth': videoFrameWidth, 'videoFrameHeight': videoFrameHeight, 'videoPixelAspectRatio': videoPixelAspectRatio, 'videoFieldType': videoFieldType, 'videoDisplayFormat': videoDisplayFormat, 'audioChannelType': audioChannelType, 'audioChannelCount': audioChannelCount, 'audioSampleRate': audioSampleRate, 'audioDisplayFormat': audioDisplayFormat, 'previewFileFormat': previewFileFormat, 'previewCodec': previewCodec, 'previewFrameWidth': previewFrameWidth, 'previewFrameHeight': previewFrameHeight, 'maximumBitDepth': maximumBitDepth, 'maximumRenderQuality': maximumRenderQuality, 'compositeLinearColor': compositeLinearColor, 'vrProjection': vrProjection, 'vrLayout': vrLayout, 'vrHorzCapturedView': vrHorzCapturedView, 'vrVertCapturedView': vrVertCapturedView})
+    """ Structure containing sequence settings. """
+    def __init__(self, pymiere_id=None, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'editingMode': editingMode, 'videoFrameRate': videoFrameRate, 'videoFrameWidth': videoFrameWidth, 'videoFrameHeight': videoFrameHeight, 'videoPixelAspectRatio': videoPixelAspectRatio, 'videoFieldType': videoFieldType, 'videoDisplayFormat': videoDisplayFormat, 'audioChannelType': audioChannelType, 'audioChannelCount': audioChannelCount, 'audioSampleRate': audioSampleRate, 'audioDisplayFormat': audioDisplayFormat, 'previewFileFormat': previewFileFormat, 'previewCodec': previewCodec, 'previewFrameWidth': previewFrameWidth, 'previewFrameHeight': previewFrameHeight, 'maximumBitDepth': maximumBitDepth, 'maximumRenderQuality': maximumRenderQuality, 'compositeLinearColor': compositeLinearColor, 'vrProjection': vrProjection, 'vrLayout': vrLayout, 'vrHorzCapturedView': vrHorzCapturedView, 'vrVertCapturedView': vrVertCapturedView})
         super(SequenceSettings, self).__init__(pymiere_id)
         self.__editingMode = editingMode
         self.__videoFrameRate = videoFrameRate
@@ -4348,8 +4608,8 @@ class SequenceSettings(PymiereBaseObject):
 
 
 class Marker(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, start=None, end=None, type=None, name=None, comments=None, guid=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'start': start, 'end': end, 'type': type, 'name': name, 'comments': comments, 'guid': guid})
+    def __init__(self, pymiere_id=None, start=None, end=None, type=None, name=None, comments=None, guid=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'start': start, 'end': end, 'type': type, 'name': name, 'comments': comments, 'guid': guid})
         super(Marker, self).__init__(pymiere_id)
         self.__start = start
         self.__end = end
@@ -4481,8 +4741,8 @@ class Marker(PymiereBaseObject):
 
 
 class Component(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, displayName=None, matchName=None, properties=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'displayName': displayName, 'matchName': matchName, 'properties': properties})
+    def __init__(self, pymiere_id=None, displayName=None, matchName=None, properties=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'displayName': displayName, 'matchName': matchName, 'properties': properties})
         super(Component, self).__init__(pymiere_id)
         self.__displayName = displayName
         self.__matchName = matchName
@@ -4558,8 +4818,9 @@ class ComponentParamCollection(PymiereBaseCollection):
 
 
 class Dollar(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'error': error, 'version': version, 'build': build, 'buildDate': buildDate, 'stack': stack, 'level': level, 'flags': flags, 'strict': strict, 'locale': locale, 'localize': localize, 'decimalPoint': decimalPoint, 'memCache': memCache, 'appEncoding': appEncoding, 'screens': screens, 'os': os, 'fileName': fileName, 'line': line, 'hiresTimer': hiresTimer, 'dictionary': dictionary, 'engineName': engineName, 'includePath': includePath})
+    """ The $ object provides a number of debugging facilities and informational methods. """
+    def __init__(self, pymiere_id=None, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
+        self._check_init_args({'pymiere_id': pymiere_id, 'error': error, 'version': version, 'build': build, 'buildDate': buildDate, 'stack': stack, 'level': level, 'flags': flags, 'strict': strict, 'locale': locale, 'localize': localize, 'decimalPoint': decimalPoint, 'memCache': memCache, 'appEncoding': appEncoding, 'screens': screens, 'os': os, 'fileName': fileName, 'line': line, 'hiresTimer': hiresTimer, 'dictionary': dictionary, 'engineName': engineName, 'includePath': includePath})
         super(Dollar, self).__init__(pymiere_id)
         self.__error = error
         self.__version = version
@@ -4584,6 +4845,7 @@ class Dollar(PymiereBaseObject):
         self.__includePath = includePath
 
     # ----- PROPERTIES -----
+    """ The most recent run-time error information. Assigning error text to this property generates a run-time error; however, the preferred way to generate a run-time error is to throw an Error object. """
     @property
     def error(self):
         """The current runtime error"""
@@ -4596,6 +4858,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
         self.__error = error
 
+    """ The version number of the ExtendScript engine. Formatted as a three-part number and description; for example: "3.92.95 (debug)". """
     @property
     def version(self):
         """The ExtendScript version"""
@@ -4605,6 +4868,7 @@ class Dollar(PymiereBaseObject):
     def version(self, version):
         raise AttributeError("Attribute 'version' is read-only")
 
+    """ The ExtendScript build information. """
     @property
     def build(self):
         """The ExtendScript build number"""
@@ -4614,6 +4878,7 @@ class Dollar(PymiereBaseObject):
     def build(self, build):
         raise AttributeError("Attribute 'build' is read-only")
 
+    """ The ExtendScript build date. """
     @property
     def buildDate(self):
         """The ExtendScript build date"""
@@ -4624,6 +4889,7 @@ class Dollar(PymiereBaseObject):
     def buildDate(self, buildDate):
         raise AttributeError("Attribute 'buildDate' is read-only")
 
+    """ The current stack trace. """
     @property
     def stack(self):
         """The current stack trace"""
@@ -4633,6 +4899,7 @@ class Dollar(PymiereBaseObject):
     def stack(self, stack):
         raise AttributeError("Attribute 'stack' is read-only")
 
+    """ The current debugging level, which enables or disables the JavaScript debugger. One of 0 (no debugging), 1 (break on runtime errors), or 2 (full debug mode). """
     @property
     def level(self):
         """The debugging level"""
@@ -4643,6 +4910,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("level = {}".format(_format_object_to_es(level)))
         self.__level = level
 
+    """ Gets or sets low-level debug output flags. A logical AND of bit flag values: 0x0002 (2): Displays each line with its line number as it is executed. 0x0040 (64): Enables excessive garbage collection. Usually, garbage collection starts when the number of objects has increased by a certain amount since the last garbage collection. This flag causes ExtendScript to garbage collect after almost every statement. This impairs performance severely, but is useful when you suspect that an object gets released too soon. 0x0080 (128): Displays all calls with their arguments and the return value. 0x0100 (256): Enables extended error handling (see strict). 0x0200 (512): Enables the localization feature of the toString method. Equivalent to the localize property. """
     @property
     def flags(self):
         """Debugging flags"""
@@ -4653,6 +4921,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("flags = {}".format(_format_object_to_es(flags)))
         self.__flags = flags
 
+    """ Sets or clears strict mode for object modification. When true, any attempt to write to a read-only property causes a runtime error. Some objects do not permit the creation of new properties when true. """
     @property
     def strict(self):
         """Set to true to enforce strict mode"""
@@ -4663,6 +4932,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("strict = {}".format(_format_object_to_es(strict)))
         self.__strict = strict
 
+    """ Gets or sets the current locale. The string contains five characters in the form LL_RR, where LL is an ISO 639 language specifier, and RR is an ISO 3166 region specifier.Initially, this is the value that the application or the platform returns for the current user. You can set it to temporarily change the locale for testing. To return to the application or platform setting, set to undefined, null, or the empty string. """
     @property
     def locale(self):
         """The current locale"""
@@ -4673,6 +4943,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("locale = {}".format(_format_object_to_es(locale)))
         self.__locale = locale
 
+    """ Set to true to enable the extended localization features of the built-in toString() method. """
     @property
     def localize(self):
         """Set to true to enable auto-localization"""
@@ -4683,6 +4954,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("localize = {}".format(_format_object_to_es(localize)))
         self.__localize = localize
 
+    """ The character used as the decimal point character in formatted numeric output. """
     @property
     def decimalPoint(self):
         """The decimal point separator"""
@@ -4692,6 +4964,7 @@ class Dollar(PymiereBaseObject):
     def decimalPoint(self, decimalPoint):
         raise AttributeError("Attribute 'decimalPoint' is read-only")
 
+    """ The ExtendScript memory cache size, in bytes. """
     @property
     def memCache(self):
         """The memory cache size"""
@@ -4712,6 +4985,7 @@ class Dollar(PymiereBaseObject):
         self._eval_on_this_object("appEncoding = {}".format(_format_object_to_es(appEncoding)))
         self.__appEncoding = appEncoding
 
+    """ An array of objects containing information about the display screens attached to your computer. Each object has the properties left, top, right, bottom, which contain the four corners of each screen in global coordinates.A property primary is true if that object describes the primary display. """
     @property
     def screens(self):
         """An array of rectangles"""
@@ -4721,6 +4995,7 @@ class Dollar(PymiereBaseObject):
     def screens(self, screens):
         raise AttributeError("Attribute 'screens' is read-only")
 
+    """ The current operating system version information. """
     @property
     def os(self):
         """The operating system"""
@@ -4730,6 +5005,7 @@ class Dollar(PymiereBaseObject):
     def os(self, os):
         raise AttributeError("Attribute 'os' is read-only")
 
+    """ The file name of the current script. """
     @property
     def fileName(self):
         """The file name of the current script"""
@@ -4739,6 +5015,7 @@ class Dollar(PymiereBaseObject):
     def fileName(self, fileName):
         raise AttributeError("Attribute 'fileName' is read-only")
 
+    """ The current line number of the currently executing script. """
     @property
     def line(self):
         """The current line number of the current script"""
@@ -4748,6 +5025,7 @@ class Dollar(PymiereBaseObject):
     def line(self, line):
         raise AttributeError("Attribute 'line' is read-only")
 
+    """ A high-resolution timer, measuring the time in microseconds. The timer starts when ExtendScript is initialized during the application startup sequence. Every read access resets the timer to Zero. """
     @property
     def hiresTimer(self):
         """The elapsed time in microseconds since the last access"""
@@ -4767,6 +5045,7 @@ class Dollar(PymiereBaseObject):
     def dictionary(self, dictionary):
         raise AttributeError("Attribute 'dictionary' is read-only")
 
+    """ The name of the current ExtendScript engine, if set. """
     @property
     def engineName(self):
         """The name of the current engine if set"""
@@ -4776,6 +5055,7 @@ class Dollar(PymiereBaseObject):
     def engineName(self, engineName):
         raise AttributeError("Attribute 'engineName' is read-only")
 
+    """ The path for include files for the current script. """
     @property
     def includePath(self):
         """The path for include files"""
@@ -4790,36 +5070,46 @@ class Dollar(PymiereBaseObject):
     def about(self):
         """
         An About box
+        Shows an About box for the ExtendScript component, and returns the text for the box.
         """
         return self._eval_on_this_object("about()")
 
     def toString(self):
         """
         Converts this object to a string
+        Converts this object to a string.
         """
         return self._eval_on_this_object("toString()")
 
     def write(self):
         """
         Prints text
+        Prints text to the Console. 
+        :param text: The text to print. All arguments are concatenated.
         """
         self._eval_on_this_object("write()")
 
     def writeln(self):
         """
         Prints text
+        Prints text to the Console, and adds a newline character. 
+        :param text: The text to print. All arguments are concatenated.
         """
         self._eval_on_this_object("writeln()")
 
     def bp(self):
         """
         Breaks execution
+        Breaks execution at the current position. 
+        :param condition: A string containing a JavaScript statement to be used as a condition. If the statement evaluates to true or nonzero when this point is reached, execution stops.
         """
         self._eval_on_this_object("bp()")
 
     def getenv(self, name):
         """
         Returns an environment variable
+        Retrieves the value of an environment variable. 
+        :param name: The name of the variable.
         :param name: The name of the variable
         :type name: str
         """
@@ -4828,6 +5118,9 @@ class Dollar(PymiereBaseObject):
 
     def setenv(self, key, value):
         """
+        Sets the value of an environment variable. 
+        :param name: The name of the variable.
+        :param value: The value of the variable.
         :type key: str
         :param value: Sets an environment variable
         :type value: str
@@ -4839,6 +5132,8 @@ class Dollar(PymiereBaseObject):
     def sleep(self, msecs):
         """
         Sleep
+        Suspends the calling thread for a number of milliseconds. During a sleep period, checks at 100 millisecond intervals to see whether the sleep should be terminated. This can happen if there is a break request, or if the script timeout has expired. 
+        :param msecs: Number of milliseconds to sleep.
         :param msecs: Number of milliseconds to sleep
         :type msecs: float
         """
@@ -4847,6 +5142,8 @@ class Dollar(PymiereBaseObject):
 
     def colorPicker(self, color):
         """
+        Invokes the platform-specific color selection dialog, and returns the selected color. 
+        :param color: The color to be preselected in the dialog, as 0xRRGGBB, or -1 for the platform default.
         :param color: Picks a color; the argument is the color or -1.
         :type color: float
         """
@@ -4856,6 +5153,9 @@ class Dollar(PymiereBaseObject):
     def evalFile(self, file):
         """
         Loads and evaluates a file
+        Loads and evaluates a file. 
+        :param file: The file to load.
+        :param timeout: An optional timeout in milliseconds.
         :param file: The file to load
         :type file: File
         """
@@ -4882,13 +5182,14 @@ class Dollar(PymiereBaseObject):
     def gc(self):
         """
         Runs the garbage collector
+        Initiates garbage collection in the ExtendScript engine.
         """
         self._eval_on_this_object("gc()")
 
 
 class Error(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'number': number, 'fileName': fileName, 'line': line, 'source': source, 'start': start, 'end': end, 'message': message, 'name': name, 'description': description})
+    def __init__(self, pymiere_id=None, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'number': number, 'fileName': fileName, 'line': line, 'source': source, 'start': start, 'end': end, 'message': message, 'name': name, 'description': description})
         super(Error, self).__init__(pymiere_id)
         self.__number = number
         self.__fileName = fileName
@@ -4992,8 +5293,8 @@ class Error(PymiereBaseObject):
 
 
 class Dictionary(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Dictionary, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -5028,8 +5329,8 @@ class Dictionary(PymiereBaseObject):
 
 
 class ComponentParam(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, displayName=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'displayName': displayName})
+    def __init__(self, pymiere_id=None, displayName=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'displayName': displayName})
         super(ComponentParam, self).__init__(pymiere_id)
         self.__displayName = displayName
 
@@ -5176,8 +5477,8 @@ class ComponentParam(PymiereBaseObject):
 
 
 class Exporter(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, name=None, classID=None, fileType=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'name': name, 'classID': classID, 'fileType': fileType})
+    def __init__(self, pymiere_id=None, name=None, classID=None, fileType=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'name': name, 'classID': classID, 'fileType': fileType})
         super(Exporter, self).__init__(pymiere_id)
         self.__name = name
         self.__classID = classID
@@ -5242,8 +5543,8 @@ class Exporter(PymiereBaseObject):
 
 
 class EncoderPreset(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, name=None, matchName=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'name': name, 'matchName': matchName})
+    def __init__(self, pymiere_id=None, name=None, matchName=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'name': name, 'matchName': matchName})
         super(EncoderPreset, self).__init__(pymiere_id)
         self.__name = name
         self.__matchName = matchName

@@ -10,9 +10,10 @@ comments_data = utils.read_json_file(os.path.join(__file__, "..", "..", "typescr
 def generate_class(object_data, all_classes_names):
     is_collection = False
     # checks
-    if list(object_data.keys()) != ["name", "type", "description", "help", "props", "funcs"]:
+    all_keys = list(object_data.keys())
+    if not all([k in all_keys for k in ["name", "type", "description", "help", "props", "funcs"]]) or len(all_keys) != 6:
         is_collection = True
-        if list(object_data.keys()) != ["name", "type", "description", "help", "props", "funcs", "collectionContent"]:
+        if not all([k in all_keys for k in ["name", "type", "description", "help", "props", "funcs", "collectionContent"]]) or len(all_keys) != 7:
             raise ValueError("Wrong keys found : {}".format(object_data.keys()))
     if object_data["type"] != "object":
         raise ValueError("Wrong type")

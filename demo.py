@@ -19,4 +19,10 @@ if not sequence_active:
 clips = wrappers.list_video(project.activeSequence)
 
 # edit clip
-wrappers.edit_clip(clips[0], 90, 260, 90, 260)
+start_frame = 0
+end_frame = 200
+import time
+for i in range(30):
+    increment = i * 5
+    wrappers.edit_clip(clips[0], start_frame + increment, end_frame + increment, start_frame, end_frame)
+    time.sleep(0.1)

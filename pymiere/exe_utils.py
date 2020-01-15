@@ -1,4 +1,5 @@
 import os
+import sys
 import time
 import re
 from subprocess import check_output, call
@@ -8,6 +9,9 @@ try:
 except:
     import winreg as wr  # python 3
 
+IS_PYTHON_2 = sys.version_info.major == 2
+
+
 def count_running_exe(exe_name):
     """
     Using tasklist windows command, we can find the number of process running with a specific name
@@ -16,10 +20,14 @@ def count_running_exe(exe_name):
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
-    output = check_output(call, text=True)
+    if IS_PYTHON_2:
+        output = check_output(call)
+    else:
+        output = check_output(call, text=True)
     # check in last line for process name
     lines = output.strip().splitlines()
     return len([l for l in lines if l.lower().startswith(exe_name.lower())])
+
 
 def exe_is_running(exe_name):
     """
@@ -29,12 +37,16 @@ def exe_is_running(exe_name):
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
-    output = check_output(call, text=True)
+    if IS_PYTHON_2:
+        output = check_output(call)
+    else:
+        output = check_output(call, text=True)
     # check in last line for process name
     lines = output.strip().splitlines()
     if lines[-1].lower().startswith(exe_name.lower()):
         return True, int(re.findall("   ([0-9]{1,6}) [a-zA-Z]", lines[-1])[0])
     return False, None
+
 
 def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallLocation"]):
     """
@@ -58,6 +70,7 @@ def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallL
         apps_info.append(dict({n: wr.QueryValueEx(subkey, n)[0] for n in names}, DisplayName=soft_name))
     return apps_info
 
+
 def get_last_premiere_exe():
     """
     Hopefully compute the path to the exe file for premiere
@@ -79,6 +92,7 @@ def get_last_premiere_exe():
     if not os.path.isfile(exe_path):
         raise IOError("Could not find Premiere executable in '{}'".format(exe_path))
     return exe_path
+
 
 def start_premiere():
     """
@@ -104,7 +118,8 @@ def start_premiere():
             time.sleep(1)
             return pid
         time.sleep(0.5)
-    raise TimeoutError("Could not guaranty premiere started")
+    raise SystemError("Could not guaranty premiere started")
+
 
 if __name__ == "__main__":
     # print(get_installed_softwares_info("adobe premiere pro"))

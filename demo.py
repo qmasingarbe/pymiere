@@ -20,13 +20,13 @@ if not sequence_active:
 clips = wrappers.list_video(project.activeSequence)
 
 # get sequence fps (timebase in ticks to be converted to frame per seconds)
-fps = 1/(project.activeSequence.timebase/wrappers.TICKS_PER_SECONDS)
+fps = 1/(float(project.activeSequence.timebase)/wrappers.TICKS_PER_SECONDS)
 print("Sequence as a framerate of {} fps".format(fps))
 
 # edit clip
 start_frame = 0
 end_frame = 200
-clips[0].setSelected(1, 1)
+clips[0].setSelected(True, True)
 
 # the next code will do nothing in ppro 2017 cause the clip were not editable at the time
 # fun (to me) animation of clip advancing in timeline

@@ -34,7 +34,7 @@ def check_premiere_is_alive(crash=True):
     except requests.exceptions.ConnectionError:
         msg = "No connection could be established to Premiere Pro, check that the pymiere pannel is loaded"
         if crash:
-            raise ConnectionError(msg)
+            raise IOError(msg)
         print(msg)
         return False
     if response.content.decode("utf-8") != "Premiere is alive":
@@ -82,7 +82,7 @@ def eval_script(code=None, filepath=None, decode_json=True):
         return response_text
     try:
         response_decoded = json.loads(response_text)
-    except json.decoder.JSONDecodeError as e:
+    except Exception as e:  # ValueError in py2 and json.decoder.JSONDecodeError in py3
         # print("No json could be decoded : {}".format(e))
         return response_text
 
@@ -197,6 +197,9 @@ class PymiereBaseObject(object):
         :param name: (str) name of the object being check to print in the error if check fails
         """
         if cls == any or cls == "any":
+            return
+        # support int and bool type even if they should be float. JSON + ExtendScript will take care of casting
+        if cls == float and (isinstance(obj, int) or isinstance(obj, bool)):
             return
         if not isinstance(obj, cls):
             raise ValueError("{} shoud be of type {} but got '{}' (type {})".format(name, cls, obj, type(obj)))
@@ -345,6 +348,8 @@ def _format_object_to_es(obj):
     """
     if isinstance(obj, str):
         return "'{}'".format(obj)
+    elif isinstance(obj, bool):
+        return str(obj).lower()
     elif isinstance(obj, PymiereBaseObject):
         return "$._pymiere['{}']".format(obj._pymiere_id)
     else:

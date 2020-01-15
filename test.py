@@ -16,3 +16,7 @@ if not sequence_active:
     project.activeSequence = sequences[0]
 
 # list videos
+clips = wrappers.list_video(project.activeSequence)
+
+# edit clip
+wrappers.edit_clip(clips[0], 90, 260, 90, 260)

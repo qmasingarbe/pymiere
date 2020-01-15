@@ -5652,19 +5652,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -11350,19 +11337,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -17072,19 +17046,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -22770,19 +22731,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -28492,19 +28440,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -34190,19 +34125,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -39912,19 +39834,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -45610,19 +45519,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -51332,19 +51228,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -57030,19 +56913,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -62752,19 +62622,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -68450,19 +68307,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -74172,19 +74016,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -79870,19 +79701,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",
@@ -85592,19 +85410,6 @@
               }
             }
           },
-          "print": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
           "writeln": {
             "dataType": "boolean",
             "description": "",
@@ -91290,19 +91095,6 @@
             "arguments": {}
           },
           "write": {
-            "dataType": "boolean",
-            "description": "",
-            "help": "",
-            "isCollection": false,
-            "arguments": {
-              "text": {
-                "dataType": "string",
-                "description": "",
-                "help": ""
-              }
-            }
-          },
-          "print": {
             "dataType": "boolean",
             "description": "",
             "help": "",

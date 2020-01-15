@@ -3177,13 +3177,6 @@ class File(PymiereBaseObject):
         self._check_type(text, str, 'arg "text" of function "File.write"')
         return self._eval_on_this_object("write({})".format(_format_object_to_es(text)))
 
-    def print(self, text):
-        """
-        :type text: str
-        """
-        self._check_type(text, str, 'arg "text" of function "File.print"')
-        return self._eval_on_this_object("print({})".format(_format_object_to_es(text)))
-
     def writeln(self, text):
         """
         Writes a string to the file at the current position and appends a line-feed sequence. You can supply multiple text values. The strings are concatenated into a single string, which is written in the file followed by one line-feed sequence, of the style specified by this object's linefeed property.For encoded files, writing a single Unicode character may write multiple bytes.Returns true if the write was successful.IMPORTANT: Be careful not to write to a file that is open in another application or object, as this can overwrite existing data. 

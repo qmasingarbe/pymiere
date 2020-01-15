@@ -1,11 +1,12 @@
 from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es
 
 class Application(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'version': version, 'build': build, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
+    def __init__(self, pymiere_id=None, version=None, build=None, csxs=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'version': version, 'build': build, 'csxs': csxs, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
         super(Application, self).__init__(pymiere_id)
         self.__version = version
         self.__build = build
+        self.__csxs = csxs
         self.__getPProPrefPath = getPProPrefPath
         self.__getPProSystemPrefPath = getPProSystemPrefPath
         self.__project = project
@@ -37,6 +38,14 @@ class Application(PymiereBaseObject):
     @build.setter
     def build(self, build):
         raise AttributeError("Attribute 'build' is read-only")
+
+    @property
+    def csxs(self):
+        self.__csxs = _format_object_to_py(self._eval_on_this_object('csxs'))
+        return self.__csxs
+    @csxs.setter
+    def csxs(self, csxs):
+        raise AttributeError("Attribute 'csxs' is read-only")
 
     @property
     def getPProPrefPath(self):

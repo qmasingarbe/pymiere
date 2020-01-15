@@ -5,7 +5,8 @@ from pymiere import utils
 import pymiere
 import keyword
 
-# todo try using https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx PremierePro.d.ts for docstrings
+# load comments extarcted from .d.ts files
+comments_data = utils.read_json_file(os.path.join(__file__, "..", "..", "typescript_definition_parser", "definition_data.json"))
 
 
 def generate_class(object_data, all_classes_names):
@@ -42,9 +43,11 @@ def generate_class(object_data, all_classes_names):
     code = code.add_empty_line()
     code = code.add_line("# ----- PROPERTIES -----", indent=1)
     for prop_name, prop_info in object_data.get("props").items():
-        # docstring$
+        # docstring
         if prop_info.get("help"):
             raise NotImplementedError("help")
+        if prop_name in comments_data["var"]:
+            code = code.add_line('""" {} """'.format(comments_data["var"][prop_name]), indent=1)
         # getter
         code = code.add_line("@property", indent=1)
         code = code.add_line("def {}(self):".format(prop_name), indent=1)
@@ -90,11 +93,16 @@ def generate_class(object_data, all_classes_names):
         code = code.add_line("def {}(self{}):".format(func_name, args), indent=1)
 
         # docstring
-        if func_info.get("arguments") or func_info.get("description"):
+        if func_info.get("arguments") or func_info.get("description") or func_name in comments_data["func"]:
             # pycharm compatible docstring for arg types
             code = code.add_line('"""', indent=2)
             if func_info.get("description"):
                 code = code.add_line(func_info.get("description"), indent=2)
+            if func_name in comments_data["func"]:
+                code = code.add_line(comments_data["func"][func_name]["comment"], indent=2)
+                if "args" in comments_data["func"][func_name]:
+                    for k, v in comments_data["func"][func_name]["args"].items():
+                        code = code.add_line(":param {}: {}".format(k, v), indent=2)
             for arg_name, arg_info in func_info.get("arguments", dict()).items():
                 if arg_info.get("help"):
                     raise NotImplementedError("help")

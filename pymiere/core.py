@@ -74,7 +74,7 @@ def eval_script(code=None, filepath=None, decode_json=True):
             code = f.read()
 
     # send code to premiere (adding try statement to prevent error popup message locking premiere UI)
-    response = requests.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;JSON.stringify(e)}"})
+    response = requests.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;ExtendJSON.stringify(e)}"})
 
     # handle response
     response_text = response.text
@@ -386,7 +386,7 @@ def _eval_script_returning_object(line, as_kwargs=False):
     script += """\nif(typeof tmp === 'object'){
             var newPymiereId = $._pymiere.generateId();
             $._pymiere[newPymiereId] = tmp;
-            tmp = JSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId}, internal_variables_replacer, 0, 1);
+            tmp = ExtendJSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId}, internal_variables_replacer, 0, 1);
         }
         tmp"""
     result = eval_script(script, decode_json=True)

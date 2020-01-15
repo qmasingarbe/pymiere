@@ -63,4 +63,4 @@ function rootReflectToDict(){
     return result
 }
 
-JSON.stringify(rootReflectToDict());
+ExtendJSON.stringify(rootReflectToDict());

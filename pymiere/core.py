@@ -172,7 +172,7 @@ class PymiereBaseObject(object):
         Check that we either get all init args (when object comes from ES) or no args (when we want to create an empty object)
         :param kwargs: (dict) keyword arguments at object creation
         """
-        if not kwargs.get("created_by_user", False):
+        if "pymiere_id" in kwargs and kwargs["pymiere_id"] is not None:
             return
         kwargs = {k: v is not None for k, v in kwargs.items()}
         if all(kwargs.values()) is True:  # all args are given
@@ -326,6 +326,7 @@ class PymiereGenericObject(PymiereBaseObject):
         print(" {} methods".format(len(available_methods)))
         for i, method in enumerate(sorted(available_methods)):
             print("  - {}({})".format(method, eval_script("$._pymiere['{}'].reflect.methods[{}].arguments".format(self._pymiere_id, i))))
+
 
 class Array(PymiereBaseCollection):
     def __init__(self, pymiere_id, length):

@@ -1,8 +1,8 @@
 from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es
 
 class Application(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'version': version, 'build': build, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
+    def __init__(self, pymiere_id=None, version=None, build=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'version': version, 'build': build, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
         super(Application, self).__init__(pymiere_id)
         self.__version = version
         self.__build = build
@@ -335,8 +335,8 @@ class Application(PymiereBaseObject):
 
 
 class Project(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'documentID': documentID, 'name': name, 'path': path, 'rootItem': rootItem, 'sequences': sequences, 'activeSequence': activeSequence, 'isCloudProject': isCloudProject, 'cloudProjectLocalID': cloudProjectLocalID})
+    def __init__(self, pymiere_id=None, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'documentID': documentID, 'name': name, 'path': path, 'rootItem': rootItem, 'sequences': sequences, 'activeSequence': activeSequence, 'isCloudProject': isCloudProject, 'cloudProjectLocalID': cloudProjectLocalID})
         super(Project, self).__init__(pymiere_id)
         self.__documentID = documentID
         self.__name = name
@@ -640,8 +640,8 @@ class Project(PymiereBaseObject):
 
 
 class ProjectItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'children': children, 'name': name, 'treePath': treePath, 'type': type, 'nodeId': nodeId, 'videoComponents': videoComponents})
+    def __init__(self, pymiere_id=None, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'children': children, 'name': name, 'treePath': treePath, 'type': type, 'nodeId': nodeId, 'videoComponents': videoComponents})
         super(ProjectItem, self).__init__(pymiere_id)
         self.__children = children
         self.__name = name
@@ -988,8 +988,8 @@ class SequenceCollection(PymiereBaseCollection):
 
 class Sequence(PymiereBaseObject):
     """ A sequence. """
-    def __init__(self, pymiere_id=None, created_by_user=False, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'id': id, 'sequenceID': sequenceID, 'name': name, 'audioTracks': audioTracks, 'videoTracks': videoTracks, 'frameSizeHorizontal': frameSizeHorizontal, 'frameSizeVertical': frameSizeVertical, 'timebase': timebase, 'zeroPoint': zeroPoint, 'end': end, 'markers': markers, 'projectItem': projectItem, 'videoDisplayFormat': videoDisplayFormat, 'audioDisplayFormat': audioDisplayFormat})
+    def __init__(self, pymiere_id=None, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'id': id, 'sequenceID': sequenceID, 'name': name, 'audioTracks': audioTracks, 'videoTracks': videoTracks, 'frameSizeHorizontal': frameSizeHorizontal, 'frameSizeVertical': frameSizeVertical, 'timebase': timebase, 'zeroPoint': zeroPoint, 'end': end, 'markers': markers, 'projectItem': projectItem, 'videoDisplayFormat': videoDisplayFormat, 'audioDisplayFormat': audioDisplayFormat})
         super(Sequence, self).__init__(pymiere_id)
         self.__id = id
         self.__sequenceID = sequenceID
@@ -1470,8 +1470,8 @@ class TrackCollection(PymiereBaseCollection):
 
 
 class MarkerCollection(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, numMarkers=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'numMarkers': numMarkers})
+    def __init__(self, pymiere_id=None, numMarkers=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'numMarkers': numMarkers})
         super(MarkerCollection, self).__init__(pymiere_id)
         self.__numMarkers = numMarkers
 
@@ -1575,8 +1575,8 @@ class ProjectCollection(PymiereBaseCollection):
 
 
 class Anywhere(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Anywhere, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1652,8 +1652,8 @@ class Anywhere(PymiereBaseObject):
 
 
 class Encoder(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'ENCODE_ENTIRE': ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT': ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA': ENCODE_WORKAREA})
+    def __init__(self, pymiere_id=None, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'ENCODE_ENTIRE': ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT': ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA': ENCODE_WORKAREA})
         super(Encoder, self).__init__(pymiere_id)
         self.__ENCODE_ENTIRE = ENCODE_ENTIRE
         self.__ENCODE_IN_TO_OUT = ENCODE_IN_TO_OUT
@@ -1789,8 +1789,8 @@ class Encoder(PymiereBaseObject):
 
 
 class Properties(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Properties, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1860,8 +1860,8 @@ class Properties(PymiereBaseObject):
 
 
 class SourceMonitor(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(SourceMonitor, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1929,8 +1929,8 @@ class SourceMonitor(PymiereBaseObject):
 
 
 class ProjectManager(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, options=None, errors=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'options': options, 'errors': errors})
+    def __init__(self, pymiere_id=None, options=None, errors=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'options': options, 'errors': errors})
         super(ProjectManager, self).__init__(pymiere_id)
         self.__options = options
         self.__errors = errors
@@ -1996,8 +1996,8 @@ class ProjectManager(PymiereBaseObject):
 
 class ProjectManagerOptions(PymiereBaseObject):
     """ Structure containing all available options for the `ProjectManager`. """
-    def __init__(self, pymiere_id=None, created_by_user=False, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'clipTransferOption': clipTransferOption, 'clipTranscoderOption': clipTranscoderOption, 'excludeUnused': excludeUnused, 'handleFrameCount': handleFrameCount, 'includePreviews': includePreviews, 'includeConformedAudio': includeConformedAudio, 'renameMedia': renameMedia, 'destinationPath': destinationPath, 'includeAllSequences': includeAllSequences, 'affectedSequences': affectedSequences, 'encoderPresetFilePath': encoderPresetFilePath, 'convertImageSequencesToClips': convertImageSequencesToClips, 'convertSyntheticsToClips': convertSyntheticsToClips, 'convertAECompsToClips': convertAECompsToClips, 'copyToPreventAlphaLoss': copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY': CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE': CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET': CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS': CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE': CLIP_TRANSCODE_MATCH_SEQUENCE})
+    def __init__(self, pymiere_id=None, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'clipTransferOption': clipTransferOption, 'clipTranscoderOption': clipTranscoderOption, 'excludeUnused': excludeUnused, 'handleFrameCount': handleFrameCount, 'includePreviews': includePreviews, 'includeConformedAudio': includeConformedAudio, 'renameMedia': renameMedia, 'destinationPath': destinationPath, 'includeAllSequences': includeAllSequences, 'affectedSequences': affectedSequences, 'encoderPresetFilePath': encoderPresetFilePath, 'convertImageSequencesToClips': convertImageSequencesToClips, 'convertSyntheticsToClips': convertSyntheticsToClips, 'convertAECompsToClips': convertAECompsToClips, 'copyToPreventAlphaLoss': copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY': CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE': CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET': CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS': CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE': CLIP_TRANSCODE_MATCH_SEQUENCE})
         super(ProjectManagerOptions, self).__init__(pymiere_id)
         self.__clipTransferOption = clipTransferOption
         self.__clipTranscoderOption = clipTranscoderOption
@@ -2247,8 +2247,8 @@ class ProjectManagerOptions(PymiereBaseObject):
 
 
 class Metadata(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, getMetadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'getMetadata': getMetadata})
+    def __init__(self, pymiere_id=None, getMetadata=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'getMetadata': getMetadata})
         super(Metadata, self).__init__(pymiere_id)
         self.__getMetadata = getMetadata
 
@@ -2307,8 +2307,8 @@ class Metadata(PymiereBaseObject):
 
 
 class Document(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Document, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2353,8 +2353,8 @@ class Document(PymiereBaseObject):
 
 
 class ProjectItemType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, BIN=None, CLIP=None, FILE=None, ROOT=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'BIN': BIN, 'CLIP': CLIP, 'FILE': FILE, 'ROOT': ROOT})
+    def __init__(self, pymiere_id=None, BIN=None, CLIP=None, FILE=None, ROOT=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'BIN': BIN, 'CLIP': CLIP, 'FILE': FILE, 'ROOT': ROOT})
         super(ProjectItemType, self).__init__(pymiere_id)
         self.__BIN = BIN
         self.__CLIP = CLIP
@@ -2425,8 +2425,8 @@ class ProjectItemType(PymiereBaseObject):
 
 
 class ScratchDiskType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'FirstVideoCaptureFolder': FirstVideoCaptureFolder, 'FirstAudioCaptureFolder': FirstAudioCaptureFolder, 'FirstVideoPreviewFolder': FirstVideoPreviewFolder, 'FirstAudioPreviewFolder': FirstAudioPreviewFolder, 'FirstAutoSaveFolder': FirstAutoSaveFolder, 'FirstCClibrariesFolder': FirstCClibrariesFolder, 'FirstCapsuleMediaFolder': FirstCapsuleMediaFolder})
+    def __init__(self, pymiere_id=None, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'FirstVideoCaptureFolder': FirstVideoCaptureFolder, 'FirstAudioCaptureFolder': FirstAudioCaptureFolder, 'FirstVideoPreviewFolder': FirstVideoPreviewFolder, 'FirstAudioPreviewFolder': FirstAudioPreviewFolder, 'FirstAutoSaveFolder': FirstAutoSaveFolder, 'FirstCClibrariesFolder': FirstCClibrariesFolder, 'FirstCapsuleMediaFolder': FirstCapsuleMediaFolder})
         super(ScratchDiskType, self).__init__(pymiere_id)
         self.__FirstVideoCaptureFolder = FirstVideoCaptureFolder
         self.__FirstAudioCaptureFolder = FirstAudioCaptureFolder
@@ -2524,8 +2524,8 @@ class ScratchDiskType(PymiereBaseObject):
 
 
 class RegisteredDirectories(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(RegisteredDirectories, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2560,8 +2560,8 @@ class RegisteredDirectories(PymiereBaseObject):
 
 
 class UtilityFunctions(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(UtilityFunctions, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2596,8 +2596,8 @@ class UtilityFunctions(PymiereBaseObject):
 
 
 class Math(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'E': E, 'LN10': LN10, 'LN2': LN2, 'LOG2E': LOG2E, 'LOG10E': LOG10E, 'PI': PI, 'SQRT1_2': SQRT1_2, 'SQRT2': SQRT2})
+    def __init__(self, pymiere_id=None, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'E': E, 'LN10': LN10, 'LN2': LN2, 'LOG2E': LOG2E, 'LOG10E': LOG10E, 'PI': PI, 'SQRT1_2': SQRT1_2, 'SQRT2': SQRT2})
         super(Math, self).__init__(pymiere_id)
         self.__E = E
         self.__LN10 = LN10
@@ -2808,8 +2808,8 @@ class Math(PymiereBaseObject):
 
 class File(PymiereBaseObject):
     """ Represents a file in the local file system in a platform-independent manner. """
-    def __init__(self, pymiere_id=None, created_by_user=False, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent, 'type': type, 'creator': creator, 'hidden': hidden, 'readonly': readonly, 'lineFeed': lineFeed, 'length': length, 'encoding': encoding, 'eof': eof})
+    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent, 'type': type, 'creator': creator, 'hidden': hidden, 'readonly': readonly, 'lineFeed': lineFeed, 'length': length, 'encoding': encoding, 'eof': eof})
         super(File, self).__init__(pymiere_id)
         self.__alias = alias
         self.__created = created
@@ -3211,8 +3211,8 @@ class File(PymiereBaseObject):
 
 
 class Date(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Date, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -3424,8 +3424,8 @@ class Date(PymiereBaseObject):
 
 class Folder(PymiereBaseObject):
     """ Represents a file-system folder or directory in a platform-independent manner. """
-    def __init__(self, pymiere_id=None, created_by_user=False, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent})
+    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent})
         super(Folder, self).__init__(pymiere_id)
         self.__alias = alias
         self.__created = created
@@ -3662,8 +3662,8 @@ class Folder(PymiereBaseObject):
 
 
 class FootageInterpretation(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'frameRate': frameRate, 'pixelAspectRatio': pixelAspectRatio, 'fieldType': fieldType, 'removePulldown': removePulldown, 'alphaUsage': alphaUsage, 'ignoreAlpha': ignoreAlpha, 'invertAlpha': invertAlpha, 'vrConformProjectionType': vrConformProjectionType, 'vrLayoutType': vrLayoutType, 'vrHorizontalView': vrHorizontalView, 'vrVerticalView': vrVerticalView, 'ALPHACHANNEL_NONE': ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT': ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED': ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE': ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT': FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE': FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST': FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST': FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE': VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR': VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC': VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER': VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE': VR_LAYOUT_STEREO_SIDE_BY_SIDE})
+    def __init__(self, pymiere_id=None, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'frameRate': frameRate, 'pixelAspectRatio': pixelAspectRatio, 'fieldType': fieldType, 'removePulldown': removePulldown, 'alphaUsage': alphaUsage, 'ignoreAlpha': ignoreAlpha, 'invertAlpha': invertAlpha, 'vrConformProjectionType': vrConformProjectionType, 'vrLayoutType': vrLayoutType, 'vrHorizontalView': vrHorizontalView, 'vrVerticalView': vrVerticalView, 'ALPHACHANNEL_NONE': ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT': ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED': ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE': ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT': FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE': FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST': FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST': FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE': VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR': VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC': VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER': VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE': VR_LAYOUT_STEREO_SIDE_BY_SIDE})
         super(FootageInterpretation, self).__init__(pymiere_id)
         self.__frameRate = frameRate
         self.__pixelAspectRatio = pixelAspectRatio
@@ -3925,8 +3925,8 @@ class FootageInterpretation(PymiereBaseObject):
 
 
 class Time(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, seconds=None, ticks=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'seconds': seconds, 'ticks': ticks})
+    def __init__(self, pymiere_id=None, seconds=None, ticks=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
         super(Time, self).__init__(pymiere_id)
         self.__seconds = seconds
         self.__ticks = ticks
@@ -3998,8 +3998,8 @@ class Time(PymiereBaseObject):
 
 
 class Track(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, id=None, name=None, mediaType=None, clips=None, transitions=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'id': id, 'name': name, 'mediaType': mediaType, 'clips': clips, 'transitions': transitions})
+    def __init__(self, pymiere_id=None, id=None, name=None, mediaType=None, clips=None, transitions=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'id': id, 'name': name, 'mediaType': mediaType, 'clips': clips, 'transitions': transitions})
         super(Track, self).__init__(pymiere_id)
         self.__id = id
         self.__name = name
@@ -4143,8 +4143,8 @@ class TrackItemCollection(PymiereBaseCollection):
 
 
 class TrackItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'duration': duration, 'start': start, 'end': end, 'inPoint': inPoint, 'outPoint': outPoint, 'type': type, 'mediaType': mediaType, 'projectItem': projectItem, 'name': name, 'matchName': matchName, 'nodeId': nodeId, 'components': components})
+    def __init__(self, pymiere_id=None, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'duration': duration, 'start': start, 'end': end, 'inPoint': inPoint, 'outPoint': outPoint, 'type': type, 'mediaType': mediaType, 'projectItem': projectItem, 'name': name, 'matchName': matchName, 'nodeId': nodeId, 'components': components})
         super(TrackItem, self).__init__(pymiere_id)
         self.__duration = duration
         self.__start = start
@@ -4348,8 +4348,8 @@ class TrackItem(PymiereBaseObject):
 
 class SequenceSettings(PymiereBaseObject):
     """ Structure containing sequence settings. """
-    def __init__(self, pymiere_id=None, created_by_user=False, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'editingMode': editingMode, 'videoFrameRate': videoFrameRate, 'videoFrameWidth': videoFrameWidth, 'videoFrameHeight': videoFrameHeight, 'videoPixelAspectRatio': videoPixelAspectRatio, 'videoFieldType': videoFieldType, 'videoDisplayFormat': videoDisplayFormat, 'audioChannelType': audioChannelType, 'audioChannelCount': audioChannelCount, 'audioSampleRate': audioSampleRate, 'audioDisplayFormat': audioDisplayFormat, 'previewFileFormat': previewFileFormat, 'previewCodec': previewCodec, 'previewFrameWidth': previewFrameWidth, 'previewFrameHeight': previewFrameHeight, 'maximumBitDepth': maximumBitDepth, 'maximumRenderQuality': maximumRenderQuality, 'compositeLinearColor': compositeLinearColor, 'vrProjection': vrProjection, 'vrLayout': vrLayout, 'vrHorzCapturedView': vrHorzCapturedView, 'vrVertCapturedView': vrVertCapturedView})
+    def __init__(self, pymiere_id=None, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'editingMode': editingMode, 'videoFrameRate': videoFrameRate, 'videoFrameWidth': videoFrameWidth, 'videoFrameHeight': videoFrameHeight, 'videoPixelAspectRatio': videoPixelAspectRatio, 'videoFieldType': videoFieldType, 'videoDisplayFormat': videoDisplayFormat, 'audioChannelType': audioChannelType, 'audioChannelCount': audioChannelCount, 'audioSampleRate': audioSampleRate, 'audioDisplayFormat': audioDisplayFormat, 'previewFileFormat': previewFileFormat, 'previewCodec': previewCodec, 'previewFrameWidth': previewFrameWidth, 'previewFrameHeight': previewFrameHeight, 'maximumBitDepth': maximumBitDepth, 'maximumRenderQuality': maximumRenderQuality, 'compositeLinearColor': compositeLinearColor, 'vrProjection': vrProjection, 'vrLayout': vrLayout, 'vrHorzCapturedView': vrHorzCapturedView, 'vrVertCapturedView': vrVertCapturedView})
         super(SequenceSettings, self).__init__(pymiere_id)
         self.__editingMode = editingMode
         self.__videoFrameRate = videoFrameRate
@@ -4608,8 +4608,8 @@ class SequenceSettings(PymiereBaseObject):
 
 
 class Marker(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, start=None, end=None, type=None, name=None, comments=None, guid=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'start': start, 'end': end, 'type': type, 'name': name, 'comments': comments, 'guid': guid})
+    def __init__(self, pymiere_id=None, start=None, end=None, type=None, name=None, comments=None, guid=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'start': start, 'end': end, 'type': type, 'name': name, 'comments': comments, 'guid': guid})
         super(Marker, self).__init__(pymiere_id)
         self.__start = start
         self.__end = end
@@ -4741,8 +4741,8 @@ class Marker(PymiereBaseObject):
 
 
 class Component(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, displayName=None, matchName=None, properties=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'displayName': displayName, 'matchName': matchName, 'properties': properties})
+    def __init__(self, pymiere_id=None, displayName=None, matchName=None, properties=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'displayName': displayName, 'matchName': matchName, 'properties': properties})
         super(Component, self).__init__(pymiere_id)
         self.__displayName = displayName
         self.__matchName = matchName
@@ -4819,8 +4819,8 @@ class ComponentParamCollection(PymiereBaseCollection):
 
 class Dollar(PymiereBaseObject):
     """ The $ object provides a number of debugging facilities and informational methods. """
-    def __init__(self, pymiere_id=None, created_by_user=False, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'error': error, 'version': version, 'build': build, 'buildDate': buildDate, 'stack': stack, 'level': level, 'flags': flags, 'strict': strict, 'locale': locale, 'localize': localize, 'decimalPoint': decimalPoint, 'memCache': memCache, 'appEncoding': appEncoding, 'screens': screens, 'os': os, 'fileName': fileName, 'line': line, 'hiresTimer': hiresTimer, 'dictionary': dictionary, 'engineName': engineName, 'includePath': includePath})
+    def __init__(self, pymiere_id=None, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
+        self._check_init_args({'pymiere_id': pymiere_id, 'error': error, 'version': version, 'build': build, 'buildDate': buildDate, 'stack': stack, 'level': level, 'flags': flags, 'strict': strict, 'locale': locale, 'localize': localize, 'decimalPoint': decimalPoint, 'memCache': memCache, 'appEncoding': appEncoding, 'screens': screens, 'os': os, 'fileName': fileName, 'line': line, 'hiresTimer': hiresTimer, 'dictionary': dictionary, 'engineName': engineName, 'includePath': includePath})
         super(Dollar, self).__init__(pymiere_id)
         self.__error = error
         self.__version = version
@@ -5188,8 +5188,8 @@ class Dollar(PymiereBaseObject):
 
 
 class Error(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'number': number, 'fileName': fileName, 'line': line, 'source': source, 'start': start, 'end': end, 'message': message, 'name': name, 'description': description})
+    def __init__(self, pymiere_id=None, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'number': number, 'fileName': fileName, 'line': line, 'source': source, 'start': start, 'end': end, 'message': message, 'name': name, 'description': description})
         super(Error, self).__init__(pymiere_id)
         self.__number = number
         self.__fileName = fileName
@@ -5293,8 +5293,8 @@ class Error(PymiereBaseObject):
 
 
 class Dictionary(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, ):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, })
+    def __init__(self, pymiere_id=None, ):
+        self._check_init_args({'pymiere_id': pymiere_id, })
         super(Dictionary, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -5329,8 +5329,8 @@ class Dictionary(PymiereBaseObject):
 
 
 class ComponentParam(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, displayName=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'displayName': displayName})
+    def __init__(self, pymiere_id=None, displayName=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'displayName': displayName})
         super(ComponentParam, self).__init__(pymiere_id)
         self.__displayName = displayName
 
@@ -5477,8 +5477,8 @@ class ComponentParam(PymiereBaseObject):
 
 
 class Exporter(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, name=None, classID=None, fileType=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'name': name, 'classID': classID, 'fileType': fileType})
+    def __init__(self, pymiere_id=None, name=None, classID=None, fileType=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'name': name, 'classID': classID, 'fileType': fileType})
         super(Exporter, self).__init__(pymiere_id)
         self.__name = name
         self.__classID = classID
@@ -5543,8 +5543,8 @@ class Exporter(PymiereBaseObject):
 
 
 class EncoderPreset(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, created_by_user=False, name=None, matchName=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'created_by_user':created_by_user, 'name': name, 'matchName': matchName})
+    def __init__(self, pymiere_id=None, name=None, matchName=None):
+        self._check_init_args({'pymiere_id': pymiere_id, 'name': name, 'matchName': matchName})
         super(EncoderPreset, self).__init__(pymiere_id)
         self.__name = name
         self.__matchName = matchName

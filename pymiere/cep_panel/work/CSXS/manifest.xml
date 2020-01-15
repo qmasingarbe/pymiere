@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ExtensionManifest Version="6.0" ExtensionBundleId="com.qmasingarbe.PymiereLink" ExtensionBundleVersion="11.1" ExtensionBundleName="Pymiere Link" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<ExtensionManifest Version="6.0" ExtensionBundleId="com.qmasingarbe.PymiereLink" ExtensionBundleVersion="1.0" ExtensionBundleName="Pymiere Link" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<ExtensionList>
 		<Extension Id="com.qmasingarbe.PymiereLink" Version="1.0.0" />
 	</ExtensionList>
 	<ExecutionEnvironment>
 		<HostList>
-			<Host Name="PPRO" Version="9.0" />
+			<Host Name="PPRO" Version="11.0" />
 		</HostList>
 		<LocaleList>
 			<Locale Code="All" />

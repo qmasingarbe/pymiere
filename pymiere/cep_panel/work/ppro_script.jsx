@@ -34,5 +34,5 @@ $._pymiere.generateId = function(){
 	return result;
 }
 
-// replacer function to pass to json.stringify preventing infinite loop for $ objects
+// replacer function to pass to ExtendJSON.stringify preventing infinite loop for $ objects
 function internal_variables_replacer(key, value){if(key !== "tmp" && key !== "_pymiere"){return value}}

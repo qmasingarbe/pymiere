@@ -9,11 +9,11 @@
 */
 
 
-// Create a JSON object only if one does not already exist. We create the
+// Create a ExtendJSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
-if (typeof JSON !== 'object') {
-    JSON = {};
+if (typeof ExtendJSON !== 'object') {
+    ExtendJSON = {};
 }
 
 (function () {
@@ -110,7 +110,7 @@ if (typeof JSON !== 'object') {
             return quote(value);
 
         case 'number':
-// JSON numbers must be finite. Encode non-finite numbers as null.
+// ExtendJSON numbers must be finite. Encode non-finite numbers as null.
             return isFinite(value) ? String(value) : 'null';
 
         case 'boolean':
@@ -144,24 +144,9 @@ if (typeof JSON !== 'object') {
             if (Object.prototype.toString.apply(value) === '[object Array]') {
 
 // The value is an array. Stringify every element. Use null as a placeholder
-// for non-JSON values.
+// for non-ExtendJSON values.
 
-                length = value.length;
-				if(dstatus === -1 || dstatus === 0){
-					for (i = 0; i < length; i += 1) {
-						partial[i] = str(i, value, (dstatus === -1) ? -1 : 1) || 'null';
-					}
-				}
-
-// Join all of the elements together, separated with commas, and wrap them in
-// brackets.
-
-                v = partial.length === 0
-                    ? '[]'
-                    : gap
-                    ? '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']'
-                    : '[' + partial.join(',') + ']';
-                gap = mind;
+                v = '{"length" : ' + str("length", value) + '}';
                 return v;
             }
 
@@ -201,7 +186,7 @@ if (typeof JSON !== 'object') {
                     k = all_keys[i];
                     if (Object.prototype.hasOwnProperty.call(value, k)) {
                         if(dstatus === 1){
-							v = (typeof(value[k]) === "undefined") ? 'null' : quote(value[k].constructor.name);
+							v = (typeof value === "undefined" || typeof value[k] === "undefined") ? 'null' : quote(value[k].constructor.name);
 						}else{
 							v = str(k, value, (dstatus === -1) ? -1 : 1);
 						}
@@ -225,9 +210,9 @@ if (typeof JSON !== 'object') {
         }
     }
 
-// If the JSON object does not yet have a stringify method, give it one.
+// If the ExtendJSON object does not yet have a stringify method, give it one.
 
-    if (typeof JSON.stringify !== 'function') {
+    if (typeof ExtendJSON.stringify !== 'function') {
         escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
         meta = {    // table of character substitutions
             '\b': '\\b',
@@ -238,15 +223,14 @@ if (typeof JSON !== 'object') {
             '"' : '\\"',
             '\\': '\\\\'
         };
-        JSON.stringify = function (value, replacer, space, depth) {
+        ExtendJSON.stringify = function (value, replacer, space, depth) {
 
 // The stringify method takes a value and an optional replacer, and an optional
-// space parameter, and returns a JSON text. The replacer can be a function
+// space parameter, and returns a ExtendJSON text. The replacer can be a function
 // that can replace values, or an array of strings that will select the keys.
 // A default replacer method can be provided. Use of the space parameter can
 // produce text that is more easily readable.
-// if depth is set at any value, json will only stringify two level of depth in objects
-
+// if depth is set at any value, ExtendJSON will only stringify two level of depth in objects
             var i;
             gap = '';
             indent = '';
@@ -274,7 +258,7 @@ if (typeof JSON !== 'object') {
             if (replacer && typeof replacer !== 'function' &&
                     (typeof replacer !== 'object' ||
                     typeof replacer.length !== 'number')) {
-                throw new Error('JSON.stringify');
+                throw new Error('ExtendJSON.stringify');
             }
 
 // Make a fake root object containing our value under the key of ''.
@@ -285,14 +269,14 @@ if (typeof JSON !== 'object') {
     }
 
 
-// If the JSON object does not yet have a parse method, give it one.
+// If the ExtendJSON object does not yet have a parse method, give it one.
 
-    if (typeof JSON.parse !== 'function') {
+    if (typeof ExtendJSON.parse !== 'function') {
         cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-        JSON.parse = function (text, reviver) {
+        ExtendJSON.parse = function (text, reviver) {
 
 // The parse method takes a text and an optional reviver function, and returns
-// a JavaScript value if the text is a valid JSON text.
+// a JavaScript value if the text is a valid ExtendJSON text.
 
             var j;
 
@@ -332,13 +316,13 @@ if (typeof JSON !== 'object') {
             }
 
 // In the second stage, we run the text against regular expressions that look
-// for non-JSON patterns. We are especially concerned with '()' and 'new'
+// for non-ExtendJSON patterns. We are especially concerned with '()' and 'new'
 // because they can cause invocation, and '=' because it can cause mutation.
 // But just to be safe, we want to reject all unexpected forms.
 
 // We split the second stage into 4 regexp operations in order to work around
 // crippling inefficiencies in IE's and Safari's regexp engines. First we
-// replace the JSON backslash pairs with '@' (a non-JSON character). Second, we
+// replace the ExtendJSON backslash pairs with '@' (a non-ExtendJSON character). Second, we
 // replace all simple value tokens with ']' characters. Third, we delete all
 // open brackets that follow a colon or comma or that begin the text. Finally,
 // we look to see that the remaining characters are only whitespace or ']' or
@@ -364,9 +348,9 @@ if (typeof JSON !== 'object') {
                     : j;
             }
 
-// If the text is not JSON parseable, then a SyntaxError is thrown.
+// If the text is not ExtendJSON parseable, then a SyntaxError is thrown.
 
-            throw new SyntaxError('JSON.parse');
+            throw new SyntaxError('ExtendJSON.parse');
         };
     }
 }());

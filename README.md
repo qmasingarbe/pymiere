@@ -1,7 +1,7 @@
 # ![Pymiere logo](logo.png) Pymiere : Python for Premiere Pro
 Use Python to interact with Adobe Premiere Pro. Gather data, check and edit your projects.
 
-## Why using Pymiere ?
+## Why using Pymiere?
 Pymiere comes from a consideration, has a Pipeline TD in a 3D/VFX studio, that we add no easy/good way to plug Premiere Pro into our workflow.   
 Of course, if you want to programmatically create a Premiere file, you can simply use an XML file (see [Open Timeline IO to XML](https://opentimelineio.readthedocs.io/en/latest/tutorials/adapters.html#final-cut-pro-xml)). **But** that require exporting and importing files, potentially loosing some data and no quick visual feedback.     
 

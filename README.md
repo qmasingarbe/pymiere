@@ -1,5 +1,5 @@
-# Pymiere : Python for Premiere Pro
-![Pymiere logo](logo.png)
+# ![Pymiere logo](logo.png) Pymiere : Python for Premiere Pro
+
 
   * [GitHub](http://github.com)
 

@@ -1,65 +1,66 @@
 # ![Pymiere logo](logo.png) Pymiere : Python for Premiere Pro
-Use Python to interact with Adobe Premiere Pro. Gathered data, edit, check your project.
+Use Python to interact with Adobe Premiere Pro. Gathered data, check and edit your projects.
 
 ## Why using Pymiere ?
-Pymiere comes from an observation, has a Pipeline TD in a 3D/VFX studio, that we add no easy/good way to add Premiere Pro to our workflow.   
-Of course, if you want to programmatically create a Premiere file the easiest way is to create an XML file (see [Open Timeline IO & XML](https://opentimelineio.readthedocs.io/en/latest/tutorials/adapters.html#final-cut-pro-xml)). But that require exporting and importing files, potentially loosing some data and no quick visual feedback.     
+Pymiere comes from a finding, has a Pipeline TD in a 3D/VFX studio, that we add no easy/good way to plug Premiere Pro into our workflow.   
+Of course, if you want to programmatically create a Premiere file, you can simply create an XML file (see [Open Timeline IO & XML](https://opentimelineio.readthedocs.io/en/latest/tutorials/adapters.html#final-cut-pro-xml)). **But** that require exporting and importing files, potentially loosing some data and no quick visual feedback.     
 That's where Pymiere comes in handy :
-> Want to inform your editor that some shots have new versions available ? Maybe automatically place them on a new track on top ?  
-> Want to create tools for your editor using Qt, Shotgun or custom libs ?
+> Want to check if some shots have new versions available ? Maybe automatically place them on a new track ?  
+> Want to create tools for your editor using Qt, Shotgun API, custom libs... ?
 
 ## Installation
-  1. Install the Pymiere Link extension to Premiere Pro.
+  1. Install the Pymiere Link extension for Premiere Pro.
       * Download `pymiere_link.zxp` from this repo
       * Install it using the [Adobe Extension Manager](https://www.adobe.com/exchange/em_download/) or the [Extension Manager Command Line tool](https://partners.adobe.com/exchangeprogram/creativecloud/support/exman-com-line-tool.html)
       * To check that it is correctly installed, start Premiere, under `Window > Extensions` you should see `Pymiere Link` (clicking on it will do nothing)
   
-  2. Install the lib
-      * make sur the `requests` python lib is installed (`pip install requests`)
+  2. Install the Python lib
+      * make sure the `requests` python lib is installed (`pip install requests`)
       * put the `pymiere` folder somewhere accessible to your Python
       
   3. Try running some basic code:
-````python
+```python
 import pymiere
 print(pymiere.objects.app.isDocumentOpen())
-````
+```
 
 ## Documentation
 ### Quick start
-Open or create a Premiere document containing a sequence with at least a clip. You can now execute the `demo.py` which will demonstrate some basic code. You can also look into the `wrappers.py` file to see some more code.   
-Pymiere is at its core a wrapper for Adobe Extend Script (adobe flavored javascript for manipulating data in their softwares).   
-Most of the help for ExtendScript will therefore apply to pymiere. See the usefull link section. 
-Using `pymiere.objects` you have access to all Premiere objects. As Pymiere offer code completion and type hint using modern IDE it is easy to naviguate/use the objects. Some also have docstings.
-If in your script you want to know if Premiere is running, start it, etc... Some functions are available in the `exe_utils.py` file
+Open or create a Premiere document containing a sequence with at least a clip. You can now execute the `demo.py` which will demonstrate some basic code. You can also look into the `pymiere/wrappers.py` file to see some more code example.   
+
+Pymiere is at its core a wrapper for Adobe ExtendScript (Adobe flavored javascript for manipulating data in their software).   
+Most of the help for ExtendScript will therefore apply to pymiere (see the usefull link section for that).    
+`pymiere.objects` is our entry point to access all Premiere objects and functions. As pymiere offer code completion and type hint using modern IDE it is easy to navigate/use the objects. Some also have docstrings.    
+If you want to know if Premiere Pro is running or start it, some functions are available in `pymiere/exe_utils.py`
 
 ### Useful links
-* [Official doc for Premiere Pro Extendscript](http://ppro.aenhancers.com/)
-* [Unofficial doc for Premiere Pro Extendscript](http://www.brysonmichael.com/premiereapi/objects)
+* [Official doc for Premiere Pro objects](http://ppro.aenhancers.com/)
+* [Unofficial doc for Premiere Pro objects](http://www.brysonmichael.com/premiereapi/objects)
 * [Advanced Premiere Pro Extendscript usage](https://github.com/Adobe-CEP/Samples/blob/master/PProPanel/jsx/PPRO/Premiere.jsx)
 
 ### Versions
   * support Python 2 & 3   
-  * Tested with Adobe Premiere Pro version 13.0 (2019) and version 11.0 (2017). I higly recommand the 2019 version because some functionality are not available in the previous versions. Should work for version 2017+ though.
+  * Tested with **Adobe Premiere Pro version 13.0 (2019)** and version 11.0 (2017). I higly recommand the 2019 version because some functionality are not available in the previous versions. Should work for version 2017+ though.
   * Tested on Windows (10)
+
+## Contact
+For any support, questions or interest please contact me : <a href="mailto:q.masingarbe@gmail.com">q.masingarbe@gmail.com</a>
 
 ## Internal working
 Here is how pymiere works :
 1. `pymiere` converts the python action to some _ExtendScript_ code (ExtendScript is Abode flavored javascript used to access and manipulate programmatically their software)
-2. `pymiere` sends the ExtendScript code to the `Pymiere Link extension` via the _requests_ lib (http post)
-3. The `Pymiere Link extension` internal _node.js_ server receive the ExtendScript code and eval it within Premiere context
+2. `pymiere` sends the ExtendScript code to the `Pymiere Link` extension via the _requests_ lib (http)
+3. `Pymiere Link` _node.js_ server receive the ExtendScript code and eval it within Premiere context
 4. If some value is returned `Pymiere Link` will send back the _JSON encoded_ response to `pymiere`
 5. `pymiere` will then decode the JSON data to have it back in the python context
 
-On top of that Pymiere also include a mirror of all ExtendScript objects in Python so that modern IDE are able to autocomplete and add hint to code.
-This mirror was autogenerated from Extendscript objects using their reflection interface.
+On top of that Pymiere also include a mirror of all Premiere Pro ExtendScript objects in Python so that modern IDE are able to autocomplete and add hint while coding.
+This objects mirrors were autogenerated from Extendscript objects reflection interface.
 
 ## Futur improvements
- - [ ] separate the generic part for communication between python and ExtendScript and the specific code for Premiere Pro, enabling it to be use in other application (Photoshop, Encoder...)
+ - [ ] separate the generic part for communication between python and ExtendScript and the specific code for Premiere Pro, enabling use in other application (Photoshop, Encoder...)
  - [ ] add more examples & more _wrappers_ functions
  - [ ] add support for Premiere events
  - [ ] add more documentation, docstrings...
- - [ ] building one py file mirror of ExtendScript objects by version, as each Premiere version adds new functions/properties
+ - [ ] build one python mirror of ExtendScript objects by version, as each Premiere version adds new objects/functions/properties
  - [ ] add a way to simply customize a panel to call python functions
-
-## Contact
-For any support, questions or interest please contact me : <a href="mailto:q.masingarbe@gmail.com">q.masingarbe@gmail.com</a>

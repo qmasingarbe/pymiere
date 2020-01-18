@@ -1,0 +1,4 @@
+This folder contains code that I use to generate the lib, you don't need it to use it.
+   - `cep_panel` : source code of the Pymiere Link extension, see [CEP panels](https://github.com/Adobe-CEP)
+   - `code_generation` : dirty code used to extract the definition of each ExtendScript object and generate a py mirroring each object
+   - `typescript_definition_parser` : some documentation on premiere ExtendScript objects/methods/properties is available [here](https://github.com/Adobe-CEP/Samples/tree/master/PProPanel/jsx). This quick code parse the typescript definition format used and extract those information to be used in the generated py typescript_definition_parser

@@ -1,3 +1,7 @@
+"""
+Suite of function used to manipulate Premiere app (is it running ? start it...) Works fine on my Windows 10 install
+but no guaranty is provided...
+"""
 import os
 import sys
 import time
@@ -15,6 +19,7 @@ IS_PYTHON_2 = sys.version_info.major == 2
 def count_running_exe(exe_name):
     """
     Using tasklist windows command, we can find the number of process running with a specific name
+
     :param exe_name: (str) exact name of the process (ex : 'pycharm64.exe')
     :return:
     """
@@ -31,7 +36,8 @@ def count_running_exe(exe_name):
 
 def exe_is_running(exe_name):
     """
-    See count_running_exe
+    See count_running_exe docstring
+
     :param exe_name: (str) exact name of the process (ex : 'pycharm64.exe')
     :return: (bool) exe is running, (int) pid
     """
@@ -51,6 +57,7 @@ def exe_is_running(exe_name):
 def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallLocation"]):
     """
     Looking into Uninstall key in Windows registry, we can get some infos about installed software
+
     :param name_filter: (str) filter software containing this name
     :return: (list of dict) info of software found
     """
@@ -74,6 +81,7 @@ def get_installed_softwares_info(name_filter, names=["DisplayVersion", "InstallL
 def get_last_premiere_exe():
     """
     Hopefully compute the path to the exe file for premiere
+
     :return: (str) path to exe
     """
     premiere_versions = get_installed_softwares_info("adobe premiere pro")
@@ -97,6 +105,7 @@ def get_last_premiere_exe():
 def start_premiere():
     """
     Start Premiere pro if not already started
+
     :return (int) pid of Premiere process
     """
     running, pid = exe_is_running("adobe premiere pro.exe")
@@ -107,7 +116,7 @@ def start_premiere():
     start_running_cep_pannels = count_running_exe("CEPHtmlEngine.exe")
     # we don't call directly premiere exec here so it's not a child of this script.
     # It will still run after this script is killed
-    call(["start_premiere.bat", exe_path])
+    call([os.path.join(__file__, "..", "bin", "start_premiere.bat"), exe_path])
     # check process is starting and when it is done
     for i in range(200):
         running, pid = exe_is_running("adobe premiere pro.exe")

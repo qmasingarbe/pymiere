@@ -1,12 +1,16 @@
+"""
+Collection of higher level functions using low level pymiere code
+"""
 import pymiere
 
-
+# premiere uses ticks as its base time unit, this is used to convert from ticks to seconds
 TICKS_PER_SECONDS = 254016000000
 
 
 def check_active_sequence(crash=True):
     """
     Check if a project is opened and if a sequence is active
+
     :param crash: (bool) crash or return status as bool
     :return: (bool), (bool) project is opened, sequence is active
     """
@@ -30,6 +34,7 @@ def check_active_sequence(crash=True):
 def get_item_recursive(item, add_root=False, filter_function=lambda i: True):
     """
     Recursively browse the project items returning a list of item with associated filepaths
+
     :param item: (ProjectItem) start item to browse from
     :param add_root: (bool) add the root (first given item) to the list and to the path
     :param filter_function: (None or func) function applied on all item, should return a bool adding or dismissing it
@@ -48,6 +53,7 @@ def get_item_recursive(item, add_root=False, filter_function=lambda i: True):
 def list_sequences():
     """
     List available sequence sin the opened project, print infos and return objects
+
     :return: (list of Sequence) all sequences available in the project
     """
     sequences = pymiere.objects.app.project.sequences
@@ -68,6 +74,7 @@ def list_sequences():
 def list_video(sequence):
     """
     List all video clips on all tracks on this sequence
+
     :param sequence: (Sequence)
     :return: (list of Clip)
     """
@@ -92,6 +99,7 @@ def list_video(sequence):
 def edit_clip(clip, start_on_timeline, end_on_timeline, in_point_on_clip, out_point_on_clip, fps=None):
     """
     Trim or move clip. This in not available in ppro 2017, use insertClip or overwriteClip
+
     :param clip: (Clip)
     :param start_on_timeline: (int) Frame at which the clip should start in the sequence timeline
     :param end_on_timeline: (int) Frame at which the clip should end in the sequence timeline

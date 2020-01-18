@@ -1,5 +1,9 @@
+"""
+Generic utils functions
+"""
 import os, json
 
+# correspondence of type names between ExtendScript and python
 TYPE_CORRESPONDENCE = {"string": "str", "boolean": "bool", "number": "float", "any": "any", "undefined": "None"}
 
 

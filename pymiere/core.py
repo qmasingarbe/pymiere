@@ -1,3 +1,6 @@
+"""
+Core functions handling connection and objects base
+"""
 import os
 import json
 from time import time as current_time
@@ -5,7 +8,7 @@ import requests
 from pymiere.exe_utils import exe_is_running
 
 # ----- GLOBALS -----
-PANEL_URL = "http://127.0.0.1:3000"
+PANEL_URL = "http://127.0.0.1:3000"  # Pymiere link local URL
 ALIVE_TIMEOUT = 2  # check that premiere is still alive every x seconds
 
 
@@ -13,6 +16,7 @@ ALIVE_TIMEOUT = 2  # check that premiere is still alive every x seconds
 def check_premiere_is_alive(crash=True):
     """
     Check if premiere is running and if the pymiere CEP panel is active
+
     :param crash: (bool) what to do if premiere is not connected
     :return: (bool) is premiere ready to receive instruction from python
     """
@@ -50,6 +54,7 @@ def check_premiere_is_alive(crash=True):
 def eval_script(code=None, filepath=None, decode_json=True):
     """
     Send some ExtendScript code to premiere and wait for the returning value
+
     :param code: (str) plain text ExtendScript code
     :param filepath: (str) path to a jsx file to execute
     :param decode_json: (bool) decode response using json if possible
@@ -118,6 +123,7 @@ class PymiereBaseObject(object):
     def __init__(self, pymiere_id):
         """
         Init pymiere connection global
+
         :param pymiere_id: (str) Id of the object we are about to create in extend script, every object is stored in
         $._pymiere var to be accessed easily from python
         """
@@ -138,6 +144,7 @@ class PymiereBaseObject(object):
     def _eval_on_this_object(self, extend_property, dot_notation=True):
         """
         Do something on the current object in extendscript, could be to query or set a property or exec a function
+
         :param extend_property: (str) code part after object needed to be execute (ex: get property name second => 'second',
         set property index => 'index = 12', execute a method 'getColor()'
         :param dot_notation: (bool) by default the dot is includin between the object query and the property, if we
@@ -170,6 +177,7 @@ class PymiereBaseObject(object):
     def _check_init_args(kwargs):
         """
         Check that we either get all init args (when object comes from ES) or no args (when we want to create an empty object)
+
         :param kwargs: (dict) keyword arguments at object creation
         """
         if "pymiere_id" in kwargs and kwargs["pymiere_id"] is not None:
@@ -192,6 +200,7 @@ class PymiereBaseObject(object):
     def _check_type(obj, cls, name):
         """
         Check that the object is an instances of the right type
+
         :param obj: (any) object to check
         :param cls: (type) class the object should be
         :param name: (str) name of the object being check to print in the error if check fails
@@ -210,6 +219,7 @@ class PymiereBaseCollection(PymiereBaseObject):
         """
         These is the base class for all collections, interfacing between premiere Collection objects and python builtin
         iteration tools
+
         :param pymiere_id: (str) Id of the object we are about to create in extend script, every object is stored in
         $._pymiere var to be accessed easily from python
         :param len_property: (str) name of the property, on the ExtendScript collection object, holding the number of items
@@ -222,6 +232,7 @@ class PymiereBaseCollection(PymiereBaseObject):
     def __getitem__(self, index):
         """
         Builtin method for getting the value at the specific index, redirect to ExtendScript similar query
+
         :param index: (int) index of item we are searching in the collection
         :return: (dict) dict of kwargs to create the object. The object creation itself append in the subclass for
         code inspection/autocomplete purposes
@@ -231,6 +242,7 @@ class PymiereBaseCollection(PymiereBaseObject):
     def __len__(self):
         """
         Builtin method for length, we ask premiere using the 'num...' property of the object
+
         :return: (int) length of the collection
         """
         return self._eval_on_this_object(self.len_property)
@@ -239,6 +251,7 @@ class PymiereBaseCollection(PymiereBaseObject):
         """
         Builtin method for iteration, we return our custom iterator to redirect to the __getitem__ method
         This is actually overriden on all super class using a list to keep code type hint in IDE
+
         :return: (generator)
         """
         return _collection_iterator(self)
@@ -254,6 +267,7 @@ class PymiereGenericObject(PymiereBaseObject):
     def __setattr__(self, key, value):
         """
         Cqlled when we set a property value
+
         :param key: (str) name of the property
         :param value: (any) new value for the property
         """
@@ -276,6 +290,7 @@ class PymiereGenericObject(PymiereBaseObject):
     def __getattr__(self, item):
         """
         Called when we query a prop or execute a function : search in ES if func or prop + return value or function
+
         :param item: (str) name of function or the property
         :return: (any or func) value of the property or function to be executed
         """
@@ -332,6 +347,9 @@ class PymiereGenericObject(PymiereBaseObject):
 
 
 class Array(PymiereBaseCollection):
+    """
+    Mirror Extend script Array (may be builtin javascript)
+    """
     def __init__(self, pymiere_id, length):
         super(Array, self).__init__(pymiere_id, "length")
 
@@ -343,6 +361,7 @@ class Array(PymiereBaseCollection):
 def _format_object_to_es(obj):
     """
     For functions args and property setter : format the given arg using quote for string, object query for object
+
     :param obj: (any) arg to format
     :return: (str) extend script equivalent for arg
     """
@@ -358,7 +377,8 @@ def _format_object_to_es(obj):
 
 def _format_object_to_py(obj):
     """
-    when getting a value from extend script, create object if it is one or return value for builtin
+    When getting a value from extend script, create object if it is one or return value for builtin
+
     :param obj: (any) value from ES decoded via json, could be an object repr
     :return: (any) python value
     """
@@ -380,6 +400,7 @@ def _format_object_to_py(obj):
 def _eval_script_returning_object(line, as_kwargs=False):
     """
     Eval the line as ExtendScript code, if the code return an object, it will be properly stored with an id for
+
     pymiere to handle it and returned as a representation with the id
     :param line: (str) line of code to execute in ES
     :param as_kwargs: (bool) if object return only kwargs+pymiere_id to directly pass it to class init
@@ -406,6 +427,7 @@ def _collection_iterator(collection):
     """
     This is an iterator, we use it to redirect the use of __iter__ to __getitem__ in order to always query from
     ExtendScript. It is used by the __iter__ method of the PymiereBaseCollection class
+
     :param collection: (PymiereBaseCollection) the collection we want to iter on
     :return: yield item of the collection
     """

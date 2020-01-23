@@ -95,7 +95,7 @@ class StartVars(object):
 
     @property
     def Dollar(self):
-        return _format_object_to_py(_eval_script_returning_object('Dollar'))
+        return Dollar(**_eval_script_returning_object('$', as_kwargs=True))
     @Dollar.setter
     def Dollar(self, Dollar):
         raise AttributeError("Attribute 'Dollar' is read-only")

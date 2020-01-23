@@ -4525,13 +4525,13 @@ class Dollar(PymiereBaseObject):
         """
         self._eval_on_this_object("write()")
 
-    def writeln(self):
+    def writeln(self, text):
         """
         Prints text
         Prints text to the Console, and adds a newline character. 
         :param text: The text to print. All arguments are concatenated.
         """
-        self._eval_on_this_object("writeln()")
+        self._eval_on_this_object("writeln({})".format(_format_object_to_es(text)))
 
     def bp(self):
         """

@@ -1183,10 +1183,10 @@ class Sequence(PymiereBaseObject):
     def setPlayerPosition(self, pos):
         """
         Sets the current player position. 
-        :param pos: The new position, as a timecode string.
-        :type pos: str
+        :param pos: The new position, in ticks
+        :type pos: int
         """
-        self._check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
+        self._check_type(pos, int, 'arg "pos" of function "Sequence.setPlayerPosition"')
         self._eval_on_this_object("setPlayerPosition({})".format(_format_object_to_es(pos)))
 
     def setInPoint(self, time):
@@ -1391,7 +1391,7 @@ class Sequence(PymiereBaseObject):
         """
         Returns currently-selected clips, as an `Array` of `trackItems`
         """
-        self._eval_on_this_object("getSelection()")
+        return Array(**self._eval_on_this_object("getSelection()"))
 
     def setSelection(self):
         self._eval_on_this_object("setSelection()")
@@ -5440,8 +5440,8 @@ class ComponentParam(PymiereBaseObject):
     def getValue(self):
         self._eval_on_this_object("getValue()")
 
-    def setValue(self):
-        return self._eval_on_this_object("setValue()")
+    def setValue(self, value, updateUI):
+        return self._eval_on_this_object("setValue({}, {})".format(_format_object_to_es(value), _format_object_to_es(updateUI)))
 
     def getColorValue(self):
         self._eval_on_this_object("getColorValue()")

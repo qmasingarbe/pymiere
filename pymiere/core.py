@@ -326,7 +326,7 @@ class Array(PymiereBaseCollection):
     """
     Mirror Extend script Array (may be builtin javascript)
     """
-    def __init__(self, pymiere_id, length):
+    def __init__(self, pymiere_id):
         super(Array, self).__init__(pymiere_id, "length")
 
     def __getitem__(self, index):

@@ -168,33 +168,9 @@ class PymiereBaseObject(object):
             # if result["objectType"] not in available_subclasses:
             #     raise ValueError("Received object of type '{}' that is not implemented in API...".format(result["objectType"]))
             # create key word argument list to create the object
-            kwargs = result["objectValues"]
-            kwargs.update(pymiere_id=result["pymiereId"])
+            kwargs = dict(pymiere_id=result["pymiereId"])
             return kwargs
         return result
-
-    @staticmethod
-    def _check_init_args(kwargs):
-        """
-        Check that we either get all init args (when object comes from ES) or no args (when we want to create an empty object)
-
-        :param kwargs: (dict) keyword arguments at object creation
-        """
-        if "pymiere_id" in kwargs and kwargs["pymiere_id"] is not None:
-            return
-        kwargs = {k: v is not None for k, v in kwargs.items()}
-        if all(kwargs.values()) is True:  # all args are given
-            return
-        if any(kwargs.values()) is False:  # no args given
-            return
-        arg_with_value = list()
-        arg_without_value = list()
-        for k, v in kwargs.items():
-            if v:
-                arg_with_value.append(k)
-            else:
-                arg_without_value.append(k)
-        raise ValueError("Creation of object with keywords args doesn't work. Got keywords {} and not {}".format(arg_with_value, arg_without_value))
 
     @staticmethod
     def _check_type(obj, cls, name):
@@ -354,7 +330,7 @@ class Array(PymiereBaseCollection):
         super(Array, self).__init__(pymiere_id, "length")
 
     def __getitem__(self, index):
-        return _format_object_to_py(super(Array, self).__getitem__(index))
+        return _format_object_to_py(_eval_script_returning_object("$._pymiere['{}'][{}]".format(self._pymiere_id, index)))
 
 
 # ----- PRIVATE FUNCTIONS ----
@@ -387,13 +363,13 @@ def _format_object_to_py(obj):
         available_subclasses = {cls.__name__: cls for cls in PymiereBaseObject.__subclasses__()}
         available_subclasses.update({cls.__name__: cls for cls in PymiereBaseCollection.__subclasses__()})
         if object_type in available_subclasses:
-            return available_subclasses[object_type](obj.get("pymiereId"), **obj["objectValues"])
+            return available_subclasses[object_type](pymiere_id=obj.get("pymiereId"))
         elif "ollection" in object_type:
             raise NotImplementedError("Pymiere does not support collections as generic object...")
         elif object_type == "$":
-            return available_subclasses["Dollar"](obj.get("pymiereId"), **obj["objectValues"])
+            return available_subclasses["Dollar"](pymiere_id=obj.get("pymiereId"))
         else:
-            return PymiereGenericObject(obj["pymiereId"], **obj["objectValues"])
+            return PymiereGenericObject(pymiere_id=obj["pymiereId"])
     return obj
 
 
@@ -412,13 +388,12 @@ def _eval_script_returning_object(line, as_kwargs=False):
     script += """\nif(typeof tmp === 'object'){
             var newPymiereId = $._pymiere.generateId();
             $._pymiere[newPymiereId] = tmp;
-            tmp = ExtendJSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "objectValues": tmp, "pymiereId": newPymiereId}, internal_variables_replacer, 0, 1);
+            tmp = ExtendJSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "pymiereId": newPymiereId}, internal_variables_replacer, 0, 1);
         }
         tmp"""
     result = eval_script(script, decode_json=True)
     if as_kwargs and isinstance(result, dict) and result.get("isObject"):
-        kwargs = result.get("objectValues", dict())
-        kwargs.update(pymiere_id=result["pymiereId"])
+        kwargs = dict(pymiere_id=result["pymiereId"])
         return kwargs
     return result
 

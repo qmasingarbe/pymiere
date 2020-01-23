@@ -31,16 +31,8 @@ def generate_class(object_data, all_classes_names):
     if object_data.get("name") in comments_data and comments_data[object_data.get("name")]["comment"]:
         code = code.add_line('""" {} """'.format(comments_data[object_data.get("name")]["comment"]), indent=1)
     # init
-    properties = ["{}=None".format(p) for p in object_data.get("props").keys()]
-    if object_data.get("name") == "$":  # absorb extra things in $ object
-        code = code.add_line("def __init__(self, pymiere_id=None, {}, **kwargs):".format(", ".join(properties)), indent=1)
-    else:
-        code = code.add_line("def __init__(self, pymiere_id=None, {}):".format(", ".join(properties)), indent=1)
-    properties_dict = ["'{0}': {0}".format(p) for p in object_data.get("props").keys()]
-    code = code.add_line("self._check_init_args({'pymiere_id': pymiere_id, "+ ", ".join(properties_dict) +"})", indent=2)
+    code = code.add_line("def __init__(self, pymiere_id=None):", indent=1)
     code = code.add_line("super({}, self).__init__(pymiere_id)".format(object_data.get("name")), indent=2)
-    for prop_name in object_data.get("props").keys():
-        code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
 
     # ----- CLASS PROPERTIES -----
     code = code.add_empty_line()
@@ -57,17 +49,16 @@ def generate_class(object_data, all_classes_names):
         if prop_info.get("description"):
             code = code.add_line('"""{}"""'.format(prop_info.get("description")), indent=2)
         if prop_info.get("dataType") in utils.TYPE_CORRESPONDENCE:
-            code = code.add_line("self.__{0} = self._eval_on_this_object('{0}')".format(prop_name), indent=2)
+            code = code.add_line("return self._eval_on_this_object('{0}')".format(prop_name), indent=2)
         elif not prop_info.get("dataType")[0].isupper():
             code = code.add_line("# TODO : this is unsupported dataType {}".format(prop_info.get("dataType")), indent=2)
             # raise ValueError("Don't know how to handle dataType {}".format(prop_info.get("dataType")))
         elif prop_info.get("dataType") not in all_classes_names:
             print("Return type '{}' for property getter '{}.{}' seems unknown, using automatic ES class to py object".format(prop_info.get("dataType"), object_data.get("name"), prop_name))
-            code = code.add_line("self.__{0} = _format_object_to_py(self._eval_on_this_object('{0}'))".format(prop_name), indent=2)
+            code = code.add_line("return _format_object_to_py(self._eval_on_this_object('{0}'))".format(prop_name), indent=2)
         else:
             code = code.add_line("kwargs = self._eval_on_this_object('{0}')".format(prop_name), indent=2)
-            code = code.add_line("self.__{0} = {1}(**kwargs) if kwargs else None".format(prop_name, prop_info.get("dataType")), indent=2)
-        code = code.add_line("return self.__{}".format(prop_name), indent=2)
+            code = code.add_line("return {1}(**kwargs) if kwargs else None".format(prop_name, prop_info.get("dataType")), indent=2)
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
@@ -79,7 +70,6 @@ def generate_class(object_data, all_classes_names):
                 print("value type '{}' for property setter of '{}.{}' seems unknown, no check for type will be performed".format(check_cls, object_data.get("name"), prop_name))
             line = """self._eval_on_this_object("{0} = {{}}".format(_format_object_to_es({0})))"""
             code = code.add_line(line.format(prop_name), indent=2)
-            code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
         elif prop_info.get("type") == "readonly":
             code = code.add_line("""raise AttributeError("Attribute '{}' is read-only")""".format(prop_name), indent=2)
         else:
@@ -182,9 +172,7 @@ def generate_collection_class(object_data):
         item_class_name = class_name.replace("Collection", "")
     # write class declaration
     code = code.add_line("class {}(PymiereBaseCollection):".format(class_name))
-    code = code.add_line("def __init__(self, pymiere_id, length, {}, **kwargs):".format(length_property), indent=1)
-    code = code.add_line("if not all([k.isdigit() for k in kwargs.keys()]):", indent=2)
-    code = code.add_line("raise ValueError('Got unexpected argument {}'.format(kwargs))", indent=3)
+    code = code.add_line("def __init__(self, pymiere_id):", indent=1)
     code = code.add_line('super({}, self).__init__(pymiere_id, "{}")'.format(class_name, length_property), indent=2)
     code = code.add_empty_line()
     code = code.add_line("def __getitem__(self, index):", indent=1)
@@ -276,4 +264,4 @@ if __name__ == "__main__":
         if registered_class not in unique_objects:
             print("The class '{}' is registered in Premiere but will not be created".format(registered_class))
 
-    build_python_from_data(unique_objects, r"D:\code\prpro\pymiere\autogenerated\premiere_objects.py")
+    build_python_from_data(unique_objects, r"D:\code\pymiere_release\pymiere\objects\premiere_objects.py")

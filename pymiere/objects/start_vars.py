@@ -9,70 +9,43 @@ def _eval_on_global_object(extend_property):
     # if it's an object search if class exists and return objects creation arguments
     if isinstance(result, dict) and "isObject" in result and result["isObject"] is True:
         # create key word argument list to create the object
-        kwargs = result["objectValues"]
-        kwargs.update(pymiere_id=result["pymiereId"])
+        kwargs = dict(pymiere_id=result["pymiereId"])
         return kwargs
     return result
 
 
 class StartVars(object):
-    def __init__(self, NaN=None, Infinity=None, undefined=None, qe=None, app=None, document=None, ProjectItemType=None, ScratchDiskType=None, RegisteredDirectories=None, UtilityFunctions=None, Dollar=None, Math=None, premierepro13=None, AEFTBridge=None, PHXSBridge=None, CCXHostBridge=None, f=None, JSON=None):
-        PymiereBaseObject._check_init_args({'NaN':NaN, 'Infinity':Infinity, 'undefined':undefined, 'qe':qe, 'app':app, 'document':document, 'ProjectItemType':ProjectItemType, 'ScratchDiskType':ScratchDiskType, 'RegisteredDirectories':RegisteredDirectories, 'UtilityFunctions':UtilityFunctions, 'Dollar':Dollar, 'Math':Math, 'premierepro13':premierepro13, 'AEFTBridge':AEFTBridge, 'PHXSBridge':PHXSBridge, 'CCXHostBridge':CCXHostBridge, 'f':f, 'JSON':JSON})
+    def __init__(self):
         super(StartVars, self).__init__()
-        self.__NaN = NaN
-        self.__Infinity = Infinity
-        self.__undefined = undefined
-        self.__qe = qe
-        self.__app = app
-        self.__document = document
-        self.__ProjectItemType = ProjectItemType
-        self.__ScratchDiskType = ScratchDiskType
-        self.__RegisteredDirectories = RegisteredDirectories
-        self.__UtilityFunctions = UtilityFunctions
-        self.__Dollar = Dollar
-        self.__Math = Math
-        self.__premierepro13 = premierepro13
-        self.__AEFTBridge = AEFTBridge
-        self.__PHXSBridge = PHXSBridge
-        self.__CCXHostBridge = CCXHostBridge
-        self.__f = f
-        self.__JSON = JSON
 
     # ----- PROPERTIES -----
     @property
     def NaN(self):
-        self.__NaN = _eval_on_global_object('NaN')
-        return self.__NaN
+        return _eval_on_global_object('NaN')
     @NaN.setter
     def NaN(self, NaN):
         PymiereBaseObject._check_type(NaN, float, 'StartVars.NaN')
         _eval_on_global_object("NaN = {}".format(_format_object_to_es(NaN)))
-        self.__NaN = NaN
 
     @property
     def Infinity(self):
-        self.__Infinity = _eval_on_global_object('Infinity')
-        return self.__Infinity
+        return _eval_on_global_object('Infinity')
     @Infinity.setter
     def Infinity(self, Infinity):
         PymiereBaseObject._check_type(Infinity, float, 'StartVars.Infinity')
         _eval_on_global_object("Infinity = {}".format(_format_object_to_es(Infinity)))
-        self.__Infinity = Infinity
 
     @property
     def undefined(self):
-        self.__undefined = _eval_on_global_object('undefined')
-        return self.__undefined
+        return _eval_on_global_object('undefined')
     @undefined.setter
     def undefined(self, undefined):
         PymiereBaseObject._check_type(undefined, None, 'StartVars.undefined')
         _eval_on_global_object("undefined = {}".format(_format_object_to_es(undefined)))
-        self.__undefined = undefined
 
     @property
     def qe(self):
-        self.__qe = _format_object_to_py(_eval_script_returning_object('qe'))
-        return self.__qe
+        return _format_object_to_py(_eval_script_returning_object('qe'))
     @qe.setter
     def qe(self, qe):
         raise AttributeError("Attribute 'qe' is read-only")
@@ -80,122 +53,102 @@ class StartVars(object):
     """ The application object """
     @property
     def app(self):
-        self.__app = Application(**_eval_script_returning_object('app', as_kwargs=True))
-        return self.__app
+        return Application(**_eval_script_returning_object('app', as_kwargs=True))
     @app.setter
     def app(self, app):
         raise AttributeError("Attribute 'app' is read-only")
 
     @property
     def document(self):
-        self.__document = Document(**_eval_script_returning_object('document', as_kwargs=True))
-        return self.__document
+        return Document(**_eval_script_returning_object('document', as_kwargs=True))
     @document.setter
     def document(self, document):
         raise AttributeError("Attribute 'document' is read-only")
 
     @property
     def ProjectItemType(self):
-        self.__ProjectItemType = ProjectItemType(**_eval_script_returning_object('ProjectItemType', as_kwargs=True))
-        return self.__ProjectItemType
+        return ProjectItemType(**_eval_script_returning_object('ProjectItemType', as_kwargs=True))
     @ProjectItemType.setter
     def ProjectItemType(self, ProjectItemType):
         raise AttributeError("Attribute 'ProjectItemType' is read-only")
 
     @property
     def ScratchDiskType(self):
-        self.__ScratchDiskType = ScratchDiskType(**_eval_script_returning_object('ScratchDiskType', as_kwargs=True))
-        return self.__ScratchDiskType
+        return ScratchDiskType(**_eval_script_returning_object('ScratchDiskType', as_kwargs=True))
     @ScratchDiskType.setter
     def ScratchDiskType(self, ScratchDiskType):
         raise AttributeError("Attribute 'ScratchDiskType' is read-only")
 
     @property
     def RegisteredDirectories(self):
-        self.__RegisteredDirectories = RegisteredDirectories(**_eval_script_returning_object('RegisteredDirectories', as_kwargs=True))
-        return self.__RegisteredDirectories
+        return RegisteredDirectories(**_eval_script_returning_object('RegisteredDirectories', as_kwargs=True))
     @RegisteredDirectories.setter
     def RegisteredDirectories(self, RegisteredDirectories):
         raise AttributeError("Attribute 'RegisteredDirectories' is read-only")
 
     @property
     def UtilityFunctions(self):
-        self.__UtilityFunctions = UtilityFunctions(**_eval_script_returning_object('UtilityFunctions', as_kwargs=True))
-        return self.__UtilityFunctions
+        return UtilityFunctions(**_eval_script_returning_object('UtilityFunctions', as_kwargs=True))
     @UtilityFunctions.setter
     def UtilityFunctions(self, UtilityFunctions):
         raise AttributeError("Attribute 'UtilityFunctions' is read-only")
 
     @property
     def Dollar(self):
-        self.__Dollar = _format_object_to_py(_eval_script_returning_object('Dollar'))
-        return self.__Dollar
+        return _format_object_to_py(_eval_script_returning_object('Dollar'))
     @Dollar.setter
     def Dollar(self, Dollar):
         raise AttributeError("Attribute 'Dollar' is read-only")
 
     @property
     def Math(self):
-        self.__Math = Math(**_eval_script_returning_object('Math', as_kwargs=True))
-        return self.__Math
+        return Math(**_eval_script_returning_object('Math', as_kwargs=True))
     @Math.setter
     def Math(self, Math):
         raise AttributeError("Attribute 'Math' is read-only")
 
     @property
     def premierepro13(self):
-        self.__premierepro13 = _format_object_to_py(_eval_script_returning_object('premierepro13'))
-        return self.__premierepro13
+        return _format_object_to_py(_eval_script_returning_object('premierepro13'))
     @premierepro13.setter
     def premierepro13(self, premierepro13):
         _eval_on_global_object("premierepro13 = {}".format(_format_object_to_es(premierepro13)))
-        self.__premierepro13 = premierepro13
 
     @property
     def AEFTBridge(self):
-        self.__AEFTBridge = _format_object_to_py(_eval_script_returning_object('AEFTBridge'))
-        return self.__AEFTBridge
+        return _format_object_to_py(_eval_script_returning_object('AEFTBridge'))
     @AEFTBridge.setter
     def AEFTBridge(self, AEFTBridge):
         _eval_on_global_object("AEFTBridge = {}".format(_format_object_to_es(AEFTBridge)))
-        self.__AEFTBridge = AEFTBridge
 
     @property
     def PHXSBridge(self):
-        self.__PHXSBridge = _format_object_to_py(_eval_script_returning_object('PHXSBridge'))
-        return self.__PHXSBridge
+        return _format_object_to_py(_eval_script_returning_object('PHXSBridge'))
     @PHXSBridge.setter
     def PHXSBridge(self, PHXSBridge):
         _eval_on_global_object("PHXSBridge = {}".format(_format_object_to_es(PHXSBridge)))
-        self.__PHXSBridge = PHXSBridge
 
     @property
     def CCXHostBridge(self):
-        self.__CCXHostBridge = _format_object_to_py(_eval_script_returning_object('CCXHostBridge'))
-        return self.__CCXHostBridge
+        return _format_object_to_py(_eval_script_returning_object('CCXHostBridge'))
     @CCXHostBridge.setter
     def CCXHostBridge(self, CCXHostBridge):
         _eval_on_global_object("CCXHostBridge = {}".format(_format_object_to_es(CCXHostBridge)))
-        self.__CCXHostBridge = CCXHostBridge
 
     @property
     def f(self):
-        self.__f = File(**_eval_script_returning_object('f', as_kwargs=True))
-        return self.__f
+        return File(**_eval_script_returning_object('f', as_kwargs=True))
     @f.setter
     def f(self, f):
         PymiereBaseObject._check_type(f, File, 'StartVars.f')
         _eval_on_global_object("f = {}".format(_format_object_to_es(f)))
-        self.__f = f
 
     @property
     def JSON(self):
-        self.__JSON = _format_object_to_py(_eval_script_returning_object('JSON'))
-        return self.__JSON
+        return _format_object_to_py(_eval_script_returning_object('JSON'))
     @JSON.setter
     def JSON(self, JSON):
         _eval_on_global_object("JSON = {}".format(_format_object_to_es(JSON)))
-        self.__JSON = JSON
 
 
     # ----- FUNCTIONS -----

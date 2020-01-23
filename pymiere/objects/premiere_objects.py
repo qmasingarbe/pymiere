@@ -1,64 +1,41 @@
 from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es
 
 class Application(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, version=None, build=None, csxs=None, getPProPrefPath=None, getPProSystemPrefPath=None, project=None, projects=None, anywhere=None, encoder=None, properties=None, sourceMonitor=None, projectManager=None, userGuid=None, path=None, getAppPrefPath=None, getAppSystemPrefPath=None, metadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'version': version, 'build': build, 'csxs': csxs, 'getPProPrefPath': getPProPrefPath, 'getPProSystemPrefPath': getPProSystemPrefPath, 'project': project, 'projects': projects, 'anywhere': anywhere, 'encoder': encoder, 'properties': properties, 'sourceMonitor': sourceMonitor, 'projectManager': projectManager, 'userGuid': userGuid, 'path': path, 'getAppPrefPath': getAppPrefPath, 'getAppSystemPrefPath': getAppSystemPrefPath, 'metadata': metadata})
+    def __init__(self, pymiere_id=None):
         super(Application, self).__init__(pymiere_id)
-        self.__version = version
-        self.__build = build
-        self.__csxs = csxs
-        self.__getPProPrefPath = getPProPrefPath
-        self.__getPProSystemPrefPath = getPProSystemPrefPath
-        self.__project = project
-        self.__projects = projects
-        self.__anywhere = anywhere
-        self.__encoder = encoder
-        self.__properties = properties
-        self.__sourceMonitor = sourceMonitor
-        self.__projectManager = projectManager
-        self.__userGuid = userGuid
-        self.__path = path
-        self.__getAppPrefPath = getAppPrefPath
-        self.__getAppSystemPrefPath = getAppSystemPrefPath
-        self.__metadata = metadata
 
     # ----- PROPERTIES -----
     @property
     def version(self):
-        self.__version = self._eval_on_this_object('version')
-        return self.__version
+        return self._eval_on_this_object('version')
     @version.setter
     def version(self, version):
         raise AttributeError("Attribute 'version' is read-only")
 
     @property
     def build(self):
-        self.__build = self._eval_on_this_object('build')
-        return self.__build
+        return self._eval_on_this_object('build')
     @build.setter
     def build(self, build):
         raise AttributeError("Attribute 'build' is read-only")
 
     @property
     def csxs(self):
-        self.__csxs = _format_object_to_py(self._eval_on_this_object('csxs'))
-        return self.__csxs
+        return _format_object_to_py(self._eval_on_this_object('csxs'))
     @csxs.setter
     def csxs(self, csxs):
         raise AttributeError("Attribute 'csxs' is read-only")
 
     @property
     def getPProPrefPath(self):
-        self.__getPProPrefPath = self._eval_on_this_object('getPProPrefPath')
-        return self.__getPProPrefPath
+        return self._eval_on_this_object('getPProPrefPath')
     @getPProPrefPath.setter
     def getPProPrefPath(self, getPProPrefPath):
         raise AttributeError("Attribute 'getPProPrefPath' is read-only")
 
     @property
     def getPProSystemPrefPath(self):
-        self.__getPProSystemPrefPath = self._eval_on_this_object('getPProSystemPrefPath')
-        return self.__getPProSystemPrefPath
+        return self._eval_on_this_object('getPProSystemPrefPath')
     @getPProSystemPrefPath.setter
     def getPProSystemPrefPath(self, getPProSystemPrefPath):
         raise AttributeError("Attribute 'getPProSystemPrefPath' is read-only")
@@ -67,19 +44,16 @@ class Application(PymiereBaseObject):
     @property
     def project(self):
         kwargs = self._eval_on_this_object('project')
-        self.__project = Project(**kwargs) if kwargs else None
-        return self.__project
+        return Project(**kwargs) if kwargs else None
     @project.setter
     def project(self, project):
         self._check_type(project, Project, 'Application.project')
         self._eval_on_this_object("project = {}".format(_format_object_to_es(project)))
-        self.__project = project
 
     @property
     def projects(self):
         kwargs = self._eval_on_this_object('projects')
-        self.__projects = ProjectCollection(**kwargs) if kwargs else None
-        return self.__projects
+        return ProjectCollection(**kwargs) if kwargs else None
     @projects.setter
     def projects(self, projects):
         raise AttributeError("Attribute 'projects' is read-only")
@@ -87,8 +61,7 @@ class Application(PymiereBaseObject):
     @property
     def anywhere(self):
         kwargs = self._eval_on_this_object('anywhere')
-        self.__anywhere = Anywhere(**kwargs) if kwargs else None
-        return self.__anywhere
+        return Anywhere(**kwargs) if kwargs else None
     @anywhere.setter
     def anywhere(self, anywhere):
         raise AttributeError("Attribute 'anywhere' is read-only")
@@ -96,8 +69,7 @@ class Application(PymiereBaseObject):
     @property
     def encoder(self):
         kwargs = self._eval_on_this_object('encoder')
-        self.__encoder = Encoder(**kwargs) if kwargs else None
-        return self.__encoder
+        return Encoder(**kwargs) if kwargs else None
     @encoder.setter
     def encoder(self, encoder):
         raise AttributeError("Attribute 'encoder' is read-only")
@@ -105,8 +77,7 @@ class Application(PymiereBaseObject):
     @property
     def properties(self):
         kwargs = self._eval_on_this_object('properties')
-        self.__properties = Properties(**kwargs) if kwargs else None
-        return self.__properties
+        return Properties(**kwargs) if kwargs else None
     @properties.setter
     def properties(self, properties):
         raise AttributeError("Attribute 'properties' is read-only")
@@ -114,8 +85,7 @@ class Application(PymiereBaseObject):
     @property
     def sourceMonitor(self):
         kwargs = self._eval_on_this_object('sourceMonitor')
-        self.__sourceMonitor = SourceMonitor(**kwargs) if kwargs else None
-        return self.__sourceMonitor
+        return SourceMonitor(**kwargs) if kwargs else None
     @sourceMonitor.setter
     def sourceMonitor(self, sourceMonitor):
         raise AttributeError("Attribute 'sourceMonitor' is read-only")
@@ -123,40 +93,35 @@ class Application(PymiereBaseObject):
     @property
     def projectManager(self):
         kwargs = self._eval_on_this_object('projectManager')
-        self.__projectManager = ProjectManager(**kwargs) if kwargs else None
-        return self.__projectManager
+        return ProjectManager(**kwargs) if kwargs else None
     @projectManager.setter
     def projectManager(self, projectManager):
         raise AttributeError("Attribute 'projectManager' is read-only")
 
     @property
     def userGuid(self):
-        self.__userGuid = self._eval_on_this_object('userGuid')
-        return self.__userGuid
+        return self._eval_on_this_object('userGuid')
     @userGuid.setter
     def userGuid(self, userGuid):
         raise AttributeError("Attribute 'userGuid' is read-only")
 
     @property
     def path(self):
-        self.__path = self._eval_on_this_object('path')
-        return self.__path
+        return self._eval_on_this_object('path')
     @path.setter
     def path(self, path):
         raise AttributeError("Attribute 'path' is read-only")
 
     @property
     def getAppPrefPath(self):
-        self.__getAppPrefPath = self._eval_on_this_object('getAppPrefPath')
-        return self.__getAppPrefPath
+        return self._eval_on_this_object('getAppPrefPath')
     @getAppPrefPath.setter
     def getAppPrefPath(self, getAppPrefPath):
         raise AttributeError("Attribute 'getAppPrefPath' is read-only")
 
     @property
     def getAppSystemPrefPath(self):
-        self.__getAppSystemPrefPath = self._eval_on_this_object('getAppSystemPrefPath')
-        return self.__getAppSystemPrefPath
+        return self._eval_on_this_object('getAppSystemPrefPath')
     @getAppSystemPrefPath.setter
     def getAppSystemPrefPath(self, getAppSystemPrefPath):
         raise AttributeError("Attribute 'getAppSystemPrefPath' is read-only")
@@ -164,8 +129,7 @@ class Application(PymiereBaseObject):
     @property
     def metadata(self):
         kwargs = self._eval_on_this_object('metadata')
-        self.__metadata = Metadata(**kwargs) if kwargs else None
-        return self.__metadata
+        return Metadata(**kwargs) if kwargs else None
     @metadata.setter
     def metadata(self, metadata):
         raise AttributeError("Attribute 'metadata' is read-only")
@@ -344,39 +308,27 @@ class Application(PymiereBaseObject):
 
 
 class Project(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, documentID=None, name=None, path=None, rootItem=None, sequences=None, activeSequence=None, isCloudProject=None, cloudProjectLocalID=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'documentID': documentID, 'name': name, 'path': path, 'rootItem': rootItem, 'sequences': sequences, 'activeSequence': activeSequence, 'isCloudProject': isCloudProject, 'cloudProjectLocalID': cloudProjectLocalID})
+    def __init__(self, pymiere_id=None):
         super(Project, self).__init__(pymiere_id)
-        self.__documentID = documentID
-        self.__name = name
-        self.__path = path
-        self.__rootItem = rootItem
-        self.__sequences = sequences
-        self.__activeSequence = activeSequence
-        self.__isCloudProject = isCloudProject
-        self.__cloudProjectLocalID = cloudProjectLocalID
 
     # ----- PROPERTIES -----
     @property
     def documentID(self):
-        self.__documentID = self._eval_on_this_object('documentID')
-        return self.__documentID
+        return self._eval_on_this_object('documentID')
     @documentID.setter
     def documentID(self, documentID):
         raise AttributeError("Attribute 'documentID' is read-only")
 
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
 
     @property
     def path(self):
-        self.__path = self._eval_on_this_object('path')
-        return self.__path
+        return self._eval_on_this_object('path')
     @path.setter
     def path(self, path):
         raise AttributeError("Attribute 'path' is read-only")
@@ -384,8 +336,7 @@ class Project(PymiereBaseObject):
     @property
     def rootItem(self):
         kwargs = self._eval_on_this_object('rootItem')
-        self.__rootItem = ProjectItem(**kwargs) if kwargs else None
-        return self.__rootItem
+        return ProjectItem(**kwargs) if kwargs else None
     @rootItem.setter
     def rootItem(self, rootItem):
         raise AttributeError("Attribute 'rootItem' is read-only")
@@ -393,8 +344,7 @@ class Project(PymiereBaseObject):
     @property
     def sequences(self):
         kwargs = self._eval_on_this_object('sequences')
-        self.__sequences = SequenceCollection(**kwargs) if kwargs else None
-        return self.__sequences
+        return SequenceCollection(**kwargs) if kwargs else None
     @sequences.setter
     def sequences(self, sequences):
         raise AttributeError("Attribute 'sequences' is read-only")
@@ -403,26 +353,22 @@ class Project(PymiereBaseObject):
     @property
     def activeSequence(self):
         kwargs = self._eval_on_this_object('activeSequence')
-        self.__activeSequence = Sequence(**kwargs) if kwargs else None
-        return self.__activeSequence
+        return Sequence(**kwargs) if kwargs else None
     @activeSequence.setter
     def activeSequence(self, activeSequence):
         self._check_type(activeSequence, Sequence, 'Project.activeSequence')
         self._eval_on_this_object("activeSequence = {}".format(_format_object_to_es(activeSequence)))
-        self.__activeSequence = activeSequence
 
     @property
     def isCloudProject(self):
-        self.__isCloudProject = self._eval_on_this_object('isCloudProject')
-        return self.__isCloudProject
+        return self._eval_on_this_object('isCloudProject')
     @isCloudProject.setter
     def isCloudProject(self, isCloudProject):
         raise AttributeError("Attribute 'isCloudProject' is read-only")
 
     @property
     def cloudProjectLocalID(self):
-        self.__cloudProjectLocalID = self._eval_on_this_object('cloudProjectLocalID')
-        return self.__cloudProjectLocalID
+        return self._eval_on_this_object('cloudProjectLocalID')
     @cloudProjectLocalID.setter
     def cloudProjectLocalID(self, cloudProjectLocalID):
         raise AttributeError("Attribute 'cloudProjectLocalID' is read-only")
@@ -649,55 +595,42 @@ class Project(PymiereBaseObject):
 
 
 class ProjectItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, children=None, name=None, treePath=None, type=None, nodeId=None, videoComponents=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'children': children, 'name': name, 'treePath': treePath, 'type': type, 'nodeId': nodeId, 'videoComponents': videoComponents})
+    def __init__(self, pymiere_id=None):
         super(ProjectItem, self).__init__(pymiere_id)
-        self.__children = children
-        self.__name = name
-        self.__treePath = treePath
-        self.__type = type
-        self.__nodeId = nodeId
-        self.__videoComponents = videoComponents
 
     # ----- PROPERTIES -----
     @property
     def children(self):
         kwargs = self._eval_on_this_object('children')
-        self.__children = ProjectItemCollection(**kwargs) if kwargs else None
-        return self.__children
+        return ProjectItemCollection(**kwargs) if kwargs else None
     @children.setter
     def children(self, children):
         raise AttributeError("Attribute 'children' is read-only")
 
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
-        self.__name = name
 
     @property
     def treePath(self):
-        self.__treePath = self._eval_on_this_object('treePath')
-        return self.__treePath
+        return self._eval_on_this_object('treePath')
     @treePath.setter
     def treePath(self, treePath):
         raise AttributeError("Attribute 'treePath' is read-only")
 
     @property
     def type(self):
-        self.__type = self._eval_on_this_object('type')
-        return self.__type
+        return self._eval_on_this_object('type')
     @type.setter
     def type(self, type):
         raise AttributeError("Attribute 'type' is read-only")
 
     @property
     def nodeId(self):
-        self.__nodeId = self._eval_on_this_object('nodeId')
-        return self.__nodeId
+        return self._eval_on_this_object('nodeId')
     @nodeId.setter
     def nodeId(self, nodeId):
         raise AttributeError("Attribute 'nodeId' is read-only")
@@ -705,8 +638,7 @@ class ProjectItem(PymiereBaseObject):
     @property
     def videoComponents(self):
         kwargs = self._eval_on_this_object('videoComponents')
-        self.__videoComponents = ComponentCollection(**kwargs) if kwargs else None
-        return self.__videoComponents
+        return ComponentCollection(**kwargs) if kwargs else None
     @videoComponents.setter
     def videoComponents(self, videoComponents):
         raise AttributeError("Attribute 'videoComponents' is read-only")
@@ -970,9 +902,7 @@ class ProjectItem(PymiereBaseObject):
 
 
 class ProjectItemCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(ProjectItemCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
@@ -983,9 +913,7 @@ class ProjectItemCollection(PymiereBaseCollection):
 
 
 class SequenceCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numSequences, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(SequenceCollection, self).__init__(pymiere_id, "numSequences")
 
     def __getitem__(self, index):
@@ -997,30 +925,14 @@ class SequenceCollection(PymiereBaseCollection):
 
 class Sequence(PymiereBaseObject):
     """ A sequence. """
-    def __init__(self, pymiere_id=None, id=None, sequenceID=None, name=None, audioTracks=None, videoTracks=None, frameSizeHorizontal=None, frameSizeVertical=None, timebase=None, zeroPoint=None, end=None, markers=None, projectItem=None, videoDisplayFormat=None, audioDisplayFormat=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'id': id, 'sequenceID': sequenceID, 'name': name, 'audioTracks': audioTracks, 'videoTracks': videoTracks, 'frameSizeHorizontal': frameSizeHorizontal, 'frameSizeVertical': frameSizeVertical, 'timebase': timebase, 'zeroPoint': zeroPoint, 'end': end, 'markers': markers, 'projectItem': projectItem, 'videoDisplayFormat': videoDisplayFormat, 'audioDisplayFormat': audioDisplayFormat})
+    def __init__(self, pymiere_id=None):
         super(Sequence, self).__init__(pymiere_id)
-        self.__id = id
-        self.__sequenceID = sequenceID
-        self.__name = name
-        self.__audioTracks = audioTracks
-        self.__videoTracks = videoTracks
-        self.__frameSizeHorizontal = frameSizeHorizontal
-        self.__frameSizeVertical = frameSizeVertical
-        self.__timebase = timebase
-        self.__zeroPoint = zeroPoint
-        self.__end = end
-        self.__markers = markers
-        self.__projectItem = projectItem
-        self.__videoDisplayFormat = videoDisplayFormat
-        self.__audioDisplayFormat = audioDisplayFormat
 
     # ----- PROPERTIES -----
     """ Sequence ID """
     @property
     def id(self):
-        self.__id = self._eval_on_this_object('id')
-        return self.__id
+        return self._eval_on_this_object('id')
     @id.setter
     def id(self, id):
         raise AttributeError("Attribute 'id' is read-only")
@@ -1028,8 +940,7 @@ class Sequence(PymiereBaseObject):
     """ Permanent ID of the sequence, within its project. """
     @property
     def sequenceID(self):
-        self.__sequenceID = self._eval_on_this_object('sequenceID')
-        return self.__sequenceID
+        return self._eval_on_this_object('sequenceID')
     @sequenceID.setter
     def sequenceID(self, sequenceID):
         raise AttributeError("Attribute 'sequenceID' is read-only")
@@ -1037,19 +948,16 @@ class Sequence(PymiereBaseObject):
     """ Name (writable). """
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
-        self.__name = name
 
     """ A collection of the sequence's audio tracks. """
     @property
     def audioTracks(self):
         kwargs = self._eval_on_this_object('audioTracks')
-        self.__audioTracks = TrackCollection(**kwargs) if kwargs else None
-        return self.__audioTracks
+        return TrackCollection(**kwargs) if kwargs else None
     @audioTracks.setter
     def audioTracks(self, audioTracks):
         raise AttributeError("Attribute 'audioTracks' is read-only")
@@ -1057,8 +965,7 @@ class Sequence(PymiereBaseObject):
     @property
     def videoTracks(self):
         kwargs = self._eval_on_this_object('videoTracks')
-        self.__videoTracks = TrackCollection(**kwargs) if kwargs else None
-        return self.__videoTracks
+        return TrackCollection(**kwargs) if kwargs else None
     @videoTracks.setter
     def videoTracks(self, videoTracks):
         raise AttributeError("Attribute 'videoTracks' is read-only")
@@ -1066,8 +973,7 @@ class Sequence(PymiereBaseObject):
     """ Width """
     @property
     def frameSizeHorizontal(self):
-        self.__frameSizeHorizontal = self._eval_on_this_object('frameSizeHorizontal')
-        return self.__frameSizeHorizontal
+        return self._eval_on_this_object('frameSizeHorizontal')
     @frameSizeHorizontal.setter
     def frameSizeHorizontal(self, frameSizeHorizontal):
         raise AttributeError("Attribute 'frameSizeHorizontal' is read-only")
@@ -1075,16 +981,14 @@ class Sequence(PymiereBaseObject):
     """ Height """
     @property
     def frameSizeVertical(self):
-        self.__frameSizeVertical = self._eval_on_this_object('frameSizeVertical')
-        return self.__frameSizeVertical
+        return self._eval_on_this_object('frameSizeVertical')
     @frameSizeVertical.setter
     def frameSizeVertical(self, frameSizeVertical):
         raise AttributeError("Attribute 'frameSizeVertical' is read-only")
 
     @property
     def timebase(self):
-        self.__timebase = self._eval_on_this_object('timebase')
-        return self.__timebase
+        return self._eval_on_this_object('timebase')
     @timebase.setter
     def timebase(self, timebase):
         raise AttributeError("Attribute 'timebase' is read-only")
@@ -1092,8 +996,7 @@ class Sequence(PymiereBaseObject):
     """ The starting timecode of the first frame of the sequence, as a string. """
     @property
     def zeroPoint(self):
-        self.__zeroPoint = self._eval_on_this_object('zeroPoint')
-        return self.__zeroPoint
+        return self._eval_on_this_object('zeroPoint')
     @zeroPoint.setter
     def zeroPoint(self, zeroPoint):
         raise AttributeError("Attribute 'zeroPoint' is read-only")
@@ -1101,8 +1004,7 @@ class Sequence(PymiereBaseObject):
     """ Timecode (as a string) of the end of the sequence. """
     @property
     def end(self):
-        self.__end = self._eval_on_this_object('end')
-        return self.__end
+        return self._eval_on_this_object('end')
     @end.setter
     def end(self, end):
         raise AttributeError("Attribute 'end' is read-only")
@@ -1111,8 +1013,7 @@ class Sequence(PymiereBaseObject):
     @property
     def markers(self):
         kwargs = self._eval_on_this_object('markers')
-        self.__markers = MarkerCollection(**kwargs) if kwargs else None
-        return self.__markers
+        return MarkerCollection(**kwargs) if kwargs else None
     @markers.setter
     def markers(self, markers):
         raise AttributeError("Attribute 'markers' is read-only")
@@ -1121,29 +1022,24 @@ class Sequence(PymiereBaseObject):
     @property
     def projectItem(self):
         kwargs = self._eval_on_this_object('projectItem')
-        self.__projectItem = ProjectItem(**kwargs) if kwargs else None
-        return self.__projectItem
+        return ProjectItem(**kwargs) if kwargs else None
     @projectItem.setter
     def projectItem(self, projectItem):
         raise AttributeError("Attribute 'projectItem' is read-only")
 
     @property
     def videoDisplayFormat(self):
-        self.__videoDisplayFormat = self._eval_on_this_object('videoDisplayFormat')
-        return self.__videoDisplayFormat
+        return self._eval_on_this_object('videoDisplayFormat')
     @videoDisplayFormat.setter
     def videoDisplayFormat(self, videoDisplayFormat):
         self._eval_on_this_object("videoDisplayFormat = {}".format(_format_object_to_es(videoDisplayFormat)))
-        self.__videoDisplayFormat = videoDisplayFormat
 
     @property
     def audioDisplayFormat(self):
-        self.__audioDisplayFormat = self._eval_on_this_object('audioDisplayFormat')
-        return self.__audioDisplayFormat
+        return self._eval_on_this_object('audioDisplayFormat')
     @audioDisplayFormat.setter
     def audioDisplayFormat(self, audioDisplayFormat):
         self._eval_on_this_object("audioDisplayFormat = {}".format(_format_object_to_es(audioDisplayFormat)))
-        self.__audioDisplayFormat = audioDisplayFormat
 
 
     # ----- FUNCTIONS -----
@@ -1183,10 +1079,10 @@ class Sequence(PymiereBaseObject):
     def setPlayerPosition(self, pos):
         """
         Sets the current player position. 
-        :param pos: The new position, in ticks
-        :type pos: int
+        :param pos: The new position, as a timecode string.
+        :type pos: str
         """
-        self._check_type(pos, int, 'arg "pos" of function "Sequence.setPlayerPosition"')
+        self._check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
         self._eval_on_this_object("setPlayerPosition({})".format(_format_object_to_es(pos)))
 
     def setInPoint(self, time):
@@ -1391,7 +1287,7 @@ class Sequence(PymiereBaseObject):
         """
         Returns currently-selected clips, as an `Array` of `trackItems`
         """
-        return Array(**self._eval_on_this_object("getSelection()"))
+        self._eval_on_this_object("getSelection()")
 
     def setSelection(self):
         self._eval_on_this_object("setSelection()")
@@ -1466,9 +1362,7 @@ class Sequence(PymiereBaseObject):
 
 
 class TrackCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numTracks, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(TrackCollection, self).__init__(pymiere_id, "numTracks")
 
     def __getitem__(self, index):
@@ -1479,16 +1373,13 @@ class TrackCollection(PymiereBaseCollection):
 
 
 class MarkerCollection(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, numMarkers=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'numMarkers': numMarkers})
+    def __init__(self, pymiere_id=None):
         super(MarkerCollection, self).__init__(pymiere_id)
-        self.__numMarkers = numMarkers
 
     # ----- PROPERTIES -----
     @property
     def numMarkers(self):
-        self.__numMarkers = self._eval_on_this_object('numMarkers')
-        return self.__numMarkers
+        return self._eval_on_this_object('numMarkers')
     @numMarkers.setter
     def numMarkers(self, numMarkers):
         raise AttributeError("Attribute 'numMarkers' is read-only")
@@ -1558,9 +1449,7 @@ class MarkerCollection(PymiereBaseObject):
 
 
 class ComponentCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(ComponentCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
@@ -1571,9 +1460,7 @@ class ComponentCollection(PymiereBaseCollection):
 
 
 class ProjectCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numProjects, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(ProjectCollection, self).__init__(pymiere_id, "numProjects")
 
     def __getitem__(self, index):
@@ -1584,8 +1471,7 @@ class ProjectCollection(PymiereBaseCollection):
 
 
 class Anywhere(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(Anywhere, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1661,34 +1547,27 @@ class Anywhere(PymiereBaseObject):
 
 
 class Encoder(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ENCODE_ENTIRE=None, ENCODE_IN_TO_OUT=None, ENCODE_WORKAREA=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'ENCODE_ENTIRE': ENCODE_ENTIRE, 'ENCODE_IN_TO_OUT': ENCODE_IN_TO_OUT, 'ENCODE_WORKAREA': ENCODE_WORKAREA})
+    def __init__(self, pymiere_id=None):
         super(Encoder, self).__init__(pymiere_id)
-        self.__ENCODE_ENTIRE = ENCODE_ENTIRE
-        self.__ENCODE_IN_TO_OUT = ENCODE_IN_TO_OUT
-        self.__ENCODE_WORKAREA = ENCODE_WORKAREA
 
     # ----- PROPERTIES -----
     @property
     def ENCODE_ENTIRE(self):
-        self.__ENCODE_ENTIRE = self._eval_on_this_object('ENCODE_ENTIRE')
-        return self.__ENCODE_ENTIRE
+        return self._eval_on_this_object('ENCODE_ENTIRE')
     @ENCODE_ENTIRE.setter
     def ENCODE_ENTIRE(self, ENCODE_ENTIRE):
         raise AttributeError("Attribute 'ENCODE_ENTIRE' is read-only")
 
     @property
     def ENCODE_IN_TO_OUT(self):
-        self.__ENCODE_IN_TO_OUT = self._eval_on_this_object('ENCODE_IN_TO_OUT')
-        return self.__ENCODE_IN_TO_OUT
+        return self._eval_on_this_object('ENCODE_IN_TO_OUT')
     @ENCODE_IN_TO_OUT.setter
     def ENCODE_IN_TO_OUT(self, ENCODE_IN_TO_OUT):
         raise AttributeError("Attribute 'ENCODE_IN_TO_OUT' is read-only")
 
     @property
     def ENCODE_WORKAREA(self):
-        self.__ENCODE_WORKAREA = self._eval_on_this_object('ENCODE_WORKAREA')
-        return self.__ENCODE_WORKAREA
+        return self._eval_on_this_object('ENCODE_WORKAREA')
     @ENCODE_WORKAREA.setter
     def ENCODE_WORKAREA(self, ENCODE_WORKAREA):
         raise AttributeError("Attribute 'ENCODE_WORKAREA' is read-only")
@@ -1798,8 +1677,7 @@ class Encoder(PymiereBaseObject):
 
 
 class Properties(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(Properties, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1869,8 +1747,7 @@ class Properties(PymiereBaseObject):
 
 
 class SourceMonitor(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(SourceMonitor, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -1938,19 +1815,15 @@ class SourceMonitor(PymiereBaseObject):
 
 
 class ProjectManager(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, options=None, errors=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'options': options, 'errors': errors})
+    def __init__(self, pymiere_id=None):
         super(ProjectManager, self).__init__(pymiere_id)
-        self.__options = options
-        self.__errors = errors
 
     # ----- PROPERTIES -----
     """ The `ProjectManagerOptions` structure. """
     @property
     def options(self):
         kwargs = self._eval_on_this_object('options')
-        self.__options = ProjectManagerOptions(**kwargs) if kwargs else None
-        return self.__options
+        return ProjectManagerOptions(**kwargs) if kwargs else None
     @options.setter
     def options(self, options):
         raise AttributeError("Attribute 'options' is read-only")
@@ -1958,8 +1831,7 @@ class ProjectManager(PymiereBaseObject):
     """ An array of strings describing errors encountered. """
     @property
     def errors(self):
-        self.__errors = self._eval_on_this_object('errors')
-        return self.__errors
+        return self._eval_on_this_object('errors')
     @errors.setter
     def errors(self, errors):
         raise AttributeError("Attribute 'errors' is read-only")
@@ -2005,186 +1877,134 @@ class ProjectManager(PymiereBaseObject):
 
 class ProjectManagerOptions(PymiereBaseObject):
     """ Structure containing all available options for the `ProjectManager`. """
-    def __init__(self, pymiere_id=None, clipTransferOption=None, clipTranscoderOption=None, excludeUnused=None, handleFrameCount=None, includePreviews=None, includeConformedAudio=None, renameMedia=None, destinationPath=None, includeAllSequences=None, affectedSequences=None, encoderPresetFilePath=None, convertImageSequencesToClips=None, convertSyntheticsToClips=None, convertAECompsToClips=None, copyToPreventAlphaLoss=None, CLIP_TRANSFER_COPY=None, CLIP_TRANSFER_TRANSCODE=None, CLIP_TRANSCODE_MATCH_PRESET=None, CLIP_TRANSCODE_MATCH_CLIPS=None, CLIP_TRANSCODE_MATCH_SEQUENCE=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'clipTransferOption': clipTransferOption, 'clipTranscoderOption': clipTranscoderOption, 'excludeUnused': excludeUnused, 'handleFrameCount': handleFrameCount, 'includePreviews': includePreviews, 'includeConformedAudio': includeConformedAudio, 'renameMedia': renameMedia, 'destinationPath': destinationPath, 'includeAllSequences': includeAllSequences, 'affectedSequences': affectedSequences, 'encoderPresetFilePath': encoderPresetFilePath, 'convertImageSequencesToClips': convertImageSequencesToClips, 'convertSyntheticsToClips': convertSyntheticsToClips, 'convertAECompsToClips': convertAECompsToClips, 'copyToPreventAlphaLoss': copyToPreventAlphaLoss, 'CLIP_TRANSFER_COPY': CLIP_TRANSFER_COPY, 'CLIP_TRANSFER_TRANSCODE': CLIP_TRANSFER_TRANSCODE, 'CLIP_TRANSCODE_MATCH_PRESET': CLIP_TRANSCODE_MATCH_PRESET, 'CLIP_TRANSCODE_MATCH_CLIPS': CLIP_TRANSCODE_MATCH_CLIPS, 'CLIP_TRANSCODE_MATCH_SEQUENCE': CLIP_TRANSCODE_MATCH_SEQUENCE})
+    def __init__(self, pymiere_id=None):
         super(ProjectManagerOptions, self).__init__(pymiere_id)
-        self.__clipTransferOption = clipTransferOption
-        self.__clipTranscoderOption = clipTranscoderOption
-        self.__excludeUnused = excludeUnused
-        self.__handleFrameCount = handleFrameCount
-        self.__includePreviews = includePreviews
-        self.__includeConformedAudio = includeConformedAudio
-        self.__renameMedia = renameMedia
-        self.__destinationPath = destinationPath
-        self.__includeAllSequences = includeAllSequences
-        self.__affectedSequences = affectedSequences
-        self.__encoderPresetFilePath = encoderPresetFilePath
-        self.__convertImageSequencesToClips = convertImageSequencesToClips
-        self.__convertSyntheticsToClips = convertSyntheticsToClips
-        self.__convertAECompsToClips = convertAECompsToClips
-        self.__copyToPreventAlphaLoss = copyToPreventAlphaLoss
-        self.__CLIP_TRANSFER_COPY = CLIP_TRANSFER_COPY
-        self.__CLIP_TRANSFER_TRANSCODE = CLIP_TRANSFER_TRANSCODE
-        self.__CLIP_TRANSCODE_MATCH_PRESET = CLIP_TRANSCODE_MATCH_PRESET
-        self.__CLIP_TRANSCODE_MATCH_CLIPS = CLIP_TRANSCODE_MATCH_CLIPS
-        self.__CLIP_TRANSCODE_MATCH_SEQUENCE = CLIP_TRANSCODE_MATCH_SEQUENCE
 
     # ----- PROPERTIES -----
     """ Which transfer option to use; will be one of these: 	`CLIP_TRANSFER_COPY`  `CLIP_TRANSFER_TRANSCODE` """
     @property
     def clipTransferOption(self):
-        self.__clipTransferOption = self._eval_on_this_object('clipTransferOption')
-        return self.__clipTransferOption
+        return self._eval_on_this_object('clipTransferOption')
     @clipTransferOption.setter
     def clipTransferOption(self, clipTransferOption):
         self._eval_on_this_object("clipTransferOption = {}".format(_format_object_to_es(clipTransferOption)))
-        self.__clipTransferOption = clipTransferOption
 
     """ Which transcode option to use; will be one of these: 	`CLIP_TRANSCODE_MATCH_PRESET`  `CLIP_TRANSCODE_MATCH_CLIPS` 	`CLIP_TRANSCODE_MATCH_SEQUENCE` """
     @property
     def clipTranscoderOption(self):
-        self.__clipTranscoderOption = self._eval_on_this_object('clipTranscoderOption')
-        return self.__clipTranscoderOption
+        return self._eval_on_this_object('clipTranscoderOption')
     @clipTranscoderOption.setter
     def clipTranscoderOption(self, clipTranscoderOption):
         self._eval_on_this_object("clipTranscoderOption = {}".format(_format_object_to_es(clipTranscoderOption)))
-        self.__clipTranscoderOption = clipTranscoderOption
 
     """ If `true`, projectItems not used in a sequence are not transferred """
     @property
     def excludeUnused(self):
-        self.__excludeUnused = self._eval_on_this_object('excludeUnused')
-        return self.__excludeUnused
+        return self._eval_on_this_object('excludeUnused')
     @excludeUnused.setter
     def excludeUnused(self, excludeUnused):
         self._eval_on_this_object("excludeUnused = {}".format(_format_object_to_es(excludeUnused)))
-        self.__excludeUnused = excludeUnused
 
     """ The number of 'handle' frames to provide, before and after the in/out points of clips in the sequence. """
     @property
     def handleFrameCount(self):
-        self.__handleFrameCount = self._eval_on_this_object('handleFrameCount')
-        return self.__handleFrameCount
+        return self._eval_on_this_object('handleFrameCount')
     @handleFrameCount.setter
     def handleFrameCount(self, handleFrameCount):
         self._eval_on_this_object("handleFrameCount = {}".format(_format_object_to_es(handleFrameCount)))
-        self.__handleFrameCount = handleFrameCount
 
     """ If `true`, preview files will also be transferred. """
     @property
     def includePreviews(self):
-        self.__includePreviews = self._eval_on_this_object('includePreviews')
-        return self.__includePreviews
+        return self._eval_on_this_object('includePreviews')
     @includePreviews.setter
     def includePreviews(self, includePreviews):
         self._eval_on_this_object("includePreviews = {}".format(_format_object_to_es(includePreviews)))
-        self.__includePreviews = includePreviews
 
     """ If `true`, conformed audio files will also be transferred. """
     @property
     def includeConformedAudio(self):
-        self.__includeConformedAudio = self._eval_on_this_object('includeConformedAudio')
-        return self.__includeConformedAudio
+        return self._eval_on_this_object('includeConformedAudio')
     @includeConformedAudio.setter
     def includeConformedAudio(self, includeConformedAudio):
         self._eval_on_this_object("includeConformedAudio = {}".format(_format_object_to_es(includeConformedAudio)))
-        self.__includeConformedAudio = includeConformedAudio
 
     """ If `true`, media files will be renamed to match clip names. """
     @property
     def renameMedia(self):
-        self.__renameMedia = self._eval_on_this_object('renameMedia')
-        return self.__renameMedia
+        return self._eval_on_this_object('renameMedia')
     @renameMedia.setter
     def renameMedia(self, renameMedia):
         self._eval_on_this_object("renameMedia = {}".format(_format_object_to_es(renameMedia)))
-        self.__renameMedia = renameMedia
 
     """ The containing directory for the consolidation/transfer. """
     @property
     def destinationPath(self):
-        self.__destinationPath = self._eval_on_this_object('destinationPath')
-        return self.__destinationPath
+        return self._eval_on_this_object('destinationPath')
     @destinationPath.setter
     def destinationPath(self, destinationPath):
         self._eval_on_this_object("destinationPath = {}".format(_format_object_to_es(destinationPath)))
-        self.__destinationPath = destinationPath
 
     """ If `true`, all sequences in the project will be transferred. """
     @property
     def includeAllSequences(self):
-        self.__includeAllSequences = self._eval_on_this_object('includeAllSequences')
-        return self.__includeAllSequences
+        return self._eval_on_this_object('includeAllSequences')
     @includeAllSequences.setter
     def includeAllSequences(self, includeAllSequences):
         self._eval_on_this_object("includeAllSequences = {}".format(_format_object_to_es(includeAllSequences)))
-        self.__includeAllSequences = includeAllSequences
 
     """ An `Array` of all sequences affected by the transfer. """
     @property
     def affectedSequences(self):
-        self.__affectedSequences = self._eval_on_this_object('affectedSequences')
-        return self.__affectedSequences
+        return self._eval_on_this_object('affectedSequences')
     @affectedSequences.setter
     def affectedSequences(self, affectedSequences):
         self._eval_on_this_object("affectedSequences = {}".format(_format_object_to_es(affectedSequences)))
-        self.__affectedSequences = affectedSequences
 
     """ Path the the encoder preset (.epr file) to be used. """
     @property
     def encoderPresetFilePath(self):
-        self.__encoderPresetFilePath = self._eval_on_this_object('encoderPresetFilePath')
-        return self.__encoderPresetFilePath
+        return self._eval_on_this_object('encoderPresetFilePath')
     @encoderPresetFilePath.setter
     def encoderPresetFilePath(self, encoderPresetFilePath):
         self._eval_on_this_object("encoderPresetFilePath = {}".format(_format_object_to_es(encoderPresetFilePath)))
-        self.__encoderPresetFilePath = encoderPresetFilePath
 
     """ If `true`, image sequences will be transcoded. """
     @property
     def convertImageSequencesToClips(self):
-        self.__convertImageSequencesToClips = self._eval_on_this_object('convertImageSequencesToClips')
-        return self.__convertImageSequencesToClips
+        return self._eval_on_this_object('convertImageSequencesToClips')
     @convertImageSequencesToClips.setter
     def convertImageSequencesToClips(self, convertImageSequencesToClips):
         self._eval_on_this_object("convertImageSequencesToClips = {}".format(_format_object_to_es(convertImageSequencesToClips)))
-        self.__convertImageSequencesToClips = convertImageSequencesToClips
 
     """ If `true`, synthetic importer clips will be transcoded. """
     @property
     def convertSyntheticsToClips(self):
-        self.__convertSyntheticsToClips = self._eval_on_this_object('convertSyntheticsToClips')
-        return self.__convertSyntheticsToClips
+        return self._eval_on_this_object('convertSyntheticsToClips')
     @convertSyntheticsToClips.setter
     def convertSyntheticsToClips(self, convertSyntheticsToClips):
         self._eval_on_this_object("convertSyntheticsToClips = {}".format(_format_object_to_es(convertSyntheticsToClips)))
-        self.__convertSyntheticsToClips = convertSyntheticsToClips
 
     """ If `true`, After Effects compositions will be transcoded. """
     @property
     def convertAECompsToClips(self):
-        self.__convertAECompsToClips = self._eval_on_this_object('convertAECompsToClips')
-        return self.__convertAECompsToClips
+        return self._eval_on_this_object('convertAECompsToClips')
     @convertAECompsToClips.setter
     def convertAECompsToClips(self, convertAECompsToClips):
         self._eval_on_this_object("convertAECompsToClips = {}".format(_format_object_to_es(convertAECompsToClips)))
-        self.__convertAECompsToClips = convertAECompsToClips
 
     """ If `true`, source media will be copied not transcoded, if transcoding would have resulted in loss of alpha information. """
     @property
     def copyToPreventAlphaLoss(self):
-        self.__copyToPreventAlphaLoss = self._eval_on_this_object('copyToPreventAlphaLoss')
-        return self.__copyToPreventAlphaLoss
+        return self._eval_on_this_object('copyToPreventAlphaLoss')
     @copyToPreventAlphaLoss.setter
     def copyToPreventAlphaLoss(self, copyToPreventAlphaLoss):
         self._eval_on_this_object("copyToPreventAlphaLoss = {}".format(_format_object_to_es(copyToPreventAlphaLoss)))
-        self.__copyToPreventAlphaLoss = copyToPreventAlphaLoss
 
     """ Transfer mode setting: Copy source media """
     @property
     def CLIP_TRANSFER_COPY(self):
-        self.__CLIP_TRANSFER_COPY = self._eval_on_this_object('CLIP_TRANSFER_COPY')
-        return self.__CLIP_TRANSFER_COPY
+        return self._eval_on_this_object('CLIP_TRANSFER_COPY')
     @CLIP_TRANSFER_COPY.setter
     def CLIP_TRANSFER_COPY(self, CLIP_TRANSFER_COPY):
         raise AttributeError("Attribute 'CLIP_TRANSFER_COPY' is read-only")
@@ -2192,8 +2012,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     """ Transfer mode setting: Transcode source media """
     @property
     def CLIP_TRANSFER_TRANSCODE(self):
-        self.__CLIP_TRANSFER_TRANSCODE = self._eval_on_this_object('CLIP_TRANSFER_TRANSCODE')
-        return self.__CLIP_TRANSFER_TRANSCODE
+        return self._eval_on_this_object('CLIP_TRANSFER_TRANSCODE')
     @CLIP_TRANSFER_TRANSCODE.setter
     def CLIP_TRANSFER_TRANSCODE(self, CLIP_TRANSFER_TRANSCODE):
         raise AttributeError("Attribute 'CLIP_TRANSFER_TRANSCODE' is read-only")
@@ -2201,8 +2020,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     """ Transcode mode setting: Transcode source media to a specific preset """
     @property
     def CLIP_TRANSCODE_MATCH_PRESET(self):
-        self.__CLIP_TRANSCODE_MATCH_PRESET = self._eval_on_this_object('CLIP_TRANSCODE_MATCH_PRESET')
-        return self.__CLIP_TRANSCODE_MATCH_PRESET
+        return self._eval_on_this_object('CLIP_TRANSCODE_MATCH_PRESET')
     @CLIP_TRANSCODE_MATCH_PRESET.setter
     def CLIP_TRANSCODE_MATCH_PRESET(self, CLIP_TRANSCODE_MATCH_PRESET):
         raise AttributeError("Attribute 'CLIP_TRANSCODE_MATCH_PRESET' is read-only")
@@ -2210,8 +2028,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     """ Transcode mode setting: Transcode source media to match clips """
     @property
     def CLIP_TRANSCODE_MATCH_CLIPS(self):
-        self.__CLIP_TRANSCODE_MATCH_CLIPS = self._eval_on_this_object('CLIP_TRANSCODE_MATCH_CLIPS')
-        return self.__CLIP_TRANSCODE_MATCH_CLIPS
+        return self._eval_on_this_object('CLIP_TRANSCODE_MATCH_CLIPS')
     @CLIP_TRANSCODE_MATCH_CLIPS.setter
     def CLIP_TRANSCODE_MATCH_CLIPS(self, CLIP_TRANSCODE_MATCH_CLIPS):
         raise AttributeError("Attribute 'CLIP_TRANSCODE_MATCH_CLIPS' is read-only")
@@ -2219,8 +2036,7 @@ class ProjectManagerOptions(PymiereBaseObject):
     """ Transcode mode setting: Transcode source media to match sequence settings """
     @property
     def CLIP_TRANSCODE_MATCH_SEQUENCE(self):
-        self.__CLIP_TRANSCODE_MATCH_SEQUENCE = self._eval_on_this_object('CLIP_TRANSCODE_MATCH_SEQUENCE')
-        return self.__CLIP_TRANSCODE_MATCH_SEQUENCE
+        return self._eval_on_this_object('CLIP_TRANSCODE_MATCH_SEQUENCE')
     @CLIP_TRANSCODE_MATCH_SEQUENCE.setter
     def CLIP_TRANSCODE_MATCH_SEQUENCE(self, CLIP_TRANSCODE_MATCH_SEQUENCE):
         raise AttributeError("Attribute 'CLIP_TRANSCODE_MATCH_SEQUENCE' is read-only")
@@ -2256,16 +2072,13 @@ class ProjectManagerOptions(PymiereBaseObject):
 
 
 class Metadata(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, getMetadata=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'getMetadata': getMetadata})
+    def __init__(self, pymiere_id=None):
         super(Metadata, self).__init__(pymiere_id)
-        self.__getMetadata = getMetadata
 
     # ----- PROPERTIES -----
     @property
     def getMetadata(self):
-        self.__getMetadata = self._eval_on_this_object('getMetadata')
-        return self.__getMetadata
+        return self._eval_on_this_object('getMetadata')
     @getMetadata.setter
     def getMetadata(self, getMetadata):
         raise AttributeError("Attribute 'getMetadata' is read-only")
@@ -2316,8 +2129,7 @@ class Metadata(PymiereBaseObject):
 
 
 class Document(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(Document, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2362,43 +2174,34 @@ class Document(PymiereBaseObject):
 
 
 class ProjectItemType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, BIN=None, CLIP=None, FILE=None, ROOT=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'BIN': BIN, 'CLIP': CLIP, 'FILE': FILE, 'ROOT': ROOT})
+    def __init__(self, pymiere_id=None):
         super(ProjectItemType, self).__init__(pymiere_id)
-        self.__BIN = BIN
-        self.__CLIP = CLIP
-        self.__FILE = FILE
-        self.__ROOT = ROOT
 
     # ----- PROPERTIES -----
     @property
     def BIN(self):
-        self.__BIN = self._eval_on_this_object('BIN')
-        return self.__BIN
+        return self._eval_on_this_object('BIN')
     @BIN.setter
     def BIN(self, BIN):
         raise AttributeError("Attribute 'BIN' is read-only")
 
     @property
     def CLIP(self):
-        self.__CLIP = self._eval_on_this_object('CLIP')
-        return self.__CLIP
+        return self._eval_on_this_object('CLIP')
     @CLIP.setter
     def CLIP(self, CLIP):
         raise AttributeError("Attribute 'CLIP' is read-only")
 
     @property
     def FILE(self):
-        self.__FILE = self._eval_on_this_object('FILE')
-        return self.__FILE
+        return self._eval_on_this_object('FILE')
     @FILE.setter
     def FILE(self, FILE):
         raise AttributeError("Attribute 'FILE' is read-only")
 
     @property
     def ROOT(self):
-        self.__ROOT = self._eval_on_this_object('ROOT')
-        return self.__ROOT
+        return self._eval_on_this_object('ROOT')
     @ROOT.setter
     def ROOT(self, ROOT):
         raise AttributeError("Attribute 'ROOT' is read-only")
@@ -2434,70 +2237,55 @@ class ProjectItemType(PymiereBaseObject):
 
 
 class ScratchDiskType(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, FirstVideoCaptureFolder=None, FirstAudioCaptureFolder=None, FirstVideoPreviewFolder=None, FirstAudioPreviewFolder=None, FirstAutoSaveFolder=None, FirstCClibrariesFolder=None, FirstCapsuleMediaFolder=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'FirstVideoCaptureFolder': FirstVideoCaptureFolder, 'FirstAudioCaptureFolder': FirstAudioCaptureFolder, 'FirstVideoPreviewFolder': FirstVideoPreviewFolder, 'FirstAudioPreviewFolder': FirstAudioPreviewFolder, 'FirstAutoSaveFolder': FirstAutoSaveFolder, 'FirstCClibrariesFolder': FirstCClibrariesFolder, 'FirstCapsuleMediaFolder': FirstCapsuleMediaFolder})
+    def __init__(self, pymiere_id=None):
         super(ScratchDiskType, self).__init__(pymiere_id)
-        self.__FirstVideoCaptureFolder = FirstVideoCaptureFolder
-        self.__FirstAudioCaptureFolder = FirstAudioCaptureFolder
-        self.__FirstVideoPreviewFolder = FirstVideoPreviewFolder
-        self.__FirstAudioPreviewFolder = FirstAudioPreviewFolder
-        self.__FirstAutoSaveFolder = FirstAutoSaveFolder
-        self.__FirstCClibrariesFolder = FirstCClibrariesFolder
-        self.__FirstCapsuleMediaFolder = FirstCapsuleMediaFolder
 
     # ----- PROPERTIES -----
     @property
     def FirstVideoCaptureFolder(self):
-        self.__FirstVideoCaptureFolder = self._eval_on_this_object('FirstVideoCaptureFolder')
-        return self.__FirstVideoCaptureFolder
+        return self._eval_on_this_object('FirstVideoCaptureFolder')
     @FirstVideoCaptureFolder.setter
     def FirstVideoCaptureFolder(self, FirstVideoCaptureFolder):
         raise AttributeError("Attribute 'FirstVideoCaptureFolder' is read-only")
 
     @property
     def FirstAudioCaptureFolder(self):
-        self.__FirstAudioCaptureFolder = self._eval_on_this_object('FirstAudioCaptureFolder')
-        return self.__FirstAudioCaptureFolder
+        return self._eval_on_this_object('FirstAudioCaptureFolder')
     @FirstAudioCaptureFolder.setter
     def FirstAudioCaptureFolder(self, FirstAudioCaptureFolder):
         raise AttributeError("Attribute 'FirstAudioCaptureFolder' is read-only")
 
     @property
     def FirstVideoPreviewFolder(self):
-        self.__FirstVideoPreviewFolder = self._eval_on_this_object('FirstVideoPreviewFolder')
-        return self.__FirstVideoPreviewFolder
+        return self._eval_on_this_object('FirstVideoPreviewFolder')
     @FirstVideoPreviewFolder.setter
     def FirstVideoPreviewFolder(self, FirstVideoPreviewFolder):
         raise AttributeError("Attribute 'FirstVideoPreviewFolder' is read-only")
 
     @property
     def FirstAudioPreviewFolder(self):
-        self.__FirstAudioPreviewFolder = self._eval_on_this_object('FirstAudioPreviewFolder')
-        return self.__FirstAudioPreviewFolder
+        return self._eval_on_this_object('FirstAudioPreviewFolder')
     @FirstAudioPreviewFolder.setter
     def FirstAudioPreviewFolder(self, FirstAudioPreviewFolder):
         raise AttributeError("Attribute 'FirstAudioPreviewFolder' is read-only")
 
     @property
     def FirstAutoSaveFolder(self):
-        self.__FirstAutoSaveFolder = self._eval_on_this_object('FirstAutoSaveFolder')
-        return self.__FirstAutoSaveFolder
+        return self._eval_on_this_object('FirstAutoSaveFolder')
     @FirstAutoSaveFolder.setter
     def FirstAutoSaveFolder(self, FirstAutoSaveFolder):
         raise AttributeError("Attribute 'FirstAutoSaveFolder' is read-only")
 
     @property
     def FirstCClibrariesFolder(self):
-        self.__FirstCClibrariesFolder = self._eval_on_this_object('FirstCClibrariesFolder')
-        return self.__FirstCClibrariesFolder
+        return self._eval_on_this_object('FirstCClibrariesFolder')
     @FirstCClibrariesFolder.setter
     def FirstCClibrariesFolder(self, FirstCClibrariesFolder):
         raise AttributeError("Attribute 'FirstCClibrariesFolder' is read-only")
 
     @property
     def FirstCapsuleMediaFolder(self):
-        self.__FirstCapsuleMediaFolder = self._eval_on_this_object('FirstCapsuleMediaFolder')
-        return self.__FirstCapsuleMediaFolder
+        return self._eval_on_this_object('FirstCapsuleMediaFolder')
     @FirstCapsuleMediaFolder.setter
     def FirstCapsuleMediaFolder(self, FirstCapsuleMediaFolder):
         raise AttributeError("Attribute 'FirstCapsuleMediaFolder' is read-only")
@@ -2533,8 +2321,7 @@ class ScratchDiskType(PymiereBaseObject):
 
 
 class RegisteredDirectories(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(RegisteredDirectories, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2569,8 +2356,7 @@ class RegisteredDirectories(PymiereBaseObject):
 
 
 class UtilityFunctions(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(UtilityFunctions, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -2605,79 +2391,62 @@ class UtilityFunctions(PymiereBaseObject):
 
 
 class Math(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, E=None, LN10=None, LN2=None, LOG2E=None, LOG10E=None, PI=None, SQRT1_2=None, SQRT2=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'E': E, 'LN10': LN10, 'LN2': LN2, 'LOG2E': LOG2E, 'LOG10E': LOG10E, 'PI': PI, 'SQRT1_2': SQRT1_2, 'SQRT2': SQRT2})
+    def __init__(self, pymiere_id=None):
         super(Math, self).__init__(pymiere_id)
-        self.__E = E
-        self.__LN10 = LN10
-        self.__LN2 = LN2
-        self.__LOG2E = LOG2E
-        self.__LOG10E = LOG10E
-        self.__PI = PI
-        self.__SQRT1_2 = SQRT1_2
-        self.__SQRT2 = SQRT2
 
     # ----- PROPERTIES -----
     @property
     def E(self):
-        self.__E = self._eval_on_this_object('E')
-        return self.__E
+        return self._eval_on_this_object('E')
     @E.setter
     def E(self, E):
         raise AttributeError("Attribute 'E' is read-only")
 
     @property
     def LN10(self):
-        self.__LN10 = self._eval_on_this_object('LN10')
-        return self.__LN10
+        return self._eval_on_this_object('LN10')
     @LN10.setter
     def LN10(self, LN10):
         raise AttributeError("Attribute 'LN10' is read-only")
 
     @property
     def LN2(self):
-        self.__LN2 = self._eval_on_this_object('LN2')
-        return self.__LN2
+        return self._eval_on_this_object('LN2')
     @LN2.setter
     def LN2(self, LN2):
         raise AttributeError("Attribute 'LN2' is read-only")
 
     @property
     def LOG2E(self):
-        self.__LOG2E = self._eval_on_this_object('LOG2E')
-        return self.__LOG2E
+        return self._eval_on_this_object('LOG2E')
     @LOG2E.setter
     def LOG2E(self, LOG2E):
         raise AttributeError("Attribute 'LOG2E' is read-only")
 
     @property
     def LOG10E(self):
-        self.__LOG10E = self._eval_on_this_object('LOG10E')
-        return self.__LOG10E
+        return self._eval_on_this_object('LOG10E')
     @LOG10E.setter
     def LOG10E(self, LOG10E):
         raise AttributeError("Attribute 'LOG10E' is read-only")
 
     @property
     def PI(self):
-        self.__PI = self._eval_on_this_object('PI')
-        return self.__PI
+        return self._eval_on_this_object('PI')
     @PI.setter
     def PI(self, PI):
         raise AttributeError("Attribute 'PI' is read-only")
 
     @property
     def SQRT1_2(self):
-        self.__SQRT1_2 = self._eval_on_this_object('SQRT1_2')
-        return self.__SQRT1_2
+        return self._eval_on_this_object('SQRT1_2')
     @SQRT1_2.setter
     def SQRT1_2(self, SQRT1_2):
         raise AttributeError("Attribute 'SQRT1_2' is read-only")
 
     @property
     def SQRT2(self):
-        self.__SQRT2 = self._eval_on_this_object('SQRT2')
-        return self.__SQRT2
+        return self._eval_on_this_object('SQRT2')
     @SQRT2.setter
     def SQRT2(self, SQRT2):
         raise AttributeError("Attribute 'SQRT2' is read-only")
@@ -2817,37 +2586,14 @@ class Math(PymiereBaseObject):
 
 class File(PymiereBaseObject):
     """ Represents a file in the local file system in a platform-independent manner. """
-    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None, type=None, creator=None, hidden=None, readonly=None, lineFeed=None, length=None, encoding=None, eof=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent, 'type': type, 'creator': creator, 'hidden': hidden, 'readonly': readonly, 'lineFeed': lineFeed, 'length': length, 'encoding': encoding, 'eof': eof})
+    def __init__(self, pymiere_id=None):
         super(File, self).__init__(pymiere_id)
-        self.__alias = alias
-        self.__created = created
-        self.__error = error
-        self.__exists = exists
-        self.__fsName = fsName
-        self.__fullName = fullName
-        self.__absoluteURI = absoluteURI
-        self.__relativeURI = relativeURI
-        self.__modified = modified
-        self.__name = name
-        self.__displayName = displayName
-        self.__path = path
-        self.__parent = parent
-        self.__type = type
-        self.__creator = creator
-        self.__hidden = hidden
-        self.__readonly = readonly
-        self.__lineFeed = lineFeed
-        self.__length = length
-        self.__encoding = encoding
-        self.__eof = eof
 
     # ----- PROPERTIES -----
     """ If true, the object refers to a file system alias or shortcut. """
     @property
     def alias(self):
-        self.__alias = self._eval_on_this_object('alias')
-        return self.__alias
+        return self._eval_on_this_object('alias')
     @alias.setter
     def alias(self, alias):
         raise AttributeError("Attribute 'alias' is read-only")
@@ -2856,8 +2602,7 @@ class File(PymiereBaseObject):
     @property
     def created(self):
         kwargs = self._eval_on_this_object('created')
-        self.__created = Date(**kwargs) if kwargs else None
-        return self.__created
+        return Date(**kwargs) if kwargs else None
     @created.setter
     def created(self, created):
         raise AttributeError("Attribute 'created' is read-only")
@@ -2865,18 +2610,15 @@ class File(PymiereBaseObject):
     """ A string containing a message describing the most recent file system error. Typically set by the file system, but a script can set it. Setting this value clears any error message and resets the error bit for opened files. Contains the empty string if there is no error. """
     @property
     def error(self):
-        self.__error = self._eval_on_this_object('error')
-        return self.__error
+        return self._eval_on_this_object('error')
     @error.setter
     def error(self, error):
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
-        self.__error = error
 
     """ If true, this object refers to a file or file-system alias that actually exists in the file system. """
     @property
     def exists(self):
-        self.__exists = self._eval_on_this_object('exists')
-        return self.__exists
+        return self._eval_on_this_object('exists')
     @exists.setter
     def exists(self, exists):
         raise AttributeError("Attribute 'exists' is read-only")
@@ -2884,8 +2626,7 @@ class File(PymiereBaseObject):
     """ The platform-specific full path name for the referenced file. """
     @property
     def fsName(self):
-        self.__fsName = self._eval_on_this_object('fsName')
-        return self.__fsName
+        return self._eval_on_this_object('fsName')
     @fsName.setter
     def fsName(self, fsName):
         raise AttributeError("Attribute 'fsName' is read-only")
@@ -2893,8 +2634,7 @@ class File(PymiereBaseObject):
     """ The full path name for the referenced file in URI notation. """
     @property
     def fullName(self):
-        self.__fullName = self._eval_on_this_object('fullName')
-        return self.__fullName
+        return self._eval_on_this_object('fullName')
     @fullName.setter
     def fullName(self, fullName):
         raise AttributeError("Attribute 'fullName' is read-only")
@@ -2902,8 +2642,7 @@ class File(PymiereBaseObject):
     """ The full path name for the referenced file in URI notation. """
     @property
     def absoluteURI(self):
-        self.__absoluteURI = self._eval_on_this_object('absoluteURI')
-        return self.__absoluteURI
+        return self._eval_on_this_object('absoluteURI')
     @absoluteURI.setter
     def absoluteURI(self, absoluteURI):
         raise AttributeError("Attribute 'absoluteURI' is read-only")
@@ -2911,8 +2650,7 @@ class File(PymiereBaseObject):
     """ The path name for the object in URI notation, relative to the current folder. """
     @property
     def relativeURI(self):
-        self.__relativeURI = self._eval_on_this_object('relativeURI')
-        return self.__relativeURI
+        return self._eval_on_this_object('relativeURI')
     @relativeURI.setter
     def relativeURI(self, relativeURI):
         raise AttributeError("Attribute 'relativeURI' is read-only")
@@ -2921,8 +2659,7 @@ class File(PymiereBaseObject):
     @property
     def modified(self):
         kwargs = self._eval_on_this_object('modified')
-        self.__modified = Date(**kwargs) if kwargs else None
-        return self.__modified
+        return Date(**kwargs) if kwargs else None
     @modified.setter
     def modified(self, modified):
         raise AttributeError("Attribute 'modified' is read-only")
@@ -2930,8 +2667,7 @@ class File(PymiereBaseObject):
     """ The file name portion of the absolute URI for the referenced file, without the path specification. """
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
@@ -2939,8 +2675,7 @@ class File(PymiereBaseObject):
     """ The localized name of the referenced file, without the path specification. """
     @property
     def displayName(self):
-        self.__displayName = self._eval_on_this_object('displayName')
-        return self.__displayName
+        return self._eval_on_this_object('displayName')
     @displayName.setter
     def displayName(self, displayName):
         raise AttributeError("Attribute 'displayName' is read-only")
@@ -2948,8 +2683,7 @@ class File(PymiereBaseObject):
     """ The path portion of the absolute URI for the referenced file, without the file name. """
     @property
     def path(self):
-        self.__path = self._eval_on_this_object('path')
-        return self.__path
+        return self._eval_on_this_object('path')
     @path.setter
     def path(self, path):
         raise AttributeError("Attribute 'path' is read-only")
@@ -2958,8 +2692,7 @@ class File(PymiereBaseObject):
     @property
     def parent(self):
         kwargs = self._eval_on_this_object('parent')
-        self.__parent = Folder(**kwargs) if kwargs else None
-        return self.__parent
+        return Folder(**kwargs) if kwargs else None
     @parent.setter
     def parent(self, parent):
         raise AttributeError("Attribute 'parent' is read-only")
@@ -2967,8 +2700,7 @@ class File(PymiereBaseObject):
     """ The file type as a four-character string. In Mac OS, the Mac OS file type. In Windows, "appl" for .EXE files, "shlb" for .DLL files and "TEXT" for any other file. """
     @property
     def type(self):
-        self.__type = self._eval_on_this_object('type')
-        return self.__type
+        return self._eval_on_this_object('type')
     @type.setter
     def type(self, type):
         raise AttributeError("Attribute 'type' is read-only")
@@ -2976,8 +2708,7 @@ class File(PymiereBaseObject):
     """ In Mac OS, the file creator as a four-character string. In Windows or UNIX, value is "????". """
     @property
     def creator(self):
-        self.__creator = self._eval_on_this_object('creator')
-        return self.__creator
+        return self._eval_on_this_object('creator')
     @creator.setter
     def creator(self, creator):
         raise AttributeError("Attribute 'creator' is read-only")
@@ -2985,58 +2716,47 @@ class File(PymiereBaseObject):
     """ When true, the file is not shown in the platform-specific file browser. If the object references a file-system alias or shortcut, the flag is altered on the alias, not on the original file. """
     @property
     def hidden(self):
-        self.__hidden = self._eval_on_this_object('hidden')
-        return self.__hidden
+        return self._eval_on_this_object('hidden')
     @hidden.setter
     def hidden(self, hidden):
         self._eval_on_this_object("hidden = {}".format(_format_object_to_es(hidden)))
-        self.__hidden = hidden
 
     """ When true, prevents the file from being altered or deleted. If the referenced file is a file-system alias or shortcut, the flag is altered on the alias, not on the original file. """
     @property
     def readonly(self):
-        self.__readonly = self._eval_on_this_object('readonly')
-        return self.__readonly
+        return self._eval_on_this_object('readonly')
     @readonly.setter
     def readonly(self, readonly):
         self._eval_on_this_object("readonly = {}".format(_format_object_to_es(readonly)))
-        self.__readonly = readonly
 
     """ How line feed characters are written in the file system. One of the values "Windows", "Macintosh", or "Unix". """
     @property
     def lineFeed(self):
-        self.__lineFeed = self._eval_on_this_object('lineFeed')
-        return self.__lineFeed
+        return self._eval_on_this_object('lineFeed')
     @lineFeed.setter
     def lineFeed(self, lineFeed):
         self._eval_on_this_object("lineFeed = {}".format(_format_object_to_es(lineFeed)))
-        self.__lineFeed = lineFeed
 
     """ The size of the file in bytes. Can be set only for a file that is not open, in which case it truncates or pads the file with 0-bytes to the new length. """
     @property
     def length(self):
-        self.__length = self._eval_on_this_object('length')
-        return self.__length
+        return self._eval_on_this_object('length')
     @length.setter
     def length(self, length):
         self._eval_on_this_object("length = {}".format(_format_object_to_es(length)))
-        self.__length = length
 
     """ Gets or sets the encoding for subsequent read/write operations. One of the encoding constants listed in the JavaScript Tools Guide. If the value is not recognized, uses the system default encoding.A special encoder, BINARY, is used to read binary files. It stores each byte of the file as one Unicode character regardless of any encoding. When writing, the lower byte of each Unicode character is treated as a single byte to write. """
     @property
     def encoding(self):
-        self.__encoding = self._eval_on_this_object('encoding')
-        return self.__encoding
+        return self._eval_on_this_object('encoding')
     @encoding.setter
     def encoding(self, encoding):
         self._eval_on_this_object("encoding = {}".format(_format_object_to_es(encoding)))
-        self.__encoding = encoding
 
     """ When true, a read attempt caused the current position to be at the end of the file, or the file is not open. """
     @property
     def eof(self):
-        self.__eof = self._eval_on_this_object('eof')
-        return self.__eof
+        return self._eval_on_this_object('eof')
     @eof.setter
     def eof(self, eof):
         raise AttributeError("Attribute 'eof' is read-only")
@@ -3213,8 +2933,7 @@ class File(PymiereBaseObject):
 
 
 class Date(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(Date, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -3426,29 +3145,14 @@ class Date(PymiereBaseObject):
 
 class Folder(PymiereBaseObject):
     """ Represents a file-system folder or directory in a platform-independent manner. """
-    def __init__(self, pymiere_id=None, alias=None, created=None, error=None, exists=None, fsName=None, fullName=None, absoluteURI=None, relativeURI=None, modified=None, name=None, displayName=None, path=None, parent=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'alias': alias, 'created': created, 'error': error, 'exists': exists, 'fsName': fsName, 'fullName': fullName, 'absoluteURI': absoluteURI, 'relativeURI': relativeURI, 'modified': modified, 'name': name, 'displayName': displayName, 'path': path, 'parent': parent})
+    def __init__(self, pymiere_id=None):
         super(Folder, self).__init__(pymiere_id)
-        self.__alias = alias
-        self.__created = created
-        self.__error = error
-        self.__exists = exists
-        self.__fsName = fsName
-        self.__fullName = fullName
-        self.__absoluteURI = absoluteURI
-        self.__relativeURI = relativeURI
-        self.__modified = modified
-        self.__name = name
-        self.__displayName = displayName
-        self.__path = path
-        self.__parent = parent
 
     # ----- PROPERTIES -----
     """ When true, the object refers to a file system alias or shortcut. """
     @property
     def alias(self):
-        self.__alias = self._eval_on_this_object('alias')
-        return self.__alias
+        return self._eval_on_this_object('alias')
     @alias.setter
     def alias(self, alias):
         raise AttributeError("Attribute 'alias' is read-only")
@@ -3457,8 +3161,7 @@ class Folder(PymiereBaseObject):
     @property
     def created(self):
         kwargs = self._eval_on_this_object('created')
-        self.__created = Date(**kwargs) if kwargs else None
-        return self.__created
+        return Date(**kwargs) if kwargs else None
     @created.setter
     def created(self, created):
         raise AttributeError("Attribute 'created' is read-only")
@@ -3466,18 +3169,15 @@ class Folder(PymiereBaseObject):
     """ A message describing the most recent file system error. Typically set by the file system, but a script can set it. Setting this value clears any error message and resets the error bit for opened files. Contains the empty string if there is no error. """
     @property
     def error(self):
-        self.__error = self._eval_on_this_object('error')
-        return self.__error
+        return self._eval_on_this_object('error')
     @error.setter
     def error(self, error):
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
-        self.__error = error
 
     """ When true, this object refers to a folder that currently exists in the file system. """
     @property
     def exists(self):
-        self.__exists = self._eval_on_this_object('exists')
-        return self.__exists
+        return self._eval_on_this_object('exists')
     @exists.setter
     def exists(self, exists):
         raise AttributeError("Attribute 'exists' is read-only")
@@ -3485,8 +3185,7 @@ class Folder(PymiereBaseObject):
     """ The platform-specific name of the referenced folder as a full path name. """
     @property
     def fsName(self):
-        self.__fsName = self._eval_on_this_object('fsName')
-        return self.__fsName
+        return self._eval_on_this_object('fsName')
     @fsName.setter
     def fsName(self, fsName):
         raise AttributeError("Attribute 'fsName' is read-only")
@@ -3494,8 +3193,7 @@ class Folder(PymiereBaseObject):
     """ The full path name for the referenced folder in URI notation. . """
     @property
     def fullName(self):
-        self.__fullName = self._eval_on_this_object('fullName')
-        return self.__fullName
+        return self._eval_on_this_object('fullName')
     @fullName.setter
     def fullName(self, fullName):
         raise AttributeError("Attribute 'fullName' is read-only")
@@ -3503,8 +3201,7 @@ class Folder(PymiereBaseObject):
     """ The full path name for the referenced folder in URI notation. """
     @property
     def absoluteURI(self):
-        self.__absoluteURI = self._eval_on_this_object('absoluteURI')
-        return self.__absoluteURI
+        return self._eval_on_this_object('absoluteURI')
     @absoluteURI.setter
     def absoluteURI(self, absoluteURI):
         raise AttributeError("Attribute 'absoluteURI' is read-only")
@@ -3512,8 +3209,7 @@ class Folder(PymiereBaseObject):
     """ The path name for the referenced folder in URI notation, relative to the current folder. """
     @property
     def relativeURI(self):
-        self.__relativeURI = self._eval_on_this_object('relativeURI')
-        return self.__relativeURI
+        return self._eval_on_this_object('relativeURI')
     @relativeURI.setter
     def relativeURI(self, relativeURI):
         raise AttributeError("Attribute 'relativeURI' is read-only")
@@ -3522,8 +3218,7 @@ class Folder(PymiereBaseObject):
     @property
     def modified(self):
         kwargs = self._eval_on_this_object('modified')
-        self.__modified = Date(**kwargs) if kwargs else None
-        return self.__modified
+        return Date(**kwargs) if kwargs else None
     @modified.setter
     def modified(self, modified):
         raise AttributeError("Attribute 'modified' is read-only")
@@ -3531,8 +3226,7 @@ class Folder(PymiereBaseObject):
     """ The folder name portion of the absolute URI for the referenced file, without the path specification. """
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
@@ -3540,8 +3234,7 @@ class Folder(PymiereBaseObject):
     """ The localized name portion of the absolute URI for the referenced folder, without the path specification. """
     @property
     def displayName(self):
-        self.__displayName = self._eval_on_this_object('displayName')
-        return self.__displayName
+        return self._eval_on_this_object('displayName')
     @displayName.setter
     def displayName(self, displayName):
         raise AttributeError("Attribute 'displayName' is read-only")
@@ -3549,8 +3242,7 @@ class Folder(PymiereBaseObject):
     """ The path portion of the object absolute URI for the referenced file, without the folder name. """
     @property
     def path(self):
-        self.__path = self._eval_on_this_object('path')
-        return self.__path
+        return self._eval_on_this_object('path')
     @path.setter
     def path(self, path):
         raise AttributeError("Attribute 'path' is read-only")
@@ -3559,8 +3251,7 @@ class Folder(PymiereBaseObject):
     @property
     def parent(self):
         kwargs = self._eval_on_this_object('parent')
-        self.__parent = Folder(**kwargs) if kwargs else None
-        return self.__parent
+        return Folder(**kwargs) if kwargs else None
     @parent.setter
     def parent(self, parent):
         raise AttributeError("Attribute 'parent' is read-only")
@@ -3664,234 +3355,174 @@ class Folder(PymiereBaseObject):
 
 
 class FootageInterpretation(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, frameRate=None, pixelAspectRatio=None, fieldType=None, removePulldown=None, alphaUsage=None, ignoreAlpha=None, invertAlpha=None, vrConformProjectionType=None, vrLayoutType=None, vrHorizontalView=None, vrVerticalView=None, ALPHACHANNEL_NONE=None, ALPHACHANNEL_STRAIGHT=None, ALPHACHANNEL_PREMULTIPLIED=None, ALPHACHANNEL_IGNORE=None, FIELD_TYPE_DEFAULT=None, FIELD_TYPE_PROGRESSIVE=None, FIELD_TYPE_UPPERFIRST=None, FIELD_TYPE_LOWERFIRST=None, VR_CONFORM_PROJECTION_NONE=None, VR_CONFORM_PROJECTION_EQUIRECTANGULAR=None, VR_LAYOUT_MONOSCOPIC=None, VR_LAYOUT_STEREO_OVER_UNDER=None, VR_LAYOUT_STEREO_SIDE_BY_SIDE=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'frameRate': frameRate, 'pixelAspectRatio': pixelAspectRatio, 'fieldType': fieldType, 'removePulldown': removePulldown, 'alphaUsage': alphaUsage, 'ignoreAlpha': ignoreAlpha, 'invertAlpha': invertAlpha, 'vrConformProjectionType': vrConformProjectionType, 'vrLayoutType': vrLayoutType, 'vrHorizontalView': vrHorizontalView, 'vrVerticalView': vrVerticalView, 'ALPHACHANNEL_NONE': ALPHACHANNEL_NONE, 'ALPHACHANNEL_STRAIGHT': ALPHACHANNEL_STRAIGHT, 'ALPHACHANNEL_PREMULTIPLIED': ALPHACHANNEL_PREMULTIPLIED, 'ALPHACHANNEL_IGNORE': ALPHACHANNEL_IGNORE, 'FIELD_TYPE_DEFAULT': FIELD_TYPE_DEFAULT, 'FIELD_TYPE_PROGRESSIVE': FIELD_TYPE_PROGRESSIVE, 'FIELD_TYPE_UPPERFIRST': FIELD_TYPE_UPPERFIRST, 'FIELD_TYPE_LOWERFIRST': FIELD_TYPE_LOWERFIRST, 'VR_CONFORM_PROJECTION_NONE': VR_CONFORM_PROJECTION_NONE, 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR': VR_CONFORM_PROJECTION_EQUIRECTANGULAR, 'VR_LAYOUT_MONOSCOPIC': VR_LAYOUT_MONOSCOPIC, 'VR_LAYOUT_STEREO_OVER_UNDER': VR_LAYOUT_STEREO_OVER_UNDER, 'VR_LAYOUT_STEREO_SIDE_BY_SIDE': VR_LAYOUT_STEREO_SIDE_BY_SIDE})
+    def __init__(self, pymiere_id=None):
         super(FootageInterpretation, self).__init__(pymiere_id)
-        self.__frameRate = frameRate
-        self.__pixelAspectRatio = pixelAspectRatio
-        self.__fieldType = fieldType
-        self.__removePulldown = removePulldown
-        self.__alphaUsage = alphaUsage
-        self.__ignoreAlpha = ignoreAlpha
-        self.__invertAlpha = invertAlpha
-        self.__vrConformProjectionType = vrConformProjectionType
-        self.__vrLayoutType = vrLayoutType
-        self.__vrHorizontalView = vrHorizontalView
-        self.__vrVerticalView = vrVerticalView
-        self.__ALPHACHANNEL_NONE = ALPHACHANNEL_NONE
-        self.__ALPHACHANNEL_STRAIGHT = ALPHACHANNEL_STRAIGHT
-        self.__ALPHACHANNEL_PREMULTIPLIED = ALPHACHANNEL_PREMULTIPLIED
-        self.__ALPHACHANNEL_IGNORE = ALPHACHANNEL_IGNORE
-        self.__FIELD_TYPE_DEFAULT = FIELD_TYPE_DEFAULT
-        self.__FIELD_TYPE_PROGRESSIVE = FIELD_TYPE_PROGRESSIVE
-        self.__FIELD_TYPE_UPPERFIRST = FIELD_TYPE_UPPERFIRST
-        self.__FIELD_TYPE_LOWERFIRST = FIELD_TYPE_LOWERFIRST
-        self.__VR_CONFORM_PROJECTION_NONE = VR_CONFORM_PROJECTION_NONE
-        self.__VR_CONFORM_PROJECTION_EQUIRECTANGULAR = VR_CONFORM_PROJECTION_EQUIRECTANGULAR
-        self.__VR_LAYOUT_MONOSCOPIC = VR_LAYOUT_MONOSCOPIC
-        self.__VR_LAYOUT_STEREO_OVER_UNDER = VR_LAYOUT_STEREO_OVER_UNDER
-        self.__VR_LAYOUT_STEREO_SIDE_BY_SIDE = VR_LAYOUT_STEREO_SIDE_BY_SIDE
 
     # ----- PROPERTIES -----
     @property
     def frameRate(self):
-        self.__frameRate = self._eval_on_this_object('frameRate')
-        return self.__frameRate
+        return self._eval_on_this_object('frameRate')
     @frameRate.setter
     def frameRate(self, frameRate):
         self._eval_on_this_object("frameRate = {}".format(_format_object_to_es(frameRate)))
-        self.__frameRate = frameRate
 
     @property
     def pixelAspectRatio(self):
-        self.__pixelAspectRatio = self._eval_on_this_object('pixelAspectRatio')
-        return self.__pixelAspectRatio
+        return self._eval_on_this_object('pixelAspectRatio')
     @pixelAspectRatio.setter
     def pixelAspectRatio(self, pixelAspectRatio):
         self._eval_on_this_object("pixelAspectRatio = {}".format(_format_object_to_es(pixelAspectRatio)))
-        self.__pixelAspectRatio = pixelAspectRatio
 
     @property
     def fieldType(self):
-        self.__fieldType = self._eval_on_this_object('fieldType')
-        return self.__fieldType
+        return self._eval_on_this_object('fieldType')
     @fieldType.setter
     def fieldType(self, fieldType):
         self._eval_on_this_object("fieldType = {}".format(_format_object_to_es(fieldType)))
-        self.__fieldType = fieldType
 
     @property
     def removePulldown(self):
-        self.__removePulldown = self._eval_on_this_object('removePulldown')
-        return self.__removePulldown
+        return self._eval_on_this_object('removePulldown')
     @removePulldown.setter
     def removePulldown(self, removePulldown):
         self._eval_on_this_object("removePulldown = {}".format(_format_object_to_es(removePulldown)))
-        self.__removePulldown = removePulldown
 
     @property
     def alphaUsage(self):
-        self.__alphaUsage = self._eval_on_this_object('alphaUsage')
-        return self.__alphaUsage
+        return self._eval_on_this_object('alphaUsage')
     @alphaUsage.setter
     def alphaUsage(self, alphaUsage):
         self._eval_on_this_object("alphaUsage = {}".format(_format_object_to_es(alphaUsage)))
-        self.__alphaUsage = alphaUsage
 
     @property
     def ignoreAlpha(self):
-        self.__ignoreAlpha = self._eval_on_this_object('ignoreAlpha')
-        return self.__ignoreAlpha
+        return self._eval_on_this_object('ignoreAlpha')
     @ignoreAlpha.setter
     def ignoreAlpha(self, ignoreAlpha):
         self._eval_on_this_object("ignoreAlpha = {}".format(_format_object_to_es(ignoreAlpha)))
-        self.__ignoreAlpha = ignoreAlpha
 
     @property
     def invertAlpha(self):
-        self.__invertAlpha = self._eval_on_this_object('invertAlpha')
-        return self.__invertAlpha
+        return self._eval_on_this_object('invertAlpha')
     @invertAlpha.setter
     def invertAlpha(self, invertAlpha):
         self._eval_on_this_object("invertAlpha = {}".format(_format_object_to_es(invertAlpha)))
-        self.__invertAlpha = invertAlpha
 
     @property
     def vrConformProjectionType(self):
-        self.__vrConformProjectionType = self._eval_on_this_object('vrConformProjectionType')
-        return self.__vrConformProjectionType
+        return self._eval_on_this_object('vrConformProjectionType')
     @vrConformProjectionType.setter
     def vrConformProjectionType(self, vrConformProjectionType):
         self._eval_on_this_object("vrConformProjectionType = {}".format(_format_object_to_es(vrConformProjectionType)))
-        self.__vrConformProjectionType = vrConformProjectionType
 
     @property
     def vrLayoutType(self):
-        self.__vrLayoutType = self._eval_on_this_object('vrLayoutType')
-        return self.__vrLayoutType
+        return self._eval_on_this_object('vrLayoutType')
     @vrLayoutType.setter
     def vrLayoutType(self, vrLayoutType):
         self._eval_on_this_object("vrLayoutType = {}".format(_format_object_to_es(vrLayoutType)))
-        self.__vrLayoutType = vrLayoutType
 
     @property
     def vrHorizontalView(self):
-        self.__vrHorizontalView = self._eval_on_this_object('vrHorizontalView')
-        return self.__vrHorizontalView
+        return self._eval_on_this_object('vrHorizontalView')
     @vrHorizontalView.setter
     def vrHorizontalView(self, vrHorizontalView):
         self._eval_on_this_object("vrHorizontalView = {}".format(_format_object_to_es(vrHorizontalView)))
-        self.__vrHorizontalView = vrHorizontalView
 
     @property
     def vrVerticalView(self):
-        self.__vrVerticalView = self._eval_on_this_object('vrVerticalView')
-        return self.__vrVerticalView
+        return self._eval_on_this_object('vrVerticalView')
     @vrVerticalView.setter
     def vrVerticalView(self, vrVerticalView):
         self._eval_on_this_object("vrVerticalView = {}".format(_format_object_to_es(vrVerticalView)))
-        self.__vrVerticalView = vrVerticalView
 
     @property
     def ALPHACHANNEL_NONE(self):
-        self.__ALPHACHANNEL_NONE = self._eval_on_this_object('ALPHACHANNEL_NONE')
-        return self.__ALPHACHANNEL_NONE
+        return self._eval_on_this_object('ALPHACHANNEL_NONE')
     @ALPHACHANNEL_NONE.setter
     def ALPHACHANNEL_NONE(self, ALPHACHANNEL_NONE):
         raise AttributeError("Attribute 'ALPHACHANNEL_NONE' is read-only")
 
     @property
     def ALPHACHANNEL_STRAIGHT(self):
-        self.__ALPHACHANNEL_STRAIGHT = self._eval_on_this_object('ALPHACHANNEL_STRAIGHT')
-        return self.__ALPHACHANNEL_STRAIGHT
+        return self._eval_on_this_object('ALPHACHANNEL_STRAIGHT')
     @ALPHACHANNEL_STRAIGHT.setter
     def ALPHACHANNEL_STRAIGHT(self, ALPHACHANNEL_STRAIGHT):
         raise AttributeError("Attribute 'ALPHACHANNEL_STRAIGHT' is read-only")
 
     @property
     def ALPHACHANNEL_PREMULTIPLIED(self):
-        self.__ALPHACHANNEL_PREMULTIPLIED = self._eval_on_this_object('ALPHACHANNEL_PREMULTIPLIED')
-        return self.__ALPHACHANNEL_PREMULTIPLIED
+        return self._eval_on_this_object('ALPHACHANNEL_PREMULTIPLIED')
     @ALPHACHANNEL_PREMULTIPLIED.setter
     def ALPHACHANNEL_PREMULTIPLIED(self, ALPHACHANNEL_PREMULTIPLIED):
         raise AttributeError("Attribute 'ALPHACHANNEL_PREMULTIPLIED' is read-only")
 
     @property
     def ALPHACHANNEL_IGNORE(self):
-        self.__ALPHACHANNEL_IGNORE = self._eval_on_this_object('ALPHACHANNEL_IGNORE')
-        return self.__ALPHACHANNEL_IGNORE
+        return self._eval_on_this_object('ALPHACHANNEL_IGNORE')
     @ALPHACHANNEL_IGNORE.setter
     def ALPHACHANNEL_IGNORE(self, ALPHACHANNEL_IGNORE):
         raise AttributeError("Attribute 'ALPHACHANNEL_IGNORE' is read-only")
 
     @property
     def FIELD_TYPE_DEFAULT(self):
-        self.__FIELD_TYPE_DEFAULT = self._eval_on_this_object('FIELD_TYPE_DEFAULT')
-        return self.__FIELD_TYPE_DEFAULT
+        return self._eval_on_this_object('FIELD_TYPE_DEFAULT')
     @FIELD_TYPE_DEFAULT.setter
     def FIELD_TYPE_DEFAULT(self, FIELD_TYPE_DEFAULT):
         raise AttributeError("Attribute 'FIELD_TYPE_DEFAULT' is read-only")
 
     @property
     def FIELD_TYPE_PROGRESSIVE(self):
-        self.__FIELD_TYPE_PROGRESSIVE = self._eval_on_this_object('FIELD_TYPE_PROGRESSIVE')
-        return self.__FIELD_TYPE_PROGRESSIVE
+        return self._eval_on_this_object('FIELD_TYPE_PROGRESSIVE')
     @FIELD_TYPE_PROGRESSIVE.setter
     def FIELD_TYPE_PROGRESSIVE(self, FIELD_TYPE_PROGRESSIVE):
         raise AttributeError("Attribute 'FIELD_TYPE_PROGRESSIVE' is read-only")
 
     @property
     def FIELD_TYPE_UPPERFIRST(self):
-        self.__FIELD_TYPE_UPPERFIRST = self._eval_on_this_object('FIELD_TYPE_UPPERFIRST')
-        return self.__FIELD_TYPE_UPPERFIRST
+        return self._eval_on_this_object('FIELD_TYPE_UPPERFIRST')
     @FIELD_TYPE_UPPERFIRST.setter
     def FIELD_TYPE_UPPERFIRST(self, FIELD_TYPE_UPPERFIRST):
         raise AttributeError("Attribute 'FIELD_TYPE_UPPERFIRST' is read-only")
 
     @property
     def FIELD_TYPE_LOWERFIRST(self):
-        self.__FIELD_TYPE_LOWERFIRST = self._eval_on_this_object('FIELD_TYPE_LOWERFIRST')
-        return self.__FIELD_TYPE_LOWERFIRST
+        return self._eval_on_this_object('FIELD_TYPE_LOWERFIRST')
     @FIELD_TYPE_LOWERFIRST.setter
     def FIELD_TYPE_LOWERFIRST(self, FIELD_TYPE_LOWERFIRST):
         raise AttributeError("Attribute 'FIELD_TYPE_LOWERFIRST' is read-only")
 
     @property
     def VR_CONFORM_PROJECTION_NONE(self):
-        self.__VR_CONFORM_PROJECTION_NONE = self._eval_on_this_object('VR_CONFORM_PROJECTION_NONE')
-        return self.__VR_CONFORM_PROJECTION_NONE
+        return self._eval_on_this_object('VR_CONFORM_PROJECTION_NONE')
     @VR_CONFORM_PROJECTION_NONE.setter
     def VR_CONFORM_PROJECTION_NONE(self, VR_CONFORM_PROJECTION_NONE):
         raise AttributeError("Attribute 'VR_CONFORM_PROJECTION_NONE' is read-only")
 
     @property
     def VR_CONFORM_PROJECTION_EQUIRECTANGULAR(self):
-        self.__VR_CONFORM_PROJECTION_EQUIRECTANGULAR = self._eval_on_this_object('VR_CONFORM_PROJECTION_EQUIRECTANGULAR')
-        return self.__VR_CONFORM_PROJECTION_EQUIRECTANGULAR
+        return self._eval_on_this_object('VR_CONFORM_PROJECTION_EQUIRECTANGULAR')
     @VR_CONFORM_PROJECTION_EQUIRECTANGULAR.setter
     def VR_CONFORM_PROJECTION_EQUIRECTANGULAR(self, VR_CONFORM_PROJECTION_EQUIRECTANGULAR):
         raise AttributeError("Attribute 'VR_CONFORM_PROJECTION_EQUIRECTANGULAR' is read-only")
 
     @property
     def VR_LAYOUT_MONOSCOPIC(self):
-        self.__VR_LAYOUT_MONOSCOPIC = self._eval_on_this_object('VR_LAYOUT_MONOSCOPIC')
-        return self.__VR_LAYOUT_MONOSCOPIC
+        return self._eval_on_this_object('VR_LAYOUT_MONOSCOPIC')
     @VR_LAYOUT_MONOSCOPIC.setter
     def VR_LAYOUT_MONOSCOPIC(self, VR_LAYOUT_MONOSCOPIC):
         raise AttributeError("Attribute 'VR_LAYOUT_MONOSCOPIC' is read-only")
 
     @property
     def VR_LAYOUT_STEREO_OVER_UNDER(self):
-        self.__VR_LAYOUT_STEREO_OVER_UNDER = self._eval_on_this_object('VR_LAYOUT_STEREO_OVER_UNDER')
-        return self.__VR_LAYOUT_STEREO_OVER_UNDER
+        return self._eval_on_this_object('VR_LAYOUT_STEREO_OVER_UNDER')
     @VR_LAYOUT_STEREO_OVER_UNDER.setter
     def VR_LAYOUT_STEREO_OVER_UNDER(self, VR_LAYOUT_STEREO_OVER_UNDER):
         raise AttributeError("Attribute 'VR_LAYOUT_STEREO_OVER_UNDER' is read-only")
 
     @property
     def VR_LAYOUT_STEREO_SIDE_BY_SIDE(self):
-        self.__VR_LAYOUT_STEREO_SIDE_BY_SIDE = self._eval_on_this_object('VR_LAYOUT_STEREO_SIDE_BY_SIDE')
-        return self.__VR_LAYOUT_STEREO_SIDE_BY_SIDE
+        return self._eval_on_this_object('VR_LAYOUT_STEREO_SIDE_BY_SIDE')
     @VR_LAYOUT_STEREO_SIDE_BY_SIDE.setter
     def VR_LAYOUT_STEREO_SIDE_BY_SIDE(self, VR_LAYOUT_STEREO_SIDE_BY_SIDE):
         raise AttributeError("Attribute 'VR_LAYOUT_STEREO_SIDE_BY_SIDE' is read-only")
@@ -3927,30 +3558,23 @@ class FootageInterpretation(PymiereBaseObject):
 
 
 class Time(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, seconds=None, ticks=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'seconds': seconds, 'ticks': ticks})
+    def __init__(self, pymiere_id=None):
         super(Time, self).__init__(pymiere_id)
-        self.__seconds = seconds
-        self.__ticks = ticks
 
     # ----- PROPERTIES -----
     @property
     def seconds(self):
-        self.__seconds = self._eval_on_this_object('seconds')
-        return self.__seconds
+        return self._eval_on_this_object('seconds')
     @seconds.setter
     def seconds(self, seconds):
         self._eval_on_this_object("seconds = {}".format(_format_object_to_es(seconds)))
-        self.__seconds = seconds
 
     @property
     def ticks(self):
-        self.__ticks = self._eval_on_this_object('ticks')
-        return self.__ticks
+        return self._eval_on_this_object('ticks')
     @ticks.setter
     def ticks(self, ticks):
         self._eval_on_this_object("ticks = {}".format(_format_object_to_es(ticks)))
-        self.__ticks = ticks
 
 
     # ----- FUNCTIONS -----
@@ -4000,37 +3624,27 @@ class Time(PymiereBaseObject):
 
 
 class Track(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, id=None, name=None, mediaType=None, clips=None, transitions=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'id': id, 'name': name, 'mediaType': mediaType, 'clips': clips, 'transitions': transitions})
+    def __init__(self, pymiere_id=None):
         super(Track, self).__init__(pymiere_id)
-        self.__id = id
-        self.__name = name
-        self.__mediaType = mediaType
-        self.__clips = clips
-        self.__transitions = transitions
 
     # ----- PROPERTIES -----
     @property
     def id(self):
-        self.__id = self._eval_on_this_object('id')
-        return self.__id
+        return self._eval_on_this_object('id')
     @id.setter
     def id(self, id):
         raise AttributeError("Attribute 'id' is read-only")
 
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
-        self.__name = name
 
     @property
     def mediaType(self):
-        self.__mediaType = self._eval_on_this_object('mediaType')
-        return self.__mediaType
+        return self._eval_on_this_object('mediaType')
     @mediaType.setter
     def mediaType(self, mediaType):
         raise AttributeError("Attribute 'mediaType' is read-only")
@@ -4038,8 +3652,7 @@ class Track(PymiereBaseObject):
     @property
     def clips(self):
         kwargs = self._eval_on_this_object('clips')
-        self.__clips = TrackItemCollection(**kwargs) if kwargs else None
-        return self.__clips
+        return TrackItemCollection(**kwargs) if kwargs else None
     @clips.setter
     def clips(self, clips):
         raise AttributeError("Attribute 'clips' is read-only")
@@ -4047,8 +3660,7 @@ class Track(PymiereBaseObject):
     @property
     def transitions(self):
         kwargs = self._eval_on_this_object('transitions')
-        self.__transitions = TrackItemCollection(**kwargs) if kwargs else None
-        return self.__transitions
+        return TrackItemCollection(**kwargs) if kwargs else None
     @transitions.setter
     def transitions(self, transitions):
         raise AttributeError("Attribute 'transitions' is read-only")
@@ -4132,9 +3744,7 @@ class Track(PymiereBaseObject):
 
 
 class TrackItemCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(TrackItemCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
@@ -4145,28 +3755,14 @@ class TrackItemCollection(PymiereBaseCollection):
 
 
 class TrackItem(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, duration=None, start=None, end=None, inPoint=None, outPoint=None, type=None, mediaType=None, projectItem=None, name=None, matchName=None, nodeId=None, components=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'duration': duration, 'start': start, 'end': end, 'inPoint': inPoint, 'outPoint': outPoint, 'type': type, 'mediaType': mediaType, 'projectItem': projectItem, 'name': name, 'matchName': matchName, 'nodeId': nodeId, 'components': components})
+    def __init__(self, pymiere_id=None):
         super(TrackItem, self).__init__(pymiere_id)
-        self.__duration = duration
-        self.__start = start
-        self.__end = end
-        self.__inPoint = inPoint
-        self.__outPoint = outPoint
-        self.__type = type
-        self.__mediaType = mediaType
-        self.__projectItem = projectItem
-        self.__name = name
-        self.__matchName = matchName
-        self.__nodeId = nodeId
-        self.__components = components
 
     # ----- PROPERTIES -----
     @property
     def duration(self):
         kwargs = self._eval_on_this_object('duration')
-        self.__duration = Time(**kwargs) if kwargs else None
-        return self.__duration
+        return Time(**kwargs) if kwargs else None
     @duration.setter
     def duration(self, duration):
         raise AttributeError("Attribute 'duration' is read-only")
@@ -4174,59 +3770,49 @@ class TrackItem(PymiereBaseObject):
     @property
     def start(self):
         kwargs = self._eval_on_this_object('start')
-        self.__start = Time(**kwargs) if kwargs else None
-        return self.__start
+        return Time(**kwargs) if kwargs else None
     @start.setter
     def start(self, start):
         self._check_type(start, Time, 'TrackItem.start')
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
-        self.__start = start
 
     @property
     def end(self):
         kwargs = self._eval_on_this_object('end')
-        self.__end = Time(**kwargs) if kwargs else None
-        return self.__end
+        return Time(**kwargs) if kwargs else None
     @end.setter
     def end(self, end):
         self._check_type(end, Time, 'TrackItem.end')
         self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
-        self.__end = end
 
     @property
     def inPoint(self):
         kwargs = self._eval_on_this_object('inPoint')
-        self.__inPoint = Time(**kwargs) if kwargs else None
-        return self.__inPoint
+        return Time(**kwargs) if kwargs else None
     @inPoint.setter
     def inPoint(self, inPoint):
         self._check_type(inPoint, Time, 'TrackItem.inPoint')
         self._eval_on_this_object("inPoint = {}".format(_format_object_to_es(inPoint)))
-        self.__inPoint = inPoint
 
     @property
     def outPoint(self):
         kwargs = self._eval_on_this_object('outPoint')
-        self.__outPoint = Time(**kwargs) if kwargs else None
-        return self.__outPoint
+        return Time(**kwargs) if kwargs else None
     @outPoint.setter
     def outPoint(self, outPoint):
         self._check_type(outPoint, Time, 'TrackItem.outPoint')
         self._eval_on_this_object("outPoint = {}".format(_format_object_to_es(outPoint)))
-        self.__outPoint = outPoint
 
     @property
     def type(self):
-        self.__type = self._eval_on_this_object('type')
-        return self.__type
+        return self._eval_on_this_object('type')
     @type.setter
     def type(self, type):
         raise AttributeError("Attribute 'type' is read-only")
 
     @property
     def mediaType(self):
-        self.__mediaType = self._eval_on_this_object('mediaType')
-        return self.__mediaType
+        return self._eval_on_this_object('mediaType')
     @mediaType.setter
     def mediaType(self, mediaType):
         raise AttributeError("Attribute 'mediaType' is read-only")
@@ -4234,35 +3820,29 @@ class TrackItem(PymiereBaseObject):
     @property
     def projectItem(self):
         kwargs = self._eval_on_this_object('projectItem')
-        self.__projectItem = ProjectItem(**kwargs) if kwargs else None
-        return self.__projectItem
+        return ProjectItem(**kwargs) if kwargs else None
     @projectItem.setter
     def projectItem(self, projectItem):
         self._check_type(projectItem, ProjectItem, 'TrackItem.projectItem')
         self._eval_on_this_object("projectItem = {}".format(_format_object_to_es(projectItem)))
-        self.__projectItem = projectItem
 
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
-        self.__name = name
 
     @property
     def matchName(self):
-        self.__matchName = self._eval_on_this_object('matchName')
-        return self.__matchName
+        return self._eval_on_this_object('matchName')
     @matchName.setter
     def matchName(self, matchName):
         raise AttributeError("Attribute 'matchName' is read-only")
 
     @property
     def nodeId(self):
-        self.__nodeId = self._eval_on_this_object('nodeId')
-        return self.__nodeId
+        return self._eval_on_this_object('nodeId')
     @nodeId.setter
     def nodeId(self, nodeId):
         raise AttributeError("Attribute 'nodeId' is read-only")
@@ -4270,8 +3850,7 @@ class TrackItem(PymiereBaseObject):
     @property
     def components(self):
         kwargs = self._eval_on_this_object('components')
-        self.__components = ComponentCollection(**kwargs) if kwargs else None
-        return self.__components
+        return ComponentCollection(**kwargs) if kwargs else None
     @components.setter
     def components(self, components):
         raise AttributeError("Attribute 'components' is read-only")
@@ -4350,234 +3929,167 @@ class TrackItem(PymiereBaseObject):
 
 class SequenceSettings(PymiereBaseObject):
     """ Structure containing sequence settings. """
-    def __init__(self, pymiere_id=None, editingMode=None, videoFrameRate=None, videoFrameWidth=None, videoFrameHeight=None, videoPixelAspectRatio=None, videoFieldType=None, videoDisplayFormat=None, audioChannelType=None, audioChannelCount=None, audioSampleRate=None, audioDisplayFormat=None, previewFileFormat=None, previewCodec=None, previewFrameWidth=None, previewFrameHeight=None, maximumBitDepth=None, maximumRenderQuality=None, compositeLinearColor=None, vrProjection=None, vrLayout=None, vrHorzCapturedView=None, vrVertCapturedView=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'editingMode': editingMode, 'videoFrameRate': videoFrameRate, 'videoFrameWidth': videoFrameWidth, 'videoFrameHeight': videoFrameHeight, 'videoPixelAspectRatio': videoPixelAspectRatio, 'videoFieldType': videoFieldType, 'videoDisplayFormat': videoDisplayFormat, 'audioChannelType': audioChannelType, 'audioChannelCount': audioChannelCount, 'audioSampleRate': audioSampleRate, 'audioDisplayFormat': audioDisplayFormat, 'previewFileFormat': previewFileFormat, 'previewCodec': previewCodec, 'previewFrameWidth': previewFrameWidth, 'previewFrameHeight': previewFrameHeight, 'maximumBitDepth': maximumBitDepth, 'maximumRenderQuality': maximumRenderQuality, 'compositeLinearColor': compositeLinearColor, 'vrProjection': vrProjection, 'vrLayout': vrLayout, 'vrHorzCapturedView': vrHorzCapturedView, 'vrVertCapturedView': vrVertCapturedView})
+    def __init__(self, pymiere_id=None):
         super(SequenceSettings, self).__init__(pymiere_id)
-        self.__editingMode = editingMode
-        self.__videoFrameRate = videoFrameRate
-        self.__videoFrameWidth = videoFrameWidth
-        self.__videoFrameHeight = videoFrameHeight
-        self.__videoPixelAspectRatio = videoPixelAspectRatio
-        self.__videoFieldType = videoFieldType
-        self.__videoDisplayFormat = videoDisplayFormat
-        self.__audioChannelType = audioChannelType
-        self.__audioChannelCount = audioChannelCount
-        self.__audioSampleRate = audioSampleRate
-        self.__audioDisplayFormat = audioDisplayFormat
-        self.__previewFileFormat = previewFileFormat
-        self.__previewCodec = previewCodec
-        self.__previewFrameWidth = previewFrameWidth
-        self.__previewFrameHeight = previewFrameHeight
-        self.__maximumBitDepth = maximumBitDepth
-        self.__maximumRenderQuality = maximumRenderQuality
-        self.__compositeLinearColor = compositeLinearColor
-        self.__vrProjection = vrProjection
-        self.__vrLayout = vrLayout
-        self.__vrHorzCapturedView = vrHorzCapturedView
-        self.__vrVertCapturedView = vrVertCapturedView
 
     # ----- PROPERTIES -----
     @property
     def editingMode(self):
-        self.__editingMode = self._eval_on_this_object('editingMode')
-        return self.__editingMode
+        return self._eval_on_this_object('editingMode')
     @editingMode.setter
     def editingMode(self, editingMode):
         self._eval_on_this_object("editingMode = {}".format(_format_object_to_es(editingMode)))
-        self.__editingMode = editingMode
 
     @property
     def videoFrameRate(self):
         kwargs = self._eval_on_this_object('videoFrameRate')
-        self.__videoFrameRate = Time(**kwargs) if kwargs else None
-        return self.__videoFrameRate
+        return Time(**kwargs) if kwargs else None
     @videoFrameRate.setter
     def videoFrameRate(self, videoFrameRate):
         self._check_type(videoFrameRate, Time, 'SequenceSettings.videoFrameRate')
         self._eval_on_this_object("videoFrameRate = {}".format(_format_object_to_es(videoFrameRate)))
-        self.__videoFrameRate = videoFrameRate
 
     @property
     def videoFrameWidth(self):
-        self.__videoFrameWidth = self._eval_on_this_object('videoFrameWidth')
-        return self.__videoFrameWidth
+        return self._eval_on_this_object('videoFrameWidth')
     @videoFrameWidth.setter
     def videoFrameWidth(self, videoFrameWidth):
         self._eval_on_this_object("videoFrameWidth = {}".format(_format_object_to_es(videoFrameWidth)))
-        self.__videoFrameWidth = videoFrameWidth
 
     @property
     def videoFrameHeight(self):
-        self.__videoFrameHeight = self._eval_on_this_object('videoFrameHeight')
-        return self.__videoFrameHeight
+        return self._eval_on_this_object('videoFrameHeight')
     @videoFrameHeight.setter
     def videoFrameHeight(self, videoFrameHeight):
         self._eval_on_this_object("videoFrameHeight = {}".format(_format_object_to_es(videoFrameHeight)))
-        self.__videoFrameHeight = videoFrameHeight
 
     @property
     def videoPixelAspectRatio(self):
-        self.__videoPixelAspectRatio = self._eval_on_this_object('videoPixelAspectRatio')
-        return self.__videoPixelAspectRatio
+        return self._eval_on_this_object('videoPixelAspectRatio')
     @videoPixelAspectRatio.setter
     def videoPixelAspectRatio(self, videoPixelAspectRatio):
         self._eval_on_this_object("videoPixelAspectRatio = {}".format(_format_object_to_es(videoPixelAspectRatio)))
-        self.__videoPixelAspectRatio = videoPixelAspectRatio
 
     @property
     def videoFieldType(self):
-        self.__videoFieldType = self._eval_on_this_object('videoFieldType')
-        return self.__videoFieldType
+        return self._eval_on_this_object('videoFieldType')
     @videoFieldType.setter
     def videoFieldType(self, videoFieldType):
         self._eval_on_this_object("videoFieldType = {}".format(_format_object_to_es(videoFieldType)))
-        self.__videoFieldType = videoFieldType
 
     @property
     def videoDisplayFormat(self):
-        self.__videoDisplayFormat = self._eval_on_this_object('videoDisplayFormat')
-        return self.__videoDisplayFormat
+        return self._eval_on_this_object('videoDisplayFormat')
     @videoDisplayFormat.setter
     def videoDisplayFormat(self, videoDisplayFormat):
         self._eval_on_this_object("videoDisplayFormat = {}".format(_format_object_to_es(videoDisplayFormat)))
-        self.__videoDisplayFormat = videoDisplayFormat
 
     @property
     def audioChannelType(self):
-        self.__audioChannelType = self._eval_on_this_object('audioChannelType')
-        return self.__audioChannelType
+        return self._eval_on_this_object('audioChannelType')
     @audioChannelType.setter
     def audioChannelType(self, audioChannelType):
         self._eval_on_this_object("audioChannelType = {}".format(_format_object_to_es(audioChannelType)))
-        self.__audioChannelType = audioChannelType
 
     @property
     def audioChannelCount(self):
-        self.__audioChannelCount = self._eval_on_this_object('audioChannelCount')
-        return self.__audioChannelCount
+        return self._eval_on_this_object('audioChannelCount')
     @audioChannelCount.setter
     def audioChannelCount(self, audioChannelCount):
         self._eval_on_this_object("audioChannelCount = {}".format(_format_object_to_es(audioChannelCount)))
-        self.__audioChannelCount = audioChannelCount
 
     @property
     def audioSampleRate(self):
         kwargs = self._eval_on_this_object('audioSampleRate')
-        self.__audioSampleRate = Time(**kwargs) if kwargs else None
-        return self.__audioSampleRate
+        return Time(**kwargs) if kwargs else None
     @audioSampleRate.setter
     def audioSampleRate(self, audioSampleRate):
         self._check_type(audioSampleRate, Time, 'SequenceSettings.audioSampleRate')
         self._eval_on_this_object("audioSampleRate = {}".format(_format_object_to_es(audioSampleRate)))
-        self.__audioSampleRate = audioSampleRate
 
     @property
     def audioDisplayFormat(self):
-        self.__audioDisplayFormat = self._eval_on_this_object('audioDisplayFormat')
-        return self.__audioDisplayFormat
+        return self._eval_on_this_object('audioDisplayFormat')
     @audioDisplayFormat.setter
     def audioDisplayFormat(self, audioDisplayFormat):
         self._eval_on_this_object("audioDisplayFormat = {}".format(_format_object_to_es(audioDisplayFormat)))
-        self.__audioDisplayFormat = audioDisplayFormat
 
     @property
     def previewFileFormat(self):
-        self.__previewFileFormat = self._eval_on_this_object('previewFileFormat')
-        return self.__previewFileFormat
+        return self._eval_on_this_object('previewFileFormat')
     @previewFileFormat.setter
     def previewFileFormat(self, previewFileFormat):
         self._eval_on_this_object("previewFileFormat = {}".format(_format_object_to_es(previewFileFormat)))
-        self.__previewFileFormat = previewFileFormat
 
     @property
     def previewCodec(self):
-        self.__previewCodec = self._eval_on_this_object('previewCodec')
-        return self.__previewCodec
+        return self._eval_on_this_object('previewCodec')
     @previewCodec.setter
     def previewCodec(self, previewCodec):
         self._eval_on_this_object("previewCodec = {}".format(_format_object_to_es(previewCodec)))
-        self.__previewCodec = previewCodec
 
     @property
     def previewFrameWidth(self):
-        self.__previewFrameWidth = self._eval_on_this_object('previewFrameWidth')
-        return self.__previewFrameWidth
+        return self._eval_on_this_object('previewFrameWidth')
     @previewFrameWidth.setter
     def previewFrameWidth(self, previewFrameWidth):
         self._eval_on_this_object("previewFrameWidth = {}".format(_format_object_to_es(previewFrameWidth)))
-        self.__previewFrameWidth = previewFrameWidth
 
     @property
     def previewFrameHeight(self):
-        self.__previewFrameHeight = self._eval_on_this_object('previewFrameHeight')
-        return self.__previewFrameHeight
+        return self._eval_on_this_object('previewFrameHeight')
     @previewFrameHeight.setter
     def previewFrameHeight(self, previewFrameHeight):
         self._eval_on_this_object("previewFrameHeight = {}".format(_format_object_to_es(previewFrameHeight)))
-        self.__previewFrameHeight = previewFrameHeight
 
     @property
     def maximumBitDepth(self):
-        self.__maximumBitDepth = self._eval_on_this_object('maximumBitDepth')
-        return self.__maximumBitDepth
+        return self._eval_on_this_object('maximumBitDepth')
     @maximumBitDepth.setter
     def maximumBitDepth(self, maximumBitDepth):
         self._eval_on_this_object("maximumBitDepth = {}".format(_format_object_to_es(maximumBitDepth)))
-        self.__maximumBitDepth = maximumBitDepth
 
     @property
     def maximumRenderQuality(self):
-        self.__maximumRenderQuality = self._eval_on_this_object('maximumRenderQuality')
-        return self.__maximumRenderQuality
+        return self._eval_on_this_object('maximumRenderQuality')
     @maximumRenderQuality.setter
     def maximumRenderQuality(self, maximumRenderQuality):
         self._eval_on_this_object("maximumRenderQuality = {}".format(_format_object_to_es(maximumRenderQuality)))
-        self.__maximumRenderQuality = maximumRenderQuality
 
     @property
     def compositeLinearColor(self):
-        self.__compositeLinearColor = self._eval_on_this_object('compositeLinearColor')
-        return self.__compositeLinearColor
+        return self._eval_on_this_object('compositeLinearColor')
     @compositeLinearColor.setter
     def compositeLinearColor(self, compositeLinearColor):
         self._eval_on_this_object("compositeLinearColor = {}".format(_format_object_to_es(compositeLinearColor)))
-        self.__compositeLinearColor = compositeLinearColor
 
     @property
     def vrProjection(self):
-        self.__vrProjection = self._eval_on_this_object('vrProjection')
-        return self.__vrProjection
+        return self._eval_on_this_object('vrProjection')
     @vrProjection.setter
     def vrProjection(self, vrProjection):
         self._eval_on_this_object("vrProjection = {}".format(_format_object_to_es(vrProjection)))
-        self.__vrProjection = vrProjection
 
     @property
     def vrLayout(self):
-        self.__vrLayout = self._eval_on_this_object('vrLayout')
-        return self.__vrLayout
+        return self._eval_on_this_object('vrLayout')
     @vrLayout.setter
     def vrLayout(self, vrLayout):
         self._eval_on_this_object("vrLayout = {}".format(_format_object_to_es(vrLayout)))
-        self.__vrLayout = vrLayout
 
     @property
     def vrHorzCapturedView(self):
-        self.__vrHorzCapturedView = self._eval_on_this_object('vrHorzCapturedView')
-        return self.__vrHorzCapturedView
+        return self._eval_on_this_object('vrHorzCapturedView')
     @vrHorzCapturedView.setter
     def vrHorzCapturedView(self, vrHorzCapturedView):
         self._eval_on_this_object("vrHorzCapturedView = {}".format(_format_object_to_es(vrHorzCapturedView)))
-        self.__vrHorzCapturedView = vrHorzCapturedView
 
     @property
     def vrVertCapturedView(self):
-        self.__vrVertCapturedView = self._eval_on_this_object('vrVertCapturedView')
-        return self.__vrVertCapturedView
+        return self._eval_on_this_object('vrVertCapturedView')
     @vrVertCapturedView.setter
     def vrVertCapturedView(self, vrVertCapturedView):
         self._eval_on_this_object("vrVertCapturedView = {}".format(_format_object_to_es(vrVertCapturedView)))
-        self.__vrVertCapturedView = vrVertCapturedView
 
 
     # ----- FUNCTIONS -----
@@ -4610,70 +4122,52 @@ class SequenceSettings(PymiereBaseObject):
 
 
 class Marker(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, start=None, end=None, type=None, name=None, comments=None, guid=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'start': start, 'end': end, 'type': type, 'name': name, 'comments': comments, 'guid': guid})
+    def __init__(self, pymiere_id=None):
         super(Marker, self).__init__(pymiere_id)
-        self.__start = start
-        self.__end = end
-        self.__type = type
-        self.__name = name
-        self.__comments = comments
-        self.__guid = guid
 
     # ----- PROPERTIES -----
     @property
     def start(self):
         kwargs = self._eval_on_this_object('start')
-        self.__start = Time(**kwargs) if kwargs else None
-        return self.__start
+        return Time(**kwargs) if kwargs else None
     @start.setter
     def start(self, start):
         self._check_type(start, Time, 'Marker.start')
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
-        self.__start = start
 
     @property
     def end(self):
         kwargs = self._eval_on_this_object('end')
-        self.__end = Time(**kwargs) if kwargs else None
-        return self.__end
+        return Time(**kwargs) if kwargs else None
     @end.setter
     def end(self, end):
         self._check_type(end, Time, 'Marker.end')
         self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
-        self.__end = end
 
     @property
     def type(self):
-        self.__type = self._eval_on_this_object('type')
-        return self.__type
+        return self._eval_on_this_object('type')
     @type.setter
     def type(self, type):
         self._eval_on_this_object("type = {}".format(_format_object_to_es(type)))
-        self.__type = type
 
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
-        self.__name = name
 
     @property
     def comments(self):
-        self.__comments = self._eval_on_this_object('comments')
-        return self.__comments
+        return self._eval_on_this_object('comments')
     @comments.setter
     def comments(self, comments):
         self._eval_on_this_object("comments = {}".format(_format_object_to_es(comments)))
-        self.__comments = comments
 
     @property
     def guid(self):
-        self.__guid = self._eval_on_this_object('guid')
-        return self.__guid
+        return self._eval_on_this_object('guid')
     @guid.setter
     def guid(self, guid):
         raise AttributeError("Attribute 'guid' is read-only")
@@ -4743,26 +4237,20 @@ class Marker(PymiereBaseObject):
 
 
 class Component(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, displayName=None, matchName=None, properties=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'displayName': displayName, 'matchName': matchName, 'properties': properties})
+    def __init__(self, pymiere_id=None):
         super(Component, self).__init__(pymiere_id)
-        self.__displayName = displayName
-        self.__matchName = matchName
-        self.__properties = properties
 
     # ----- PROPERTIES -----
     @property
     def displayName(self):
-        self.__displayName = self._eval_on_this_object('displayName')
-        return self.__displayName
+        return self._eval_on_this_object('displayName')
     @displayName.setter
     def displayName(self, displayName):
         raise AttributeError("Attribute 'displayName' is read-only")
 
     @property
     def matchName(self):
-        self.__matchName = self._eval_on_this_object('matchName')
-        return self.__matchName
+        return self._eval_on_this_object('matchName')
     @matchName.setter
     def matchName(self, matchName):
         raise AttributeError("Attribute 'matchName' is read-only")
@@ -4770,8 +4258,7 @@ class Component(PymiereBaseObject):
     @property
     def properties(self):
         kwargs = self._eval_on_this_object('properties')
-        self.__properties = ComponentParamCollection(**kwargs) if kwargs else None
-        return self.__properties
+        return ComponentParamCollection(**kwargs) if kwargs else None
     @properties.setter
     def properties(self, properties):
         raise AttributeError("Attribute 'properties' is read-only")
@@ -4807,9 +4294,7 @@ class Component(PymiereBaseObject):
 
 
 class ComponentParamCollection(PymiereBaseCollection):
-    def __init__(self, pymiere_id, length, numItems, **kwargs):
-        if not all([k.isdigit() for k in kwargs.keys()]):
-            raise ValueError('Got unexpected argument {}'.format(kwargs))
+    def __init__(self, pymiere_id):
         super(ComponentParamCollection, self).__init__(pymiere_id, "numItems")
 
     def __getitem__(self, index):
@@ -4821,30 +4306,8 @@ class ComponentParamCollection(PymiereBaseCollection):
 
 class Dollar(PymiereBaseObject):
     """ The $ object provides a number of debugging facilities and informational methods. """
-    def __init__(self, pymiere_id=None, error=None, version=None, build=None, buildDate=None, stack=None, level=None, flags=None, strict=None, locale=None, localize=None, decimalPoint=None, memCache=None, appEncoding=None, screens=None, os=None, fileName=None, line=None, hiresTimer=None, dictionary=None, engineName=None, includePath=None, **kwargs):
-        self._check_init_args({'pymiere_id': pymiere_id, 'error': error, 'version': version, 'build': build, 'buildDate': buildDate, 'stack': stack, 'level': level, 'flags': flags, 'strict': strict, 'locale': locale, 'localize': localize, 'decimalPoint': decimalPoint, 'memCache': memCache, 'appEncoding': appEncoding, 'screens': screens, 'os': os, 'fileName': fileName, 'line': line, 'hiresTimer': hiresTimer, 'dictionary': dictionary, 'engineName': engineName, 'includePath': includePath})
+    def __init__(self, pymiere_id=None):
         super(Dollar, self).__init__(pymiere_id)
-        self.__error = error
-        self.__version = version
-        self.__build = build
-        self.__buildDate = buildDate
-        self.__stack = stack
-        self.__level = level
-        self.__flags = flags
-        self.__strict = strict
-        self.__locale = locale
-        self.__localize = localize
-        self.__decimalPoint = decimalPoint
-        self.__memCache = memCache
-        self.__appEncoding = appEncoding
-        self.__screens = screens
-        self.__os = os
-        self.__fileName = fileName
-        self.__line = line
-        self.__hiresTimer = hiresTimer
-        self.__dictionary = dictionary
-        self.__engineName = engineName
-        self.__includePath = includePath
 
     # ----- PROPERTIES -----
     """ The most recent run-time error information. Assigning error text to this property generates a run-time error; however, the preferred way to generate a run-time error is to throw an Error object. """
@@ -4852,20 +4315,17 @@ class Dollar(PymiereBaseObject):
     def error(self):
         """The current runtime error"""
         kwargs = self._eval_on_this_object('error')
-        self.__error = Error(**kwargs) if kwargs else None
-        return self.__error
+        return Error(**kwargs) if kwargs else None
     @error.setter
     def error(self, error):
         self._check_type(error, Error, '$.error')
         self._eval_on_this_object("error = {}".format(_format_object_to_es(error)))
-        self.__error = error
 
     """ The version number of the ExtendScript engine. Formatted as a three-part number and description; for example: "3.92.95 (debug)". """
     @property
     def version(self):
         """The ExtendScript version"""
-        self.__version = self._eval_on_this_object('version')
-        return self.__version
+        return self._eval_on_this_object('version')
     @version.setter
     def version(self, version):
         raise AttributeError("Attribute 'version' is read-only")
@@ -4874,8 +4334,7 @@ class Dollar(PymiereBaseObject):
     @property
     def build(self):
         """The ExtendScript build number"""
-        self.__build = self._eval_on_this_object('build')
-        return self.__build
+        return self._eval_on_this_object('build')
     @build.setter
     def build(self, build):
         raise AttributeError("Attribute 'build' is read-only")
@@ -4885,8 +4344,7 @@ class Dollar(PymiereBaseObject):
     def buildDate(self):
         """The ExtendScript build date"""
         kwargs = self._eval_on_this_object('buildDate')
-        self.__buildDate = Date(**kwargs) if kwargs else None
-        return self.__buildDate
+        return Date(**kwargs) if kwargs else None
     @buildDate.setter
     def buildDate(self, buildDate):
         raise AttributeError("Attribute 'buildDate' is read-only")
@@ -4895,8 +4353,7 @@ class Dollar(PymiereBaseObject):
     @property
     def stack(self):
         """The current stack trace"""
-        self.__stack = self._eval_on_this_object('stack')
-        return self.__stack
+        return self._eval_on_this_object('stack')
     @stack.setter
     def stack(self, stack):
         raise AttributeError("Attribute 'stack' is read-only")
@@ -4905,63 +4362,52 @@ class Dollar(PymiereBaseObject):
     @property
     def level(self):
         """The debugging level"""
-        self.__level = self._eval_on_this_object('level')
-        return self.__level
+        return self._eval_on_this_object('level')
     @level.setter
     def level(self, level):
         self._eval_on_this_object("level = {}".format(_format_object_to_es(level)))
-        self.__level = level
 
     """ Gets or sets low-level debug output flags. A logical AND of bit flag values: 0x0002 (2): Displays each line with its line number as it is executed. 0x0040 (64): Enables excessive garbage collection. Usually, garbage collection starts when the number of objects has increased by a certain amount since the last garbage collection. This flag causes ExtendScript to garbage collect after almost every statement. This impairs performance severely, but is useful when you suspect that an object gets released too soon. 0x0080 (128): Displays all calls with their arguments and the return value. 0x0100 (256): Enables extended error handling (see strict). 0x0200 (512): Enables the localization feature of the toString method. Equivalent to the localize property. """
     @property
     def flags(self):
         """Debugging flags"""
-        self.__flags = self._eval_on_this_object('flags')
-        return self.__flags
+        return self._eval_on_this_object('flags')
     @flags.setter
     def flags(self, flags):
         self._eval_on_this_object("flags = {}".format(_format_object_to_es(flags)))
-        self.__flags = flags
 
     """ Sets or clears strict mode for object modification. When true, any attempt to write to a read-only property causes a runtime error. Some objects do not permit the creation of new properties when true. """
     @property
     def strict(self):
         """Set to true to enforce strict mode"""
-        self.__strict = self._eval_on_this_object('strict')
-        return self.__strict
+        return self._eval_on_this_object('strict')
     @strict.setter
     def strict(self, strict):
         self._eval_on_this_object("strict = {}".format(_format_object_to_es(strict)))
-        self.__strict = strict
 
     """ Gets or sets the current locale. The string contains five characters in the form LL_RR, where LL is an ISO 639 language specifier, and RR is an ISO 3166 region specifier.Initially, this is the value that the application or the platform returns for the current user. You can set it to temporarily change the locale for testing. To return to the application or platform setting, set to undefined, null, or the empty string. """
     @property
     def locale(self):
         """The current locale"""
-        self.__locale = self._eval_on_this_object('locale')
-        return self.__locale
+        return self._eval_on_this_object('locale')
     @locale.setter
     def locale(self, locale):
         self._eval_on_this_object("locale = {}".format(_format_object_to_es(locale)))
-        self.__locale = locale
 
     """ Set to true to enable the extended localization features of the built-in toString() method. """
     @property
     def localize(self):
         """Set to true to enable auto-localization"""
-        self.__localize = self._eval_on_this_object('localize')
-        return self.__localize
+        return self._eval_on_this_object('localize')
     @localize.setter
     def localize(self, localize):
         self._eval_on_this_object("localize = {}".format(_format_object_to_es(localize)))
-        self.__localize = localize
 
     """ The character used as the decimal point character in formatted numeric output. """
     @property
     def decimalPoint(self):
         """The decimal point separator"""
-        self.__decimalPoint = self._eval_on_this_object('decimalPoint')
-        return self.__decimalPoint
+        return self._eval_on_this_object('decimalPoint')
     @decimalPoint.setter
     def decimalPoint(self, decimalPoint):
         raise AttributeError("Attribute 'decimalPoint' is read-only")
@@ -4970,29 +4416,24 @@ class Dollar(PymiereBaseObject):
     @property
     def memCache(self):
         """The memory cache size"""
-        self.__memCache = self._eval_on_this_object('memCache')
-        return self.__memCache
+        return self._eval_on_this_object('memCache')
     @memCache.setter
     def memCache(self, memCache):
         self._eval_on_this_object("memCache = {}".format(_format_object_to_es(memCache)))
-        self.__memCache = memCache
 
     @property
     def appEncoding(self):
         """The default application encoding"""
-        self.__appEncoding = self._eval_on_this_object('appEncoding')
-        return self.__appEncoding
+        return self._eval_on_this_object('appEncoding')
     @appEncoding.setter
     def appEncoding(self, appEncoding):
         self._eval_on_this_object("appEncoding = {}".format(_format_object_to_es(appEncoding)))
-        self.__appEncoding = appEncoding
 
     """ An array of objects containing information about the display screens attached to your computer. Each object has the properties left, top, right, bottom, which contain the four corners of each screen in global coordinates.A property primary is true if that object describes the primary display. """
     @property
     def screens(self):
         """An array of rectangles"""
-        self.__screens = _format_object_to_py(self._eval_on_this_object('screens'))
-        return self.__screens
+        return _format_object_to_py(self._eval_on_this_object('screens'))
     @screens.setter
     def screens(self, screens):
         raise AttributeError("Attribute 'screens' is read-only")
@@ -5001,8 +4442,7 @@ class Dollar(PymiereBaseObject):
     @property
     def os(self):
         """The operating system"""
-        self.__os = self._eval_on_this_object('os')
-        return self.__os
+        return self._eval_on_this_object('os')
     @os.setter
     def os(self, os):
         raise AttributeError("Attribute 'os' is read-only")
@@ -5011,8 +4451,7 @@ class Dollar(PymiereBaseObject):
     @property
     def fileName(self):
         """The file name of the current script"""
-        self.__fileName = self._eval_on_this_object('fileName')
-        return self.__fileName
+        return self._eval_on_this_object('fileName')
     @fileName.setter
     def fileName(self, fileName):
         raise AttributeError("Attribute 'fileName' is read-only")
@@ -5021,8 +4460,7 @@ class Dollar(PymiereBaseObject):
     @property
     def line(self):
         """The current line number of the current script"""
-        self.__line = self._eval_on_this_object('line')
-        return self.__line
+        return self._eval_on_this_object('line')
     @line.setter
     def line(self, line):
         raise AttributeError("Attribute 'line' is read-only")
@@ -5031,8 +4469,7 @@ class Dollar(PymiereBaseObject):
     @property
     def hiresTimer(self):
         """The elapsed time in microseconds since the last access"""
-        self.__hiresTimer = self._eval_on_this_object('hiresTimer')
-        return self.__hiresTimer
+        return self._eval_on_this_object('hiresTimer')
     @hiresTimer.setter
     def hiresTimer(self, hiresTimer):
         raise AttributeError("Attribute 'hiresTimer' is read-only")
@@ -5041,8 +4478,7 @@ class Dollar(PymiereBaseObject):
     def dictionary(self):
         """The application's main dictionary"""
         kwargs = self._eval_on_this_object('dictionary')
-        self.__dictionary = Dictionary(**kwargs) if kwargs else None
-        return self.__dictionary
+        return Dictionary(**kwargs) if kwargs else None
     @dictionary.setter
     def dictionary(self, dictionary):
         raise AttributeError("Attribute 'dictionary' is read-only")
@@ -5051,8 +4487,7 @@ class Dollar(PymiereBaseObject):
     @property
     def engineName(self):
         """The name of the current engine if set"""
-        self.__engineName = self._eval_on_this_object('engineName')
-        return self.__engineName
+        return self._eval_on_this_object('engineName')
     @engineName.setter
     def engineName(self, engineName):
         raise AttributeError("Attribute 'engineName' is read-only")
@@ -5061,8 +4496,7 @@ class Dollar(PymiereBaseObject):
     @property
     def includePath(self):
         """The path for include files"""
-        self.__includePath = self._eval_on_this_object('includePath')
-        return self.__includePath
+        return self._eval_on_this_object('includePath')
     @includePath.setter
     def includePath(self, includePath):
         raise AttributeError("Attribute 'includePath' is read-only")
@@ -5190,100 +4624,72 @@ class Dollar(PymiereBaseObject):
 
 
 class Error(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, number=None, fileName=None, line=None, source=None, start=None, end=None, message=None, name=None, description=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'number': number, 'fileName': fileName, 'line': line, 'source': source, 'start': start, 'end': end, 'message': message, 'name': name, 'description': description})
+    def __init__(self, pymiere_id=None):
         super(Error, self).__init__(pymiere_id)
-        self.__number = number
-        self.__fileName = fileName
-        self.__line = line
-        self.__source = source
-        self.__start = start
-        self.__end = end
-        self.__message = message
-        self.__name = name
-        self.__description = description
 
     # ----- PROPERTIES -----
     @property
     def number(self):
-        self.__number = self._eval_on_this_object('number')
-        return self.__number
+        return self._eval_on_this_object('number')
     @number.setter
     def number(self, number):
         self._eval_on_this_object("number = {}".format(_format_object_to_es(number)))
-        self.__number = number
 
     @property
     def fileName(self):
-        self.__fileName = self._eval_on_this_object('fileName')
-        return self.__fileName
+        return self._eval_on_this_object('fileName')
     @fileName.setter
     def fileName(self, fileName):
         self._eval_on_this_object("fileName = {}".format(_format_object_to_es(fileName)))
-        self.__fileName = fileName
 
     @property
     def line(self):
-        self.__line = self._eval_on_this_object('line')
-        return self.__line
+        return self._eval_on_this_object('line')
     @line.setter
     def line(self, line):
         self._eval_on_this_object("line = {}".format(_format_object_to_es(line)))
-        self.__line = line
 
     @property
     def source(self):
-        self.__source = self._eval_on_this_object('source')
-        return self.__source
+        return self._eval_on_this_object('source')
     @source.setter
     def source(self, source):
         self._eval_on_this_object("source = {}".format(_format_object_to_es(source)))
-        self.__source = source
 
     @property
     def start(self):
-        self.__start = self._eval_on_this_object('start')
-        return self.__start
+        return self._eval_on_this_object('start')
     @start.setter
     def start(self, start):
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
-        self.__start = start
 
     @property
     def end(self):
-        self.__end = self._eval_on_this_object('end')
-        return self.__end
+        return self._eval_on_this_object('end')
     @end.setter
     def end(self, end):
         self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
-        self.__end = end
 
     @property
     def message(self):
-        self.__message = self._eval_on_this_object('message')
-        return self.__message
+        return self._eval_on_this_object('message')
     @message.setter
     def message(self, message):
         self._eval_on_this_object("message = {}".format(_format_object_to_es(message)))
-        self.__message = message
 
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         self._eval_on_this_object("name = {}".format(_format_object_to_es(name)))
-        self.__name = name
 
     @property
     def description(self):
-        self.__description = self._eval_on_this_object('description')
-        return self.__description
+        return self._eval_on_this_object('description')
     @description.setter
     def description(self, description):
         self._eval_on_this_object("description = {}".format(_format_object_to_es(description)))
-        self.__description = description
 
 
     # ----- FUNCTIONS -----
@@ -5295,8 +4701,7 @@ class Error(PymiereBaseObject):
 
 
 class Dictionary(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, ):
-        self._check_init_args({'pymiere_id': pymiere_id, })
+    def __init__(self, pymiere_id=None):
         super(Dictionary, self).__init__(pymiere_id)
 
     # ----- PROPERTIES -----
@@ -5331,16 +4736,13 @@ class Dictionary(PymiereBaseObject):
 
 
 class ComponentParam(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, displayName=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'displayName': displayName})
+    def __init__(self, pymiere_id=None):
         super(ComponentParam, self).__init__(pymiere_id)
-        self.__displayName = displayName
 
     # ----- PROPERTIES -----
     @property
     def displayName(self):
-        self.__displayName = self._eval_on_this_object('displayName')
-        return self.__displayName
+        return self._eval_on_this_object('displayName')
     @displayName.setter
     def displayName(self, displayName):
         raise AttributeError("Attribute 'displayName' is read-only")
@@ -5440,8 +4842,8 @@ class ComponentParam(PymiereBaseObject):
     def getValue(self):
         self._eval_on_this_object("getValue()")
 
-    def setValue(self, value, updateUI):
-        return self._eval_on_this_object("setValue({}, {})".format(_format_object_to_es(value), _format_object_to_es(updateUI)))
+    def setValue(self):
+        return self._eval_on_this_object("setValue()")
 
     def getColorValue(self):
         self._eval_on_this_object("getColorValue()")
@@ -5479,34 +4881,27 @@ class ComponentParam(PymiereBaseObject):
 
 
 class Exporter(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, name=None, classID=None, fileType=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'name': name, 'classID': classID, 'fileType': fileType})
+    def __init__(self, pymiere_id=None):
         super(Exporter, self).__init__(pymiere_id)
-        self.__name = name
-        self.__classID = classID
-        self.__fileType = fileType
 
     # ----- PROPERTIES -----
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
 
     @property
     def classID(self):
-        self.__classID = self._eval_on_this_object('classID')
-        return self.__classID
+        return self._eval_on_this_object('classID')
     @classID.setter
     def classID(self, classID):
         raise AttributeError("Attribute 'classID' is read-only")
 
     @property
     def fileType(self):
-        self.__fileType = self._eval_on_this_object('fileType')
-        return self.__fileType
+        return self._eval_on_this_object('fileType')
     @fileType.setter
     def fileType(self, fileType):
         raise AttributeError("Attribute 'fileType' is read-only")
@@ -5545,25 +4940,20 @@ class Exporter(PymiereBaseObject):
 
 
 class EncoderPreset(PymiereBaseObject):
-    def __init__(self, pymiere_id=None, name=None, matchName=None):
-        self._check_init_args({'pymiere_id': pymiere_id, 'name': name, 'matchName': matchName})
+    def __init__(self, pymiere_id=None):
         super(EncoderPreset, self).__init__(pymiere_id)
-        self.__name = name
-        self.__matchName = matchName
 
     # ----- PROPERTIES -----
     @property
     def name(self):
-        self.__name = self._eval_on_this_object('name')
-        return self.__name
+        return self._eval_on_this_object('name')
     @name.setter
     def name(self, name):
         raise AttributeError("Attribute 'name' is read-only")
 
     @property
     def matchName(self):
-        self.__matchName = self._eval_on_this_object('matchName')
-        return self.__matchName
+        return self._eval_on_this_object('matchName')
     @matchName.setter
     def matchName(self, matchName):
         raise AttributeError("Attribute 'matchName' is read-only")

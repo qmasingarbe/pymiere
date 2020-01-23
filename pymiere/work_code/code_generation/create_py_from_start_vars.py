@@ -29,16 +29,8 @@ def generate_class(object_data, all_classes_names):
     if object_data.get("help") or object_data.get("description"):
         raise NotImplementedError()
     # init
-    properties = ["{}=None".format(p) for p in object_data.get("props").keys()]
-    if object_data.get("name") == "$":  # absorb extra things in $ object
-        code = code.add_line("def __init__(self, {}, **kwargs):".format(", ".join(properties)), indent=1)
-    else:
-        code = code.add_line("def __init__(self, {}):".format(", ".join(properties)), indent=1)
-    properties_dict = ["'{0}':{0}".format(p) for p in object_data.get("props").keys()]
-    code = code.add_line("PymiereBaseObject._check_init_args({"+ ", ".join(properties_dict) +"})", indent=2)
+    code = code.add_line("def __init__(self):", indent=1)
     code = code.add_line("super({}, self).__init__()".format(object_data.get("name")), indent=2)
-    for prop_name in object_data.get("props").keys():
-        code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
 
     # ----- CLASS PROPERTIES -----
     code = code.add_empty_line()
@@ -55,13 +47,12 @@ def generate_class(object_data, all_classes_names):
         if prop_info.get("description"):
             code = code.add_line('"""{}"""'.format(prop_info.get("description")), indent=2)
         if prop_info.get("dataType") in utils.TYPE_CORRESPONDENCE:
-            code = code.add_line("self.__{0} = _eval_on_global_object('{0}')".format(prop_name), indent=2)
+            code = code.add_line("return _eval_on_global_object('{0}')".format(prop_name), indent=2)
         elif prop_info.get("dataType") not in all_classes_names:
             print("Return type '{}' for property getter '{}.{}' seems unknown, using automatic ES class to py object".format(prop_info.get("dataType"), object_data.get("name"), prop_name))
-            code = code.add_line("self.__{0} = _format_object_to_py(_eval_script_returning_object('{0}'))".format(prop_name), indent=2)
+            code = code.add_line("return _format_object_to_py(_eval_script_returning_object('{0}'))".format(prop_name), indent=2)
         else:
-            code = code.add_line("self.__{0} = {1}(**_eval_script_returning_object('{0}', as_kwargs=True))".format(prop_name, prop_info.get("dataType")), indent=2)
-        code = code.add_line("return self.__{}".format(prop_name), indent=2)
+            code = code.add_line("return {1}(**_eval_script_returning_object('{0}', as_kwargs=True))".format(prop_name, prop_info.get("dataType")), indent=2)
         # setter
         code = code.add_line("@{}.setter".format(prop_name), indent=1)
         code = code.add_line("def {0}(self, {0}):".format(prop_name), indent=1)
@@ -73,7 +64,6 @@ def generate_class(object_data, all_classes_names):
                 print("value type '{}' for property setter of '{}.{}' seems unknown, no check for type will be performed".format(check_cls, object_data.get("name"), prop_name))
             line = """_eval_on_global_object("{0} = {{}}".format(_format_object_to_es({0})))"""
             code = code.add_line(line.format(prop_name), indent=2)
-            code = code.add_line("self.__{0} = {0}".format(prop_name), indent=2)
         elif prop_info.get("type") == "readonly":
             code = code.add_line("""raise AttributeError("Attribute '{}' is read-only")""".format(prop_name), indent=2)
         else:
@@ -197,13 +187,14 @@ if __name__ == "__main__":
     # if it's an object search if class exists and return objects creation arguments
     if isinstance(result, dict) and "isObject" in result and result["isObject"] is True:
         # create key word argument list to create the object
-        kwargs = result["objectValues"]
-        kwargs.update(pymiere_id=result["pymiereId"])
+        kwargs = dict(pymiere_id=result["pymiereId"])
         return kwargs
     return result\n\n"""
     import inspect
     from pymiere.objects import premiere_objects
     result_code += generate_class(data, ["Array"] + [name for name, obj in inspect.getmembers(premiere_objects) if inspect.isclass(obj)])
     result_code = result_code.replace("$", "Dollar")
-    with open(os.path.join(__file__, "..", "..", "objects", "start_vars.py"), "w") as f:
+    path = os.path.join(__file__, "..", "..", "..", "objects", "start_vars.py")
+    print(os.path.realpath(path))
+    with open(path, "w") as f:
         f.write(result_code)

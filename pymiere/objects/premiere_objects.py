@@ -409,17 +409,19 @@ class Project(PymiereBaseObject):
         self._check_type(sequenceID, str, 'arg "sequenceID" of function "Project.openSequence"')
         return self._eval_on_this_object("openSequence({})".format(_format_object_to_es(sequenceID)))
 
-    def importFiles(self, arg1):
+    def importFiles(self, arrayOfFilePathsToImport, suppressUI, targetBin, importAsNumberedStills):
         """
         Imports files into the project. 
         :param arrayOfFilePathsToImport: An array of paths to files to import
         :param suppressUI: optional; if true, suppress any warnings, translation reports, or errors.
         :param projectBin: optional; if present, the bin into which to import the new media.
-        :param importAsNumberedStill: optiona; if present, interprets the file paths as a series of numbered stills.
-        :type arg1: any
+        :param importAsNumberedStill: optional if present, interprets the file paths as a series of numbered stills.
         """
-        self._check_type(arg1, any, 'arg "arg1" of function "Project.importFiles"')
-        return self._eval_on_this_object("importFiles({})".format(_format_object_to_es(arg1)))
+        self._check_type(arrayOfFilePathsToImport, list, 'arg "arrayOfFilePathsToImport" of function "Project.importFiles"')
+        self._check_type(suppressUI, bool, 'arg "suppressUI" of function "Project.importFiles"')
+        self._check_type(targetBin, ProjectItem, 'arg "targetBin" of function "Project.importFiles"')
+        self._check_type(importAsNumberedStills, bool, 'arg "importAsNumberedStills" of function "Project.importFiles"')
+        return self._eval_on_this_object("importFiles({}, {}, {}, {})".format(_format_object_to_es(arrayOfFilePathsToImport), _format_object_to_es(suppressUI), _format_object_to_es(targetBin), _format_object_to_es(importAsNumberedStills)))
 
     def importSequences(self, arg1):
         """
@@ -800,7 +802,7 @@ class ProjectItem(PymiereBaseObject):
         """
         self._check_type(matchString, str, 'arg "matchString" of function "ProjectItem.findItemsMatchingMediaPath"')
         self._check_type(ignoreSubclips, float, 'arg "ignoreSubclips" of function "ProjectItem.findItemsMatchingMediaPath"')
-        self._eval_on_this_object("findItemsMatchingMediaPath({}, {})".format(_format_object_to_es(matchString), _format_object_to_es(ignoreSubclips)))
+        return Array(**self._eval_on_this_object("findItemsMatchingMediaPath({}, {})".format(_format_object_to_es(matchString), _format_object_to_es(ignoreSubclips))))
 
     def attachProxy(self, mediaPath, isHiRes):
         """

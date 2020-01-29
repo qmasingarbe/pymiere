@@ -130,5 +130,19 @@ def edit_clip(clip, start_on_timeline, end_on_timeline, in_point_on_clip, out_po
     clip.outPoint = out_point
 
 
+def move_clip(clip, seconds):
+    """
+    Move a clip by the number of seconds. Negative values will move the clip left (before the original position),
+    positive values move the clip right (after the original position)
+    :param clip: (Clip) clip object we want to move
+    :param seconds: (float) how many seconds we want to move the clip by, negative value will move left, positive right
+    """
+    params = ["end", "start"]
+    for param in params:
+        time_object = getattr(clip, param)
+        time_object.seconds = time_object.seconds + seconds
+        setattr(clip, param, time_object)
+
+
 if __name__ == "__main__":
     pass

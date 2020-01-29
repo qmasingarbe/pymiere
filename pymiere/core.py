@@ -60,7 +60,6 @@ def eval_script(code=None, filepath=None, decode_json=True):
     :param decode_json: (bool) decode response using json if possible
     :return: (any) depend on the returned value
     """
-    # todo voir si ca prends du temps et peut etre mettre un cache ici
     check_premiere_is_alive(crash=True)
 
     # arg check
@@ -77,6 +76,9 @@ def eval_script(code=None, filepath=None, decode_json=True):
         # using encoding 'utf-8-sig' to work with file saved with Adobe ExtendScript Toolkit
         with open(filepath, encoding='utf-8-sig') as f:
             code = f.read()
+
+    # escape backslash for javascript
+    code = code.replace("\\", "\\\\")
 
     # send code to premiere (adding try statement to prevent error popup message locking premiere UI)
     response = requests.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;ExtendJSON.stringify(e)}"})
@@ -332,6 +334,16 @@ class Array(PymiereBaseCollection):
     def __getitem__(self, index):
         return _format_object_to_py(_eval_script_returning_object("$._pymiere['{}'][{}]".format(self._pymiere_id, index)))
 
+    def append(self, item):
+        self.push(item)
+
+    def push(self, item):
+        self._eval_on_this_object("push({})".format(_format_object_to_es(item)))
+
+    @classmethod
+    def from_python_list(cls, python_list):
+        return cls(**_eval_script_returning_object("[{}]".format(", ".join([_format_object_to_es(item) for item in python_list])), as_kwargs=True))
+
 
 # ----- PRIVATE FUNCTIONS ----
 def _format_object_to_es(obj):
@@ -347,6 +359,8 @@ def _format_object_to_es(obj):
         return str(obj).lower()
     elif isinstance(obj, PymiereBaseObject):
         return "$._pymiere['{}']".format(obj._pymiere_id)
+    elif isinstance(obj, list):
+        return "$._pymiere['{}']".format(Array.from_python_list(obj)._pymiere_id)
     else:
         return str(obj)
 

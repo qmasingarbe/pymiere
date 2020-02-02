@@ -137,7 +137,7 @@ def move_clip(clip, seconds):
     :param clip: (Clip) clip object we want to move
     :param seconds: (float) how many seconds we want to move the clip by, negative value will move left, positive right
     """
-    params = ["end", "start"]
+    params = ["end", "start"] if seconds > 0 else ["start", "end"]
     for param in params:
         time_object = getattr(clip, param)
         time_object.seconds = time_object.seconds + seconds

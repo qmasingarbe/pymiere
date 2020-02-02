@@ -185,8 +185,9 @@ class Application(PymiereBaseObject):
         self._check_type(filePath, str, 'arg "filePath" of function "Application.isDocument"')
         return self._eval_on_this_object("isDocument({})".format(_format_object_to_es(filePath)))
 
-    def openDocument(self):
-        return self._eval_on_this_object("openDocument()")
+    def openDocument(self, filePath):
+        self._check_type(filePath, str, 'arg "filePath" of function "Application.openDocument"')
+        return self._eval_on_this_object("openDocument({})".format(_format_object_to_es(filePath)))
 
     def quit(self):
         self._eval_on_this_object("quit()")
@@ -1319,6 +1320,7 @@ class Sequence(PymiereBaseObject):
         :type audioTrackIndex: float
         """
         self._check_type(clipProjectItem, ProjectItem, 'arg "clipProjectItem" of function "Sequence.insertClip"')
+        self._check_type(time, Time, 'arg "time" of function "Sequence.insertClip"')
         self._check_type(videoTrackIndex, float, 'arg "videoTrackIndex" of function "Sequence.insertClip"')
         self._check_type(audioTrackIndex, float, 'arg "audioTrackIndex" of function "Sequence.insertClip"')
         self._eval_on_this_object("insertClip({}, {}, {}, {})".format(_format_object_to_es(clipProjectItem), _format_object_to_es(time), _format_object_to_es(videoTrackIndex), _format_object_to_es(audioTrackIndex)))

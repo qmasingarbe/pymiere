@@ -167,7 +167,7 @@ class Application(PymiereBaseObject):
         return self._eval_on_this_object("isDocumentOpen()")
 
     def getWorkspaces(self):
-        self._eval_on_this_object("getWorkspaces()")
+        return Array(**self._eval_on_this_object("getWorkspaces()"))
 
     def setWorkspace(self, workspace):
         """

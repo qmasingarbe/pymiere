@@ -4798,21 +4798,25 @@ class ComponentParam(PymiereBaseObject):
 
     def findNearestKey(self, time, threshold):
         """
-        :type time: Object
-        :type threshold: Object
+        :type time: float
+        :type threshold: float
         """
+        self._check_type(time, float, 'arg "time" of function "ComponentParam.findNearestKey"')
+        self._check_type(threshold, float, 'arg "threshold" of function "ComponentParam.findNearestKey"')
         return Time(**self._eval_on_this_object("findNearestKey({}, {})".format(_format_object_to_es(time), _format_object_to_es(threshold))))
 
     def findPreviousKey(self, time):
         """
-        :type time: Object
+        :type time: float
         """
+        self._check_type(time, float, 'arg "time" of function "ComponentParam.findPreviousKey"')
         return Time(**self._eval_on_this_object("findPreviousKey({})".format(_format_object_to_es(time))))
 
     def findNextKey(self, time):
         """
-        :type time: Object
+        :type time: float
         """
+        self._check_type(time, float, 'arg "time" of function "ComponentParam.findNextKey"')
         return Time(**self._eval_on_this_object("findNextKey({})".format(_format_object_to_es(time))))
 
     def getKeys(self):
@@ -4820,27 +4824,34 @@ class ComponentParam(PymiereBaseObject):
 
     def addKey(self, time):
         """
-        :type time: Object
+        :type time: float
         """
+        self._check_type(time, float, 'arg "time" of function "ComponentParam.addKey"')
         self._eval_on_this_object("addKey({})".format(_format_object_to_es(time)))
 
     def removeKey(self, time):
         """
-        :type time: Object
+        :type time: float
         """
+        self._check_type(time, float, 'arg "time" of function "ComponentParam.removeKey"')
         self._eval_on_this_object("removeKey({})".format(_format_object_to_es(time)))
 
-    def removeKeyRange(self, startTime, stopTime):
+    def removeKeyRange(self, startTime, stopTime, updateUI):
         """
-        :type startTime: Object
-        :type stopTime: Object
+        :type startTime: float
+        :type stopTime: float
+        :type updateUI: bool
         """
-        self._eval_on_this_object("removeKeyRange({}, {})".format(_format_object_to_es(startTime), _format_object_to_es(stopTime)))
+        self._check_type(startTime, float, 'arg "startTime" of function "ComponentParam.removeKeyRange"')
+        self._check_type(stopTime, float, 'arg "stopTime" of function "ComponentParam.removeKeyRange"')
+        self._check_type(updateUI, bool, 'arg "updateUI" of function "ComponentParam.removeKeyRange"')
+        self._eval_on_this_object("removeKeyRange({}, {}, {})".format(_format_object_to_es(startTime), _format_object_to_es(stopTime), _format_object_to_es(updateUI)))
 
     def keyExistsAtTime(self, time):
         """
-        :type time: Object
+        :type time: float
         """
+        self._check_type(time, float, 'arg "time" of function "ComponentParam.keyExistsAtTime"')
         return self._eval_on_this_object("keyExistsAtTime({})".format(_format_object_to_es(time)))
 
     def getValue(self):
@@ -4866,11 +4877,13 @@ class ComponentParam(PymiereBaseObject):
         """
         self._eval_on_this_object("getValueAtKey({})".format(_format_object_to_es(time)))
 
-    def setValueAtKey(self, time):
+    def setValueAtKey(self, time, value, updateUI):
         """
         :type time: Object
+        :type value: float
+        :type updateUI: bool
         """
-        return self._eval_on_this_object("setValueAtKey({})".format(_format_object_to_es(time)))
+        return self._eval_on_this_object("setValueAtKey({}, {}, {})".format(_format_object_to_es(time), _format_object_to_es(value), _format_object_to_es(updateUI)))
 
     def getValueAtTime(self, time):
         """

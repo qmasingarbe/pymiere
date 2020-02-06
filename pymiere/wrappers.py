@@ -144,5 +144,47 @@ def move_clip(clip, seconds):
         setattr(clip, param, time_object)
 
 
+def animate_effect_using_function(clip, effect_name, property_name, anim_func, overwrite=True, keyframe_per_seconds=1/25):
+    """
+    Reproduce the animation of the given function on an effect property
+    :param clip: (Clip) clip object on which we want to change animate the effect
+    :param effect_name: (str) name of the effect (ex: 'twirl')
+    :param property_name: (str) name of the property on the effect (ex: 'angle')
+    :param anim_func: (function) function that take a float number as input (seconds) and return the value for the effect at this time as float
+    (ex: lambda s: math.cos(s*2)*10 for a sine wave, lambda s: int(s % 2)*10 for a blinking effect, ...)
+    :param overwrite: (bool) if True, clear existing keys else only add keys
+    :param keyframe_per_seconds: (float) number of keyframes to place each seconds
+    """
+    # filter effect by name
+    effects = clip.components
+    for effect in effects:
+        if effect.displayName.lower() != effect_name.lower():
+            continue
+        # filter effect property by name
+        for property in effect.properties:
+            if property.displayName.lower() != property_name.lower():
+                continue
+            # check keyframes are supported
+            if not property.areKeyframesSupported():
+                raise ValueError("Keyframes are not supported on property '{}' of effect '{}' for clip '{}'".format(property.displayName, effect.displayName, clip.name))
+            # activate keyframes on proerty (= check the stop watch icon in the ui)
+            if not property.isTimeVarying():
+                property.setTimeVarying(True)
+
+            # get clip in/out
+            start = clip.inPoint.seconds
+            end = clip.outPoint.seconds
+
+            # clear keys
+            if overwrite:
+                property.removeKeyRange(start, end, True)
+
+            # place keys
+            while start < end:
+                property.addKey(start)
+                property.setValueAtKey(start, anim_func(start), True)
+                start += keyframe_per_seconds
+
+
 if __name__ == "__main__":
     pass

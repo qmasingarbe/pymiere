@@ -10,6 +10,7 @@ from PyQt5.QtCore import Qt
 import pymiere
 from pymiere import wrappers
 
+default_folder = r"C:\Users\Quentin\Desktop\temp\playblast"
 
 def swap_focus(func):
     """
@@ -151,11 +152,9 @@ class PymiereControl(QWidget):
 
     def refresh_selection_func(self, *args):
         """ Refresh list of selected clip in UI, should be triggered by event in the futur """
-        result = str()
         clips = self.active_sequence.getSelection()
-        for clip in clips:
-            result += "{}\n".format(clip.name)
-        self.selection_info.setText(result)
+        result = list(set([clip.name for clip in clips]))
+        self.selection_info.setText("\n".join(result))
 
     @swap_focus
     def change_path_func(self, *args, new_path="D:/3d/simulations/bumperCars/demo/wallAway.0101.jpeg"):
@@ -197,7 +196,7 @@ class PymiereControl(QWidget):
 
     @swap_focus
     def import_func(self, *args):
-        file_to_import = os.path.normpath(QFileDialog.getOpenFileName(caption="Choose a file to import...")[0])
+        file_to_import = os.path.normpath(QFileDialog.getOpenFileName(caption="Choose a file to import...", directory=default_folder)[0])
         root_bin = pymiere.objects.app.project.getInsertionBin()
         pymiere.objects.app.project.importFiles([file_to_import], True, root_bin, True)
         result = root_bin.findItemsMatchingMediaPath(file_to_import, True)
@@ -220,7 +219,7 @@ class PymiereControl(QWidget):
     def export_frame_func(self, *args):
         active_sequence_qe = pymiere.objects.qe.project.getActiveSequence()
         time = active_sequence_qe.CTI.timecode
-        filename = QFileDialog.getSaveFileName(caption="Export png frame there...", filter="Image (*.png)")[0]
+        filename = QFileDialog.getSaveFileName(caption="Export png frame there...", filter="Image (*.png)", directory=default_folder)[0]
         filename = os.path.normpath(filename)
         if os.path.isfile(filename):
             os.remove(filename)
@@ -243,7 +242,7 @@ class PymiereControl(QWidget):
 
     def open_func(self, *args):
         self.__active_sequence = None
-        filepath = os.path.normpath(QFileDialog.getOpenFileName(caption="Choose a project to open...")[0])
+        filepath = os.path.normpath(QFileDialog.getOpenFileName(caption="Choose a project to open...", directory=default_folder)[0])
         # if not filepath.endswith(".pproj"):
         #     raise ValueError("Given path was not a valid premiere pro document")
         pymiere.objects.app.openDocument(filepath)
@@ -252,7 +251,7 @@ class PymiereControl(QWidget):
         pymiere.objects.app.project.save()
 
     def saveas_func(self, *args):
-        filename = QFileDialog.getSaveFileName(caption="Choose new location to save project...", filter="Project (*.pproj)")[0]
+        filename = QFileDialog.getSaveFileName(caption="Choose new location to save project...", filter="Project (*.pproj)", directory=default_folder)[0]
         filename = os.path.normpath(filename)
         if os.path.isfile(filename):
             os.remove(filename)

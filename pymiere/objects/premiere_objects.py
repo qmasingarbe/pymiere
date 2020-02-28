@@ -434,19 +434,25 @@ class Project(PymiereBaseObject):
         self._check_type(arg1, any, 'arg "arg1" of function "Project.importSequences"')
         return self._eval_on_this_object("importSequences({})".format(_format_object_to_es(arg1)))
 
-    def importAllAEComps(self, arg1):
+    def importAllAEComps(self, pathOfContainingProject, optionalTargetBin):
         """
-        :type arg1: any
-        """
-        self._check_type(arg1, any, 'arg "arg1" of function "Project.importAllAEComps"')
-        return self._eval_on_this_object("importAllAEComps({})".format(_format_object_to_es(arg1)))
+         :type pathOfContainingProject: str
+         :type optionalTargetBin: ProjectItem
+         """
+        self._check_type(pathOfContainingProject, str, 'arg "pathOfContainingProject" of function "Project.importAEComps"')
+        self._check_type(optionalTargetBin, ProjectItem, 'arg "optionalTargetBin" of function "Project.importAEComps"')
+        return self._eval_on_this_object("importAEComps({},{})".format(_format_object_to_es(pathOfContainingProject), _format_object_to_es(optionalTargetBin)))
 
-    def importAEComps(self, arg1):
+    def importAEComps(self, pathOfContainingProject, arrayOfCompNames, optionalTargetBin):
         """
-        :type arg1: any
+        :type pathOfContainingProject: str
+        :type arrayOfCompNames: list
+        :type optionalTargetBin: ProjectItem
         """
-        self._check_type(arg1, any, 'arg "arg1" of function "Project.importAEComps"')
-        return self._eval_on_this_object("importAEComps({})".format(_format_object_to_es(arg1)))
+        self._check_type(pathOfContainingProject, str, 'arg "pathOfContainingProject" of function "Project.importAEComps"')
+        self._check_type(arrayOfCompNames, list, 'arg "arrayOfCompNames" of function "Project.importAEComps"')
+        self._check_type(optionalTargetBin, ProjectItem, 'arg "optionalTargetBin" of function "Project.importAEComps"')
+        return self._eval_on_this_object("importAEComps({},{},{})".format(_format_object_to_es(pathOfContainingProject), _format_object_to_es(arrayOfCompNames), _format_object_to_es(optionalTargetBin)))
 
     def createNewSequence(self, sequenceName, placeholderID):
         """

@@ -16,7 +16,7 @@ Want to create interactive tools for your editor using Qt, Shotgun API, custom l
         - Download and unzip the folder somewhere
         - Navigate to the folder in Command line or Power shell
         - type `.\ExManCmd.exe /install D:\path_to_extension\pymiere_link.zxp`
-      * Alternatively install using [Anastasiy Extension Manager](http://install.anastasiy.com) (untested)
+      * Alternatively install using [ZXP installer](https://aescripts.com/learn/zxp-installer/) or [Anastasiy Extension Manager](http://install.anastasiy.com)
       * To check that it is correctly installed, start Premiere, under `Window > Extensions` you should see `Pymiere Link` (clicking on it will do nothing)
   
   2. Install the Python lib

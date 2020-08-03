@@ -2,6 +2,7 @@
 Core functions handling connection and objects base
 """
 import os
+import sys
 import json
 from time import time as current_time
 import requests
@@ -84,7 +85,10 @@ def eval_script(code=None, filepath=None, decode_json=True):
     response = requests.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;ExtendJSON.stringify(e)}"})
 
     # handle response
-    response_text = response.text
+    response_text = response.content
+    if sys.version_info >= (3, 0):
+        # in python 3 response.content is bytes which should be decoded, directly a str in python 2
+        response_text = response_text.decode(encoding="utf-8")
     if decode_json is False:
         return response_text
     try:
@@ -390,8 +394,8 @@ def _format_object_to_py(obj):
 def _eval_script_returning_object(line, as_kwargs=False):
     """
     Eval the line as ExtendScript code, if the code return an object, it will be properly stored with an id for
-
     pymiere to handle it and returned as a representation with the id
+
     :param line: (str) line of code to execute in ES
     :param as_kwargs: (bool) if object return only kwargs+pymiere_id to directly pass it to class init
     :return: (dict) object repr

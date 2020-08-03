@@ -17,7 +17,7 @@ if not sequence_active:
     sequences = wrappers.list_sequences()
     for seq in sequences:
         project.openSequence(sequenceID=seq.sequenceID)
-    project.activeSequence = sequences[0]  # set the firsts equence in the list as active
+    project.activeSequence = sequences[0]  # set the first sequence in the list as active
 
 # list all videos clip in the active sequence
 clips = wrappers.list_video(project.activeSequence)

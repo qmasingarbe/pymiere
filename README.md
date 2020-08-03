@@ -66,3 +66,7 @@ I did a [detailed article](https://www.linkedin.com/pulse/python-control-adobe-a
  - [ ] add more documentation, docstrings...
  - [ ] build one Python mirror of ExtendScript objects by Premiere version, as each version adds new objects/functions/properties
  - [ ] add a way to simply customize a panel to call python functions
+ 
+ ## Thanks
+ I'd like to thank everybody that contributed to Pymiere by reporting bugs, sending ideas, ...
+ - Isaac brown (https://github.com/ikebenbrown)

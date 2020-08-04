@@ -6,12 +6,15 @@ import os
 import sys
 import time
 import re
-from subprocess import check_output, call, Popen, CREATE_NO_WINDOW, CREATE_NEW_CONSOLE
+from subprocess import check_output, call, Popen, CREATE_NEW_CONSOLE
 from distutils.version import StrictVersion
 try:
     import _winreg as wr  # python 2
 except:
     import winreg as wr  # python 3
+
+
+CREATE_NO_WINDOW = 0x08000000
 
 
 def count_running_exe(exe_name):

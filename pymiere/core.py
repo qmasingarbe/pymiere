@@ -403,7 +403,7 @@ def _eval_script_returning_object(line, as_kwargs=False):
     if not line.endswith(";"):
         line += ";"
     script = "var tmp = {}".format(line)
-    script += """\nif(typeof tmp === 'object'){
+    script += """\nif(typeof tmp === 'object' && tmp !== null){
             var newPymiereId = $._pymiere.generateId();
             $._pymiere[newPymiereId] = tmp;
             tmp = ExtendJSON.stringify({"isObject": true, "objectType": tmp.reflect.name, "pymiereId": newPymiereId}, internal_variables_replacer, 0, 1);

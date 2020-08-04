@@ -13,8 +13,6 @@ try:
 except:
     import winreg as wr  # python 3
 
-IS_PYTHON_2 = sys.version_info.major == 2
-
 
 def count_running_exe(exe_name):
     """
@@ -25,10 +23,9 @@ def count_running_exe(exe_name):
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
-    if IS_PYTHON_2:
-        output = check_output(call)
-    else:
-        output = check_output(call, text=True)
+    output = check_output(call)
+    if sys.version_info >= (3, 0):
+        output = output.decode(encoding="437")  # encoding for windows console
     # check in last line for process name
     lines = output.strip().splitlines()
     return len([l for l in lines if l.lower().startswith(exe_name.lower())])
@@ -43,10 +40,9 @@ def exe_is_running(exe_name):
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
-    if IS_PYTHON_2:
-        output = check_output(call)
-    else:
-        output = check_output(call, text=True)
+    output = check_output(call)
+    if sys.version_info >= (3, 0):
+        output = output.decode(encoding="437")  # encoding for windows console
     # check in last line for process name
     lines = output.strip().splitlines()
     if lines[-1].lower().startswith(exe_name.lower()):

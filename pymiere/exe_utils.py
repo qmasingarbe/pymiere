@@ -14,6 +14,9 @@ except:
     import winreg as wr  # python 3
 
 
+CREATE_NO_WINDOW = 0x08000000  # create subprocess without showing the console
+
+
 def count_running_exe(exe_name):
     """
     Using tasklist windows command, we can find the number of process running with a specific name
@@ -23,7 +26,7 @@ def count_running_exe(exe_name):
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
-    output = check_output(call)
+    output = check_output(call, creationflags=CREATE_NO_WINDOW)
     if sys.version_info >= (3, 0):
         output = output.decode(encoding="437")  # encoding for windows console
     # check in last line for process name
@@ -40,7 +43,7 @@ def exe_is_running(exe_name):
     """
     # use tasklist command with filter by name
     call = 'TASKLIST', '/FI', 'imagename eq {}'.format(exe_name)
-    output = check_output(call)
+    output = check_output(call, creationflags=CREATE_NO_WINDOW)
     if sys.version_info >= (3, 0):
         output = output.decode(encoding="437")  # encoding for windows console
     # check in last line for process name

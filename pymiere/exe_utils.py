@@ -90,15 +90,19 @@ def get_last_premiere_exe():
     # find last installed version
     last_version_num = sorted([StrictVersion(v["DisplayVersion"]) for v in premiere_versions])[-1]
     last_version_info = [v for v in premiere_versions if v["DisplayVersion"] == str(last_version_num)][0]
-    # build exe path
-    exe_path = last_version_info["InstallLocation"]
-    if "Premiere" not in exe_path:
-        exe_path = os.path.join(exe_path, "Adobe Premiere Pro CC {}".format(last_version_info["DisplayName"].split(" ")[-1]))
-    if not os.path.isdir(exe_path):
-        raise IOError("Could not find install dir for Premiere in '{}'".format(exe_path))
-    exe_path = os.path.join(exe_path, "Adobe Premiere Pro.exe")
-    if not os.path.isfile(exe_path):
-        raise IOError("Could not find Premiere executable in '{}'".format(exe_path))
+    # search actual exe path
+    base_path = last_version_info["InstallLocation"]
+    build_year = last_version_info["DisplayName"].split(" ")[-1]
+    wrong_paths = list()
+    for folder_name in ["Adobe Premiere Pro CC {}", "Adobe Premiere Pro {}", ""]:  # different versions formatting
+        exe_path = os.path.join(base_path, folder_name.format(build_year), "Adobe Premiere Pro.exe")
+        if not os.path.isfile(exe_path):
+            wrong_paths.append(exe_path)
+            continue
+        wrong_paths = list()
+        break
+    if len(wrong_paths) != 0:
+        raise IOError("Could not find Premiere executable in '{}'".format(wrong_paths))
     return exe_path
 
 

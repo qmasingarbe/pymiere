@@ -74,3 +74,4 @@ I did a [detailed article](https://www.linkedin.com/pulse/python-control-adobe-a
  ## Thanks
  I'd like to thank everybody that contributed to Pymiere by reporting bugs, sending ideas, ...
  - Isaac brown (https://github.com/ikebenbrown)
+ - Roy Nieterau (https://github.com/BigRoy)

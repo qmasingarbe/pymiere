@@ -6,15 +6,12 @@ import os
 import sys
 import time
 import re
-from subprocess import check_output, call
+from subprocess import check_output, call, Popen, CREATE_NO_WINDOW, CREATE_NEW_CONSOLE
 from distutils.version import StrictVersion
 try:
     import _winreg as wr  # python 2
 except:
     import winreg as wr  # python 3
-
-
-CREATE_NO_WINDOW = 0x08000000  # create subprocess without showing the console
 
 
 def count_running_exe(exe_name):
@@ -105,10 +102,11 @@ def get_last_premiere_exe():
     return exe_path
 
 
-def start_premiere():
+def start_premiere(use_bat=False):
     """
     Start Premiere pro if not already started
 
+    :param use_bat: (bool) start Premiere Pro using a bat file to keep it running after script exit (in specific cases)
     :return (int) pid of Premiere process
     """
     running, pid = exe_is_running("adobe premiere pro.exe")
@@ -117,9 +115,12 @@ def start_premiere():
     exe_path = get_last_premiere_exe()
     # we count the CEP pannel process running before because Premiere pops new ones at the end of loading
     start_running_cep_pannels = count_running_exe("CEPHtmlEngine.exe")
-    # we don't call directly premiere exec here so it's not a child of this script.
-    # It will still run after this script is killed
-    call([os.path.join(__file__, "..", "bin", "start_premiere.bat"), exe_path])
+    if use_bat:
+        # we don't call directly premiere exec here so it's not a child of this script.
+        # It will still run after this script is killed
+        call([os.path.join(__file__, "..", "bin", "start_premiere.bat"), exe_path])
+    else:
+        Popen(exe_path, creationflags=CREATE_NEW_CONSOLE)
     # check process is starting and when it is done
     for i in range(200):
         running, pid = exe_is_running("adobe premiere pro.exe")

@@ -1091,7 +1091,7 @@ class Sequence(PymiereBaseObject):
         :param pos: The new position, in ticks
         :type pos: int
         """
-        self._check_type(pos, int, 'arg "pos" of function "Sequence.setPlayerPosition"')
+        self._check_type(pos, any, 'arg "pos" of function "Sequence.setPlayerPosition"')
         self._eval_on_this_object("setPlayerPosition({})".format(_format_object_to_es(pos)))
 
     def setInPoint(self, time):
@@ -3783,7 +3783,7 @@ class TrackItem(PymiereBaseObject):
         return Time(**kwargs) if kwargs else None
     @start.setter
     def start(self, start):
-        self._check_type(start, Time, 'TrackItem.start')
+        self._check_type(start, any, 'TrackItem.start')
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
 
     @property

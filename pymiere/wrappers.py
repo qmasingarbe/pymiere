@@ -186,5 +186,11 @@ def animate_effect_using_function(clip, effect_name, property_name, anim_func, o
                 start += keyframe_per_seconds
 
 
+def time_from_seconds(seconds):
+    t = pymiere.Time()
+    t.seconds = seconds
+    return t
+
+
 if __name__ == "__main__":
     pass

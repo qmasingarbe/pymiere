@@ -113,21 +113,11 @@ def edit_clip(clip, start_on_timeline, end_on_timeline, in_point_on_clip, out_po
     # check length match
     if end_on_timeline - start_on_timeline != out_point_on_clip - in_point_on_clip:
         raise ValueError("Duration in timeline ({} frames) doesn't match duration of clip ({} frames)".format(end_on_timeline - start_on_timeline, out_point_on_clip - in_point_on_clip))
-    # convert frame to seconds and generate Time objects (note that to properly construct a Time object we should first
-    # init the object empty, then set the seconds property. Don't set the ticks property, set the seconds and the ticks
-    # will be properly set, the inverse is not True
-    start = pymiere.Time()
-    start.seconds = start_on_timeline / fps
-    end = pymiere.Time()
-    end.seconds = end_on_timeline / fps
-    in_point = pymiere.Time()
-    in_point.seconds = in_point_on_clip / fps
-    out_point = pymiere.Time()
-    out_point.seconds = out_point_on_clip / fps
-    clip.end = end
-    clip.start = start
-    clip.inPoint = in_point
-    clip.outPoint = out_point
+    # set actual properties
+    clip.end = time_from_seconds(end_on_timeline / fps)
+    clip.start = time_from_seconds(start_on_timeline / fps)
+    clip.inPoint = time_from_seconds(in_point_on_clip / fps)
+    clip.outPoint = time_from_seconds(out_point_on_clip / fps)
 
 
 def move_clip(clip, seconds):
@@ -187,6 +177,11 @@ def animate_effect_using_function(clip, effect_name, property_name, anim_func, o
 
 
 def time_from_seconds(seconds):
+    """
+    Many properties need a Time object to represent time, this is an helper to create one
+    :param seconds: (float) time in seconds
+    :return: (pymiere.Time) preseted time object
+    """
     t = pymiere.Time()
     t.seconds = seconds
     return t

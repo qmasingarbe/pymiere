@@ -219,6 +219,8 @@ class PymiereBaseCollection(PymiereBaseObject):
         :return: (dict) dict of kwargs to create the object. The object creation itself append in the subclass for
         code inspection/autocomplete purposes
         """
+        if index < 0:
+            index = self.__len__() + index
         return self._eval_on_this_object("[{}]".format(index), dot_notation=False)
 
     def __len__(self):
@@ -319,7 +321,10 @@ class PymiereGenericObject(PymiereBaseObject):
         available_props = [p for p in available_props if not p.startswith("__") and p not in ["reflect"]]
         print(" {} properties :".format(len(available_props)))
         for prop in sorted(available_props):
-            print("  - {} = {}".format(prop, self.__getattr__(prop)))
+            try:
+                print("  - {} = {}".format(prop, self.__getattr__(prop)))
+            except:
+                print("  - {} = CANNOT GET THIS VALUE".format(prop))
         # print available methods
         available_methods = eval_script("$._pymiere['{}'].reflect.methods".format(self._pymiere_id), decode_json=False).split(",")
         available_methods = [m for m in available_methods if m not in ["hasOwnProperty", "propertyIsEnumerable", "isPrototypeOf", "toSource", "watch", "unwatch"]]

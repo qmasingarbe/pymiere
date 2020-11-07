@@ -240,6 +240,14 @@ class PymiereBaseCollection(PymiereBaseObject):
         """
         return _collection_iterator(self)
 
+    def __getattr__(self, item):
+        """
+        Catch property call on this object, we use it to return collection length via len property
+        """
+        if item == self.len_property:
+            return self._eval_on_this_object(self.len_property)
+        return super(PymiereBaseCollection, self).__getattribute__(item)
+
 
 class PymiereGenericObject(PymiereBaseObject):
     """

@@ -109,17 +109,18 @@ class ExtendScriptError(Exception):
     Exception used to handle error object coming from a try statement in ES
     """
     def __init__(self, error_obj):
-        msg = "\n{name} at line {line} : {message}".format(**error_obj)
+        text = "\n{name} at line {line} : {message}".format(**error_obj)
+        self.message = error_obj["message"]
         # add previous, current and next code line where the error is
         line = error_obj.get("line")
         source = error_obj.get("source").splitlines()
         if line != 1:
-            msg += "\n {}\t{}".format(line-1, source[line-2])
-        msg += "\n {}\t{}".format(line, source[line-1])
+            text += "\n {}\t{}".format(line-1, source[line-2])
+        text += "\n {}\t{}".format(line, source[line-1])
         if line != len(source):
-            msg += "\n {}\t{}".format(line+1, source[line])
+            text += "\n {}\t{}".format(line+1, source[line])
         # previous line
-        super(ExtendScriptError, self).__init__(msg)
+        super(ExtendScriptError, self).__init__(text)
 
 
 class PymiereBaseObject(object):

@@ -1,4 +1,4 @@
-from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es
+from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es, ExtendScriptError
 
 class Application(PymiereBaseObject):
     def __init__(self, pymiere_id=None):
@@ -3784,7 +3784,13 @@ class TrackItem(PymiereBaseObject):
     @start.setter
     def start(self, start):
         self._check_type(start, any, 'TrackItem.start')
-        self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
+        try:
+            self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
+        except ExtendScriptError as e:
+            # in PremierePro 2020 this will raise a specific error although it actually worked...
+            # see https://community.adobe.com/t5/premiere-pro/extend-script-crash-when-setting-start-end-on-trackitem/td-p/11338656?page=1
+            if e.message != "Cannot set property start":
+                raise e
 
     @property
     def end(self):
@@ -3793,7 +3799,13 @@ class TrackItem(PymiereBaseObject):
     @end.setter
     def end(self, end):
         self._check_type(end, Time, 'TrackItem.end')
-        self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
+        try:
+            self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
+        except ExtendScriptError as e:
+            # in PremierePro 2020 this will raise a specific error although it actually worked...
+            # see https://community.adobe.com/t5/premiere-pro/extend-script-crash-when-setting-start-end-on-trackitem/td-p/11338656?page=1
+            if e.message != "Cannot set property end":
+                raise e
 
     @property
     def inPoint(self):
@@ -3802,7 +3814,13 @@ class TrackItem(PymiereBaseObject):
     @inPoint.setter
     def inPoint(self, inPoint):
         self._check_type(inPoint, Time, 'TrackItem.inPoint')
-        self._eval_on_this_object("inPoint = {}".format(_format_object_to_es(inPoint)))
+        try:
+            self._eval_on_this_object("inPoint = {}".format(_format_object_to_es(inPoint)))
+        except ExtendScriptError as e:
+            # in PremierePro 2020 this will raise a specific error although it actually worked...
+            # see https://community.adobe.com/t5/premiere-pro/extend-script-crash-when-setting-start-end-on-trackitem/td-p/11338656?page=1
+            if e.message != "Cannot set property inPoint":
+                raise e
 
     @property
     def outPoint(self):
@@ -3811,7 +3829,13 @@ class TrackItem(PymiereBaseObject):
     @outPoint.setter
     def outPoint(self, outPoint):
         self._check_type(outPoint, Time, 'TrackItem.outPoint')
-        self._eval_on_this_object("outPoint = {}".format(_format_object_to_es(outPoint)))
+        try:
+            self._eval_on_this_object("outPoint = {}".format(_format_object_to_es(outPoint)))
+        except ExtendScriptError as e:
+            # in PremierePro 2020 this will raise a specific error although it actually worked...
+            # see https://community.adobe.com/t5/premiere-pro/extend-script-crash-when-setting-start-end-on-trackitem/td-p/11338656?page=1
+            if e.message != "Cannot set property outPoint":
+                raise e
 
     @property
     def type(self):

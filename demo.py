@@ -1,36 +1,36 @@
-"""
-Demonstrate an interaction with Premiere pro through the pymiere lib.
-"""
+# Interact with Premiere Pro using the Pymiere library.
+
 import time
 import pymiere
 from pymiere import wrappers
 
-# check that a project is opened
+# Check for an open project
 project_opened, sequence_active = wrappers.check_active_sequence(crash=False)
 if not project_opened:
     raise ValueError("please open a project")
 
 project = pymiere.objects.app.project
 
-# open sequences in UI if none are active
+# Open Sequences in Premiere Pro if none are active
 if not sequence_active:
     sequences = wrappers.list_sequences()
     for seq in sequences:
         project.openSequence(sequenceID=seq.sequenceID)
-    project.activeSequence = sequences[0]  # set the first sequence in the list as active
+    # Set the first Sequence in the list as the active Sequence
+    project.activeSequence = sequences[0]
 
-# list all videos clip in the active sequence
+# List all videos clips in the active Sequence
 clips = wrappers.list_video(project.activeSequence)
 
-# get sequence fps (timebase in ticks to be converted to frame per seconds)
+# Convert timebase in ticks per second to Frame Per Second (FPS)
 fps = 1/(float(project.activeSequence.timebase)/wrappers.TICKS_PER_SECONDS)
 print("Sequence as a framerate of {} fps".format(fps))
 
-# select the first clip in the timeline
+# Select the first video clip in the Timeline
 clips[0].setSelected(True, True)
 
-# fun (to me) animation of clip advancing in timeline
-# the next code will do nothing in ppro 2017 cause the clip were not editable at the time
+# The following code will not work in Premiere Pro 2017...
+# Dynamically advance through the first video clip in the Timeline
 start_frame = 0
 end_frame = 100
 for i in range(30):

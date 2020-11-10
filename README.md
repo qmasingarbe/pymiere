@@ -48,6 +48,8 @@ Basically you start by creating a ```project``` object to interact with the open
 
 Other useful methods e.g. for interacting with Sequences and video Clips are available using ```wrappers```:
 
+    from pymiere import wrappers
+    
     # Get a list of Sequences
     sequences = wrappers.list_sequences()
 

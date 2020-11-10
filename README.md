@@ -4,7 +4,7 @@ Use Python to interact with _Adobe Premiere Pro_, gather data, check, edit and a
 ## Why use ```Pymiere```?
 If you just want to create a Premiere file programmatically, you can  generate and use an XML file (see [Open Timeline IO to XML](https://opentimelineio.readthedocs.io/en/latest/tutorials/adapters.html#final-cut-pro-xml)). **But** that involves manually exporting and importing files, potentially losing data and with no visual feedback.
 
-**```Pymiere```** was created to enable video editors and 3D/VFX studios to automate some of their workflows using Python rather than Adobe's custom scripting language ExtendScript.  **```Pymiere```** goes far beyond simply opening Edit Decision Lists (EDLs):
+**```Pymiere```** was created to enable video editors and 3D/VFX studios to automate some of their workflows using Python rather than Adobe's custom scripting language ExtendScript.
 
 - Want to check if some shots have new versions available?
 - Maybe automatically place them on a new track?
@@ -13,7 +13,7 @@ If you just want to create a Premiere file programmatically, you can  generate a
 No problem!
 
 ### Versions
-  * Python 3 (may also work with Python 2 which is no longer supported).
+  * Support Python 2 & 3
   * Tested with **Adobe Premiere Pro version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend the 2019 version because some functionality isn't available in the previous versions. It should work for version 2017+ though.
   * Tested on Windows (10)
 
@@ -24,7 +24,7 @@ No problem!
       * make sure the `requests` Python library is installed (`pip install requests`)
 
   2. Install  _```Pymiere```_:
-      * Clone the ```Pymiere``` repository to somewhere on your system and add that folder to your "Path" variable if necessary so Python can import it.  Just start typing "Edit the system environment variables" in the Windows search box to find the right Control Panel menu.
+      * Clone the ```Pymiere``` repository to somewhere on your system and add that folder to your "Path" variable so Python can import it.
       * Install Adobe's [Extension Manager Command Line tool](https://partners.adobe.com/exchangeprogram/creativecloud/support/exman-com-line-tool.html) (note that the User Interface is deprecated, but we just need to use the command line interface).
         - Download and unzip the folder somewhere
         - Navigate to the folder in Command line or Power shell
@@ -42,7 +42,7 @@ print(pymiere.objects.app.isDocumentOpen())
 ## Quick start
 Open or create a _Premiere Pro_ project containing a Sequence with at least one video Clip. You can then run or step through [demo.py](https://github.com/qmasingarbe/pymiere/blob/master/demo.py) which demonstrates some basic code. [pymiere/wrappers.py](https://github.com/qmasingarbe/pymiere/blob/master/pymiere/wrappers.py) contains more code examples.
 
-Basically you start by creating a ```project``` object to interact with the open _Premiere Pro_ application (it can't run in 'headless' mode I'm afraid, the main program needs to be running), after which you can get/set its attributes and call its methods using the normal Python ```.attribute``` or ```.method()``` syntax:
+Basically you start by creating a ```project``` object to interact with the opened _Premiere Pro_ application (it needs to be running), after which you can get/set its attributes and call its methods like ```.name``` or ```.save()``` :
 
     project = pymiere.objects.app.project
 

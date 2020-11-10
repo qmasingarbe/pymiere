@@ -1,5 +1,6 @@
-# Interact with Premiere Pro using the Pymiere library.
-
+"""
+Interact with Premiere Pro using the Pymiere library.
+"""
 import time
 import pymiere
 from pymiere import wrappers
@@ -29,8 +30,8 @@ print("Sequence as a framerate of {} fps".format(fps))
 # Select the first video clip in the Timeline
 clips[0].setSelected(True, True)
 
-# The following code will not work in Premiere Pro 2017...
-# Dynamically advance through the first video clip in the Timeline
+# The following code will not work in Premiere Pro 2017 (clips were not editable at the time)
+# Periodically advance the first video clip through the Timeline
 start_frame = 0
 end_frame = 100
 for i in range(30):

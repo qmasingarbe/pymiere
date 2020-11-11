@@ -22,6 +22,7 @@ No problem!
 
   1. Install [Python](https://www.python.org/downloads/windows/) if you haven't already:
       * make sure the `requests` Python library is installed (`pip install requests`)
+      * optionally `pip install PySimpleGui` and `pip install Qt5` to run the demo programmes.
 
   2. Install  _```Pymiere```_:
       * Clone the ```Pymiere``` repository to somewhere on your system and add that folder to your "Path" variable so Python can import it.

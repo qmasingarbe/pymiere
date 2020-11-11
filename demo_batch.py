@@ -1,7 +1,7 @@
 import pymiere
 import pymiere.exe_utils as pymiere_exe
 import requests
-sjpwimport PySimpleGUI as sg
+import PySimpleGUI as sg
 from pathlib import Path
 
 # Use PySimpleGui to select a .pproj file

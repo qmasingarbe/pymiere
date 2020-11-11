@@ -49,7 +49,7 @@ Basically you start by creating a ```project``` object to interact with the open
 Other useful methods e.g. for interacting with Sequences and video Clips are available using ```wrappers```:
 
     from pymiere import wrappers
-    
+
     # Get a list of Sequences
     sequences = wrappers.list_sequences()
 
@@ -60,7 +60,7 @@ Other useful methods e.g. for interacting with Sequences and video Clips are ava
     project.activeSequence = sequences[0]
 
     # Get a list of all video Clips
-    clips = wrappers.list_video(project.activeSequence)
+    clips = wrappers.list_clips(project.activeSequence)
 
     # Select one or more video Clips on the Timeline
     clips[0].setSelected(True, True)

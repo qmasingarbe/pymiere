@@ -21,10 +21,10 @@ if not sequence_active:
     project.activeSequence = sequences[0]
 
 # List all videos clips in the active Sequence
-clips = wrappers.list_video(project.activeSequence)
+clips = wrappers.list_clips(project.activeSequence)
 
 # Convert timebase in ticks per second to Frame Per Second (FPS)
-fps = 1/(float(project.activeSequence.timebase)/wrappers.TICKS_PER_SECONDS)
+fps = 1/(float(project.activeSequence.timebase)/wrappers.TICKS_PER_SECOND)
 print("Sequence as a framerate of {} fps".format(fps))
 
 # Select the first video clip in the Timeline

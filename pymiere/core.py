@@ -372,6 +372,8 @@ def _format_object_to_es(obj):
     :return: (str) extend script equivalent for arg
     """
     if isinstance(obj, str):
+        if "'" in obj:  # support string containing single quote
+            return '"{}"'.format(obj)
         return "'{}'".format(obj)
     elif isinstance(obj, bool):
         return str(obj).lower()

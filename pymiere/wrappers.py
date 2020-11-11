@@ -84,15 +84,16 @@ def list_video(sequence):
         print("Track :", track.name or track.id)  # Premiere 2017 doesn't have 'name' property on tracks
         clips = track.clips
         for clip in clips:
-            print("name", clip.name)  # Premiere 2017 doesn't have 'name' property on clips
-            print("path", clip.projectItem.getMediaPath())
-            print("duration", clip.duration.seconds)
-            print("start", clip.start.seconds)
-            print("in", clip.inPoint.seconds)
-            print("out", clip.outPoint.seconds)
-            print("end", clip.end.seconds)
+            print("\tName: {}".format(clip.name))  # Premiere 2017 doesn't have 'name' property on clips
+            print("\t- {:.<12}{}".format("Path", clip.projectItem.getMediaPath() if not clip.isMGT() else "[No path, this is a Motion Graphics template]"))
+            print("\t- {:.<12}{}".format("Start", clip.start.seconds))
+            print("\t- {:.<12}{}".format("End", clip.end.seconds))
+            print("\t- {:.<12}{}".format("In", clip.inPoint.seconds))
+            print("\t- {:.<12}{}".format("Out", clip.outPoint.seconds))
+            print("\t- {:.<12}{}".format("Duration", clip.duration.seconds))
             print("")
             video_clips.append(clip)
+        print("")
     return video_clips
 
 

@@ -3,7 +3,7 @@ Collection of higher level functions using low level pymiere code
 """
 import pymiere
 
-Premiere Pro uses ticks as its base time unit, this is used to convert from ticks to seconds
+# Premiere Pro uses ticks as its base time unit, this is used to convert from ticks to seconds
 TICKS_PER_SECOND = 254016000000
 
 

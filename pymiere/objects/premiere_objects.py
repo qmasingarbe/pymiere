@@ -1089,9 +1089,11 @@ class Sequence(PymiereBaseObject):
         """
         Sets the current player position. 
         :param pos: The new position, in ticks
-        :type pos: int
+        :type pos: str
         """
-        self._check_type(pos, any, 'arg "pos" of function "Sequence.setPlayerPosition"')
+        if isinstance(pos, float) or isinstance(pos, int):
+            pos = str(pos)
+        self._check_type(pos, str, 'arg "pos" of function "Sequence.setPlayerPosition"')
         self._eval_on_this_object("setPlayerPosition({})".format(_format_object_to_es(pos)))
 
     def setInPoint(self, time):

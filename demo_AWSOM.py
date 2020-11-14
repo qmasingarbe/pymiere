@@ -20,9 +20,10 @@ https://twitter.com/AppAwsom
 import pymiere
 from pymiere import wrappers
 from pymiere import exe_utils
-import requests
 import datetime
 from pathlib import Path
+import win32api
+import shutil
 from cleverdict import CleverDict  # powerful dictionary/attribute switching
 import PySimpleGUI as sg  # fast and easy GUI creation
 
@@ -35,8 +36,9 @@ PROJECT_TYPES = {"SWLTV - ": "Project intended for YouTube channel SWL.TV",
                  "Project - ": "Other project not intended for publishing",
                  "Pod - ": "Breakfast TV style interviews in 'The Pod'"}
 ICON = "logo.ico"
-DEFAULT_BIN_NAME = "Rushes - To be sorted"
+DEFAULT_BIN_NAME = "Rushes (Unsorted)"
 DEFAULT_RUSHES_SEQUENCE = "Rushes/Teaser"
+EXCLUDE_DRIVES = "BCDEFHLPW"  # Attached drives, never a source to import media
 
 class Project(CleverDict):
     """
@@ -96,8 +98,27 @@ class Project(CleverDict):
         if hasattr(self, "format"):
             return
         self.format = "XDCAM"
+        project.clip_path = project.path / "XDROOT/Clip"
+        project.thumbnail_path = project.path / "XDROOT/Thmbnl"
+        project.metadata_path = project.path / "XDROOT/MEDIAPRO.XML"
 
-def from_device_to_storage(project):
+def search_for_XDCAM_media(project):
+    """
+    Searches for connected devices with XDCAM media.
+    Creates list project.sources with any drives found.
+    """
+    drives = win32api.GetLogicalDriveStrings()
+    drives = [x for x in drives if x.isalpha() and x not in EXCLUDE_DRIVES]
+    project.sources = []
+    for drive in drives:
+        dirs = [x for x in Path(drive+":\\").rglob("*") if x.is_dir()]
+        # Check for XDCAM structure
+        possible_source = [x for x in dirs if "\\XDROOT\\Clip" in str(x)]
+        if possible_source:
+            if len(list(possible_source[0].glob("*.mxf"))):
+                project.sources += possible_source
+
+def copy_media_from_device(project):
     """
     TODO:
     Intelligently* copies media from a connected device (usually a video camera or memory card).
@@ -119,14 +140,22 @@ def from_device_to_storage(project):
     create sidecare .srt (subtitles) files and overall Summary transcript.
     """
     project.get_format()  # Premature/redundant?
-    return
+    search_for_XDCAM_media(project)
+    for source in project.sources:
+        print(f"Copying media from {source.parent} to {project.clip_path.parent}")
+        files = list(source.parent.rglob("*.*"))
+        print(len(files), "files, ending with", files[-1].name)
+        print("Please be patient...")
+        shutil.copytree(source.parent, project.clip_path.parent)
 
-def get_new_path(path, index, rule = "SWL.TV #1"):
+
+
+def get_new_path(path, index, title, rule = "SWL.TV #1"):
     """
     Returns a new filepath based on the preferred formatting rule
     """
     if rule == "SWL.TV #1":
-        new_name = project.title + " " +str(index+1).zfill(4) + path.suffix
+        new_name = title + " " +str(index+1).zfill(4) + path.suffix
         return path.with_name(new_name)
     # If all else fails, return original path
     return path
@@ -140,30 +169,30 @@ def rename_media(project):
 
     Also renames thumbnail images and updates any Metadata XML (XDCAM)
     """
-    project.get_format()
     if project.format == "XDCAM":
-        project.clip_path = project.path / "XDROOT/Clip"
-        project.thumbnail_path = project.path / "XDROOT/Thmbnl"
-        project.metadata_path = project.path / "XDROOT/MEDIAPRO.XML"
-    file_lists = [list(project.clip_path.glob("*.mxf"))]
-    file_lists += [list(project.clip_path.glob("*.xml"))]
-    thumbnails = list(project.thumbnail_path.glob("*.jpg"))
-    # Only rename thumbnails corresponding to selected clips, not all
-    stems = [x.stem for x in file_lists[0]]
-    thumbnails = [x for x in thumbnails if x.stem.split("T01")[0] in stems]
-    file_lists += [thumbnails]
-    with open(project.metadata_path, "r") as file:
-        metadata = file.read()
+        file_lists = [list(project.clip_path.glob("*.mxf"))]
+        file_lists += [list(project.clip_path.glob("*.xml"))]
+        thumbnails = list(project.thumbnail_path.glob("*.jpg"))
+        # Only rename thumbnails corresponding to selected clips, not all
+        stems = [x.stem for x in file_lists[0]]
+        thumbnails = [x for x in thumbnails if x.stem.split("T01")[0] in stems]
+        file_lists += [thumbnails]
+    try:
+        with open(project.metadata_path, "r") as file:
+            metadata = file.read()
+    except FileNotFoundError:
+        metadata = ""
     with open(project.metadata_path, "w") as file:
         for file_list in file_lists:
             for index, path in enumerate(file_list):
-                new_path = get_new_path(path, index)
+                new_path = get_new_path(path, index, project.title)
                 new_end = "/".join(path.rename(new_path).parts[-2:])
                 print(path,"->", "…/" + new_end)
                 metadata = metadata.replace("/".join(path.parts[-2:]), new_end)
-        file.write(metadata)
+        if metadata:
+            file.write(metadata)
     project.media_renamed_on = datetime.datetime.now()
-    project.clips = list(project.clip_path.glob("*.mxf"))
+
 
 def create_global_shortcuts():
     """
@@ -183,27 +212,26 @@ def create_prproj_from_template(project):
     if not exe_utils.exe_is_running("adobe premiere pro.exe")[0]:
         exe_utils.start_premiere()
     create_global_shortcuts()
-    app.openDocument(str(path))
-    app.project.saveAs(str(project.prproj_path))
+    if project.prproj_path.is_file():
+        app.openDocument(str(project.prproj_path))
+    else:
+        app.openDocument(str(project.template_path))
+        app.project.saveAs(str(project.prproj_path))
 
 def import_clips_to_bin(project):
     """
     Imports Clips from .clip_path to a new bin named as DEFAULT_BIN_NAME
     """
-    file_list = [str(x) for x in project.clips]
+    project.clips = list(project.clip_path.glob("*.mxf"))
     root = app.project.rootItem
     ProjectItem.createBin(root, DEFAULT_BIN_NAME)
     project.default_bin = [x for x in root.children if x.type == 2 and x.name == DEFAULT_BIN_NAME][0]
     # Type 1: "Sequence" object
     # Type 2: "Bin" object
-    for file in file_list:
-        print("Importing:",file)
-        app.project.importFiles([file], True, project.default_bin, True)
-        result = project.default_bin.findItemsMatchingMediaPath(file, True)
-        if len(result) == 0:
-            raise ImportError("Failed to find the imported item")
-        if len(result) != 1:
-            raise ValueError("Import sucessfull but there are more than one clips matching path {} in the default bin".format(file))
+    files = [str(x) for x in project.clips]
+    # for file in files:
+    print(f"Importing {len(files)} files, from {project.clips[0].name} to {project.clips[-1].name}")
+    app.project.importFiles(files, True, project.default_bin, False)
 
 def create_rushes_sequence(project):
     """
@@ -232,7 +260,7 @@ def get_all_input_for_ingest():
     automation to proceed without later steps pausing for user input.
     """
     project = Project()
-    template_path = Path(sg.popup_get_file("Please select a Premiere Pro project to open", default_path=TEMPLATE, icon=ICON, file_types=(("Premiere Pro", "*.prproj"),)))
+    project.template_path = Path(sg.popup_get_file("Please select a Premiere Pro project to open", default_path=TEMPLATE, icon=ICON, file_types=(("Premiere Pro", "*.prproj"),)))
     project.prproj_path = project.path / (project.title + ".prproj")
     return project
 
@@ -243,7 +271,8 @@ def ingest():
     actual editing to start.
     """
     project = get_all_input_for_ingest()
-    from_device_to_storage(project)
+    copy_media_from_device(project)
+    project.get_format()
     rename_media(project)
     create_prproj_from_template(project)
     import_clips_to_bin(project)
@@ -252,4 +281,4 @@ def ingest():
     # import_subtitles_to_bin(project)
     # add_subtitles_to_rushes(project)
     # send_rushes_to_media_encoder(project)
-    save_and_close(project)
+    app.project.save()

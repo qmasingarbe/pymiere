@@ -17,8 +17,8 @@ In the meantime though, please follow us on Twitter and strike up a conversation
 https://twitter.com/AppAwsom
 """
 
-import os
 import pymiere
+from pymiere import wrappers
 from pymiere import exe_utils
 import requests
 import datetime
@@ -35,6 +35,8 @@ PROJECT_TYPES = {"SWLTV - ": "Project intended for YouTube channel SWL.TV",
                  "Project - ": "Other project not intended for publishing",
                  "Pod - ": "Breakfast TV style interviews in 'The Pod'"}
 ICON = "logo.ico"
+DEFAULT_BIN_NAME = "Rushes - To be sorted"
+DEFAULT_RUSHES_SEQUENCE = "Rushes/Teaser"
 
 class Project(CleverDict):
     """
@@ -94,7 +96,6 @@ class Project(CleverDict):
         if hasattr(self, "format"):
             return
         self.format = "XDCAM"
-
 
 def from_device_to_storage(project):
     """
@@ -162,20 +163,92 @@ def rename_media(project):
                 metadata = metadata.replace("/".join(path.parts[-2:]), new_end)
         file.write(metadata)
     project.media_renamed_on = datetime.datetime.now()
+    project.clips = list(project.clip_path.glob("*.mxf"))
 
+def create_global_shortcuts():
+    """
+    Creates shortcuts for common Pymiere objects for developer convenience.
+    """
+    global app, ProjectItem
+    app = pymiere.objects.app
+    ProjectItem = pymiere.ProjectItem
+
+def create_prproj_from_template(project):
+    """
+    Launches Premiere Pro if not already running;
+    Prompts to open a template .prpoj file;
+    Saves the .prproj file with a path based on .title and .path
+    """
+    # Start Premiere Pro and open the selected project
+    if not exe_utils.exe_is_running("adobe premiere pro.exe")[0]:
+        exe_utils.start_premiere()
+    create_global_shortcuts()
+    app.openDocument(str(path))
+    app.project.saveAs(str(project.prproj_path))
+
+def import_clips_to_bin(project):
+    """
+    Imports Clips from .clip_path to a new bin named as DEFAULT_BIN_NAME
+    """
+    file_list = [str(x) for x in project.clips]
+    root = app.project.rootItem
+    ProjectItem.createBin(root, DEFAULT_BIN_NAME)
+    project.default_bin = [x for x in root.children if x.type == 2 and x.name == DEFAULT_BIN_NAME][0]
+    # Type 1: "Sequence" object
+    # Type 2: "Bin" object
+    for file in file_list:
+        print("Importing:",file)
+        app.project.importFiles([file], True, project.default_bin, True)
+        result = project.default_bin.findItemsMatchingMediaPath(file, True)
+        if len(result) == 0:
+            raise ImportError("Failed to find the imported item")
+        if len(result) != 1:
+            raise ValueError("Import sucessfull but there are more than one clips matching path {} in the default bin".format(file))
+
+def create_rushes_sequence(project):
+    """
+    Create DEFAULT_RUSHES_SEQUENCE or make it active if it already exists
+    """
+    sequences = app.project.sequences
+    sequence = [x for x in sequences if x.name == DEFAULT_RUSHES_SEQUENCE]
+    if not sequence:
+        app.project.createNewSequence(DEFAULT_RUSHES_SEQUENCE,"Rushes Sequence")
+        # Auto-selects new Sequence on creation
+    else:
+        app.project.activeSequence = sequence[0]
+
+def insert_clips_in_rushes_sequence(project):
+    """
+    Insert all Clips from DEFAULT_BIN_NAME into Sequence DEFAULT_RUSHES_SEQUENCE
+    """
+    for clip in reversed(project.clips):
+        media = project.default_bin.findItemsMatchingMediaPath(str(clip), True)
+        current_time = app.project.activeSequence.getPlayerPosition()
+        app.project.activeSequence.insertClip(media[0], current_time, 0, 0)
+
+def get_all_input_for_ingest():
+    """
+    Use PySimpleGUI popups to get all user input up front, thereby allowing
+    automation to proceed without later steps pausing for user input.
+    """
+    project = Project()
+    template_path = Path(sg.popup_get_file("Please select a Premiere Pro project to open", default_path=TEMPLATE, icon=ICON, file_types=(("Premiere Pro", "*.prproj"),)))
+    project.prproj_path = project.path / (project.title + ".prproj")
+    return project
 
 def ingest():
     """
     A typical workflow to speed up the ingest process, from copying new media
-    from a connected device to a working storage area, all the way through to
-    having Premiere Pro open and ready for actual editing.
+    from a connected device, right up to having Premiere Pro open and ready for
+    actual editing to start.
     """
-    project = Project()
+    project = get_all_input_for_ingest()
     from_device_to_storage(project)
     rename_media(project)
-    create_pproj_from_template(project)
+    create_prproj_from_template(project)
     import_clips_to_bin(project)
     create_rushes_sequence(project)
+    insert_clips_in_rushes_sequence(project)
     # import_subtitles_to_bin(project)
     # add_subtitles_to_rushes(project)
     # send_rushes_to_media_encoder(project)

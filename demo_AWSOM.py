@@ -115,9 +115,9 @@ class Project(CleverDict):
         if hasattr(self, "format"):
             return
         self.format = "XDCAM"
-        project.clip_path = project.path / "XDROOT/Clip"
-        project.thumbnail_path = project.path / "XDROOT/Thmbnl"
-        project.metadata_path = project.path / "XDROOT/MEDIAPRO.XML"
+        self.clip_path = self.path / "XDROOT/Clip"
+        self.thumbnail_path = self.path / "XDROOT/Thmbnl"
+        self.metadata_path = self.path / "XDROOT/MEDIAPRO.XML"
 
 @timer
 def search_for_XDCAM_media(project):

@@ -230,7 +230,7 @@ class PymiereControl(QWidget):
         if not success:
             return
         root_bin = pymiere.objects.app.project.getInsertionBin()
-        pymiere.objects.app.project.importFiles([file_to_import], True, root_bin, True)
+        pymiere.objects.app.project.importFiles([file_to_import], True, root_bin, False)
         result = root_bin.findItemsMatchingMediaPath(file_to_import, True)
         if len(result) == 0:
             raise ImportError("Failed to find the imported items")

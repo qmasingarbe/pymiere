@@ -14,7 +14,7 @@ if not exe_utils.exe_is_running("adobe premiere pro.exe")[0]:
     # TODO: Perhaps rename to just 'exe_utils.start'?  Mentioning premiere seems unnecessary...
 app = pymiere.objects.app
 app.openDocument(str(path))
-# TODO: It would be nice for .openDocument to take a pathlib object itself (so you don't have to remember str(path).add()
+# TODO: It would be nice for .openDocument to take a pathlib object itself (so you don't have to remember str(path).
 # TODO: It would also be nice to be able to start Premiere and open a Project all in one command by passing a Path argument e.g. exe_utils.start(path)
 
 # Open "hello world" and set it as the active sequence; if "hello world" doesn't exist, use the first Sequence found.

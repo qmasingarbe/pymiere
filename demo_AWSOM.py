@@ -21,6 +21,8 @@ import pymiere
 from pymiere import wrappers
 from pymiere import exe_utils
 import datetime
+import functools
+import time
 from pathlib import Path
 import win32api
 import shutil
@@ -39,6 +41,21 @@ ICON = "logo.ico"
 DEFAULT_BIN_NAME = "Rushes (Unsorted)"
 DEFAULT_RUSHES_SEQUENCE = "Rushes/Teaser"
 EXCLUDE_DRIVES = "BCDEFHLPW"  # Attached drives, never a source to import media
+
+def timer(func):
+    """
+    Starts the clock, runs func(), stops the clock. Simples.
+    Designed to work as a decorator... just put @timer in front of
+    the original function.
+    """
+    # Preserve __doc__ and __name__ information of the main function
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        data = func(*args, **kwargs)
+        print(f"\n ⏲  {func.__name__!r} took {round(time.perf_counter()-start,2)} seconds.")
+        return (data)
+    return wrapper
 
 class Project(CleverDict):
     """
@@ -102,6 +119,7 @@ class Project(CleverDict):
         project.thumbnail_path = project.path / "XDROOT/Thmbnl"
         project.metadata_path = project.path / "XDROOT/MEDIAPRO.XML"
 
+@timer
 def search_for_XDCAM_media(project):
     """
     Searches for connected devices with XDCAM media.
@@ -118,6 +136,7 @@ def search_for_XDCAM_media(project):
             if len(list(possible_source[0].glob("*.mxf"))):
                 project.sources += possible_source
 
+@timer
 def copy_media_from_device(project):
     """
     TODO:
@@ -160,6 +179,7 @@ def get_new_path(path, index, title, rule = "SWL.TV #1"):
     # If all else fails, return original path
     return path
 
+@timer
 def rename_media(project):
     """
     Renames individual clips according to rules e.g.
@@ -202,6 +222,7 @@ def create_global_shortcuts():
     app = pymiere.objects.app
     ProjectItem = pymiere.ProjectItem
 
+@timer
 def create_prproj_from_template(project):
     """
     Launches Premiere Pro if not already running;
@@ -218,6 +239,7 @@ def create_prproj_from_template(project):
         app.openDocument(str(project.template_path))
         app.project.saveAs(str(project.prproj_path))
 
+@timer
 def import_clips_to_bin(project):
     """
     Imports Clips from .clip_path to a new bin named as DEFAULT_BIN_NAME
@@ -245,6 +267,7 @@ def create_rushes_sequence(project):
     else:
         app.project.activeSequence = sequence[0]
 
+@timer
 def insert_clips_in_rushes_sequence(project):
     """
     Insert all Clips from DEFAULT_BIN_NAME into Sequence DEFAULT_RUSHES_SEQUENCE
@@ -254,6 +277,7 @@ def insert_clips_in_rushes_sequence(project):
         current_time = app.project.activeSequence.getPlayerPosition()
         app.project.activeSequence.insertClip(media[0], current_time, 0, 0)
 
+@timer
 def get_all_input_for_ingest():
     """
     Use PySimpleGUI popups to get all user input up front, thereby allowing
@@ -264,6 +288,7 @@ def get_all_input_for_ingest():
     project.prproj_path = project.path / (project.title + ".prproj")
     return project
 
+@timer
 def ingest():
     """
     A typical workflow to speed up the ingest process, from copying new media
@@ -282,3 +307,6 @@ def ingest():
     # add_subtitles_to_rushes(project)
     # send_rushes_to_media_encoder(project)
     app.project.save()
+
+if __name__ == "__main__":
+    ingest()

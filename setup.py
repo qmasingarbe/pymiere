@@ -4,6 +4,7 @@ from pymiere import __name__
 
 HERE = pathlib.Path(__file__).parent
 VERSION = "0.1"
+URL = f'https://github.com/qmasingarbe/{__name__}'
 
 setup(name = '__name__',
       packages = ['__name__'],
@@ -14,8 +15,8 @@ setup(name = '__name__',
       long_description_content_type="text/markdown",
       author = 'Quentin Masingarbe',
       author_email = 'q.masingarbe@gmail.com',
-      url = f'https://github.com/qmasingarbe/{__name__}',
-      download_url = f'{url}/archive/v_{VERSION}.tar.gz',
+      url = URL,
+      download_url = f'{URL}/archive/v_{VERSION}.tar.gz',
       keywords = [__name__, "video", "Premiere", "Adobe", "Pymiere", "workflow", "automation", "Creative Cloud", "edit", "editor", "editing"],
       install_requires=['cleverdict', 'requests', 'pysimplegui'],
       classifiers=['Development Status :: 4 - Beta',

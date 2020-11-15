@@ -20,7 +20,7 @@ No problem!
 
 ## Installation
 
-  1. Install [Python](https://www.python.org/downloads/windows/) if you haven't already and `pip install requests`.
+  1. Install [Python](https://www.python.org/downloads/windows/) if you haven't already.
 
   2. `Pymiere` is still under development and changing rapidly but you can install it from the Test PyPi server as follows:
 

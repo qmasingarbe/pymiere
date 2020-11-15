@@ -71,7 +71,7 @@ def list_sequences():
     return sequences
 
 
-def list_video(sequence):
+def list_clips(sequence):
     """
     List all video clips on all tracks on this sequence
 

@@ -4,7 +4,7 @@ Collection of higher level functions using low level pymiere code
 import pymiere
 
 # premiere uses ticks as its base time unit, this is used to convert from ticks to seconds
-TICKS_PER_SECONDS = 254016000000
+TICKS_PER_SECOND = 254016000000
 
 
 def check_active_sequence(crash=True):

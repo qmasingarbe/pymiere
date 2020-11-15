@@ -1,4 +1,4 @@
-# ![```Pymiere``` logo](logo.png) ```Pymiere``` : Python for Premiere Pro
+# ![```Pymiere``` logo](https://github.com/qmasingarbe/pymiere/blob/master/logo.png) ```Pymiere``` : Python for Premiere Pro
 Use Python to interact with _Adobe Premiere Pro_, gather data, check, edit and automate your projects.
 
 ## Why use ```Pymiere```?

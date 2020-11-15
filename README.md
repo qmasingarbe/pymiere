@@ -20,11 +20,20 @@ No problem!
 
 ## Installation
 
-  1. Install [Python](https://www.python.org/downloads/windows/) if you haven't already:
-      * make sure the `requests` Python library is installed (`pip install requests`)
+  1. Install [Python](https://www.python.org/downloads/windows/) if you haven't already and `pip install requests`.
 
-  2. Install  _```Pymiere```_:
-      * Clone the ```Pymiere``` repository to somewhere on your system and add that folder to your "Path" variable so Python can import it.
+  2. `Pymiere` is still under development and changing rapidly but you can install it from the Test PyPi server as follows:
+
+    pip install -i https://test.pypi.org/simple/ pymiere
+
+  3. If we've forgotten to update this README (as if!) and published to PyPi anyway, you may be able to install the latest approved release as follows:
+
+    python -m pip install pymiere --upgrade --user
+
+
+  4. Install the `Pymiere Link` extension for `Premiere Pro`:
+
+      * Go [here](https://github.com/qmasingarbe/pymiere/blob/master/pymiere_link.zxp) and just click the DOWNLOAD button for the latest version of the `pymiere_link.zxp` extension file.
       * Install Adobe's [Extension Manager Command Line tool](https://partners.adobe.com/exchangeprogram/creativecloud/support/exman-com-line-tool.html) (note that the User Interface is deprecated, but we just need to use the command line interface).
         - Download and unzip the folder somewhere
         - Navigate to the folder in Command line or Power shell
@@ -49,7 +58,7 @@ Basically you start by creating a ```project``` object to interact with the open
 Other useful methods e.g. for interacting with Sequences and video Clips are available using ```wrappers```:
 
     from pymiere import wrappers
-    
+
     # Get a list of Sequences
     sequences = wrappers.list_sequences()
 

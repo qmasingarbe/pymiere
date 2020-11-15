@@ -1,6 +1,5 @@
 import pathlib
 from setuptools import setup
-from pymiere import __name__
 
 HERE = pathlib.Path(__file__).parent
 NAME = "pymiere"

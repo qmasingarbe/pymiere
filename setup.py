@@ -7,7 +7,7 @@ NAME = "pymiere"
 URL = f'https://github.com/qmasingarbe/{NAME}'
 VERSION = "0.1"
 
-setup(name = 'NAME',
+setup(name = NAME,
       # packages = ['NAME'],
       version = VERSION,
       license='MIT',

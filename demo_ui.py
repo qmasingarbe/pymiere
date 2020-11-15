@@ -230,7 +230,7 @@ class PymiereControl(QWidget):
         if not success:
             return
         root_bin = pymiere.objects.app.project.getInsertionBin()
-        pymiere.objects.app.project.importFiles([file_to_import], True, root_bin, False)
+        pymiere.objects.app.project.importFiles([file_to_import], True, root_bin, True)
         result = root_bin.findItemsMatchingMediaPath(file_to_import, True)
         if len(result) == 0:
             raise ImportError("Failed to find the imported items")
@@ -292,7 +292,7 @@ class PymiereControl(QWidget):
         pymiere.objects.app.project.save()
 
     def saveas_func(self, *args):
-        success, filepath = simple_file_dialog("save", "choose new location to save project",
+        success, filepath = simple_file_dialog("open", "choose new location to save project",
                                                filter="Premiere project (*.prproj)")
         if not success:
             return

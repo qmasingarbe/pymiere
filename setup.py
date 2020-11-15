@@ -7,10 +7,10 @@ VERSION = "0.1"
 URL = f'https://github.com/qmasingarbe/{__name__}'
 
 setup(name = '__name__',
-      packages = ['__name__'],
+      # packages = ['__name__'],
       version = VERSION,
       license='MIT',
-      description='A data structure which allows both object attributes and dictionary keys and values to be used simultaneously and interchangeably.',
+      description='Automation of Adobe Premiere Pro.  Converts Python commands to Adobe ExtendScript code and sends to/from Premiere Pro via HTTP and the `Pymiere Link` extension for Premiere (installed separately).',
       long_description=(HERE / "README.md").read_text(),
       long_description_content_type="text/markdown",
       author = 'Quentin Masingarbe',
@@ -32,6 +32,7 @@ setup(name = '__name__',
 
 # Run the following from the command prompt:
 
+# python -m pip install setuptools wheel twine
 # python setup.py sdist
 # python -m twine upload --repository testpypi dist/*
 # python -m twine upload --repository pypi dist/*

@@ -30,7 +30,7 @@ setup(name = NAME,
                    'Programming Language :: Python :: 3.9',
                    'Topic :: Multimedia :: Video :: Non-Linear Editor',],)
 
-# Run the following from the command prompt:
+# Update VERSION (above) then run the following from the command prompt:
 
 # python -m pip install setuptools wheel twine
 # python setup.py sdist

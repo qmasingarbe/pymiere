@@ -1,5 +1,5 @@
-# ![```Pymiere``` logo](https://github.com/qmasingarbe/pymiere/blob/master/logo.png) ```Pymiere``` : Python for Premiere Pro
-Use Python to interact with _Adobe Premiere Pro_, gather data, check, edit and automate your projects.
+# ![Pymiere](https://raw.githubusercontent.com/qmasingarbe/pymiere/master/logo.png) ```Pymiere``` : Python for Premiere Pro
+> Use Python to interact with _Adobe Premiere Pro_, gather data, check, edit and automate your projects.
 
 ## Why use ```Pymiere```?
 If you just want to create a Premiere file programmatically, you can  generate and use an XML file (see [Open Timeline IO to XML](https://opentimelineio.readthedocs.io/en/latest/tutorials/adapters.html#final-cut-pro-xml)). **But** that involves manually exporting and importing files, potentially losing data and with no visual feedback.

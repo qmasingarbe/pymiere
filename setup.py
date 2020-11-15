@@ -4,7 +4,7 @@ from setuptools import setup
 HERE = pathlib.Path(__file__).parent
 NAME = "pymiere"
 URL = f'https://github.com/qmasingarbe/{NAME}'
-VERSION = "0.1"
+VERSION = "0.2"
 
 setup(name = NAME,
       # packages = ['NAME'],

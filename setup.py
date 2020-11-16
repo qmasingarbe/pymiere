@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 HERE = pathlib.Path(__file__).parent
 NAME = "pymiere"
 URL = f'https://github.com/qmasingarbe/{NAME}'
-VERSION = "0.35"
+VERSION = "0.36"
 
 setup(name = NAME,
       packages = find_packages(),

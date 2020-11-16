@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 HERE = pathlib.Path(__file__).parent
 NAME = "pymiere"
 URL = f'https://github.com/qmasingarbe/{NAME}'
-VERSION = "0.36"
+VERSION = "0.37"
 
 setup(name = NAME,
       packages = find_packages(),
@@ -18,7 +18,7 @@ setup(name = NAME,
       url = URL,
       download_url = f'{URL}/archive/{VERSION}.tar.gz',
       keywords = [NAME, "video", "Premiere", "Adobe", "Pymiere", "workflow", "automation", "Creative Cloud", "edit", "editor", "editing"],
-      install_requires=['cleverdict', 'requests'],
+      install_requires=['cleverdict>1.7', 'requests>2.25'],
       # https://pypi.org/classifiers/
       classifiers=['Development Status :: 4 - Beta',
                    'Intended Audience :: Developers',

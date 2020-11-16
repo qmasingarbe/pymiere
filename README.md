@@ -70,6 +70,7 @@ Other useful methods e.g. for interacting with Sequences and video Clips are ava
 * [Official doc for Premiere Pro objects](http://ppro.aenhancers.com/)
 * [Unofficial doc for Premiere Pro objects](http://www.brysonmichael.com/premiereapi/objects)
 * [Advanced Premiere Pro Extendscript usage](https://github.com/Adobe-CEP/Samples/blob/master/PProPanel/jsx/PPRO/Premiere.jsx)
+* [Great example of Pymiere being used for real](https://github.com/PFython/AWSOM)
 
 ## Contact
 For any support, questions or interest please contact me: <a href="mailto:q.masingarbe@gmail.com">q.masingarbe@gmail.com</a>

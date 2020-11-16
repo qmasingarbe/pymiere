@@ -18,7 +18,7 @@ setup(name = NAME,
       url = URL,
       download_url = f'{URL}/archive/{VERSION}.tar.gz',
       keywords = [NAME, "video", "Premiere", "Adobe", "Pymiere", "workflow", "automation", "Creative Cloud", "edit", "editor", "editing"],
-      install_requires=['cleverdict>1.7', 'requests>2.25'],
+      install_requires=['cleverdict>=1.7', 'requests>=2.25'],
       # https://pypi.org/classifiers/
       classifiers=['Development Status :: 4 - Beta',
                    'Intended Audience :: Developers',

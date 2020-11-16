@@ -1,13 +1,13 @@
 import pathlib
-from setuptools import setup
+from setuptools import setup, find_packages
 
 HERE = pathlib.Path(__file__).parent
 NAME = "pymiere"
 URL = f'https://github.com/qmasingarbe/{NAME}'
-VERSION = "0.34"
+VERSION = "0.35"
 
 setup(name = NAME,
-      packages = [NAME],
+      packages = find_packages(),
       version = VERSION,
       license='MIT',
       description = "Pythonic automations for Adobe Premiere Pro.  Converts Python code to Adobe ExtendScript code and sends to/from Premiere Pro via HTTP and the `Pymiere Link` extension for Premiere (installed separately).",
@@ -35,4 +35,9 @@ setup(name = NAME,
 # python -m pip install setuptools wheel twine
 # python setup.py sdist
 # python -m twine upload --repository testpypi dist/*
+
+# Then:
+# pip install -i https://test.pypi.org/simple/ pymiere
+
+# And when you're ready to go fully public:
 # python -m twine upload --repository pypi dist/*

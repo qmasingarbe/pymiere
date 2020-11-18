@@ -1,17 +1,19 @@
-import pathlib
+import os
 from setuptools import setup, find_packages
 
-HERE = pathlib.Path(__file__).parent
 NAME = "pymiere"
 URL = 'https://github.com/qmasingarbe/{}'.format(NAME)
-VERSION = "1.0.1"
+VERSION = "1.0.2"
+
+with open(os.path.join(os.path.dirname(__file__), "README.md"), "r") as f:
+    long_description = f.read()
 
 setup(name=NAME,
       packages=find_packages(),
       version=VERSION,
       license='GNU',
       description="Pythonic automations for Adobe Premiere Pro. Require the `Pymiere Link` extension for Premiere (installed separately).",
-      long_description=(HERE / "README.md").read_text(),
+      long_description=long_description,
       long_description_content_type="text/markdown",
       author='Quentin Masingarbe',
       author_email='q.masingarbe@gmail.com',

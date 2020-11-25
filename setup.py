@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 NAME = "pymiere"
 URL = 'https://github.com/qmasingarbe/{}'.format(NAME)
-VERSION = "1.0.2"
+VERSION = "1.1.0"
 
 with open(os.path.join(os.path.dirname(__file__), "README.md"), "r") as f:
     long_description = f.read()
@@ -29,6 +29,7 @@ setup(name=NAME,
                    'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
                    'Natural Language :: English',
                    'Operating System :: Microsoft :: Windows',
+                   'Operating System :: MacOS',
                    'Programming Language :: Python :: 2.7',
                    'Programming Language :: Python :: 3.6',
                    'Programming Language :: Python :: 3.7',

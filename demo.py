@@ -1,5 +1,7 @@
 """
-Interact with Premiere Pro using the Pymiere library.
+This demo show basic interactions with Premiere Pro using the Pymiere library.
+It will display some info about the currently opened project in Premiere Pro and an action in the timeline.
+Before running this script make sure that you have a Premiere project opened with at least a sequence.
 """
 import time
 import pymiere

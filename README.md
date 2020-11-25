@@ -14,13 +14,13 @@ No problem!
 
 ### Versions
   * Support Python 2 & 3
-  * Tested with **Adobe Premiere Pro version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend the 2019 version because some functionality isn't available in the previous versions. It should work for version 2017+ though.
-  * Tested on Windows (10)
+  * Tested with **Adobe Premiere Pro version 14.5 (2020)**, **version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend version 2019+ because some functionality isn't available in the previous versions. It should work for version 2017+ though.
+  * Tested on Windows 10 & macOS Catalina
 
 
 ## Installation
 
-  1. Install [Python](https://www.python.org/downloads/windows/) if you haven't already.
+  1. Install [Python](https://www.python.org/downloads) if you haven't already.
 
   2. Install `Pymiere` via pip:
 
@@ -31,8 +31,9 @@ No problem!
       * Download `pymiere_link.zxp` [here](https://github.com/qmasingarbe/pymiere/blob/master/pymiere_link.zxp)
       * Install Adobe's [Extension Manager Command Line tool](https://partners.adobe.com/exchangeprogram/creativecloud/support/exman-com-line-tool.html) (note that the User Interface is deprecated, but we just need to use the command line interface).
         - Download and unzip the folder somewhere
-        - Navigate to the folder in Command line or Power shell
-        - type `.\ExManCmd.exe /install D:\path_to_extension\pymiere_link.zxp`
+        - Navigate to the folder in Command line/Power shell (Windows) or terminal (Mac)
+        - type (Windows) `.\ExManCmd.exe /install D:\path_to_extension\pymiere_link.zxp`
+        - type (Mac) `./ExManCmd --install /path_to_extension/pymiere_link.zxp`
       * Alternatively install using [ZXP installer](https://aescripts.com/learn/zxp-installer/) or [Anastasiy Extension Manager](http://install.anastasiy.com) and drag `pymiere_link.zxp` onto the open application window.
       * To check that it is correctly installed, start Premiere, under `Window > Extensions` you should see `Pymiere Link` (clicking on it will do nothing)
 

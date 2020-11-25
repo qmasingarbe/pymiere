@@ -6,7 +6,7 @@ import sys
 import json
 from time import time as current_time
 import requests
-from pymiere.exe_utils import exe_is_running
+from pymiere.exe_utils import is_premiere_running
 
 # ----- GLOBALS -----
 PANEL_URL = "http://127.0.0.1:3000"  # Pymiere link local URL
@@ -26,7 +26,7 @@ def check_premiere_is_alive(crash=True):
     if "last_alive_check_time" in globals() and current_time() - last_alive_check_time < ALIVE_TIMEOUT:
         return True
     # is premiere pro launched
-    running, pid = exe_is_running("adobe premiere pro.exe")
+    running, pid = is_premiere_running()
     if not running:
         msg = "Premiere Pro is not running"
         if crash:

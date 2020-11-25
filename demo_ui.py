@@ -1,14 +1,27 @@
+"""
+This demo display the interaction between an external UI and a running Premiere Pro.
+The external UI will be able to control playback, move/insert/repath clips, export frame/sequences, etc...
+Before running this script make sure that PyQt5 is installed and open a Premiere project for testing.
+If running on Windows you will also need the win32gui lib to be installed (pip install win32gui)
+"""
 # builtin
 import sys
 import os
+import platform
+
 # third party
-import win32gui
 from PyQt5.QtWidgets import QApplication, QPushButton, QSlider, QVBoxLayout, QWidget, QGroupBox, QTextEdit, QGridLayout
 from PyQt5.QtWidgets import QFileDialog
 from PyQt5.QtCore import Qt
 
 import pymiere
-from pymiere import wrappers
+from pymiere import wrappers, exe_utils
+
+WINDOWS_SYSTEM = platform.system().lower() == "windows"
+if WINDOWS_SYSTEM:
+    import win32gui
+else:
+    import subprocess
 
 
 def swap_focus(func):
@@ -17,11 +30,21 @@ def swap_focus(func):
     that will change something in the UI we have to give focus to Premiere
     """
     def wrapper(self, *args, **kwargs):
-        win32gui.SetForegroundWindow(self.premiere_window_id)
+        set_focus_from_id(self.premiere_window_id)
         result = func(self, *args, **kwargs)
-        win32gui.SetForegroundWindow(self.ui_id)
+        set_focus_from_id(self.ui_id)
         return result
     return wrapper
+
+
+def set_focus_from_id(pid):
+    if WINDOWS_SYSTEM:
+        # focus via win32gui on Windows
+        win32gui.SetForegroundWindow(pid)
+    else:
+        # focus via AppleScript command on macOS
+        osascript = """tell application "System Events" to set frontmost of every process whose unix id is {} to true"""
+        subprocess.Popen(['osascript'], stdin=subprocess.PIPE).communicate(osascript.format(int(pid)).encode())
 
 
 def get_default_folder():
@@ -68,9 +91,13 @@ class PymiereControl(QWidget):
     def __init__(self):
         super(PymiereControl, self).__init__()
 
-        # get UI ids for swapping focus
-        self.premiere_window_id = win32gui.FindWindow("Premiere Pro", None)
-        self.ui_id = self.winId()
+        if WINDOWS_SYSTEM:
+            # get UI ids for swapping focus
+            self.premiere_window_id = win32gui.FindWindow("Premiere Pro", None)
+            self.ui_id = self.winId()
+        else:
+            _, self.premiere_window_id = exe_utils.is_premiere_running()
+            self.ui_id = None  # given by qapplication
 
         # create UI
         layout = QVBoxLayout()
@@ -137,7 +164,7 @@ class PymiereControl(QWidget):
 
         # miscelanious
         miscellaneous = HorizontalGroup("Miscellaneous")
-        add_effect = QPushButton("Add effect on clip")
+        add_effect = QPushButton("Add effect on first clip")
         add_effect.clicked.connect(self.add_effect_func)
         miscellaneous.addWidget(add_effect, 1, 0)
 
@@ -243,7 +270,7 @@ class PymiereControl(QWidget):
         item = self.import_func()
         self.insert_func(project_item=item)
 
-    def insert_func(self, *args, project_item):
+    def insert_func(self, project_item):
         current_time = self.active_sequence.getPlayerPosition()
         self.active_sequence.insertClip(project_item, current_time, 0, 0)
 
@@ -314,5 +341,7 @@ if __name__ == "__main__":
 
     app = QApplication([])
     pymiere_ui = PymiereControl()
+    if not WINDOWS_SYSTEM:
+        pymiere_ui.ui_id = app.applicationPid()
     pymiere_ui.show()
     app.exec_()

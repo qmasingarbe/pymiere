@@ -705,7 +705,7 @@ class ProjectItem(PymiereBaseObject):
         :type name: str
         """
         self._check_type(name, str, 'arg "name" of function "ProjectItem.createBin"')
-        self._eval_on_this_object("createBin({})".format(_format_object_to_es(name)))
+        return ProjectItem(**self._eval_on_this_object("createBin({})".format(_format_object_to_es(name))))
 
     def renameBin(self, name):
         """

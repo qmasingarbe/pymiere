@@ -888,8 +888,12 @@ class ProjectItem(PymiereBaseObject):
         self._check_type(mediaType, float, 'arg "mediaType" of function "ProjectItem.getOutPoint"')
         return Time(**self._eval_on_this_object("getOutPoint({})".format(_format_object_to_es(mediaType))))
 
-    def setColorLabel(self):
-        self._eval_on_this_object("setColorLabel()")
+    def setColorLabel(self, color):
+        """
+        :param color: color id
+        :type color: int
+        """
+        self._eval_on_this_object("setColorLabel({})".format(_format_object_to_es(color)))
 
     def getColorLabel(self):
         return self._eval_on_this_object("getColorLabel()")

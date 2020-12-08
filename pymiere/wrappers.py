@@ -1,6 +1,8 @@
 """
 Collection of higher level functions using low level pymiere code
 """
+import os
+import platform
 import pymiere
 
 # premiere uses ticks as its base time unit, this is used to convert from ticks to seconds
@@ -186,6 +188,33 @@ def time_from_seconds(seconds):
     t = pymiere.Time()
     t.seconds = seconds
     return t
+
+
+def get_system_sequence_presets(category="Digital SLR", preset_name="DSLR 1080p25"):
+    """
+    To create a new sequence via qe.project.newSequence we need to give a sequence preset file (.sqpreset)
+    Base presets come installed with premiere. Select one according to your footage.
+    Paths examples : (versions may vary)
+        on win: C:\Program Files\Adobe\Adobe Premiere Pro 2020\Settings\SequencePresets
+        on mac: /Applications/Adobe Premiere Pro CC 2019/Adobe Premiere Pro CC 2019.app/Contents/Settings/SequencePresets
+    :param category: (str) category of the sequence preset in SequencePresets folder (AVCHD, RED R3D, ProRes RAW...)
+    :param preset_name: (str) actual filename of the sqpreset file (with or without extension)
+    :return: (str) path of a sqpreset file
+    """
+    # add ext if needed
+    if not preset_name.endswith(".sqpreset"):
+        preset_name += ".sqpreset"
+    # relative path
+    sequence_preset_root = os.path.normpath("Settings/SequencePresets/{}/{}".format(category, preset_name))
+    # on mac add a Contents folder
+    if platform.system().lower() != "windows":
+        sequence_preset_root = os.path.join("Contents", sequence_preset_root)
+    # absolute path in running Premiere pro directory
+    sequence_preset_path = os.path.join(pymiere.objects.app.path, sequence_preset_root)
+    # check exists
+    if not os.path.isfile(sequence_preset_path):
+        raise IOError("Sequence preset '{}' not found on disk".format(sequence_preset_path))
+    return sequence_preset_path
 
 
 if __name__ == "__main__":

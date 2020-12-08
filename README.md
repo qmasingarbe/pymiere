@@ -27,15 +27,20 @@ No problem!
     python -m pip install pymiere
 
   3. Install the `Pymiere Link` extension for `Premiere Pro`:
-
-      * Download `pymiere_link.zxp` [here](https://github.com/qmasingarbe/pymiere/blob/master/pymiere_link.zxp)
-      * Install Adobe's [Extension Manager Command Line tool](https://partners.adobe.com/exchangeprogram/creativecloud/support/exman-com-line-tool.html) (note that the User Interface is deprecated, but we just need to use the command line interface).
-        - Download and unzip the folder somewhere
+      * Via the automatic `extension_installer` script
+        - Download the installer script [for windows](https://raw.githubusercontent.com/qmasingarbe/pymiere/master/extension_installer_win.bat) or [for mac](https://raw.githubusercontent.com/qmasingarbe/pymiere/master/extension_installer_mac.sh)
+        - Navigate to the download folder in Command line/Power shell (Windows) or terminal (Mac)
+        - Run the script by typing `extension_installer_win.bat` (Windows) or `./extension_installer_mac.sh` (Mac)
+        - Check the script output to see if it properly worked 
+      * Alternatively via Adobe's Extension Manager
+        - Download [Extension Manager Command Line tool](https://partners.adobe.com/exchangeprogram/creativecloud/support/exman-com-line-tool.html) (note that the User Interface is deprecated, but we just need to use the command line interface).
+        - Unzip the folder somewhere
+        - Download `pymiere_link.zxp` [here](https://github.com/qmasingarbe/pymiere/blob/master/pymiere_link.zxp)
         - Navigate to the folder in Command line/Power shell (Windows) or terminal (Mac)
-        - type (Windows) `.\ExManCmd.exe /install D:\path_to_extension\pymiere_link.zxp`
-        - type (Mac) `./ExManCmd --install /path_to_extension/pymiere_link.zxp`
-      * Alternatively install using [ZXP installer](https://aescripts.com/learn/zxp-installer/) or [Anastasiy Extension Manager](http://install.anastasiy.com) and drag `pymiere_link.zxp` onto the open application window.
-      * To check that it is correctly installed, start Premiere, under `Window > Extensions` you should see `Pymiere Link` (clicking on it will do nothing)
+        - Type (Windows) `.\ExManCmd.exe /install D:\path_to_extension\pymiere_link.zxp`
+        - Type (Mac) `./ExManCmd --install /path_to_extension/pymiere_link.zxp`
+      * Alternatively via [ZXP installer](https://aescripts.com/learn/zxp-installer/) or [Anastasiy Extension Manager](http://install.anastasiy.com)
+      * **To check that the extension is correctly installed**, start Premiere, under `Window > Extensions` you should see `Pymiere Link` (clicking on it will do nothing)
 
 
   4. Try running some basic code:

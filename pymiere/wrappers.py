@@ -190,7 +190,7 @@ def time_from_seconds(seconds):
     return t
 
 
-def get_system_sequence_presets(category="Digital SLR", preset_name="DSLR 1080p25"):
+def get_system_sequence_presets(category="Digital SLR", resolution="1080p", preset_name="DSLR 1080p25"):
     """
     To create a new sequence via qe.project.newSequence we need to give a sequence preset file (.sqpreset)
     Base presets come installed with premiere. Select one according to your footage.
@@ -198,6 +198,7 @@ def get_system_sequence_presets(category="Digital SLR", preset_name="DSLR 1080p2
         on win: C:\Program Files\Adobe\Adobe Premiere Pro 2020\Settings\SequencePresets
         on mac: /Applications/Adobe Premiere Pro CC 2019/Adobe Premiere Pro CC 2019.app/Contents/Settings/SequencePresets
     :param category: (str) category of the sequence preset in SequencePresets folder (AVCHD, RED R3D, ProRes RAW...)
+    :param resolution: (str) category subfolder for sequence resolution
     :param preset_name: (str) actual filename of the sqpreset file (with or without extension)
     :return: (str) path of a sqpreset file
     """
@@ -205,7 +206,7 @@ def get_system_sequence_presets(category="Digital SLR", preset_name="DSLR 1080p2
     if not preset_name.endswith(".sqpreset"):
         preset_name += ".sqpreset"
     # relative path
-    sequence_preset_root = os.path.normpath("Settings/SequencePresets/{}/{}".format(category, preset_name))
+    sequence_preset_root = os.path.normpath("Settings/SequencePresets/{}/{}/{}".format(category, resolution, preset_name))
     # on mac add a Contents folder
     if platform.system().lower() != "windows":
         sequence_preset_root = os.path.join("Contents", sequence_preset_root)

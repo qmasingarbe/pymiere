@@ -74,9 +74,8 @@ def eval_script(code=None, filepath=None, decode_json=True):
         if not os.path.splitext(filepath)[-1] != "jsx":
             print("Passing a file '{}' that's not a .jsx to premiere, that's strange...".format(filepath))
 
-        # using encoding 'utf-8-sig' to work with file saved with Adobe ExtendScript Toolkit
-        with open(filepath, encoding='utf-8-sig') as f:
-            code = f.read()
+        with open(filepath, "rb") as f:
+            code = f.read().decode("UTF-8")
 
     # escape backslash for javascript
     code = code.replace("\\", "\\\\")

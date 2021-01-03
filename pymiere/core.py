@@ -4,6 +4,7 @@ Core functions handling connection and objects base
 import os
 import sys
 import json
+from distutils.version import StrictVersion
 from time import time as current_time
 import requests
 from pymiere.exe_utils import is_premiere_running
@@ -21,7 +22,7 @@ def check_premiere_is_alive(crash=True):
     :param crash: (bool) what to do if premiere is not connected
     :return: (bool) is premiere ready to receive instruction from python
     """
-    # search in globals the last time premiere was checked and if we need to chack again
+    # search in globals the last time premiere was checked and if we need to check it again
     global last_alive_check_time
     if "last_alive_check_time" in globals() and current_time() - last_alive_check_time < ALIVE_TIMEOUT:
         return True
@@ -50,6 +51,18 @@ def check_premiere_is_alive(crash=True):
         return False
     last_alive_check_time = current_time()
     return True
+
+
+def get_premiere_version():
+    """
+    Query or get from cache the version of the currently running Premiere pro
+
+    :return: (StrictVersion) version object of current premiere pro
+    """
+    global premiere_pro_version
+    if "premiere_pro_version" not in globals():
+        premiere_pro_version = StrictVersion(eval_script("app.version;"))
+    return premiere_pro_version
 
 
 def eval_script(code=None, filepath=None, decode_json=True):
@@ -194,6 +207,28 @@ class PymiereBaseObject(object):
             return
         if not isinstance(obj, cls):
             raise ValueError("{} shoud be of type {} but got '{}' (type {})".format(name, cls, obj, type(obj)))
+
+    @staticmethod
+    def _check_version(minimum_version, name, alternative_msg=None):
+        """
+        Check to use in subclass when creating a new property or method only available from a specific premiere
+        version to check and raise if it is not available because we are using an older premiere version
+
+        :param minimum_version: (str or StrictVersion) minimum version requirement to use this property/method
+        :param name: (str) name of the method/property
+        :param alternative_msg: (None or str) if given provide an alternative solution in the error message to achieve
+        the same behaviour with different code
+        """
+        current_version = get_premiere_version()
+        if not isinstance(minimum_version, StrictVersion):
+            minimum_version = StrictVersion(minimum_version)
+        if current_version >= minimum_version:
+            return
+        message = "'{}' is only available from Premiere Pro v{} and you are using v{}.".format(
+            name, minimum_version, current_version)
+        if alternative_msg:
+            message += "\nAlternative solution : {}".format(alternative_msg)
+        raise NameError(message)
 
 
 class PymiereBaseCollection(PymiereBaseObject):

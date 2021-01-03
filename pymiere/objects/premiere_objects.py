@@ -1,5 +1,6 @@
 from pymiere.core import PymiereBaseObject, PymiereBaseCollection, Array, _format_object_to_py, _format_object_to_es, ExtendScriptError
 
+
 class Application(PymiereBaseObject):
     def __init__(self, pymiere_id=None):
         super(Application, self).__init__(pymiere_id)
@@ -303,6 +304,19 @@ class Application(PymiereBaseObject):
 
     def getCCXUserJSONData(self):
         return self._eval_on_this_object("getCCXUserJSONData()")
+
+    def newProject(self, newFilePath):
+        """
+        Create a new empty project/document saved at the newFilePath location
+
+        :param newFilePath: where to save the new project (filepath to .prproj)
+        :type newFilePath: str
+        :return: success
+        """
+        # only available from Premiere Pro 14.0 (2020)
+        self._check_version("14.0", "Application.newProject", alternative_msg="Use pymiere.objects.qe.newProject(newFilePath) for older versions")
+        self._check_type(newFilePath, str, 'arg "newProject" of function "Application.newProject"')
+        return bool(self._eval_on_this_object("newProject({})".format(_format_object_to_es(newFilePath))))
 
     def enableQE(self):
         return self._eval_on_this_object("enableQE()")

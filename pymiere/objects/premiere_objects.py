@@ -4870,7 +4870,7 @@ class ComponentParam(PymiereBaseObject):
         return Time(**self._eval_on_this_object("findNextKey({})".format(_format_object_to_es(time))))
 
     def getKeys(self):
-        self._eval_on_this_object("getKeys()")
+        return self._eval_on_this_object("getKeys()")
 
     def addKey(self, time):
         """
@@ -4905,14 +4905,14 @@ class ComponentParam(PymiereBaseObject):
         return self._eval_on_this_object("keyExistsAtTime({})".format(_format_object_to_es(time)))
 
     def getValue(self):
-        self._eval_on_this_object("getValue()")
+        return self._eval_on_this_object("getValue()")
 
     def setValue(self, value, updateUI):
         self._check_type(updateUI, bool, 'arg "updateUI" of function "ComponentParam.setValue"')
         return self._eval_on_this_object("setValue({}, {})".format(_format_object_to_es(value), _format_object_to_es(updateUI)))
 
     def getColorValue(self):
-        self._eval_on_this_object("getColorValue()")
+        return self._eval_on_this_object("getColorValue()")
 
     def setColorValue(self, arg1):
         """
@@ -4925,7 +4925,7 @@ class ComponentParam(PymiereBaseObject):
         """
         :type time: Object
         """
-        self._eval_on_this_object("getValueAtKey({})".format(_format_object_to_es(time)))
+        return self._eval_on_this_object("getValueAtKey({})".format(_format_object_to_es(time)))
 
     def setValueAtKey(self, time, value, updateUI):
         """
@@ -4939,7 +4939,7 @@ class ComponentParam(PymiereBaseObject):
         """
         :type time: Object
         """
-        self._eval_on_this_object("getValueAtTime({})".format(_format_object_to_es(time)))
+        return self._eval_on_this_object("getValueAtTime({})".format(_format_object_to_es(time)))
 
     def setInterpolationTypeAtKey(self, time):
         """

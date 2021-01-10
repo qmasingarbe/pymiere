@@ -206,7 +206,10 @@ def get_system_sequence_presets(category="Digital SLR", resolution="1080p", pres
     if not preset_name.endswith(".sqpreset"):
         preset_name += ".sqpreset"
     # relative path
-    sequence_preset_root = os.path.normpath("Settings/SequencePresets/{}/{}/{}".format(category, resolution, preset_name))
+    if resolution is None:
+        sequence_preset_root = os.path.normpath("Settings/SequencePresets/{}/{}".format(category, preset_name))
+    else:
+        sequence_preset_root = os.path.normpath("Settings/SequencePresets/{}/{}/{}".format(category, resolution, preset_name))
     # on mac add a Contents folder
     if platform.system().lower() != "windows":
         sequence_preset_root = os.path.join("Contents", sequence_preset_root)

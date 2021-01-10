@@ -413,6 +413,9 @@ def _format_object_to_es(obj):
         return "$._pymiere['{}']".format(obj._pymiere_id)
     elif isinstance(obj, list):
         return "$._pymiere['{}']".format(Array.from_python_list(obj)._pymiere_id)
+    elif isinstance(obj, dict):
+        key_value_pair = ["{}: {}".format(_format_object_to_es(k), _format_object_to_es(v)) for k, v in obj.items()]
+        return "{" + ",".join(key_value_pair) + "}"
     else:
         return str(obj)
 

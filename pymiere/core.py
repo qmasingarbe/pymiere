@@ -439,6 +439,10 @@ def _format_object_to_py(obj):
             return available_subclasses["Dollar"](pymiere_id=obj.get("pymiereId"))
         else:
             return PymiereGenericObject(pymiere_id=obj["pymiereId"])
+    if isinstance(obj, dict) and obj.get("pymiere_id"):
+        # no idea how we can get to this situation but it happen so let's convert to an object wa can use
+        return PymiereGenericObject(pymiere_id=obj["pymiere_id"])
+
     return obj
 
 

@@ -1,5 +1,5 @@
 # Use cases & examples
-Here you will find little snippets and explanation for things you may want to do with pymiere.
+Here you will find little snippets and explanations for things you may want to do with `Pymiere`.
 
 ## Import clips and add them to sequence
 ```python
@@ -97,7 +97,7 @@ print(pymiere.objects.app.project.activeSequence)
 
 
 ## Add & manipulate effects
-#### Add video effect usig QE
+#### Add video effect using QE
 (see QE section)
 ```python
 import pymiere  
@@ -115,7 +115,7 @@ clip.addVideoEffect(qe_project.getVideoEffectByName("Twirl"))
 ```
 
 #### Manipulate effects properties
-Each clip in Premiere has components. The first 2 components of a video clips are usually `Opacity` and `Motion`, they are added by default and allow control over the opacity and position/rotation/scale of the clip. Each effect on a clip is a new component.
+Each clip in Premiere has components. The first 2 components of a video clips are usually `Opacity` and `Motion`, they are added by default and allow control over the opacity and position/rotation/scale of the clip. They can be controlled like effects. Each additional effect on a clip is a new component.
 ```python
 import pymiere  
 # first clip of first video track of active sequence  
@@ -129,18 +129,20 @@ else:
 # change some properties value or get the value  
 for property in component.properties:  
     # set the twirl angle to 50  
-  if property.displayName == "Angle":  
+    if property.displayName == "Angle":  
         property.setValue(50, True)  
     if property.displayName == "Twirl Radius":  
         print("Twirl radius value:", property.getValue())
 ```
+
 ## Text & Motion Graphics
-There is at least 4 ways to add text in Premiere Pro and None of them are perfectly integrated in the API so you may need to be a bit creative. The short answer is: use custom `Motion Grapic Templates`.
+There is at least 4 ways to add text in Premiere Pro and none of them are perfectly integrated in the API so you may need to be a bit creative. The short answer is: use custom `Motion Grapic Templates`.
 #### Type Tool Text
 Text added by the `Type Tool` in Premiere is not supported by the API.
 It seems to be added as an effect on a clip but the source text is not unfortunately not editable.
+
 #### Simple Text Effect
-An effect that can be added on any video clip (see Add & manipulate effects). We can change the text programatically but this seems buggy/unreliable. Also the options are very limited (opacity, position and size)
+`Simple Text` is an effect that can be added on any video clip (see Add & manipulate effects). We can change the text programmatically but this seems buggy/unreliable. Also the options are very limited (opacity, position and size)
 ```python
 import pymiere  
 # first clip of first video track of active sequence  
@@ -159,11 +161,15 @@ for property, property_name in zip(component.properties, ["?", "Position", "Just
         property.setValue(" New text ", True)
 ```
 #### Captions
-Not tried to use them with pymiere yet
+Not tried to use them with Pymiere yet...
 
 #### Motion Graphics Templates
-Motion Graphic Templates are After Effects compositions exported to be used in Premiere Pro. On export you choose which composition parameters should be available as properties in Premiere. These seems to be the best option as you can create more complicated animations/design than basic text and expose all the options you want to be modified by the api in Premiere.
-Note: Although it has been implemented since Premiere 2019 some of the property types exposed in After Effects are not editable by the API untils Premiere 2020.
+Motion Graphic Templates are basically After Effects compositions exported to be used in Premiere Pro.
+On export you choose which composition parameters should be available as properties in Premiere.
+These seems to be the best option as you can create more complicated animations and designs than basic text and expose all the options you want to be modified in Premiere.
+Note: Although it has been implemented since Premiere 2019 some of the property types exposed from After Effects are not editable via the API. 
+It's especially true for the text property than an't be edited as a compound property so you can only edit the text not the font etc...
+If you want to edit the font via the API in Premiere you will have to promote it through a custom control in After Effects.
 
 ```python
 import pymiere  
@@ -188,10 +194,12 @@ for prop in mgt_component.properties:
 ```
 
 ## QE
-QE (Quality Enginering) is an hidden, undocumented API for Premiere Pro. It is used by Adobe to run automated tests for development purposes. Although it is not officially supported by Adobe, it is usable alongside the official API.
-Pymiere offer an entry point to QE using `pymiere.objects.qe`
-Python objects in QE won't have autocompletion or docstring but you can see the available properties and method by calling the `inspect` method (ex: `pymiere.object.qe.inspect()`)
-Some functionnality are available only in QE or only in the official API, so you may need to use both.
+QE (Quality Engineering) is an hidden, undocumented API for Premiere Pro.
+It is used by Adobe to run automated tests for development purposes.
+Although it is not officially supported by Adobe, it is usable alongside the official API.
+Pymiere offer an entry point to QE using `pymiere.objects.qe`.
+Python objects in QE won't have autocompletion or docstrings but you can inspect the available properties and method by calling the `inspect` method (ex: `pymiere.object.qe.inspect()`)
+Some functionality are available only in QE or only in the official API, so you may need to use both in your script.
 Note that QE is not fail proof and you may crash Premiere while exploring it. Also some of the methods seems to not be working or we don't know the proper arguments for them.
 
 #### Similarity with the official API
@@ -221,37 +229,38 @@ print([c.displayName for c in clip.components])
 print([qe_clip.getComponentAt(i).name for i in range(qe_clip.numComponents)])
 ```
 
-#### Functionnalities only in QE
-So far these functionnality are only available through QE:
+#### Actions only in QE
+So far these actions are only available through QE:
   - Listing and adding video/audio effects (see Add & manipulate effects)
+  - Listing and adding video/audio transitions
   - Creating new items such as Transparent Video, Universal Counter, Bars&Tones, Black Video...
-  - Controling playback (I may be wrong for this one)
+  - Controlling playback (I may be wrong for this one)
   - Making clip cut (razor tool)
   - Many more that I didn't found yet...
 
 #### Know method signature
-
-  - newTransparentVideo
+Here a couple of method in QE with a bit of documentation deducted through testing
+  - newTransparentVideo (create new transparent video in root bin)
 ```python
 """
+pymiere.objects.qe.project.newTransparentVideo(1280, 720, 0, 1, 1)
 arg1: (int) x size in pixel
 arg2: (int) y size in pixel
 arg3: (int) ?
 arg4: (int) ? probably aspect ratio ?
 arg5: (int) ? probably aspect ratio ?
 """
-pymiere.objects.qe.project.newTransparentVideo(1280, 720, 0, 1, 1)
 ```
 
-  - razor
+  - razor (split clip using Razor Tool)
 ```python
 """
+pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).razor("1.0")
 arg1: (str) string representation of a float number representing the time in second where to cut
 """
-pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).razor("1.0")
 ```
 
-  - move (clip)
+  - move (move a clip left or right in a track)
 ```python
 """
 arg1: (str) string representation of time in second (can be negative)
@@ -261,7 +270,7 @@ arg3: (bool) offset everything around?
 pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(1).move("10.0", False, False)
 ```
 
-  - control playback
+  - control playback (play/pause sequence)
 ```python
 player = pymiere.objects.qe.project.getActiveSequence().player  
 player.play(1)  # arg seems to be playback speed

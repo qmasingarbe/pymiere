@@ -56,24 +56,7 @@ Basically you start by creating a ```project``` object to interact with the open
 
     project = pymiere.objects.app.project
 
-Other useful methods e.g. for interacting with Sequences and video Clips are available using ```wrappers```:
-
-    from pymiere import wrappers
-
-    # Get a list of Sequences
-    sequences = wrappers.list_sequences()
-
-    # Open a Sequence programmatically
-    project.openSequence(sequenceID=sequences[0].sequenceID)
-
-    # Set the active Sequence programmatically
-    project.activeSequence = sequences[0]
-
-    # Get a list of all video Clips
-    clips = wrappers.list_video(project.activeSequence)
-
-    # Select one or more video Clips on the Timeline
-    clips[0].setSelected(True, True)
+For more snippets and examples see [pymiere documentation](https://github.com/qmasingarbe/pymiere/blob/master/example_and_documentation.md).
 
 ## Useful links
 * [Official doc for Premiere Pro objects](http://ppro.aenhancers.com/)

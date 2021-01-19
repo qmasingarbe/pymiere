@@ -242,8 +242,8 @@ So far these actions are only available through QE:
 Here a couple of method in QE with a bit of documentation deducted through testing
   - newTransparentVideo (create new transparent video in root bin)
 ```python
-"""
 pymiere.objects.qe.project.newTransparentVideo(1280, 720, 0, 1, 1)
+"""
 arg1: (int) x size in pixel
 arg2: (int) y size in pixel
 arg3: (int) ?
@@ -254,20 +254,20 @@ arg5: (int) ? probably aspect ratio ?
 
   - razor (split clip using Razor Tool)
 ```python
-"""
 pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).razor("1.0")
+"""
 arg1: (str) string representation of a float number representing the time in second where to cut
 """
 ```
 
   - move (move a clip left or right in a track)
 ```python
+pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(1).move("10.0", False, False)
 """
 arg1: (str) string representation of time in second (can be negative)
 arg2: (bool) duplicate?
 arg3: (bool) offset everything around?
 """
-pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(1).move("10.0", False, False)
 ```
 
   - control playback (play/pause sequence)

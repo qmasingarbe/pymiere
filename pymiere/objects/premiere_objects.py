@@ -4912,14 +4912,30 @@ class ComponentParam(PymiereBaseObject):
         return self._eval_on_this_object("setValue({}, {})".format(_format_object_to_es(value), _format_object_to_es(updateUI)))
 
     def getColorValue(self):
-        return self._eval_on_this_object("getColorValue()")
+        """
+        Get the value of a color property on an effect
 
-    def setColorValue(self, arg1):
+        :return: (Array) containing in order alpha, red, green and blue color channel (0-255 int)
         """
-        :type arg1: any
+        return Array(**self._eval_on_this_object("getColorValue()"))
+
+    def setColorValue(self, alpha, red, green, blue, updateUI):
         """
-        self._check_type(arg1, any, 'arg "arg1" of function "ComponentParam.setColorValue"')
-        return self._eval_on_this_object("setColorValue({})".format(_format_object_to_es(arg1)))
+        :type alpha: int
+        :type red: int
+        :type green: int
+        :type blue: int
+        :type updateUI: bool
+        """
+        self._check_type(alpha, int, 'arg "alpha" of function "ComponentParam.setColorValue"')
+        self._check_type(red, int, 'arg "red" of function "ComponentParam.setColorValue"')
+        self._check_type(green, int, 'arg "green" of function "ComponentParam.setColorValue"')
+        self._check_type(blue, int, 'arg "blue" of function "ComponentParam.setColorValue"')
+        self._check_type(updateUI, bool, 'arg "updateUI" of function "ComponentParam.setColorValue"')
+        return self._eval_on_this_object("setColorValue({}, {}, {}, {}, {})".format(
+            _format_object_to_es(alpha), _format_object_to_es(red), _format_object_to_es(green),
+            _format_object_to_es(blue), _format_object_to_es(updateUI)
+        ))
 
     def getValueAtKey(self, time):
         """

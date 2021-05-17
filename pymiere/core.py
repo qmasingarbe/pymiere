@@ -416,6 +416,8 @@ def _format_object_to_es(obj):
     elif isinstance(obj, dict):
         key_value_pair = ["{}: {}".format(_format_object_to_es(k), _format_object_to_es(v)) for k, v in obj.items()]
         return "{" + ",".join(key_value_pair) + "}"
+    elif obj is None:
+        return 'null'
     else:
         return str(obj)
 

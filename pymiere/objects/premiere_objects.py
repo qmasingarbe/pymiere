@@ -477,6 +477,18 @@ class Project(PymiereBaseObject):
         self._check_type(placeholderID, str, 'arg "placeholderID" of function "Project.createNewSequence"')
         self._eval_on_this_object("createNewSequence({}, {})".format(_format_object_to_es(sequenceName), _format_object_to_es(placeholderID)))
 
+    def createNewSequenceFromClips(self, sequenceName, arrayOfProjectItems, destinationBin=None):
+        """
+        Creates a new Sequence object with the given name, in the specified destination bin,
+        and sequentially inserts project items into it.
+
+        :type sequenceName: str
+        :type arrayOfProjectItems: list of ProjectItem
+        :type destinationBin: ProjectItem
+        :return: Sequence object
+        """
+        return Sequence(**self._eval_on_this_object("createNewSequenceFromClips({}, {}, {})".format(_format_object_to_es(sequenceName), _format_object_to_es(arrayOfProjectItems), _format_object_to_es(destinationBin))))
+
     def deleteSequence(self, sequence):
         """
         :type sequence: Sequence

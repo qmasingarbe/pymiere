@@ -96,6 +96,25 @@ print(pymiere.objects.app.project.activeSequence)
 ```
 
 
+## Render
+#### Direct render in Premiere
+```python
+import pymiere
+# find the sequence we want to export
+sequence = pymiere.objects.app.project.activeSequence
+result = sequence.exportAsMediaDirect(
+    r"D:\tmp\hello.mp4",  # path of the exported file
+    r"C:\Program Files\Adobe\Adobe Premiere Pro 2020\Settings\IngestPresets\Transcode\Match Source - H.264 High Bitrate.epr",  # path of the export preset file
+    pymiere.objects.app.encoder.ENCODE_ENTIRE  # what part of the sequence to export. Others are: ENCODE_IN_TO_OUT or ENCODE_WORKAREA
+)
+print(result)  # log after the export is done or has crashed
+print(result.strip() == "No result")  # success log
+```
+
+#### Queue render to Media Encoder
+**TODO** : send me an email if you badly need this and I will take a shot at it
+
+
 ## Add & manipulate effects
 #### Add video effect using QE
 (see QE section)

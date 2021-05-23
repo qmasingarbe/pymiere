@@ -54,7 +54,7 @@ def get_item_recursive(item, add_root=False, filter_function=lambda i: True):
 
 def list_sequences():
     """
-    List available sequence sin the opened project, print infos and return objects
+    List available sequences in the opened project, print infos and return objects
 
     :return: (list of Sequence) all sequences available in the project
     """

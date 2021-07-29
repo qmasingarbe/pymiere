@@ -186,9 +186,20 @@ class Application(PymiereBaseObject):
         self._check_type(filePath, str, 'arg "filePath" of function "Application.isDocument"')
         return self._eval_on_this_object("isDocument({})".format(_format_object_to_es(filePath)))
 
-    def openDocument(self, filePath):
+    def openDocument(self, filePath, suppressConversionDialog=False, bypassLocateFileDialog=False, bypassWarningDialog=False, doNotAddToMRUList=False):
+        """
+        :type filePath: str
+        :type suppressConversionDialog: bool
+        :type bypassLocateFileDialog: bool
+        :type bypassWarningDialog: bool
+        :type doNotAddToMRUList: bool
+        """
         self._check_type(filePath, str, 'arg "filePath" of function "Application.openDocument"')
-        return self._eval_on_this_object("openDocument({})".format(_format_object_to_es(filePath)))
+        self._check_type(suppressConversionDialog, bool, 'arg "suppressConversionDialog" of function "Application.openDocument"')
+        self._check_type(bypassLocateFileDialog, bool, 'arg "bypassLocateFileDialog" of function "Application.openDocument"')
+        self._check_type(bypassWarningDialog, bool, 'arg "bypassWarningDialog" of function "Application.openDocument"')
+        self._check_type(doNotAddToMRUList, bool, 'arg "doNotAddToMRUList" of function "Application.openDocument"')
+        return self._eval_on_this_object("openDocument({}, {}, {}, {}, {})".format(_format_object_to_es(filePath), _format_object_to_es(suppressConversionDialog), _format_object_to_es(bypassLocateFileDialog), _format_object_to_es(bypassWarningDialog), _format_object_to_es(doNotAddToMRUList)))
 
     def quit(self):
         self._eval_on_this_object("quit()")

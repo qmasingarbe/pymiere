@@ -59,6 +59,14 @@ class StartVars(object):
         raise AttributeError("Attribute 'app' is read-only")
 
     @property
+    def apps(self):
+        return Array(**_eval_script_returning_object('apps', as_kwargs=True))
+
+    @apps.setter
+    def apps(self, apps):
+        raise AttributeError("Attribute 'apps' is read-only")
+
+    @property
     def document(self):
         return Document(**_eval_script_returning_object('document', as_kwargs=True))
     @document.setter

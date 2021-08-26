@@ -681,14 +681,6 @@ class ProjectItem(PymiereBaseObject):
     def nodeId(self, nodeId):
         raise AttributeError("Attribute 'nodeId' is read-only")
 
-    @property
-    def videoComponents(self):
-        kwargs = self._eval_on_this_object('videoComponents')
-        return ComponentCollection(**kwargs) if kwargs else None
-    @videoComponents.setter
-    def videoComponents(self, videoComponents):
-        raise AttributeError("Attribute 'videoComponents' is read-only")
-
 
     # ----- FUNCTIONS -----
     def bind(self, eventName, function):
@@ -874,6 +866,10 @@ class ProjectItem(PymiereBaseObject):
 
     def startTime(self):
         return Time(**self._eval_on_this_object("startTime()"))
+
+    def videoComponents(self):
+        """ Return Master effects on project item """
+        return ComponentCollection(**self._eval_on_this_object("videoComponents()"))
 
     def setStartTime(self, arg1):
         """

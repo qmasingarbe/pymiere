@@ -1519,6 +1519,18 @@ class ProjectCollection(PymiereBaseCollection):
         return iter([self.__getitem__(i) for i in range(len(self))])
 
 
+class ExporterCollection(PymiereBaseCollection):
+    def __init__(self, pymiere_id):
+        super(ExporterCollection, self).__init__(pymiere_id, "length")
+
+    def __getitem__(self, index):
+        return Exporter(**super(ExporterCollection, self).__getitem__(index))
+
+    def __iter__(self):
+        return iter([self.__getitem__(i) for i in range(len(self))])
+
+
+
 class Anywhere(PymiereBaseObject):
     def __init__(self, pymiere_id=None):
         super(Anywhere, self).__init__(pymiere_id)
@@ -1650,7 +1662,7 @@ class Encoder(PymiereBaseObject):
         self._check_type(milliseconds, float, 'arg "milliseconds" of function "Encoder.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
-    def encodeSequence(self, sequence, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately):
+    def encodeSequence(self, sequence, outputFilePath, presetPath, WorkAreaType, removeOnCompletion, startQueueImmediately=False):
         """
         :type sequence: Sequence
         :type outputFilePath: str
@@ -1722,7 +1734,7 @@ class Encoder(PymiereBaseObject):
         self._eval_on_this_object("setEmbeddedXMPEnabled({})".format(_format_object_to_es(enable)))
 
     def getExporters(self):
-        self._eval_on_this_object("getExporters()")
+        return ExporterCollection(**self._eval_on_this_object("getExporters()"))
 
 
 class Properties(PymiereBaseObject):

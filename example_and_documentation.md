@@ -206,8 +206,8 @@ mgt_clip = sequence.importMGT(
 mgt_component = mgt_clip.getMGTComponent()  
 # iter through MGT properties, display and change values  
 for prop in mgt_component.properties:  
-    print(prop.displayName)  
-    value = prop.getValue()  
+    print(prop.displayName)
+    value = prop.getValue()  # for color properties use getColorValue() and setColorValue()
     print(value)  
     prop.setValue(value, True)
 ```

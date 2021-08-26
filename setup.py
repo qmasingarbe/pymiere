@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 NAME = "pymiere"
 URL = 'https://github.com/qmasingarbe/{}'.format(NAME)
-VERSION = "1.2.3"
+VERSION = "1.2.4"
 
 with open(os.path.join(os.path.dirname(__file__), "README.md"), "r") as f:
     long_description = f.read()

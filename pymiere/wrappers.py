@@ -4,6 +4,7 @@ Collection of higher level functions using low level pymiere code
 import os
 import platform
 import pymiere
+from pymiere.core import get_premiere_version
 
 # premiere uses ticks as its base time unit, this is used to convert from ticks to seconds
 TICKS_PER_SECONDS = 254016000000
@@ -219,6 +220,17 @@ def get_system_sequence_presets(category="Digital SLR", resolution="1080p", pres
     if not os.path.isfile(sequence_preset_path):
         raise IOError("Sequence preset '{}' not found on disk".format(sequence_preset_path))
     return sequence_preset_path
+
+
+def has_media_encoder():
+    """
+    Check if there is a Media Encoder (AME) version installed that work with the currently running Premiere Pro
+
+    :return: (bool) True if suitable AME version found
+    """
+    premiere_version = get_premiere_version().version[0]
+    encoder_versions = [int(app_name.split("-")[1].split(".")[0]) for app_name in pymiere.objects.apps if app_name.startswith("ame-")]
+    return premiere_version in encoder_versions
 
 
 if __name__ == "__main__":

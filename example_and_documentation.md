@@ -96,7 +96,7 @@ print(pymiere.objects.app.project.activeSequence)
 ```
 
 
-## Render
+## Render / Encode
 #### Direct render in Premiere
 ```python
 import pymiere
@@ -112,7 +112,32 @@ print(result.strip() == "No result")  # success log
 ```
 
 #### Queue render to Media Encoder
-**TODO** : send me an email if you badly need this and I will take a shot at it
+You can send sequences from Premiere to be encoded in Adobe Media Encoder (AME).
+Unlike the direct render method, Premiere will not be blocked by this operation that will run in the background.
+```python
+import pymiere
+# ensure Media Encoder is started
+pymiere.objects.app.encoder.launchEncoder()
+# find the sequence we want to export
+sequence = pymiere.objects.app.project.activeSequence
+# add sequence to Media Encoder queue
+job_id = pymiere.objects.app.encoder.encodeSequence(
+    sequence,
+    r"D:\tmp\hello.mp4",  # path of the exported file
+    r"C:\Program Files\Adobe\Adobe Premiere Pro 2020\Settings\IngestPresets\Transcode\Match Source - H.264 High Bitrate.epr",  # path of the export preset file
+    pymiere.objects.app.encoder.ENCODE_ENTIRE,  # what part of the sequence to export. Others are: ENCODE_IN_TO_OUT or ENCODE_WORKAREA
+    removeOnCompletion=False,  # clear this job of media encoder render queue on completion
+    startQueueImmediately=False  # seem not to be working in Premiere 2017? Untested on versions above
+)
+# press green play button in the queue list to start encoding everything
+pymiere.objects.app.encoder.startBatch()
+```
+**Notes** :
+ 1. Make sur you have the proper version of Media Encoder installed before sending it sequences to encode, this code won't work nor crash if it is not the case. 
+ You can use `pymiere.wrappers.has_media_encoder()` to check if a suitable version of AME is available programmatically.
+ 2. Although it may take time to start AME, the script will return immediately. Startup and queuing in AME will proceed asynchronously.
+ 3. Due to some limitation in the communication between Premiere and Python, you cannot bind functions to encoder events like you can do in ExtendScript.
+ To handle what happens in AME, either write your binding function for Premiere in ExtendScript or use the ExtendScript API for Media Encoder.
 
 
 ## Add & manipulate effects

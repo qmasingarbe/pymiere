@@ -109,7 +109,6 @@ def edit_clip(clip, start_on_timeline, end_on_timeline, in_point_on_clip, out_po
     :param end_on_timeline: (int) Frame at which the clip should end in the sequence timeline
     :param in_point_on_clip: (int) First frame we will see of the clip (in the clip own timeline)
     :param out_point_on_clip: (int) Last frame we will see of the clip (in the clip own timeline)
-    :param out_point_on_clip: (int) Last frame we will see of the clip (in the clip own timeline)
     """
     # get clip fps if no fps given
     if fps is None:

@@ -14,7 +14,7 @@ No problem!
 
 ### Versions
   * Support Python 2 & 3
-  * Tested with **Adobe Premiere Pro version 14.5 (2020)**, **version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend version 2019+ because some functionality isn't available in the previous versions. It should work for version 2017+ though.
+  * Tested with **Adobe Premiere Pro version 15.1 (2021)**, **version 14.5 (2020)**, **version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend version 2019+ because some functionality isn't available in the previous versions. It should work for version 2017+ though.
   * Tested on Windows 10 & macOS Catalina
 
 
@@ -86,10 +86,7 @@ Alternatively, you'll be pleased to know ```Pymiere``` supports code completion 
 
 ## Future improvements
  - [ ] separate the generic part handling communication between python and ExtendScript from the specific code for Premiere Pro, enabling its use in other applications (Photoshop, Encoder...)
- - [ ] add more examples & more _wrappers_ functions
  - [ ] add support for Premiere _events_
- - [ ] add more documentation, docstrings...
- - [ ] build one Python mirror of ExtendScript objects by Premiere version, as each version adds new objects/functions/properties
  - [ ] add a way to simply customize a panel to call python functions
 
  ## Thanks

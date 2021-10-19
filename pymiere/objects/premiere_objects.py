@@ -1116,6 +1116,34 @@ class Sequence(PymiereBaseObject):
         self._check_type(milliseconds, float, 'arg "milliseconds" of function "Sequence.setTimeout"')
         self._eval_on_this_object("setTimeout({}, {}, {})".format(_format_object_to_es(eventName), _format_object_to_es(function), _format_object_to_es(milliseconds)))
 
+    def autoReframeSequence(self, numerator, denominator, motionPreset, newName, useNestedSequences):
+        """
+        Generates a new, auto-reframed sequence
+
+        :param numerator: numerator of desired frame aspect ratio (for a vertical 9:16 video it will be 9)
+        :type numerator: int
+        :param denominator: denominator of desired frame aspect ratio (for a vertical 9:16 video it will be 16)
+        :type denominator: int
+        :param motionPreset: one of "slower", "default" or "faster"
+        :type motionPreset: str
+        :param newName: a name for a newly created sequence
+        :type newName: str
+        :param useNestedSequences: whether to honor nested sequence
+        :type useNestedSequences: bool
+        :return: (Sequence or int)
+        """
+        # only available from Premiere Pro 14.0 (2020)
+        self._check_version("14.0", "Sequence.autoReframeSequence")
+        self._check_type(numerator, int, 'arg "numerator" of function "Sequence.autoReframeSequence"')
+        self._check_type(denominator, int, 'arg "denominator" of function "Sequence.autoReframeSequence"')
+        self._check_type(motionPreset, str, 'arg "motionPreset" of function "Sequence.autoReframeSequence"')
+        self._check_type(newName, str, 'arg "newName" of function "Sequence.autoReframeSequence"')
+        self._check_type(useNestedSequences, bool, 'arg "useNestedSequences" of function "Sequence.autoReframeSequence"')
+        result = self._eval_on_this_object("autoReframeSequence({}, {}, {}, {}, {})".format(_format_object_to_es(numerator), _format_object_to_es(denominator), _format_object_to_es(motionPreset), _format_object_to_es(newName), _format_object_to_es(useNestedSequences)))
+        if isinstance(result, int) or isinstance(result, bool):
+            return result
+        return Sequence(**result)
+
     def getPlayerPosition(self):
         """
         Retrieves the current player position, as a `Time` object.

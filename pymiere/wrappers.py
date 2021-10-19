@@ -233,5 +233,29 @@ def has_media_encoder():
     return premiere_version in encoder_versions
 
 
+def clone_sequence(sequence, new_sequence_name=None):
+    """
+    Equivalent of Sequence.clone() with return value and optional rename
+    :param sequence: (Sequence) sequence object to duplicate
+    :param new_sequence_name: (str or None) optional new name for the duplicated sequence
+    :return: (Sequence) duplicated sequence object
+    """
+    project = pymiere.objects.app.project
+    # store sequences before clone
+    before_sequence_names = [s.sequenceID for s in project.sequences]
+    # actual clone
+    sequence.clone()
+    # search clone sequence
+    for new_seq in project.sequences:
+        if new_seq.sequenceID not in before_sequence_names:
+            break
+    else:
+        raise ValueError("New sequence not found")
+    # rename and return
+    if new_sequence_name is not None:
+        new_seq.name = new_sequence_name
+    return new_seq
+
+
 if __name__ == "__main__":
     pass

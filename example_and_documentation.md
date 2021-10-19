@@ -209,11 +209,17 @@ Not tried to use them with Pymiere yet...
 
 #### Motion Graphics Templates
 Motion Graphic Templates are basically After Effects compositions exported to be used in Premiere Pro.
-On export you choose which composition parameters should be available as properties in Premiere.
+On export you choose which composition parameters should be exposed as properties in Premiere.
 These seems to be the best option as you can create more complicated animations and designs than basic text and expose all the options you want to be modified in Premiere.
+
 Note: Although it has been implemented since Premiere 2019 some of the property types exposed from After Effects are not editable via the API. 
-It's especially true for the text property than an't be edited as a compound property so you can only edit the text not the font etc...
+It's especially true for the text property than can't be edited as a compound property so you can only edit the text not the font etc...
 If you want to edit the font via the API in Premiere you will have to promote it through a custom control in After Effects.
+
+Note 2: There is two type of Motion Graphic Templates, one is an assembly of Premiere Pro effects and the other is an actual After Effects composition with exposed parameters.
+They will both return `True` for `Clip.isMGT()` but only the After Effects one will return a valid component when using `Clip.getMGTComponent()`.
+If you want to edit the component for the Premiere Pro type, they are all available under `Clip.components`. 
+
 
 ```python
 import pymiere  
@@ -229,12 +235,21 @@ mgt_clip = sequence.importMGT(
 )  
 # get component hosting modifiable template properties  
 mgt_component = mgt_clip.getMGTComponent()  
-# iter through MGT properties, display and change values  
-for prop in mgt_component.properties:  
-    print(prop.displayName)
-    value = prop.getValue()  # for color properties use getColorValue() and setColorValue()
-    print(value)  
-    prop.setValue(value, True)
+# handle two types, see Note 2 above
+if mgt_component is None:
+    # Premiere Pro type, directly use components
+    components = mgt_clip.components
+else:
+    # After Effects type, everything is hosted by the MGT component
+    components = [mgt_component]
+
+for component in components:
+    # iter through MGT properties, display and change values
+    for prop in component.properties:
+        print(prop.displayName)
+        value = prop.getValue()  # for color properties use getColorValue() and setColorValue()
+        print(value)  
+        prop.setValue(value, True)
 ```
 
 ## QE

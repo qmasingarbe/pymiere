@@ -1236,9 +1236,11 @@ class Sequence(PymiereBaseObject):
 
     def clone(self):
         """
-        Clones a sequence. @returns the clone Sequence.
+        Clones a sequence.
+        Use `pymiere.wrappers.clone_sequence` to clone a sequence and get the new sequence easily
+        :return: success (bool)
         """
-        self._eval_on_this_object("clone()")
+        return self._eval_on_this_object("clone()")
 
     def exportAsProject(self, exportPath):
         """

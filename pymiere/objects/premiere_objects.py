@@ -3990,7 +3990,10 @@ class TrackItem(PymiereBaseObject):
         return self._eval_on_this_object("isMGT()")
 
     def getMGTComponent(self):
-        return Component(**self._eval_on_this_object("getMGTComponent()"))
+        component_kwargs = self._eval_on_this_object("getMGTComponent()")
+        if component_kwargs is None:
+            return component_kwargs
+        return Component(**component_kwargs)
 
     def isAdjustmentLayer(self):
         return self._eval_on_this_object("isAdjustmentLayer()")

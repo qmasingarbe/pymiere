@@ -3970,6 +3970,20 @@ class TrackItem(PymiereBaseObject):
     def components(self, components):
         raise AttributeError("Attribute 'components' is read-only")
 
+    @property
+    def disabled(self):
+        """ Gets the disabled state of the trackItem """
+        self._check_version("15.0", "TrackItem.disabled")
+        return self._eval_on_this_object('disabled')
+
+    @disabled.setter
+    def disabled(self, disabled):
+        """
+        Sets the disabled state of the trackItem
+        :type disabled: bool
+        """
+        self._check_version("15.0", "TrackItem.disabled")
+        self._eval_on_this_object("disabled = {}".format(_format_object_to_es(disabled)))
 
     # ----- FUNCTIONS -----
     def bind(self, eventName, function):

@@ -44,9 +44,9 @@ def check_premiere_is_alive(crash=True):
         print(msg)
         return False
     if response.content.decode("utf-8") != "Premiere is alive":
-        msg = "Found running server on '{}' but got wrong response for ping".format(PANEL_URL)
+        msg = "Found running server on '{}' but got wrong response for ping.\nResponse: {}".format(PANEL_URL, response.content.decode("utf-8"))
         if crash:
-            raise ValueError()
+            raise ValueError(msg)
         print(msg)
         return False
     last_alive_check_time = current_time()

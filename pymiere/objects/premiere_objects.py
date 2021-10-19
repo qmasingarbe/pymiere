@@ -170,6 +170,14 @@ class Application(PymiereBaseObject):
     def getWorkspaces(self):
         return Array(**self._eval_on_this_object("getWorkspaces()"))
 
+    def getCurrentProjectViewSelection(self):
+        """
+        Returns an array of projectItems selected, in the current active project view
+        :return: (list of ProjectItem)
+        """
+        self._check_version("15.4", "Application.getCurrentProjectViewSelection")
+        return Array(**self._eval_on_this_object("getCurrentProjectViewSelection()"))
+
     def setWorkspace(self, workspace):
         """
         :type workspace: str
@@ -4024,6 +4032,16 @@ class TrackItem(PymiereBaseObject):
         self._check_type(isSelected, float, 'arg "isSelected" of function "TrackItem.setSelected"')
         self._check_type(updateUI, float, 'arg "updateUI" of function "TrackItem.setSelected"')
         self._eval_on_this_object("setSelected({}, {})".format(_format_object_to_es(isSelected), _format_object_to_es(updateUI)))
+
+    def move(self, newInPoint):
+        """
+        Moves the inPoint of the track item to a new time
+        :param newInPoint: the time to which to move the track item’s in point
+        :type newInPoint: Time
+        """
+        self._check_version("15.4", "TrackItem.move", alternative_msg="Use pymiere.wrappers.move_clip()")
+        self._check_type(newInPoint, Time, 'arg "newInPoint" of function "TrackItem.move"')
+        self._eval_on_this_object("move({})".format(_format_object_to_es(newInPoint)))
 
     def getLinkedItems(self):
         return TrackItemCollection(**self._eval_on_this_object("getLinkedItems()"))

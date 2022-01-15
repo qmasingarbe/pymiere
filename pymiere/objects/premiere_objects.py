@@ -5001,7 +5001,11 @@ class ComponentParam(PymiereBaseObject):
         return self._eval_on_this_object("keyExistsAtTime({})".format(_format_object_to_es(time)))
 
     def getValue(self):
-        return self._eval_on_this_object("getValue()")
+        value = self._eval_on_this_object("getValue()")
+        # cast objects to Arrays
+        if isinstance(value, dict) and "pymiere_id" in value:
+            value = Array(**value)
+        return value
 
     def setValue(self, value, updateUI):
         self._check_type(updateUI, bool, 'arg "updateUI" of function "ComponentParam.setValue"')

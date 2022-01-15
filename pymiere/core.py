@@ -386,6 +386,9 @@ class Array(PymiereBaseCollection):
     def __getitem__(self, index):
         return _format_object_to_py(_eval_script_returning_object("$._pymiere['{}'][{}]".format(self._pymiere_id, index)))
 
+    def __setitem__(self, key, value):
+        eval_script("$._pymiere['{}'][{}] = {}".format(self._pymiere_id, key, value))
+
     def append(self, item):
         self.push(item)
 

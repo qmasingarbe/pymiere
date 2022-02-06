@@ -124,7 +124,7 @@ sequence = pymiere.objects.app.project.activeSequence
 job_id = pymiere.objects.app.encoder.encodeSequence(
     sequence,
     r"D:\tmp\hello.mp4",  # path of the exported file
-    r"C:\Program Files\Adobe\Adobe Premiere Pro 2020\Settings\IngestPresets\Transcode\Match Source - H.264 High Bitrate.epr",  # path of the export preset file
+    r"C:\Program Files\Adobe\Adobe Media Encoder CC 2017\MediaIO\systempresets\4E49434B_48323634\01 - Match Source - High bitrate.epr",  # path of the export preset file
     pymiere.objects.app.encoder.ENCODE_ENTIRE,  # what part of the sequence to export. Others are: ENCODE_IN_TO_OUT or ENCODE_WORKAREA
     removeOnCompletion=False,  # clear this job of media encoder render queue on completion
     startQueueImmediately=False  # seem not to be working in Premiere 2017? Untested on versions above

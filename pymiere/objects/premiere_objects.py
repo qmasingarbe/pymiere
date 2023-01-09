@@ -226,8 +226,19 @@ class Application(PymiereBaseObject):
         self._check_type(arg1, any, 'arg "arg1" of function "Application.write"')
         self._eval_on_this_object("write({})".format(_format_object_to_es(arg1)))
 
-    def openFCPXML(self):
-        return self._eval_on_this_object("openFCPXML()")
+    def openFCPXML(self, filePath, projectPath):
+        """
+        Create and open Premiere project from FinalCut xml file
+
+        :param filePath: .xml file path
+        :type filePath: str
+        :param projectPath: folder path where the new prproj file will be saved
+        :type projectPath: str
+        :return: success (bool)
+        """
+        self._check_type(filePath, str, 'arg "filePath" of function "Application.openFCPXML"')
+        self._check_type(projectPath, str, 'arg "projectPath" of function "Application.openFCPXML"')
+        return self._eval_on_this_object("openFCPXML({}, {})".format(_format_object_to_es(filePath), _format_object_to_es(projectPath)))
 
     def setSDKEventMessage(self, value, eventType):
         """

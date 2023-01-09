@@ -598,8 +598,13 @@ class Project(PymiereBaseObject):
         self._check_type(pausedOrNot, float, 'arg "pausedOrNot" of function "Project.pauseGrowing"')
         return self._eval_on_this_object("pauseGrowing({})".format(_format_object_to_es(pausedOrNot)))
 
-    def closeDocument(self):
-        return self._eval_on_this_object("closeDocument()")
+    def closeDocument(self, save=True):
+        """
+        :param save: save the document before closing it
+        :type save: bool
+        """
+        self._check_type(save, bool, 'arg "save" of function "Project.save"')
+        return self._eval_on_this_object("closeDocument({})".format(_format_object_to_es(save)))
 
     def placeAsset(self, arg1):
         """

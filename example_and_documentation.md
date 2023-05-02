@@ -313,9 +313,14 @@ arg5: (int) ? probably aspect ratio ?
 
   - razor (split clip using Razor Tool)
 ```python
-pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).razor("1.0")
+from pymiere.wrappers import time_from_seconds
+seq = pymiere.objects.app.project.activeSequence
+time = time_from_seconds(2.5)
+# format Time object to timecode string
+timecode = time.getFormatted(seq.getSettings().videoFrameRate, seq.getSettings().videoDisplayFormat)
+pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).razor(timecode)
 """
-arg1: (str) string representation of a float number representing the time in second where to cut
+arg1: (str) string timecode of when to cut the sequence 
 """
 ```
 

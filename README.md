@@ -14,7 +14,7 @@ No problem!
 
 ### Versions
   * Support Python 2 & 3
-  * Tested with **Adobe Premiere Pro version 15.1 (2021)**, **version 14.5 (2020)**, **version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend version 2019+ because some functionality isn't available in the previous versions. It should work for version 2017+ though.
+  * Tested with **Adobe Premiere Pro version 23.1 (2023)**, **version 15.1 (2021)**, **version 14.5 (2020)**, **version 13.0 (2019)** and **version 11.0 (2017)**. I highly recommend version 2019+ because some functionality isn't available in the previous versions. It should work for version 2017+ though.
   * Tested on Windows 10 & macOS Catalina
 
 

@@ -160,6 +160,23 @@ class PymiereBaseObject(object):
         # store id
         self._pymiere_id = pymiere_id
 
+    def __del__(self):
+        """
+        Delete the reference to this Python object in the ExtendScript side to avoid memory leak (stored in $._pymiere)
+        This method is automatically called when our object is garbage collected
+        """
+        if not self._pymiere_id:
+            return  # no reference to ExtendScript object
+
+        script = """
+            delete $._pymiere['{0}'];
+            var index = $._pymiere.generatedIds.indexOf('{0}');
+            if (index !== -1) {{
+                $._pymiere.generatedIds.splice(index, 1);
+            }}
+        """.format(self._pymiere_id)
+        eval_script(code=script)
+
     def _eval_on_this_object(self, extend_property, dot_notation=True):
         """
         Do something on the current object in extendscript, could be to query or set a property or exec a function

@@ -190,6 +190,28 @@ def time_from_seconds(seconds):
     return t
 
 
+def timecode_from_time(time, sequence):
+    """
+    Some QE methods like move or razor need a timecode in order to work, this convert Time object to timecode
+
+    :param time: (pymiere.Time) time object to be converted
+    :param sequence: (pymiere.Sequence) the sequence in which the timecode wil be used to ensure proper formatting
+    :return: (str) formated timecode
+    """
+    return time.getFormatted(sequence.getSettings().videoFrameRate, sequence.getSettings().videoDisplayFormat)
+
+
+def timecode_from_seconds(seconds, sequence):
+    """
+    Some QE methods like move or razor need a timecode in order to work, this convert seconds to timecode
+
+    :param seconds: (float or int) seconds to be converted to timecode
+    :param sequence: (pymiere.Sequence) the sequence in which the timecode wil be used to ensure proper formatting
+    :return: (str) formated timecode
+    """
+    return timecode_from_time(time_from_seconds(seconds), sequence)
+
+
 def get_system_sequence_presets(category="Digital SLR", resolution="1080p", preset_name="DSLR 1080p25"):
     """
     To create a new sequence via qe.project.newSequence we need to give a sequence preset file (.sqpreset)

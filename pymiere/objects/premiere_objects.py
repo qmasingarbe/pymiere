@@ -1523,6 +1523,7 @@ class MarkerCollection(PymiereBaseObject):
 
     def createMarker(self, time):
         """
+        :param time: time in seconds to create marker at
         :type time: float
         """
         self._check_type(time, float, 'arg "time" of function "MarkerCollection.createMarker"')
@@ -4302,7 +4303,11 @@ class Marker(PymiereBaseObject):
         return Time(**kwargs) if kwargs else None
     @start.setter
     def start(self, start):
-        self._check_type(start, Time, 'Marker.start')
+        """
+        :param start: time in seconds at which marker should start
+        :type start: float
+        """
+        self._check_type(start, float, 'Marker.start')
         self._eval_on_this_object("start = {}".format(_format_object_to_es(start)))
 
     @property
@@ -4311,7 +4316,11 @@ class Marker(PymiereBaseObject):
         return Time(**kwargs) if kwargs else None
     @end.setter
     def end(self, end):
-        self._check_type(end, Time, 'Marker.end')
+        """
+        :param end: time in seconds at which marker should end
+        :type end: float
+        """
+        self._check_type(end, float, 'Marker.end')
         self._eval_on_this_object("end = {}".format(_format_object_to_es(end)))
 
     @property

@@ -1168,6 +1168,11 @@ class Sequence(PymiereBaseObject):
             return result
         return Sequence(**result)
 
+    def isDoneAnalyzingForVideoEffects(self):
+        """ Useful in a while loop when waiting for autoReframeSequence to process a sequence before rendering it """
+        self._check_version("14.0", "Sequence.isDoneAnalyzingForVideoEffects")
+        return self._eval_on_this_object("isDoneAnalyzingForVideoEffects()")
+
     def getPlayerPosition(self):
         """
         Retrieves the current player position, as a `Time` object.
@@ -1582,7 +1587,6 @@ class ExporterCollection(PymiereBaseCollection):
 
     def __iter__(self):
         return iter([self.__getitem__(i) for i in range(len(self))])
-
 
 
 class Anywhere(PymiereBaseObject):

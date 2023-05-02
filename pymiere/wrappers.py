@@ -256,5 +256,19 @@ def clone_sequence(sequence, new_sequence_name=None):
     return new_seq
 
 
+def add_video_track():
+    """ Adds a new empty video track above all the others """
+    sequence = pymiere.objects.qe.project.getActiveSequence()
+    sequence.addTracks()
+    sequence.removeAudioTrack(sequence.numAudioTracks - 1)
+
+
+def add_audio_track():
+    """ Adds a new empty audio track above all the others """
+    sequence = pymiere.objects.qe.project.getActiveSequence()
+    sequence.addTracks()
+    sequence.removeVideoTrack(sequence.numVideoTracks - 1)
+
+
 if __name__ == "__main__":
     pass

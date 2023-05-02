@@ -4982,7 +4982,15 @@ class ComponentParam(PymiereBaseObject):
         return Time(**self._eval_on_this_object("findNextKey({})".format(_format_object_to_es(time))))
 
     def getKeys(self):
-        return self._eval_on_this_object("getKeys()")
+        """
+        Get the list of Time objects at which a key is placed. Return empty Array if not animated
+
+        :return: Array of Time
+        """
+        result = self._eval_on_this_object("getKeys()")
+        if result is None:
+            return Array.from_python_list(list())
+        return Array(**result)
 
     def addKey(self, time):
         """

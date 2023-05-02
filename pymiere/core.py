@@ -271,9 +271,20 @@ class PymiereBaseCollection(PymiereBaseObject):
         :return: (dict) dict of kwargs to create the object. The object creation itself append in the subclass for
         code inspection/autocomplete purposes
         """
-        if index < 0:
-            index = self.__len__() + index
-        return self._eval_on_this_object("[{}]".format(index), dot_notation=False)
+        # store given index
+        given_index = index
+        # for negative index, resolve the real index (not supported in ExtendScript)
+        if given_index < 0:
+            index = self.__len__() + given_index
+        # actual ExtendScript call
+        result = self._eval_on_this_object("[{}]".format(index), dot_notation=False)
+
+        # here we may be outside the range of the collection if nothing is returned, check index is in collection range.
+        # We could do it before actual ExtendScript call, but it may slow successful call to getitem with positive index
+        if result is None and (index < 0 or given_index >= self.__len__()):
+            raise IndexError("index {} out of range for collection {}".format(given_index, self))
+
+        return result
 
     def __len__(self):
         """

@@ -48,6 +48,7 @@ clip.start = time_from_seconds(clip.start.seconds + 10)
 (see QE section)
 ```python
 import pymiere  
+from pymiere.wrappers import timecode_from_seconds
 # get first video track of active sequence  
 track = pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0)  
 # get first clip in track (QE list empty spaces as items)  
@@ -55,8 +56,24 @@ for x in range(track.numItems):
     item = track.getItemAt(x)    
     if item.type != "Empty":    
         break
-# move clip right (use "-10.0" to move left)  
-item.move("10.0")
+timecode = timecode_from_seconds(2.5, pymiere.objects.app.project.activeSequence)
+# move clip right (use "-10.0" to move left)
+# using timecode = "-" + timecode
+item.move(timecode)  # this should be a timecode
+```
+
+### Cut clip (razor tool)
+```python
+import pymiere
+from pymiere.wrappers import timecode_from_time
+
+seq = pymiere.objects.app.project.activeSequence
+# get player head time (could be any Time object)
+current_time = seq.getPlayerPosition()
+# Time object to timecode string
+timecode = timecode_from_time(current_time, seq)
+# razor tool on first video track at given timecode
+pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).razor(timecode)
 ```
 
 ## New/open/save project
@@ -328,7 +345,7 @@ arg1: (str) string timecode of when to cut the sequence
 ```python
 pymiere.objects.qe.project.getActiveSequence().getVideoTrackAt(0).getItemAt(1).move("10.0", False, False)
 """
-arg1: (str) string representation of time in second (can be negative)
+arg1: (str) string timecode (can be negative)
 arg2: (bool) duplicate?
 arg3: (bool) offset everything around?
 """

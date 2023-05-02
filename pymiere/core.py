@@ -423,9 +423,25 @@ class Array(PymiereBaseCollection):
     def push(self, item):
         self._eval_on_this_object("push({})".format(_format_object_to_es(item)))
 
+    @staticmethod
+    def python_list_to_es_declaration(python_list):
+        """
+        Convert python list to javascript declaration code for the equivalent Array
+
+        :param python_list: (list)
+        :return: (str) ExtendScript code
+        """
+        return "[{}]".format(", ".join([_format_object_to_es(item) for item in python_list]))
+
     @classmethod
     def from_python_list(cls, python_list):
-        return cls(**_eval_script_returning_object("[{}]".format(", ".join([_format_object_to_es(item) for item in python_list])), as_kwargs=True))
+        """
+        Create an Array in ExtendScript from a python list and return the Array object
+
+        :param python_list: (list)
+        :return: (Array)
+        """
+        return cls(**_eval_script_returning_object(cls.python_list_to_es_declaration(python_list), as_kwargs=True))
 
 
 # ----- PRIVATE FUNCTIONS ----
@@ -443,7 +459,7 @@ def _format_object_to_es(obj):
     elif isinstance(obj, PymiereBaseObject):
         return "$._pymiere['{}']".format(obj._pymiere_id)
     elif isinstance(obj, list):
-        return "$._pymiere['{}']".format(Array.from_python_list(obj)._pymiere_id)
+        return Array.python_list_to_es_declaration(obj)
     elif isinstance(obj, dict):
         key_value_pair = ["{}: {}".format(_format_object_to_es(k), _format_object_to_es(v)) for k, v in obj.items()]
         return "{" + ",".join(key_value_pair) + "}"

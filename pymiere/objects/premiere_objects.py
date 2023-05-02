@@ -5081,11 +5081,28 @@ class ComponentParam(PymiereBaseObject):
         """
         return self._eval_on_this_object("getValueAtTime({})".format(_format_object_to_es(time)))
 
-    def setInterpolationTypeAtKey(self, time):
+    def setInterpolationTypeAtKey(self, time, interpolationType, updateUI):
         """
-        :type time: Object
+        :param time: A time of keyframe to modify.
+        :type time: Time
+        :param interpolationType: Must be one of the following interpolation choice:
+            0 kfInterpMode_Linear
+            1 kfInterpMode_EaseIn_Obsolete
+            2 kfInterpMode_EaseOut_Obsolete
+            3 kfInterpMode_EaseInEaseOut_Obsolete
+            4 kfInterpMode_Hold
+            5 kfInterpMode_Bezier
+            6 kfInterpMode_Time
+            7 kfInterpMode_TimeTransitionStart
+            8 kfInterpMode_TimeTransitionEnd
+        :type interpolationType: int
+        :param updateUI: Whether to update UI afterward
+        :type updateUI: bool
         """
-        return self._eval_on_this_object("setInterpolationTypeAtKey({})".format(_format_object_to_es(time)))
+        self._check_type(time, Time, 'arg "time" of function "ComponentParam.setInterpolationTypeAtKey"')
+        self._check_type(interpolationType, int, 'arg "interpolationType" of function "ComponentParam.setInterpolationTypeAtKey"')
+        self._check_type(updateUI, bool, 'arg "updateUI" of function "ComponentParam.setInterpolationTypeAtKey"')
+        return self._eval_on_this_object("setInterpolationTypeAtKey({}, {}, {})".format(_format_object_to_es(time), _format_object_to_es(interpolationType), _format_object_to_es(updateUI)))
 
 
 class Exporter(PymiereBaseObject):

@@ -176,7 +176,10 @@ class Application(PymiereBaseObject):
         :return: (list of ProjectItem)
         """
         self._check_version("15.4", "Application.getCurrentProjectViewSelection")
-        return Array(**self._eval_on_this_object("getCurrentProjectViewSelection()"))
+        result = self._eval_on_this_object("getCurrentProjectViewSelection()")
+        if result is None:
+            return Array.from_python_list(list())
+        return Array(**result)
 
     def setWorkspace(self, workspace):
         """
@@ -1868,7 +1871,7 @@ class Properties(PymiereBaseObject):
         :type propertyKey: str
         """
         self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.getProperty"')
-        self._eval_on_this_object("getProperty({})".format(_format_object_to_es(propertyKey)))
+        return self._eval_on_this_object("getProperty({})".format(_format_object_to_es(propertyKey)))
 
 
 class SourceMonitor(PymiereBaseObject):

@@ -795,12 +795,17 @@ class ProjectItem(PymiereBaseObject):
     def getProjectMetadata(self):
         return self._eval_on_this_object("getProjectMetadata()")
 
-    def setProjectMetadata(self, buffer):
+    def setProjectMetadata(self, newMetadata, updatedFields):
         """
-        :type buffer: str
+        :type newMetadata: str
+        :type updatedFields: list
         """
-        self._check_type(buffer, str, 'arg "buffer" of function "ProjectItem.setProjectMetadata"')
-        self._eval_on_this_object("setProjectMetadata({})".format(_format_object_to_es(buffer)))
+        self._check_type(newMetadata, str, 'arg "newMetadata" of function "ProjectItem.setProjectMetadata"')
+        self._check_type(updatedFields, list, 'arg "updatedFields" of function "ProjectItem.setProjectMetadata"')
+        self._eval_on_this_object("setProjectMetadata({}, {})".format(_format_object_to_es(newMetadata), _format_object_to_es(updatedFields)))
+
+    def getProjectColumnsMetadata(self):
+        return self._eval_on_this_object("getProjectColumnsMetadata()")
 
     def getMarkers(self):
         return MarkerCollection(**self._eval_on_this_object("getMarkers()"))

@@ -1856,12 +1856,19 @@ class Properties(PymiereBaseObject):
         self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.clearProperty"')
         self._eval_on_this_object("clearProperty({})".format(_format_object_to_es(propertyKey)))
 
-    def setProperty(self, propertyKey):
+    def setProperty(self, property, value, persistent=True, createIfNotExist=True):
         """
-        :type propertyKey: str
+        May crash if createIfNotExist is False and property does not exist, check with doesPropertyExist before
+
+        :type property: str
+        :type value: any
+        :type persistent: bool
+        :type createIfNotExist: bool
         """
-        self._check_type(propertyKey, str, 'arg "propertyKey" of function "Properties.setProperty"')
-        self._eval_on_this_object("setProperty({})".format(_format_object_to_es(propertyKey)))
+        self._check_type(property, str, 'arg "property" of function "Properties.setProperty"')
+        self._check_type(persistent, bool, 'arg "propertyKey" of function "Properties.setProperty"')
+        self._check_type(createIfNotExist, bool, 'arg "propertyKey" of function "Properties.setProperty"')
+        self._eval_on_this_object("setProperty({}, {}, {}, {})".format(_format_object_to_es(property), _format_object_to_es(value), _format_object_to_es(persistent), _format_object_to_es(createIfNotExist)))
 
     def getProperty(self, propertyKey):
         """

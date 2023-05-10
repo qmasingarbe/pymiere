@@ -176,10 +176,7 @@ class Application(PymiereBaseObject):
         :return: (list of ProjectItem)
         """
         self._check_version("15.4", "Application.getCurrentProjectViewSelection")
-        result = self._eval_on_this_object("getCurrentProjectViewSelection()")
-        if result is None:
-            return Array.from_python_list(list())
-        return Array(**result)
+        return Array(**self._eval_on_this_object("getCurrentProjectViewSelection()"))
 
     def setWorkspace(self, workspace):
         """

@@ -9,7 +9,7 @@ import time
 import re
 import json
 import subprocess
-from distutils.version import StrictVersion
+from packaging.version import Version
 import platform
 if platform.system().lower() == "windows":
     WINDOWS_SYSTEM = True
@@ -148,7 +148,7 @@ def _get_last_premiere_exe_windows():
     if not premiere_versions:
         raise OSError("Could not find an Adobe Premiere Pro version installed on this computer")
     # find last installed version
-    last_version_num = sorted([StrictVersion(v["DisplayVersion"]) for v in premiere_versions])[-1]
+    last_version_num = sorted([Version(v["DisplayVersion"]) for v in premiere_versions])[-1]
     last_version_info = [v for v in premiere_versions if v["DisplayVersion"] == str(last_version_num)][0]
     # search actual exe path
     base_path = last_version_info["InstallLocation"]

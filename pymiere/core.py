@@ -4,7 +4,7 @@ Core functions handling connection and objects base
 import os
 import sys
 import json
-from distutils.version import StrictVersion
+from packaging.version import Version
 from time import time as current_time
 import requests
 from pymiere.exe_utils import is_premiere_running
@@ -57,11 +57,11 @@ def get_premiere_version():
     """
     Query or get from cache the version of the currently running Premiere pro
 
-    :return: (StrictVersion) version object of current premiere pro
+    :return: (Version) version object of current premiere pro
     """
     global premiere_pro_version
     if "premiere_pro_version" not in globals():
-        premiere_pro_version = StrictVersion(eval_script("app.version;"))
+        premiere_pro_version = Version(eval_script("app.version;"))
     return premiere_pro_version
 
 
@@ -235,14 +235,14 @@ class PymiereBaseObject(object):
         Check to use in subclass when creating a new property or method only available from a specific premiere
         version to check and raise if it is not available because we are using an older premiere version
 
-        :param minimum_version: (str or StrictVersion) minimum version requirement to use this property/method
+        :param minimum_version: (str or Version) minimum version requirement to use this property/method
         :param name: (str) name of the method/property
         :param alternative_msg: (None or str) if given provide an alternative solution in the error message to achieve
         the same behaviour with different code
         """
         current_version = get_premiere_version()
-        if not isinstance(minimum_version, StrictVersion):
-            minimum_version = StrictVersion(minimum_version)
+        if not isinstance(minimum_version, Version):
+            minimum_version = Version(minimum_version)
         if current_version >= minimum_version:
             return
         message = "'{}' is only available from Premiere Pro v{} and you are using v{}.".format(

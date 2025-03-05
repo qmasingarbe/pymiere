@@ -213,7 +213,7 @@ def timecode_from_seconds(seconds, sequence):
 
 
 def get_system_sequence_presets(category="Digital SLR", resolution="1080p", preset_name="DSLR 1080p25"):
-    """
+    r"""
     To create a new sequence via qe.project.newSequence we need to give a sequence preset file (.sqpreset)
     Base presets come installed with premiere. Select one according to your footage.
     Paths examples : (versions may vary)

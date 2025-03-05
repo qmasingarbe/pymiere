@@ -175,7 +175,11 @@ class PymiereBaseObject(object):
                 $._pymiere.generatedIds.splice(index, 1);
             }}
         """.format(self._pymiere_id)
-        eval_script(code=script)
+
+        try:
+            eval_script(code=script)
+        except:
+            pass
 
     def _eval_on_this_object(self, extend_property, dot_notation=True):
         """

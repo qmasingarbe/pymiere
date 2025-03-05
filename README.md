@@ -1,6 +1,10 @@
 # ![Pymiere](https://raw.githubusercontent.com/qmasingarbe/pymiere/master/logo.png) ```Pymiere``` : Python for Premiere Pro
 > Use Python to interact with _Adobe Premiere Pro_, gather data, check, edit and automate your projects.
 
+> [!WARNING]
+> Pymiere is not maintained anymore.  
+> It should still work fine but some newer part of the Premiere pro api may not be wrapped.
+
 ## Why use ```Pymiere```?
 If you just want to create a Premiere file programmatically, you can  generate and use an XML file (see [Open Timeline IO to XML](https://opentimelineio.readthedocs.io/en/latest/tutorials/adapters.html#final-cut-pro-xml)). **But** that involves manually exporting and importing files, potentially losing data and with no visual feedback.
 
@@ -62,9 +66,6 @@ For more snippets and examples see [pymiere documentation](https://github.com/qm
 * [Official doc for Premiere Pro objects](http://ppro.aenhancers.com/)
 * [Unofficial doc for Premiere Pro objects](http://www.brysonmichael.com/premiereapi/objects)
 * [Advanced Premiere Pro Extendscript usage](https://github.com/Adobe-CEP/Samples/blob/master/PProPanel/jsx/PPRO/Premiere.jsx)
-
-## Contact
-For any support, questions or interest please contact me: <a href="mailto:q.masingarbe@gmail.com">q.masingarbe@gmail.com</a>
 
 ## How ```Pymiere``` Works
 ```Pymiere``` is basically a wrapper for _ExtendScript_ (an Adobe flavour of JavaScript used for most of its _Creative Cloud_ software).  Most of the help documentation for _ExtendScript_ therefore applies directly to ```Pymiere```.

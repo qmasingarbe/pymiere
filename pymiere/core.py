@@ -12,7 +12,8 @@ from pymiere.exe_utils import is_premiere_running
 # ----- GLOBALS -----
 PANEL_URL = "http://127.0.0.1:3000"  # Pymiere link local URL
 ALIVE_TIMEOUT = 2  # check that premiere is still alive every x seconds
-
+# Create a Session object
+session = requests.Session()
 
 # ----- FUNCTIONS -----
 def check_premiere_is_alive(crash=True):
@@ -36,7 +37,7 @@ def check_premiere_is_alive(crash=True):
         return False
     # is the CEP panel reachable
     try:
-        response = requests.get(PANEL_URL)
+        response = session.get(PANEL_URL)
     except requests.exceptions.ConnectionError:
         msg = "No connection could be established to Premiere Pro, check that the pymiere pannel is loaded"
         if crash:
@@ -94,7 +95,7 @@ def eval_script(code=None, filepath=None, decode_json=True):
     code = code.replace("\\", "\\\\")
 
     # send code to premiere (adding try statement to prevent error popup message locking premiere UI)
-    response = requests.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;ExtendJSON.stringify(e)}"})
+    response = session.post(PANEL_URL, json={"to_eval": "try{\n" + code + "\n}catch(e){e.error=true;ExtendJSON.stringify(e)}"})
 
     # handle response
     response_text = response.content
